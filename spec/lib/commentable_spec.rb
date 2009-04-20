@@ -1,8 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Commentable do
+  # sections 5-9, 12-16
   %w[
-    Immunization AbstractResult Allergy Medication Encounter
+    Immunization Result VitalSign Allergy Medication Encounter
     Condition InsuranceProvider Provider AdvanceDirective
   ].each do |class_name|
     it "should be included by #{class_name}" do
