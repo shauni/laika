@@ -1,5 +1,5 @@
 <!-- Start Information Source Module -->
-<% remote_form_for(:information_source, 
+<% patient_form_for(@information_source, 
                    :url => patient_information_source_path(@patient),
                    :update => 'informationSourceContainer', :method => http_method(@information_source)) do |f| %>
 <h5>Information Source (Required)</h5>
@@ -8,7 +8,7 @@
     <td class="lighttext">Time <%= print_validation_for @information_source, :time %></td>
     <td><%= f.calendar_date_select :time %></td>
   </tr>
-  <%= render :partial => '/person_names/edit', :locals => {:person_name => @information_source.person_name}%>
+  <%= f.person_name_fields %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Document ID <%= print_validation_for @information_source, :document_id %></td>
     <td>

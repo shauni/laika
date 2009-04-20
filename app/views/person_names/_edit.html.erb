@@ -1,4 +1,4 @@
-<% fields_for person_name do |person_name_form| -%>
+<% parent.fields_for :person_name do |person_name_form| -%>
 <tr class="lightzebra">
   <td class="lighttext">Prefix <%= print_validation_for person_name, :name_prefix %></td>
   <td><%= person_name_form.text_field :name_prefix %></td>

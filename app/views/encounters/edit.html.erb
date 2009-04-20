@@ -4,7 +4,7 @@
 <% else
   encounter_div = "encounter#{@encounter.id}"
 end %>
-<% remote_form_for(:encounter, @encounter, :url => patient_url_for(@patient, @encounter),
+<% patient_form_for(@encounter, :url => patient_url_for(@patient, @encounter),
                    :html => {:method => http_method(@encounter)}, :update => encounter_div) do |f| -%>
 
 <table>
@@ -38,9 +38,9 @@ end %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td colspan="2" class="lighttext">Encounter Provider</td>
   </tr>
-  <%= render :partial => '/person_names/edit', :locals => {:person_name => @encounter.person_name}%>
-  <%= render :partial => '/addresses/edit', :locals => {:address => @encounter.address}%>
-  <%= render :partial => '/telecoms/edit', :locals => {:telecom => @encounter.telecom}%>
+  <%= f.person_name_fields %>
+  <%= f.address_fields     %>
+  <%= f.telecom_fields     %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Location Name <%= print_validation_for @encounter, :location_name %></td>
     <td><%= f.text_field :location_name %></td>

@@ -26,7 +26,7 @@ describe PatientsController do
     pd_mock.stub!(:id).and_return(7)
     Patient.stub!(:find).and_return(pd_mock)
     get :show, :id => 1, :format => 'xml'
-    response.headers['type'].should == 'application/x-download'
+    response.headers['content-type'].should == 'application/x-download'
   end
   
   it "should return xml content with xml declaration" do
