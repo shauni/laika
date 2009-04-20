@@ -8,11 +8,11 @@
                       :html => {:method => http_method(@allergy)}, :update => allergy_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Free Text Product Name <%= print_validation_for @allergy, :free_text_product %></td>
+    <td class="lighttext">Free Text Product Name <%= requirements_for @allergy, :free_text_product %></td>
     <td><%= f.text_field :free_text_product %></td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Product Code <%= print_validation_for @allergy, :product_code %></td>
+    <td class="lighttext">Product Code <%= requirements_for @allergy, :product_code %></td>
     <td>
       <%= f.text_field :product_code %>
       <br />
@@ -22,31 +22,31 @@
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Severity <%= print_validation_for @allergy, :severity_term_id %></td>
+    <td class="lighttext">Severity <%= requirements_for @allergy, :severity_term_id %></td>
     <td>
       <%= f.select :severity_term_id, SeverityTerm.select_options %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Alert Type <%= print_validation_for @allergy, :adverse_event_type_id %></td>
+    <td class="lighttext">Alert Type <%= requirements_for @allergy, :adverse_event_type_id %></td>
     <td>
       <%= f.select :adverse_event_type_id, AdverseEventType.select_options %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Start Event <%= print_validation_for @allergy, :start_event %></td>
+    <td class="lighttext">Start Event <%= requirements_for @allergy, :start_event %></td>
     <td>
       <%= f.calendar_date_select :start_event %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">End Event <%= print_validation_for @allergy, :end_event %></td>
+    <td class="lighttext">End Event <%= requirements_for @allergy, :end_event %></td>
     <td>
       <%= f.calendar_date_select :end_event %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Status Code <%= print_validation_for @allergy, :allergy_status_code_id %></td>
+    <td class="lighttext">Status Code <%= requirements_for @allergy, :allergy_status_code_id %></td>
     <td>
       <%= f.select :allergy_status_code_id, AllergyStatusCode.select_options, {:include_blank => true} %>
     </td>

@@ -10,31 +10,31 @@
                    :update => insurance_provider_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Insurance Provider Organization <%= print_validation_for @insurance_provider, :represented_organization %></td>
+    <td class="lighttext">Insurance Provider Organization <%= requirements_for @insurance_provider, :represented_organization %></td>
     <td>
       <%= f.text_field :represented_organization %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Insurance Provider Group Number <%= print_validation_for @insurance_provider, :group_number %></td>
+    <td class="lighttext">Insurance Provider Group Number <%= requirements_for @insurance_provider, :group_number %></td>
     <td>
       <%= f.text_field :group_number %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Insurance Type <%= print_validation_for @insurance_provider, :insurance_type_id %></td>
+    <td class="lighttext">Insurance Type <%= requirements_for @insurance_provider, :insurance_type_id %></td>
     <td>
       <%= f.select :insurance_type_id, InsuranceType.select_options, {:include_blank => true} %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Relationship to Subscriber <%= print_validation_for @insurance_provider, :coverage_role_type_id %></td>
+    <td class="lighttext">Relationship to Subscriber <%= requirements_for @insurance_provider, :coverage_role_type_id %></td>
     <td>
       <%= f.select :coverage_role_type_id, CoverageRoleType.select_options %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Financial Responsibility Type <%= print_validation_for @insurance_provider, :role_class_relationship_formal_type_id %> </td>
+    <td class="lighttext">Financial Responsibility Type <%= requirements_for @insurance_provider, :role_class_relationship_formal_type_id %> </td>
     <td>
       <%= f.select :role_class_relationship_formal_type_id, 
             RoleClassRelationshipFormalType.select_options %>

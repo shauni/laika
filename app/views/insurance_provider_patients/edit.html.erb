@@ -4,7 +4,7 @@
                    :update => "insurance_provider_patient#{@insurance_provider_patient.id}") do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td colspan="2" class="lighttext">Patient <%= print_validation_for @insurance_provider_patient, :member_id %></td>
+    <td colspan="2" class="lighttext">Patient <%= requirements_for @insurance_provider_patient, :member_id %></td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Member ID</td>
@@ -17,16 +17,16 @@
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Start Coverage Date <%= print_validation_for @insurance_provider_patient, :start_coverage_date %></td>
+    <td class="lighttext">Start Coverage Date <%= requirements_for @insurance_provider_patient, :start_coverage_date %></td>
     <td><%= f.calendar_date_select :start_coverage_date %></td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">End Coverage Date <%= print_validation_for @insurance_provider_patient, :end_coverage_date %></td>
+    <td class="lighttext">End Coverage Date <%= requirements_for @insurance_provider_patient, :end_coverage_date %></td>
     <td><%= f.calendar_date_select :end_coverage_date %></td>
   </tr>
   <%= f.person_name_fields %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Patient Birth Date <%= print_validation_for @insurance_provider_patient, :date_of_birth %></td>
+    <td class="lighttext">Patient Birth Date <%= requirements_for @insurance_provider_patient, :date_of_birth %></td>
     <td><%= f.calendar_date_select :date_of_birth %></td>
   </tr>
   <%= f.address_fields %>

@@ -29,7 +29,7 @@ module ApplicationHelper
     remote_form_for(record, *(args << options.merge(:builder => PatientFormBuilder)), &proc)
   end
 
-  def print_validation_for(model, field)
+  def requirements_for(model, field)
     return nil unless model.respond_to?(:requirements) and model.requirements
     case model.requirements[field]
       when :required

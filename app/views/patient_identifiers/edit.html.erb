@@ -9,13 +9,13 @@
 
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Patient Identifer <%= print_validation_for @patient_identifier, :patient_identifier %></td>
+    <td class="lighttext">Patient Identifer <%= requirements_for @patient_identifier, :patient_identifier %></td>
     <td>
       <%= f.text_field :patient_identifier %>
      </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Identifier domain identifier <%= print_validation_for @patient_identifier, :identifier_domain_identifier_id %></td>
+    <td class="lighttext">Identifier domain identifier <%= requirements_for @patient_identifier, :identifier_domain_identifier_id %></td>
     <td>
       <%= f.text_field  :identifier_domain_identifier %>
     </td>
