@@ -1,4 +1,4 @@
-  <% fields_for address do |address_form| -%>
+  <% parent.fields_for :address do |address_form| -%>
   <tr class="lightzebra">
     <td class="lighttext">Street Address <%= print_validation_for(address, :street_address_line_one) %></td>
     <td><%= address_form.text_field :street_address_line_one %></td>

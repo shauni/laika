@@ -1,4 +1,4 @@
-<% remote_form_for(:insurance_provider_guarantor, @insurance_provider_guarantor,
+<% patient_form_for(@insurance_provider_guarantor,
                    :url => patient_insurance_provider_guarantor_path(@patient, @insurance_provider_guarantor),
                    :html => {:method => 'put'},
                    :update => "insurance_provider_guarantor#{@insurance_provider_guarantor.id}") do |f| -%>
@@ -6,13 +6,13 @@
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td colspan="2" class="lighttext">Guarantor Information</td>
   </tr>
-  <%= render :partial => '/person_names/edit', :locals => {:person_name => @insurance_provider_guarantor.person_name}%>
+  <%= f.person_name_fields %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Guarantor Effective Date</td>
     <td><%= f.calendar_date_select :effective_date %></td>
   </tr>
-  <%= render :partial => '/addresses/edit', :locals => {:address => @insurance_provider_guarantor.address}%>
-  <%= render :partial => '/telecoms/edit', :locals => {:telecom => @insurance_provider_guarantor.telecom}%>
+  <%= f.address_fields %>
+  <%= f.telecom_fields %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td></td>
     <td><%= f.submit "Save" %></td>

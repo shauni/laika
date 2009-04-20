@@ -4,9 +4,6 @@ class AccountController < ApplicationController
 
   class InvalidPasswordResetCode < StandardError; end
 
-  def index
-  end
-
   def login
     return unless request.post?
     

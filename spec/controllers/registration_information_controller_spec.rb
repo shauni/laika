@@ -9,6 +9,24 @@ describe RegistrationInformationController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update person name record" do
+    put :update, :patient_id => @patient.id.to_s, :registration_information => {
+        :person_name_attributes => { :last_name => 'roberts' } }
+    @patient.registration_information.person_name.last_name.should == 'roberts'
+  end
+
+  it "should update address record" do
+    put :update, :patient_id => @patient.id.to_s, :registration_information => {
+        :address_attributes => { :city => 'roberts' } }
+    @patient.registration_information.address.city.should == 'roberts'
+  end
+
+  it "should update telecom record" do
+    put :update, :patient_id => @patient.id.to_s, :registration_information => {
+        :telecom_attributes => { :home_phone => '323 555-1234' } }
+    @patient.registration_information.telecom.home_phone.should == '323 555-1234'
+  end
+
   it "should render edit template on get new" do
     get :new, :patient_id => @patient.id.to_s
     response.should render_template('registration_information/edit')
@@ -35,7 +53,7 @@ describe RegistrationInformationController do
   end
 
   it "should create registration_information on post create" do
-    @patient.update_attributes!(:registration_information => nil)
+    @patient.registration_information.destroy
     post :create, :patient_id => @patient.id.to_s
     @patient.registration_information(true).should_not be_nil
   end

@@ -1,4 +1,4 @@
-<% fields_for telecom do |telecom_form| -%>
+<% parent.fields_for :telecom do |telecom_form| -%>
 <tr class="lightzebra">
   <td class="lighttext">Home Phone <%= print_validation_for(telecom, :home_phone) %></td>
   <td><%= telecom_form.text_field :home_phone %></td>

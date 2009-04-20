@@ -6,7 +6,6 @@ class AdvanceDirectivesController < PatientChildController
   def create
     advance_directive = AdvanceDirective.new(params[:advance_directive])
     @patient.advance_directive = advance_directive
-    advance_directive.create_person_attributes(params)
     
     render :partial  => 'show', :locals => {:advance_directive => advance_directive, :patient => @patient}
   end
@@ -14,7 +13,6 @@ class AdvanceDirectivesController < PatientChildController
   def update
     advance_directive = @patient.advance_directive
     advance_directive.update_attributes(params[:advance_directive])
-    advance_directive.update_person_attributes(params)
     
     render :partial  => 'show', :locals => {:advance_directive => advance_directive, :patient => @patient}
   end

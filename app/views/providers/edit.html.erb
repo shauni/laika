@@ -4,7 +4,7 @@
 <% else
      provider_div = "provider#{@provider.id}"
    end %>
-   <% remote_form_for(:provider, @provider,  :url => patient_url_for(@patient, @provider), :html => { :method => http_method(@provider) }, :update => provider_div) do |f| -%>
+   <% patient_form_for(@provider,  :url => patient_url_for(@patient, @provider), :html => { :method => http_method(@provider) }, :update => provider_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Start Service <%= print_validation_for @provider, :start_service %></td>
@@ -18,7 +18,7 @@
       <%= f.calendar_date_select :end_service %>
     </td>
   </tr>
-  <%= render :partial => '/person_names/edit', :locals => {:person_name => @provider.person_name}%>
+  <%= f.person_name_fields %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Provider Type <%= print_validation_for @provider, :provider_type_id %></td>
     <td>
@@ -37,9 +37,8 @@
     <%= f.text_field :provider_role_free_text %>
     </td>
   </tr>
-  <%= render :partial => '/addresses/edit', :locals => {:address => @provider.address}%>
-  <%= render :partial => '/telecoms/edit', :locals => {:telecom => @provider.telecom}%>
-
+  <%= f.address_fields %>
+  <%= f.telecom_fields %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Organization <%= print_validation_for @provider, :organization %></td>
     <td>

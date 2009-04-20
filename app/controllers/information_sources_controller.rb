@@ -17,7 +17,6 @@ class InformationSourcesController < PatientChildController
   def create
     information_source = InformationSource.new(params[:information_source])
     @patient.information_source = information_source
-    information_source.create_person_attributes(params)
     render :partial  => 'show', :locals => {:information_source => information_source,
                                             :patient => @patient}
   end
@@ -25,7 +24,6 @@ class InformationSourcesController < PatientChildController
   def update
     information_source = @patient.information_source
     information_source.update_attributes(params[:information_source])
-    information_source.update_person_attributes(params)
     render :partial  => 'show', :locals => {:information_source => information_source,
                                             :patient => @patient}
   end

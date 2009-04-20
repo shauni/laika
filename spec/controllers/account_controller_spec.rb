@@ -109,17 +109,5 @@ describe AccountController do
 
   end
 
-  describe "after authentication" do
-    before(:each) do
-      @user = mock_model(User)
-      controller.stub!(:current_user).and_return(@user)
-    end
-
-    it "should load the index" do
-      get :index
-      response.should be_success
-    end
-  end
-
 end
 
