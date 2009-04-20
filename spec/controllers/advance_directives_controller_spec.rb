@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe AdvanceDirectivesController do
+  integrate_views
+
   fixtures :patients, :advance_directives
 
   before do

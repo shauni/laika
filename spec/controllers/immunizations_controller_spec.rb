@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ImmunizationsController do
+  integrate_views
+
   fixtures :patients, :immunizations
 
   before do

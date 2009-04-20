@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe MedicalEquipmentsController do
+  integrate_views
+
   fixtures :patients, :medical_equipments
 
   before do

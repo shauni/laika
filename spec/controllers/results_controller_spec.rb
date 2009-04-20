@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ResultsController do
+  integrate_views
+
   fixtures :patients, :abstract_results
 
   before do

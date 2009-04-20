@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RegistrationInformationController do
+  integrate_views
+
   fixtures :patients, :registration_information
 
   before do

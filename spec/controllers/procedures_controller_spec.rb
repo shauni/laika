@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ProceduresController do
+  integrate_views
+
   fixtures :patients, :procedures
 
   before do

@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe AllergiesController do
+  integrate_views
+
   fixtures :patients, :allergies
 
   before do

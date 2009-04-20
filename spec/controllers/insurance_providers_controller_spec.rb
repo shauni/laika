@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe InsuranceProvidersController do
+  integrate_views
+
   fixtures :patients, :insurance_providers
 
   before do

@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe LanguagesController do
+  integrate_views
+
   fixtures :patients, :languages
 
   before do
