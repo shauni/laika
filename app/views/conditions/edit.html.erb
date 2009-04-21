@@ -6,9 +6,7 @@
 <% else
      condition_div = "condition#{@condition.id}"
    end %>
-<% remote_form_for(:condition, @condition, :url => patient_url_for(@patient, @condition),
-                   :html => {:method => http_method(@condition)},
-                   :update => condition_div, :name => "conditions_form") do |f| -%>
+<% remote_form_for([@patient, @condition], :update => condition_div, :name => "conditions_form") do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Start Event <%= requirements_for @condition, :start_event %></td>

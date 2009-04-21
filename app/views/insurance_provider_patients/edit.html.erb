@@ -1,6 +1,4 @@
-<% patient_form_for(@insurance_provider_patient,
-                   :url => patient_insurance_provider_patient_path(@patient, @insurance_provider_patient),
-                   :html => {:method => 'put'},
+<% patient_form_for([@patient, @insurance_provider_patient],
                    :update => "insurance_provider_patient#{@insurance_provider_patient.id}") do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">

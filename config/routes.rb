@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
       :has_many => [:languages, :providers, :insurance_providers, 
                     :insurance_provider_patients, :insurance_provider_subscribers, 
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
-                    :comments, :results, :immunizations, 
+                    :results, :immunizations, 
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
       :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get}
   ) do |patients|
@@ -74,5 +74,5 @@ ActionController::Routing::Routes.draw do |map|
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id.:format'
 end

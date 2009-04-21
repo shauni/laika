@@ -4,8 +4,7 @@
 <% else
      immunization_div = "immunization#{@immunization.id}"
    end %>
-   <% remote_form_for(:immunization, @immunization, :url => patient_url_for(@patient, @immunization),
-                      :html => {:method => http_method(@immunization)}, :update => immunization_div) do |f| -%>
+   <% remote_form_for([@patient, @immunization], :update => immunization_div) do |f| -%>
 
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">

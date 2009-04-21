@@ -1,13 +1,15 @@
 <% if @result.new_record?
      result_div = 'resultNew' 
-     html_options = {:id => 'resultForm', :method => http_method(@result)} -%>
+     html_options = {:id => 'resultForm'} -%>
 <div id="resultNew">
 <% else
      result_div = "result#{@result.id}"
-     html_options = { :method => http_method(@result) }
+     html_options = {}
    end %>
-   <% remote_form_for(:result, @result, :url => patient_url_for(@patient, @result, :is_vital_sign => @is_vital_sign), :html => html_options,
-                   :update => result_div) do |f| -%>
+   <% remote_form_for([@patient, @result],
+                      :url => patient_url_for(@patient, @result, :is_vital_sign => @is_vital_sign),
+                      :html => html_options,
+                      :update => result_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Result ID <%= requirements_for @result, :result_id %></td>
