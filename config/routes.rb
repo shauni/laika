@@ -16,18 +16,15 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users
 
-  map.resources(
-    :patients,
-      :has_one  => [:registration_information, :support, :information_source, :advance_directive],
+  map.resources :patients,
+      :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
       :has_many => [:languages, :providers, :insurance_providers, 
                     :insurance_provider_patients, :insurance_provider_subscribers, 
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get}
-  ) do |patients|
-    patients.resources :vital_signs, :controller => 'results'
-  end
+      :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get },
+      :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|
     xds_patients.xds_patients '/xds_patients', :action => 'index'
@@ -39,7 +36,19 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :document_locations
 
+  # FIXME this controller should have a plural name that can be singularized
   map.resources :news
+
+  map.with_options :controller => 'account' do |account|
+    %w[ signup login logout forgot_password reset_password ].each do |action|
+      account.send(action, "/account/#{action}", :action => action)
+    end
+  end
+
+  map.with_options :controller => 'test_plan_manager' do |tpm|
+    tpm.assign_test_plan "/test_plan_manager/assign/:id", :action => 'assign_patient'
+    tpm.export_test_plan "/test_plan_manager/export/:id", :action => 'export'
+  end
 
   map.root :controller => "vendor_test_plans"
   # The priority is based upon order of creation: first created -> highest priority.
