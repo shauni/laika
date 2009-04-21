@@ -29,6 +29,13 @@ class InsuranceProvider < ActiveRecord::Base
     }
   end
 
+  def initialize(*args)
+    super
+    build_insurance_provider_patient    unless insurance_provider_patient
+    build_insurance_provider_subscriber unless insurance_provider_subscriber
+    build_insurance_provider_guarantor  unless insurance_provider_guarantor
+  end
+
   def clone
     copy = super
     copy.insurance_provider_patient    = insurance_provider_patient.clone    if insurance_provider_patient

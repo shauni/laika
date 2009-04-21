@@ -5,16 +5,14 @@ class SupportsController < PatientChildController
   end
 
   def create
-    support = Support.new(params[:support])
-    @patient.support = support
-    render :partial  => 'show', :locals => {:support =>  support,
+    @patient.support = Support.new(params[:support])
+    render :partial  => 'show', :locals => {:support =>  @patient.support,
                                             :patient => @patient}
   end
 
   def update
-    support = @patient.support
-    support.update_attributes(params[:support])
-    render :partial  => 'show', :locals => {:support =>  support,
+    @patient.support.update_attributes(params[:support])
+    render :partial  => 'show', :locals => {:support =>  @patient.support,
                                             :patient => @patient}
   end
 
