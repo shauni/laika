@@ -27,6 +27,7 @@
    <span>
     <%= link_to_remote 'Remove', :update => "language#{language.id}",
                                :url => patient_language_path(patient, language),
+                               :confirm => 'Are you sure you wish to remove this language?',
                                :method => 'delete' %>
     </span> 
   </td>

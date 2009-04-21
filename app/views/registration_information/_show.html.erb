@@ -49,6 +49,7 @@
       <span>
         <%= link_to_remote 'Remove', :update => 'personInformationContainer',
                                      :url => patient_registration_information_path(patient),
+                                     :confirm => 'Are you sure you wish to remove this registration information?',
                                      :method => 'delete' %>
       </span>
     </td>
