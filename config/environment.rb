@@ -82,7 +82,8 @@ Rails::Initializer.run do |config|
   config.gem 'rspec',       :lib => false, :version => '1.2.2'
   config.gem 'rspec-rails', :lib => false, :version => '1.2.2'
 
-
+  # Setting a default timezone, please change this to where ever you are deployed
+  config.time_zone = "Eastern Time (US & Canada)"
 end
 
 ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] = '%d.%b.%Y'

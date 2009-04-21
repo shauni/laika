@@ -89,12 +89,10 @@ class Patient < ActiveRecord::Base
                "codeSystemName" => "LOINC")
       xml.title(name)
 
-      # FIXME Hard-coding EST time zone doesn't seem like a great idea...
-      # TZ should either come from the environment or be an option set on deployment.
-      if registration_information && registration_information.document_timestamp
-        xml.effectiveTime("value" => registration_information.document_timestamp.strftime("%Y%m%d%H%M%S-0500"))
+      if registration_information.andand.document_timestamp
+        xml.effectiveTime("value" => c32_timestamp(registration_information.document_timestamp))
       else
-        xml.effectiveTime("value" => updated_at.andand.strftime("%Y%m%d%H%M%S-0500"))
+        xml.effectiveTime("value" => c32_timestamp(updated_at))
       end
       xml.confidentialityCode
       xml.languageCode("code" => "en-US")
@@ -246,6 +244,10 @@ class Patient < ActiveRecord::Base
   end
 
  private
+
+  def c32_timestamp(datetime)
+    datetime.strftime("%Y%m%d%H%M%S") + datetime.formatted_offset(false)
+  end
 
   # If the patient is pregnant, this method will add the appropriate
   # C32 component to the provided XML::Builder object.
