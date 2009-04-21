@@ -11,6 +11,12 @@ describe EncountersController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.encounters.first.id.to_s,
+      :encounter => { :comment_attributes => { :text => 'roberts' } }
+    @patient.encounters.first.comment.text.should == 'roberts'
+  end
+
   it "should assign @encounter on get new" do
     get :new, :patient_id => @patient.id.to_s
     assigns[:encounter].should be_new_record

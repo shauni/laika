@@ -11,6 +11,12 @@ describe ConditionsController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.conditions.first.id.to_s,
+      :condition => { :comment_attributes => { :text => 'roberts' } }
+    @patient.conditions.first.comment.text.should == 'roberts'
+  end
+
   it "should assign @condition on get new" do
     get :new, :patient_id => @patient.id.to_s
     assigns[:condition].should be_new_record

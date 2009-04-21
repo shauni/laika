@@ -11,6 +11,12 @@ describe AdvanceDirectivesController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s,
+      :advance_directive => { :comment_attributes => { :text => 'roberts' } }
+    @patient.advance_directive.comment.text.should == 'roberts'
+  end
+
   it "should render edit template on get new" do
     get :new, :patient_id => @patient.id.to_s
     response.should render_template('advance_directives/edit')

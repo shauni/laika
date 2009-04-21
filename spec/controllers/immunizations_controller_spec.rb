@@ -11,6 +11,12 @@ describe ImmunizationsController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.immunizations.first.id.to_s,
+      :immunization => { :comment_attributes => { :text => 'roberts' } }
+    @patient.immunizations.first.comment.text.should == 'roberts'
+  end
+
   it "should assign @immunization on get new" do
     get :new, :patient_id => @patient.id.to_s
     assigns[:immunization].should be_new_record

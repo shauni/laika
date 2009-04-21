@@ -11,6 +11,12 @@ describe InsuranceProvidersController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.insurance_providers.first.id.to_s,
+      :insurance_provider => { :comment_attributes => { :text => 'roberts' } }
+    @patient.insurance_providers.first.comment.text.should == 'roberts'
+  end
+
   it "should assign @insurance_provider on get new" do
     get :new, :patient_id => @patient.id.to_s
     assigns[:insurance_provider].should be_new_record

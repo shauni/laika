@@ -18,25 +18,43 @@ describe Commentable do
     before do
       @patient = Patient.first
       @immunization = @patient.immunizations.create
-      @comment = @immunization.create_comment(:text => 'yo dawg.')
     end
 
-    it "should copy the comment on clone" do
-      copy = @immunization.clone
-      copy.comment.should_not == @comment
-      copy.comment.text.should == @comment.text
+    it "should create the comment on update_attributes" do
+      @immunization.update_attributes(:comment_attributes => { :text => 'foo' })
+      @immunization.comment.text.should == 'foo'
     end
 
-    it "should delete the comment on destroy" do
-      @immunization.destroy
-      lambda { @comment.reload }.should raise_error(ActiveRecord::RecordNotFound)
-    end
+    describe "with a comment" do
+      before { @comment = @immunization.create_comment(:text => 'yo dawg.') }
 
-    it "should touch the patient timestamp on comment save" do
-      last_updated_at = @patient.updated_at
-      @comment.save
-      @patient.reload
-      @patient.updated_at.should > last_updated_at
+      it "should update the comment on update_attributes" do
+        @immunization.update_attributes(:comment_attributes => { :id => @comment.id, :text => 'foo' })
+        @immunization.comment.text.should == 'foo'
+      end
+  
+      it "should destroy the comment on update_attributes" do
+        @immunization.update_attributes(:comment_attributes => { :id => @comment.id, '_delete' => '1' })
+        @immunization.comment(true).should be_nil
+      end
+  
+      it "should copy the comment on clone" do
+        copy = @immunization.clone
+        copy.comment.should_not == @comment
+        copy.comment.text.should == @comment.text
+      end
+  
+      it "should delete the comment on destroy" do
+        @immunization.destroy
+        lambda { @comment.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      end
+  
+      it "should touch the patient timestamp on comment save" do
+        last_updated_at = @patient.updated_at
+        @comment.save
+        @patient.reload
+        @patient.updated_at.should > last_updated_at
+      end
     end
   end
 end
