@@ -2,11 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe AccountController do
   describe "before authentication" do
-    it "should redirect index to login" do
-      get :index
-      response.should redirect_to('/account/login')
-    end
-
     it "should return success on get login" do
       get :login
       response.should be_success
@@ -15,7 +10,7 @@ describe AccountController do
     it "should redirect to login on failed login" do
       User.stub!(:authenticate).and_return nil
       post :login, { :email => 'foo@bar.com', :password => 'barfoo' }
-      response.should redirect_to('/account/login')
+      response.should redirect_to(login_url)
     end
 
     it "should redirect to patients after successful login (no test plans)" do
@@ -68,12 +63,12 @@ describe AccountController do
 
     it "should redirect to forgot_password on failed forgotten password lookups" do
       post :forgot_password, :email => 'foo@bar.com'
-      response.should redirect_to('/account/forgot_password')
+      response.should redirect_to(forgot_password_url)
     end
 
     it "should redirect on invalid reset_password (id required)" do
       get :reset_password
-      response.should redirect_to('/account/forgot_password')
+      response.should redirect_to(forgot_password_url)
     end
 
     it "should return success with a valid reset code on reset_password" do
@@ -104,7 +99,7 @@ describe AccountController do
       User.stub!(:find_by_password_reset_code).and_return mock_model(User, :save => true,
         :password= => nil, :password_confirmation= => nil, :reset_password => nil)
       get :reset_password, :id => 'something', :password => 'foo', :password_confirmation => 'foo'
-      response.should redirect_to('/account/login')
+      response.should redirect_to(login_url)
     end
 
   end

@@ -1,8 +1,6 @@
 class AccountController < ApplicationController
-  # If you want "remember me" functionality, add this before_filter to Application Controller
-  before_filter :login_from_cookie
-
   class InvalidPasswordResetCode < StandardError; end
+  skip_before_filter :login_required, :only => [:login, :signup, :forgot_password, :reset_password]
 
   def login
     return unless request.post?
@@ -25,9 +23,9 @@ class AccountController < ApplicationController
     else
       flash[:notice] = %{
         Sorry mate, your email and password <strong>do not match</strong>.
-        Want to <a href='#{relative_url_root}/account/signup' class='loginlink'>create an account?</a>
+        Want to <a href='#{signup_path}' class='loginlink'>create an account?</a>
       }
-      redirect_to :action => 'login'
+      redirect_to login_url
     end
   end
 
@@ -57,10 +55,10 @@ class AccountController < ApplicationController
       @user.forgot_password
       @user.save
       flash[:notice] = "We found the email address #{params[:email]}, and just sent a password reset link"
-      redirect_to :action => 'login'
+      redirect_to login_url
     else
       flash[:notice] = "Sorry, we couldn't find email address <b>#{params[:email]}</b>" 
-      redirect_to :action => 'forgot_password'
+      redirect_to forgot_password_url
     end
   end
   
@@ -75,7 +73,7 @@ class AccountController < ApplicationController
       @user.reset_password
       if @user.save
         flash[:notice] = "Your Laika password has been reset"
-        redirect_to :action => 'login'
+        redirect_to login_url
       else
         @notice = "Your Laika password has not been reset" 
       end
@@ -85,7 +83,7 @@ class AccountController < ApplicationController
   rescue InvalidPasswordResetCode
     #logger.error "Invalid Reset Code entered" 
     flash[:notice] = "Sorry - That is an invalid password reset code.<P>Please check your code and try again.<P>(Perhaps your email client inserted a carriage return?"
-    redirect_to :action => 'forgot_password'
+    redirect_to forgot_password_url
   end  
   
 end
