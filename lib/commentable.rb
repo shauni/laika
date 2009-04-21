@@ -17,14 +17,6 @@ module Commentable
       copy
     end
 
-    def update_comment_attributes(params)
-      comment.update_attributes(params[:comment])
-    end
-
-    def create_comment_attributes(params)
-      self.comment = Comment.new(params[:comment])
-    end
-
     def comment_blank?
       comment.text.blank? 
     end
