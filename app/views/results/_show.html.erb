@@ -43,16 +43,16 @@
   <td></td>
   <td>
   <span>
-    <%= link_to_remote 'Edit', :update => "result#{result.id}",
-                               :url => edit_patient_result_path(patient, result, :is_vital_sign => @is_vital_sign),
-                               :method => 'get' %>
-    </span> 
+    <%= link_to_remote 'Edit', :update => "#{result.class.name.tableize}#{result.id}",
+      :url => {:controller => result.class.name.tableize, :action => 'edit', :patient_id => patient, :id => result },
+          :method => 'get' %>
+  </span> 
     
-   <span>
-    <%= link_to_remote 'Remove', :update => "result#{result.id}",
-                               :url => patient_result_path(patient, result),
-                               :method => 'delete' %>
-    </span> 
+  <span>
+    <%= link_to_remote 'Remove', :update => "#{result.class.name.tableize}#{result.id}",
+          :url => {:controller =>  result.class.name.tableize, :action => 'destroy', :patient_id => patient, :id => result },
+          :method => 'delete' %>
+  </span> 
   </td>
 </tr>
 </table>
