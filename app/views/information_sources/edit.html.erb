@@ -1,7 +1,6 @@
 <!-- Start Information Source Module -->
-<% patient_form_for(@information_source, 
-                   :url => patient_information_source_path(@patient),
-                   :update => 'informationSourceContainer', :method => http_method(@information_source)) do |f| %>
+<% patient_form_for(@information_source, :url => patient_information_source_path(@patient),
+                   :update => 'informationSourceContainer') do |f| %>
 <h5>Information Source (Required)</h5>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">

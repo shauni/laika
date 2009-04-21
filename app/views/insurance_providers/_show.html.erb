@@ -37,6 +37,7 @@
     <span>
       <%= link_to_remote 'Remove', :update => "insurance_provider#{insurance_provider.id}",
                                  :url => patient_insurance_provider_path(patient, insurance_provider),
+                                 :confirm => 'Are you sure you wish to remove this insurance provider?',
                                  :method => 'delete' %>
     </span>    
     </td>

@@ -11,6 +11,12 @@ describe ResultsController do
     @patient = patients(:jennifer_thompson)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.results.first.id.to_s,
+      :result => { :comment_attributes => { :text => 'roberts' } }
+    @patient.results.first.comment.text.should == 'roberts'
+  end
+
   it "should assign @result on get new" do
     get :new, :patient_id => @patient.id.to_s
     assigns[:result].should be_new_record

@@ -4,8 +4,7 @@
 <% else
      medication_div = "medication#{@medication.id}"
    end %>
-<% remote_form_for(:medication, @medication, :url => patient_url_for(@patient, @medication),
-                   :html => {:method => http_method(@medication)}, :update => medication_div) do |f| -%>
+<% remote_form_for([@patient, @medication], :update => medication_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Product Coded Display Name <%= requirements_for @medication, :product_coded_display_name %></td>

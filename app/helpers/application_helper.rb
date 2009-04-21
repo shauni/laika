@@ -8,14 +8,6 @@ module ApplicationHelper
      end
    end
 
-  def http_method(model)
-    if model.new_record?
-      'post'
-    else
-      'put'
-    end
-  end
-  
   def required_field(req)
      "<td>#{(req == :r2) ? 'R2' : (req == :req) ? 'R' : 'O'}</td>"
   end

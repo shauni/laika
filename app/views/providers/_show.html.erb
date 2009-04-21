@@ -66,6 +66,7 @@
     <span>
       <%= link_to_remote 'Remove', :update => "provider#{provider.id}",
                                  :url => patient_provider_path(patient, provider),
+                                 :confirm => 'Are you sure you wish to remove this healthcare provider?',
                                  :method => 'delete' %>
     </span>    
     </td>

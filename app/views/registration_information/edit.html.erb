@@ -1,7 +1,6 @@
 <!-- Start Personal Information Module -->
-<% patient_form_for(@registration_information,
-                   :url => patient_registration_information_path(@patient),
-                   :update => 'personInformationContainer', :method => http_method(@registration_information)) do |f| %>
+<% patient_form_for(@registration_information, :url => patient_registration_information_path(@patient),
+                   :update => 'personInformationContainer' ) do |f| %>
 <h5>Person Information (Required)</h5>
 <table>
   <tr class="darkzebra">

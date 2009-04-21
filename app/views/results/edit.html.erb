@@ -1,18 +1,17 @@
 <% if @result.new_record?
-     result_div = 'resultNew' 
-     html_options = {:id => 'resultForm', :method => http_method(@result)} -%>
-<div id="resultNew">
+    result_div = "#{controller.controller_name}New" 
+    html_options = {:id => "#{controller.controller_name}Form"} -%>
+<div id="<%= result_div %>">
 <% else
-     result_div = "result#{@result.id}"
-     html_options = { :method => http_method(@result) }
+    result_div = "#{controller.controller_name}#{@result.id}"
+    html_options = {}
    end %>
-   <% remote_form_for(:result, @result, :url => patient_url_for(@patient, @result, :is_vital_sign => @is_vital_sign), :html => html_options,
-                   :update => result_div) do |f| -%>
+   <% remote_form_for([@patient, @result], :html => html_options, :update => result_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Result ID <%= requirements_for @result, :result_id %></td>
     <td>
-      <%= f.text_field :result_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}#{@is_vital_sign}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}#{@is_vital_sign}');" %>
+      <%= f.text_field :result_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}');" %>
       <br />
       <em>
         <%= render :partial => '/layouts/uuid_help_text' %>

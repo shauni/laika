@@ -4,7 +4,7 @@
 <% else
      provider_div = "provider#{@provider.id}"
    end %>
-   <% patient_form_for(@provider,  :url => patient_url_for(@patient, @provider), :html => { :method => http_method(@provider) }, :update => provider_div) do |f| -%>
+   <% patient_form_for([@patient, @provider], :update => provider_div) do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Start Service <%= requirements_for @provider, :start_service %></td>

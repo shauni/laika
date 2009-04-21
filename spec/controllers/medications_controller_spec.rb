@@ -11,6 +11,12 @@ describe MedicationsController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.medications.first.id.to_s,
+      :medication => { :comment_attributes => { :text => 'roberts' } }
+    @patient.medications.first.comment.text.should == 'roberts'
+  end
+
   it "should assign @medication on get new" do
     get :new, :patient_id => @patient.id.to_s
     assigns[:medication].should be_new_record

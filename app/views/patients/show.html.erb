@@ -323,9 +323,8 @@
         <div id="vitalSignsContainer">
         <h5>Vital Sign</h5>
         <% @patient.vital_signs.each do |result| -%>
-          <div id="result<%= result.id %>">
+          <div id="vital_signs<%= result.id %>">
             <%= render :partial => '/results/show', :locals => {:result  => result,
-                                                                :is_vital_sign => true,
                                                                 :patient => @patient} %>
           </div>
         <% end -%>
@@ -333,11 +332,10 @@
           <tr class="<%= cycle("darkzebra", "lightzebra")%>">
             <td></td>
             <!-- Callback at the end to modify the form and let the controller we are creating a vital sign instead of a result -->
-            <td><%= link_to_remote 'Add', :url => new_patient_result_path(@patient, :is_vital_sign => true),
+            <td><%= link_to_remote 'Add', :url => new_patient_vital_sign_path(@patient),
                                           :method => 'get',
                                           :update => 'addVital',
-                                          :position => :before,
-                                          :complete => "Element.insert('resultForm', '<input type=\"hidden\" name=\"type\" value=\"vital\"/>')" %>
+                                          :position => :before %>
             </td>
           </tr>
         </table>
@@ -348,16 +346,15 @@
         <div id="resultsContainer"> 
         <h5>Result</h5>
         <% @patient.results.each do |result| -%>
-          <div id="result<%= result.id %>">
+          <div id="results<%= result.id %>">
             <%= render :partial => '/results/show', :locals => {:result  => result,
-                                                                :is_vital_sign => false,
                                                                 :patient => @patient} %>
           </div>
         <% end -%>
         <table id="addResult">
           <tr class="<%= cycle("darkzebra", "lightzebra")%>">
             <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_result_path(@patient, :is_vital_sign => false),
+            <td><%= link_to_remote 'Add', :url => new_patient_result_path(@patient),
                                           :method => 'get',
                                           :update => 'addResult',
                                           :position => :before %>

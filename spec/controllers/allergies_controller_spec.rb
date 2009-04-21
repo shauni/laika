@@ -11,6 +11,12 @@ describe AllergiesController do
     @patient = patients(:joe_smith)
   end
 
+  it "should update comment record" do
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.allergies.first.id.to_s,
+      :allergy => { :comment_attributes => { :text => 'roberts' } }
+    @patient.allergies.first.comment.text.should == 'roberts'
+  end
+
   it "should not update patient allergy flag on get new" do
     @patient.update_attributes!(:no_known_allergies => true)
     get :new, :patient_id => @patient.id.to_s
