@@ -76,6 +76,7 @@ class Encounter < ActiveRecord::Base
     @possible_encounter_locations_index = rand(@possible_encounter_locations.size)
 
     self.encounter_date = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
+    self.encounter_id = UUID.generate
     self.person_name = PersonName.new
     self.person_name.name_prefix = 'Dr.'
     self.person_name.first_name = Faker::Name.first_name
