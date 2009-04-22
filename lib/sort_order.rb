@@ -7,7 +7,6 @@
 # To use this module:
 #
 # require 'sort_order'
-#
 # class SomeController < Application
 #   include SortOrder
 #   self.valid_sort_fields = %w[ field1 field2 ] # optional
@@ -15,6 +14,13 @@
 #   def action
 #     render :text => "requested sort is #{sort_order}"
 #   end
+# end
+#
+# Then, in the helper:
+#
+# require 'sort_order'
+# module SomeHelper
+#   include SortOrderHelper
 # end
 #
 module SortOrder
