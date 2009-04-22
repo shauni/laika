@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
  
   # AuthenticationSystem supports the acts_as_authenticated
   include AuthenticatedSystem
+  before_filter :login_required
 
   # Call for "remember me" functionality
   before_filter :login_from_cookie
