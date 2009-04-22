@@ -90,7 +90,9 @@ class Encounter < ActiveRecord::Base
     self.name = descriptions[possible_procedures_index]    
 
     self.location_name = possible_encounter_locations[possible_encounter_locations_index]
-    self.encounter_location_code = EncounterLocationCode.find(:all).sort_by{rand}.first
+    
+    offset = rand(EncounterLocationCode.count)
+    self.encounter_location_code = EncounterLocationCode.find(:all, :limit => 1, :offset => offset).first
   end
 
   def self.c32_component(encounters, xml)
