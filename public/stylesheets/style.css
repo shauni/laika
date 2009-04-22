@@ -112,6 +112,11 @@ body {
 	color:#FFF;
 }
 
+#session-controls a {
+  color:#FFF;
+  text-decoration: underline;
+}
+
 .content {
 	background: url(/images/content.png);
 	padding:45px 5px; 
