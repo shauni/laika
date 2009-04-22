@@ -8,14 +8,10 @@
     <td></td>
     <td>
       <%= link_to_remote 'Edit', :update => 'pregnancyContainer', 
-                                 :url =>  {:controller => "pregnancy", 
-                                           :action => "edit", 
-                                           :patient_id => @patient.id},
+                                 :url => edit_patient_pregnancy_path(@patient),
                                  :method => 'get' %>
       <%= link_to_remote 'Remove', :update => "pregnancyContainer",
-                                   :url =>  {:controller => "pregnancy", 
-                                             :action => "destroy", 
-                                             :patient_id => @patient.id},
+                                   :url => patient_pregnancy_path(@patient),
                                    :confirm => 'Are you sure you wish to remove this pregnancy information?',
                                    :method => 'delete' %>
     </td>

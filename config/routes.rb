@@ -1,7 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :message_logs
-
   map.resources :atna_audits
+  map.resources :vendors
+  map.resources :users
+  map.resources :document_locations
+  map.resources :news, :singular => 'news_item'
 
   map.resources :vendor_test_plans, :has_one => [:clinical_document, :test_result],
                                     :member => {:inspect_content => :get,
@@ -12,22 +15,15 @@ ActionController::Routing::Routes.draw do |map|
                                                 :set_status => :get,
                                                 :validate_p_and_r => :get}
 
-  map.resources :vendors
-
-  map.resources :users
-
-  map.resources(
-    :patients,
-      :has_one  => [:registration_information, :support, :information_source, :advance_directive],
+  map.resources :patients,
+      :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
       :has_many => [:languages, :providers, :insurance_providers, 
                     :insurance_provider_patients, :insurance_provider_subscribers, 
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get}
-  ) do |patients|
-    patients.resources :vital_signs, :controller => 'results'
-  end
+      :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get },
+      :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|
     xds_patients.xds_patients '/xds_patients', :action => 'index'
@@ -37,11 +33,24 @@ ActionController::Routing::Routes.draw do |map|
     xds_patients.do_provide_and_register_xds_patient '/xds_patients/do_provide_and_register', :action => 'do_provide_and_register'
   end
 
-  map.resources :document_locations
+  map.with_options :controller => 'account' do |account|
+    %w[ signup login logout forgot_password reset_password ].each do |action|
+      account.send(action, "/account/#{action}", :action => action)
+    end
+  end
 
-  map.resources :news
+  map.with_options :controller => 'test_plan_manager' do |tpm|
+    tpm.assign_test_plan "/test_plan_manager/assign/:id", :action => 'assign_patient'
+    tpm.export_test_plan "/test_plan_manager/export/:id", :action => 'export'
+  end
+
+  # to support autocomplete actions, include each autocomplete-able field in the list
+  %w[ snowmed_problem_name ].each do |field|
+    map.connect ':controller/:action', :action => "auto_complete_for_#{field}"
+  end
 
   map.root :controller => "vendor_test_plans"
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -71,8 +80,4 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  #map.connect ':controller/:action/:id.:format'
 end

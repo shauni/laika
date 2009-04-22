@@ -26,9 +26,14 @@ set :glassfish_location, "/usr/local/glassfish"
 set :user, 'root'
 set :user_sudo, false
 
+# git config
+set :scm,         'git'
+set :deploy_via,  :remote_cache
+set :branch,      'master'
+
 # application-specific configuration
 set :application, 'laika'
-set :repository,  'https://laika.svn.sourceforge.net/svnroot/laika/webapp/trunk'
+set :repository,  'http://github.com/CCHIT/laika.git'
 set :deploy_to,   '/vol/laika'
 set :rails_env,   'production'
 set :rake,        '/usr/local/jruby/bin/jruby -S rake'

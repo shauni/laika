@@ -11,57 +11,77 @@ class SortOrderTestController < ActionController::Base
   end
 end
 
-describe SortOrderTestController do
+def test_sort_routes
+  with_routing do |map|
+    map.draw {|test| test.connect "/sort_order/:action", :controller => 'sort_order_test' }
+    yield
+  end
+end
 
+describe SortOrderTestController do
   it "should not respond to sort_order as an action" do
-    lambda { get :sort_order }.should raise_error(ActionController::UnknownAction)
+    test_sort_routes do
+      lambda { get :sort_order }.should raise_error(ActionController::UnknownAction)
+    end
   end
 
   it "should not respond to sort_spec as an action" do
-    lambda { get :sort_spec }.should raise_error(ActionController::UnknownAction)
+    test_sort_routes do
+      lambda { get :sort_spec }.should raise_error(ActionController::UnknownAction)
+    end
   end
 
   it "should have nil sort order if no sort is given" do
-    get :foo
-    @controller.sort_order.should be_nil
+    test_sort_routes do
+      get :foo
+      @controller.sort_order.should be_nil
+    end
   end
 
   it "should have nil sort order if a malformed sort is given" do
-    get :foo, :sort => ';delete from important_table'
-    @controller.sort_order.should be_nil
+    test_sort_routes do
+      get :foo, :sort => ';delete from important_table'
+      @controller.sort_order.should be_nil
 
-    get :foo, :sort => '--comment'
-    @controller.sort_order.should be_nil
+      get :foo, :sort => '--comment'
+      @controller.sort_order.should be_nil
 
-    get :foo, :sort => '/*comment*/'
-    @controller.sort_order.should be_nil
+      get :foo, :sort => '/*comment*/'
+      @controller.sort_order.should be_nil
+    end
   end
 
   it "should correctly set the sort order given a sort key" do
-    get :foo, :sort => 'updated_at'
-    @controller.sort_order.should == 'updated_at ASC'
+    test_sort_routes do
+      get :foo, :sort => 'updated_at'
+      @controller.sort_order.should == 'updated_at ASC'
 
-    get :foo, :sort => '-updated_at'
-    @controller.sort_order.should == 'updated_at DESC'
+      get :foo, :sort => '-updated_at'
+      @controller.sort_order.should == 'updated_at DESC'
+    end
   end
 
   it "should reuse the sort order in subsequent calls to the same action" do
-    get :foo
-    @controller.sort_order.should be_nil
+    test_sort_routes do
+      get :foo
+      @controller.sort_order.should be_nil
 
-    get :foo, :sort => '-updated_at'
-    @controller.sort_order.should == 'updated_at DESC'
+      get :foo, :sort => '-updated_at'
+      @controller.sort_order.should == 'updated_at DESC'
 
-    get :foo
-    @controller.sort_order.should == 'updated_at DESC'
+      get :foo
+      @controller.sort_order.should == 'updated_at DESC'
+    end
   end
 
   it "should not reuse the sort order in subsequent calls to different actions" do
-    get :foo, :sort => 'updated_at'
-    @controller.sort_order.should == 'updated_at ASC'
+    test_sort_routes do
+      get :foo, :sort => 'updated_at'
+      @controller.sort_order.should == 'updated_at ASC'
 
-    get :bar
-    @controller.sort_order.should be_nil
+      get :bar
+      @controller.sort_order.should be_nil
+    end
   end
 
   describe "with valid_sort_fields specified" do
@@ -70,13 +90,17 @@ describe SortOrderTestController do
     after(:all)  { SortOrderTestController.valid_sort_fields = nil }
 
     it "should respect valid sort specs" do
-      get :foo, :sort => 'updated_at'
-      @controller.sort_order.should == 'updated_at ASC'
+      test_sort_routes do
+        get :foo, :sort => 'updated_at'
+        @controller.sort_order.should == 'updated_at ASC'
+      end
     end
 
     it "should not respect invalid sort specs" do
-      get :foo, :sort => 'created_at'
-      @controller.sort_order.should be_nil
+      test_sort_routes do
+        get :foo, :sort => 'created_at'
+        @controller.sort_order.should be_nil
+      end
     end
   end
 end

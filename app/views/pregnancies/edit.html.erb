@@ -1,6 +1,5 @@
-<% remote_form_for(:patient, 
-                   :url =>  {:controller => "pregnancy", :action => "update", :patient_id => @patient.id},
-                   :update => 'pregnancyContainer') do |f| %>
+<% remote_form_for(:patient, :url =>  patient_pregnancy_path(@patient),
+                   :method => 'put', :update => 'pregnancyContainer') do |f| %>
 <h5>Pregnancy</h5>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">

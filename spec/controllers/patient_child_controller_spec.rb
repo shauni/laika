@@ -6,6 +6,13 @@ class TestPatientChildrenController < PatientChildController
   end
 end
 
+def test_patient_child_routes
+  with_routing do |map|
+    map.draw {|test| test.connect "/patient_child/hi", :controller => 'test_patient_children', :action => 'hiworld' }
+    yield
+  end
+end
+
 describe TestPatientChildrenController do
   describe "as a subclass of PatientChildController" do
     before(:each) do
@@ -13,14 +20,18 @@ describe TestPatientChildrenController do
     end
 
     it "should redirect when there is no patient_id parameter" do
-      get :hiworld
-      response.should redirect_to(patients_url)
+      test_patient_child_routes do
+        get :hiworld
+        response.should redirect_to('/patients')
+      end
     end
 
     it "should not redirect when there is a patient_id parameter" do
-      Patient.stub!(:find).and_return(mock_model(Patient))
-      get :hiworld, :patient_id => 1
-      response.should be_success
+      test_patient_child_routes do
+        Patient.stub!(:find).and_return(mock_model(Patient))
+        get :hiworld, :patient_id => 1
+        response.should be_success
+      end
     end
 
     it "should determine the association based on controller name" do

@@ -1,5 +1,5 @@
 <h3>Edit Post</h3>
 <%= error_messages_for :message %>
-<% form_for :message, :url => news_url(@message), :html => {:method => 'PUT'} do |f| %>
+<% form_for :message, :url => news_item_path(@message), :html => {:method => 'PUT'} do |f| %>
   <%= render :partial => 'news/message_form', :object => f %>
 <% end %>

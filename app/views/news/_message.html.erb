@@ -6,8 +6,8 @@
       Updated by <%=h message.updater.display_name %> on <%= message.updated_at %>
     <% end %>
     <% if current_user.administrator? %>
-      <%= link_to 'edit', edit_news_url(message) %> |
-      <%= link_to 'delete', news_url(message), :method => 'DELETE',
+      <%= link_to 'edit', edit_news_item_path(message) %> |
+      <%= link_to 'delete', news_item_path(message), :method => 'delete',
         :confirm => 'Are you sure you want to delete this post?' %>
     <% end %>
   </span>
