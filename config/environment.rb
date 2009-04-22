@@ -76,6 +76,7 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '>= 2.3.6', :lib => 'will_paginate', :source => 'http://gems.github.com'
 
   config.gem 'xds-facade'
+  config.gem 'uuid'
 
   # These are dependencies for the tests.
   # We just want to make sure they're available without loading them.
