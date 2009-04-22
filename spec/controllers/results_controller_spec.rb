@@ -23,13 +23,13 @@ describe ResultsController do
   end
 
   it "should render edit template on get edit" do
-    get :edit, :patient_id => @patient.id.to_s, :id => @patient.all_results.first.id.to_s
+    get :edit, :patient_id => @patient.id.to_s, :id => @patient.results.first.id.to_s
     response.should render_template('results/edit')
   end
 
   it "should assign @result on get edit" do
-    get :edit, :patient_id => @patient.id.to_s, :id => @patient.all_results.first.id.to_s
-    assigns[:result].should == @patient.all_results.first
+    get :edit, :patient_id => @patient.id.to_s, :id => @patient.results.first.id.to_s
+    assigns[:result].should == @patient.results.first
   end
 
   it "should render create template on post create" do
@@ -43,28 +43,28 @@ describe ResultsController do
   end
 
   it "should add an result on post create" do
-    old_result_count = @patient.all_results.count
+    old_result_count = @patient.results.count
     post :create, :patient_id => @patient.id.to_s
-    @patient.all_results(true).count.should == old_result_count + 1
+    @patient.results(true).count.should == old_result_count + 1
   end
 
   it "should render show partial on put update" do
-    put :update, :patient_id => @patient.id.to_s, :id => @patient.all_results.first.id.to_s
+    put :update, :patient_id => @patient.id.to_s, :id => @patient.results.first.id.to_s
     response.should render_template('results/_show')
   end
 
   it "should update result on put update" do
-    existing_result = @patient.all_results.first
+    existing_result = @patient.results.first
     put :update, :patient_id => @patient.id.to_s, :id => existing_result.id.to_s,
       :result => { :result_code_display_name => 'foobar' }
     existing_result.reload
     existing_result.result_code_display_name.should == 'foobar'
   end
 
-  it "should remove from @patient.all_results on delete destroy" do
-    existing_result = @patient.all_results.first
+  it "should remove from @patient.results on delete destroy" do
+    existing_result = @patient.results.first
     delete :destroy, :patient_id => @patient.id.to_s, :id => existing_result.id.to_s
-    @patient.all_results(true).should_not include(existing_result)
+    @patient.results(true).should_not include(existing_result)
   end
 
 end
