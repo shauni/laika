@@ -3,8 +3,6 @@
 
 class ApplicationController < ActionController::Base
  
-  helper :all # include all helpers, all the time
- 
   # AuthenticationSystem supports the acts_as_authenticated
   include AuthenticatedSystem
 

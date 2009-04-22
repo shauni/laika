@@ -1,16 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-   def patient_url_for(patient, model, *args)
-     if model.new_record? 
-       send("patient_#{model.class.name.tableize}_path", patient, *args) 
-     else
-       send("patient_#{model.class.name.underscore}_path", patient, model, *args)
-     end
-   end
-
-  def required_field(req)
-     "<td>#{(req == :r2) ? 'R2' : (req == :req) ? 'R' : 'O'}</td>"
-  end
 
   def current_controller?(name)
     controller.controller_name == name.to_s
@@ -43,11 +32,6 @@ module ApplicationHelper
     if FileTest.exist?(File.join(RAILS_ROOT, 'public', 'javascripts', "#{name}.js"))
       javascript_include_tag(name, *args)
     end
-  end
-
-
-  def selected_value(select_id)
-      "$('#{select_id}').options[$('#{select_id}').selectedIndex].value"
   end
 
 end
