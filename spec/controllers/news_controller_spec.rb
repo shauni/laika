@@ -8,6 +8,8 @@ shared_examples_for "all news users" do
 end
 
 describe NewsController do
+  integrate_views
+
   fixtures :users
 
   describe "in use by a non-admin" do

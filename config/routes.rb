@@ -1,7 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :message_logs
-
   map.resources :atna_audits
+  map.resources :vendors
+  map.resources :users
+  map.resources :document_locations
+  map.resources :news, :singular => 'news_item'
 
   map.resources :vendor_test_plans, :has_one => [:clinical_document, :test_result],
                                     :member => {:inspect_content => :get,
@@ -11,10 +14,6 @@ ActionController::Routing::Routes.draw do |map|
                                                 :checklist => :get,
                                                 :set_status => :get,
                                                 :validate_p_and_r => :get}
-
-  map.resources :vendors
-
-  map.resources :users
 
   map.resources :patients,
       :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
@@ -34,11 +33,6 @@ ActionController::Routing::Routes.draw do |map|
     xds_patients.do_provide_and_register_xds_patient '/xds_patients/do_provide_and_register', :action => 'do_provide_and_register'
   end
 
-  map.resources :document_locations
-
-  # FIXME this controller should have a plural name that can be singularized
-  map.resources :news
-
   map.with_options :controller => 'account' do |account|
     %w[ signup login logout forgot_password reset_password ].each do |action|
       account.send(action, "/account/#{action}", :action => action)
@@ -50,7 +44,13 @@ ActionController::Routing::Routes.draw do |map|
     tpm.export_test_plan "/test_plan_manager/export/:id", :action => 'export'
   end
 
+  # to support autocomplete actions, include each autocomplete-able field in the list
+  %w[ snowmed_problem_name ].each do |field|
+    map.connect ':controller/:action', :action => "auto_complete_for_#{field}"
+  end
+
   map.root :controller => "vendor_test_plans"
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -80,8 +80,4 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  #map.connect ':controller/:action/:id.:format'
 end

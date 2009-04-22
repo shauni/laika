@@ -5,7 +5,7 @@
           <div class="right">
             <ul id="smallnav">
               <li <% if current_controller? 'atna_audits' %>id="active"<% end %>><%= link_to 'ATNA Log', atna_audits_path %></li>
-              <li <% if current_controller? 'news' %>id="active"<% end %>><%= link_to 'News', news_index_path %></li>
+              <li <% if current_controller? 'news' %>id="active"<% end %>><%= link_to 'News', news_path %></li>
               <li <% if current_controller? 'users' %>id="active"<% end %>><%= link_to 'People &amp; Inspections', users_path %></li>
               <li><a href="http://laika.sourceforge.net/about.html">About</a></li>
               <li><a href="mailto:<%= FEEDBACK_EMAIL %>">Feedback</a></li>
