@@ -68,12 +68,12 @@ class Encounter < ActiveRecord::Base
   end
   
   def randomize(birth_date)
-    @possible_procedures = ['Heart Valve', 'IUD', 'Artificial Hip', 'Bypass', 'Hypothermia']
-    @descriptions = ['Heart Valve Replacement', 'Insertion of intrauterine device (IUD)', 'Hip replacement surgery', 'Bypass surgery', 'Treatement for hypothermia']
-    @possible_procedures_index = rand(@possible_procedures.size)
+    possible_procedures = ['Heart Valve', 'IUD', 'Artificial Hip', 'Bypass', 'Hypothermia']
+    descriptions = ['Heart Valve Replacement', 'Insertion of intrauterine device (IUD)', 'Hip replacement surgery', 'Bypass surgery', 'Treatement for hypothermia']
+    possible_procedures_index = rand(possible_procedures.size)
 
-    @possible_encounter_locations = ['South Shore Hospital', 'General Hospital', 'Lahey Clinic', 'Darwin Clinic', 'Sagacious Hospital']
-    @possible_encounter_locations_index = rand(@possible_encounter_locations.size)
+    possible_encounter_locations = ['South Shore Hospital', 'General Hospital', 'Lahey Clinic', 'Darwin Clinic', 'Sagacious Hospital']
+    possible_encounter_locations_index = rand(possible_encounter_locations.size)
 
     self.encounter_date = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
     self.encounter_id = UUID.generate
@@ -86,10 +86,10 @@ class Encounter < ActiveRecord::Base
     self.telecom = Telecom.new
     self.telecom.randomize()
 
-    self.free_text = @possible_procedures[@possible_procedures_index]
-    self.name = @descriptions[@possible_procedures_index]    
+    self.free_text = possible_procedures[possible_procedures_index]
+    self.name = descriptions[possible_procedures_index]    
 
-    self.location_name = @possible_encounter_locations[@possible_encounter_locations_index]
+    self.location_name = possible_encounter_locations[possible_encounter_locations_index]
     self.encounter_location_code = EncounterLocationCode.find(:all).sort_by{rand}.first
   end
 
