@@ -2,14 +2,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PregnanciesController do
   integrate_views
+  fixtures :patients
 
   before do
     controller.stub!(:current_user).and_return(stub_model User)
   end
 
   it "should display the edit page" do
-    pd = stub_model Patient
-    Patient.stub!(:find).and_return(pd)
+    pd = Patient.first
 
     get :edit, :patient_id => pd.id.to_s
 
@@ -19,39 +19,30 @@ describe PregnanciesController do
   end
 
   it "should update patients with pregnancy on" do
-    pd = stub_model Patient
-    Patient.stub!(:find).and_return(pd)
-
-    pd.should_receive(:pregnant=).with(true)
-    pd.should_receive(:save!)
+    pd = Patient.first
 
     put :update, :patient_id => pd.id.to_s, :pregnant => 'on'
 
-    assigns[:patient].should == pd
+    pd.reload
+    pd.pregnant.should == true
   end
 
   it "should update patients with pregnancy off" do
-    pd = stub_model Patient
-    Patient.stub!(:find).and_return(pd)
-
-    pd.should_receive(:pregnant=).with(false)
-    pd.should_receive(:save!)
+    pd = Patient.first
 
     put :update, :patient_id => pd.id.to_s
 
-    assigns[:patient].should == pd
+    pd.reload
+    pd.pregnant.should == false
   end
 
   it "should update patients with pregnancy nil" do
-    pd = stub_model Patient
-    Patient.stub!(:find).and_return(pd)
-
-    pd.should_receive(:pregnant=).with(nil)
-    pd.should_receive(:save!)
+    pd = Patient.first
 
     delete :destroy, :patient_id => pd.id.to_s
 
-    assigns[:patient].should == pd
+    pd.reload
+    pd.pregnant.should be_nil
   end
 
 end

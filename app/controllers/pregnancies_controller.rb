@@ -1,18 +1,15 @@
 class PregnanciesController < PatientChildController
 
   def edit
-    render :layout => false
   end
 
   def update
-    @patient.pregnant = (params[:pregnant] == 'on')
-    @patient.save!
+    @patient.update_attributes(:pregnant => (params[:pregnant] == 'on'))
     render :partial  => 'show'
   end
   
   def destroy
-    @patient.pregnant = nil
-    @patient.save!
+    @patient.update_attributes(:pregnant => nil)
     render :partial  => 'show'
   end
 
