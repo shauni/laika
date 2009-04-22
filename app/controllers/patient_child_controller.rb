@@ -2,40 +2,43 @@
 # This controller is an abstract class that provides basic CRUD operations for
 # patient data sections. Individual actions can be overridden as needed.
 #
+# This controller is meant to be subclassed by controllers that a single patient
+# child instance (e.g., support, advance_directive). For controllers that handle
+# multiple children (e.g., conditions, allergies, providers) should subclass
+# PatientChildrenController.
+#
 class PatientChildController < ApplicationController
   before_filter :find_patient
   layout false
 
   def new
-    instance_variable_set(instance_var_name, model_class.new)
+    instance_variable_set instance_var_name, model_class.new
     render :action => 'edit'
   end
   
-  def create
-    instance_variable_set(instance_var_name, model_class.new(params[param_key]))
-    @patient.send(association_name) << instance_variable_get(instance_var_name)
-  end
-
   def edit
-    instance_variable_set(instance_var_name, @patient.send(association_name).find(params[:id]))
+    instance_variable_set instance_var_name, @patient.send(association_name)
   end
-  
-  def update
-    instance = @patient.send(association_name).find(params[:id])
-    instance.send(:update_attributes, params[param_key])
 
-    render :partial => 'show', :locals => {
-      :patient => @patient,
-      param_key     => instance
-    }
+  def create
+    instance = model_class.new params[association_name]
+    @patient.send "#{association_name}=", instance
+    render :partial  => 'show', :locals => {association_name => instance, :patient => @patient}
+  end
+
+  def update
+    instance = @patient.send(association_name)
+    instance.update_attributes(params[association_name])
+    render :partial  => 'show', :locals => {association_name => instance, :patient => @patient}
   end
 
   def destroy
-    instance = @patient.send(association_name).find(params[:id])
-    instance.destroy
+    @patient.send(association_name).destroy
+    render :partial  => 'show', :locals => {association_name => nil, :patient => @patient}
   end
   
-  private
+  protected
+
   def base_name
     @base_name ||= self.class.name.sub(/Controller$/,'')
   end
@@ -45,15 +48,11 @@ class PatientChildController < ApplicationController
   end
 
   def association_name
-    @association_name ||= base_name.underscore
-  end
-
-  def param_key
-    @param_key ||= association_name.singularize.to_sym
+    @association_name ||= base_name.underscore.singularize.to_sym
   end
 
   def instance_var_name
-    @instance_var_name ||= "@#{param_key}"
+    @instance_var_name ||= "@#{association_name}"
   end
 
   def find_patient

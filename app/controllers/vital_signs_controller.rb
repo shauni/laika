@@ -1,4 +1,4 @@
-class VitalSignsController < PatientChildController
+class VitalSignsController < PatientChildrenController
   def new
     @result = VitalSign.new
     render :file => 'results/edit'

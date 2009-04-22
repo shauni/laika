@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-class TestPatientChildrenController < PatientChildController
+class TestPatientChildrenController < PatientChildrenController
   def hiworld
     render :text => 'hiworld'
   end
@@ -14,7 +14,7 @@ def test_patient_child_routes
 end
 
 describe TestPatientChildrenController do
-  describe "as a subclass of PatientChildController" do
+  describe "as a subclass of PatientChildrenController" do
     before(:each) do
       controller.stub!(:current_user).and_return(mock_model(User))
     end

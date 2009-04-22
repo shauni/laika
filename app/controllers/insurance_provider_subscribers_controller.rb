@@ -1,3 +1,3 @@
-class InsuranceProviderSubscribersController < PatientChildController
+class InsuranceProviderSubscribersController < PatientChildrenController
 
 end

@@ -1,2 +1,2 @@
-class LanguagesController < PatientChildController
+class LanguagesController < PatientChildrenController
 end

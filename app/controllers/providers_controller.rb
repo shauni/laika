@@ -1,2 +1,2 @@
-class ProvidersController < PatientChildController
+class ProvidersController < PatientChildrenController
 end

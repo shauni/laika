@@ -1,4 +1,4 @@
-class PregnanciesController < PatientChildController
+class PregnanciesController < PatientChildrenController
 
   def edit
   end
