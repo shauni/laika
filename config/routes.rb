@@ -40,7 +40,6 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.with_options :controller => 'test_plan_manager' do |tpm|
-    tpm.assign_test_plan "/test_plan_manager/assign/:id", :action => 'assign_patient'
     tpm.export_test_plan "/test_plan_manager/export/:id", :action => 'export'
   end
 

@@ -5,10 +5,11 @@ class ApplicationController < ActionController::Base
  
   # AuthenticationSystem supports the acts_as_authenticated
   include AuthenticatedSystem
-  before_filter :login_required
 
-  # Call for "remember me" functionality
+  # "remember me" functionality
   before_filter :login_from_cookie
+
+  before_filter :login_required
 
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
@@ -18,8 +19,8 @@ class ApplicationController < ActionController::Base
   # Set the last selected vendor by id. The value is saved in the session.
   #
   # This method (along with last_selected_kind_id=) is used by
-  # TestPlanManagerController#assign_patient to retain previous selections
-  # as a convenience in the UI.
+  # VendorTestPlan#create to retain previous selections as a convenience
+  # in the UI.
   def last_selected_vendor_id=(vendor_id)
     session[:previous_vendor_id] = vendor_id
   end

@@ -27,78 +27,45 @@ class VendorTestPlansController < ApplicationController
     end
   end
 
-  # GET /vendor_test_plans/1
-  # GET /vendor_test_plans/1.xml
-  def show
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @vendor_test_plan }
-    end
-  end
-
-  # GET /vendor_test_plans/new
-  # GET /vendor_test_plans/new.xml
-  def new
-    @vendor_test_plan = VendorTestPlan.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @vendor_test_plan }
-    end
-  end
-
-  # GET /vendor_test_plans/1/edit
-  def edit
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-  end
-
   # POST /vendor_test_plans
-  # POST /vendor_test_plans.xml
   def create
-    @vendor_test_plan = VendorTestPlan.new(params[:vendor_test_plan])
+    patient = Patient.find(params[:patient_id]).clone
 
-    respond_to do |format|
-      if @vendor_test_plan.save
-        @vendor_test_plan.test_result = TestResult.new(:result => 'IN-PROGRESS')
-        flash[:notice] = 'VendorTestPlan was successfully created.'
-        format.html { redirect_to(@vendor_test_plan) }
-        format.xml  { render :xml => @vendor_test_plan, :status => :created, :location => @vendor_test_plan }
+    vtp = patient.vendor_test_plan = VendorTestPlan.new(params[:vendor_test_plan])
+    vtp.user = current_user if not current_user.administrator?
+
+    if params[:metadata]
+      if params[:metadata].kind_of?(String)
+        vtp.metadata = YAML.load(params[:metadata])         
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @vendor_test_plan.errors, :status => :unprocessable_entity }
+        md = XDS::Metadata.new
+        md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
+        vtp.metadata = md
+      end
+      if vtp.metadata 
+        doc = XDSUtils.retrieve_document(vtp.metadata)
+        cd = ClinicalDocument.new(:uploaded_data=>doc, :vendor_test_plan_id=>vtp.id)
+        vtp.clinical_document = cd   
       end
     end
-  end
 
-  # PUT /vendor_test_plans/1
-  # PUT /vendor_test_plans/1.xml
-  def update
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
+    vtp.save!
+    patient.save!
 
-    respond_to do |format|
-      if @vendor_test_plan.update_attributes(params[:vendor_test_plan])
-        flash[:notice] = 'VendorTestPlan was successfully updated.'
-        format.html { redirect_to(@vendor_test_plan) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @vendor_test_plan.errors, :status => :unprocessable_entity }
-      end
-    end
+    # save the vendor/kind selections for next time
+    self.last_selected_vendor_id = vtp.vendor_id
+    self.last_selected_kind_id   = vtp.kind_id
+
+    redirect_to vendor_test_plans_path
   end
 
   # DELETE /vendor_test_plans/1
-  # DELETE /vendor_test_plans/1.xml
   def destroy
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @vendor_test_plan.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(vendor_test_plans_url) }
-      format.xml  { head :ok }
+    vendor_test_plan = VendorTestPlan.find(params[:id])
+    if vendor_test_plan.user == current_user || current_user.administrator?
+      vendor_test_plan.destroy
     end
+    redirect_to vendor_test_plans_path
   end
 
   def inspect_content

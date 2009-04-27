@@ -44,4 +44,73 @@ describe VendorTestPlansController do
       end
     end
   end
+
+  describe "with built-in records" do
+    fixtures :patients, :vendors, :users, :kinds, :person_names, :addresses
+  
+    describe "operated by a non-admin" do
+      before do
+        @current_user = users(:alex_kroman)
+        @current_user.roles.clear
+        controller.stub!(:current_user).and_return(@current_user)
+      end
+  
+      it "should retain the previous vendor and kind selection" do
+        patient = patients(:joe_smith)
+        vendor = Vendor.find :first
+        kind = Kind.find :first
+        controller.send( :last_selected_kind_id=,   nil)
+        controller.send( :last_selected_vendor_id=, nil)
+  
+        post :create, :patient_id => patient.id.to_s, :vendor_test_plan => { :vendor_id => vendor.id.to_s, :kind_id => kind.id.to_s }
+  
+        controller.send( :last_selected_vendor ).should == vendor
+        controller.send( :last_selected_kind   ).should == kind
+      end
+  
+      it "should auto-assign current user" do
+        patient = patients(:joe_smith)
+        vendor = Vendor.find :first
+        kind = Kind.find :first
+  
+        User.should_not_receive(:find)
+  
+        post :create, :patient_id => patient.id.to_s, :vendor_test_plan => { :vendor_id => vendor.id.to_s, :kind_id => kind.id.to_s }
+      end
+  
+      it "should not assign selected user" do
+        other = users(:rob_dingwell)
+        patient = patients(:joe_smith)
+        vendor = Vendor.find :first
+        kind = Kind.find :first
+        old_count = @current_user.vendor_test_plans.count
+
+        post :create, :patient_id => patient.id.to_s, :vendor_test_plan => {:user_id => other.id.to_s, :vendor_id => vendor.id.to_s, :kind_id => kind.id.to_s }
+
+        @current_user.vendor_test_plans(true).count.should == old_count + 1
+      end
+    end
+  
+    describe "operated by an admin" do
+      before do
+        @current_user = users(:alex_kroman)
+        @current_user.roles.clear
+        @current_user.roles << Role.administrator
+        controller.stub!(:current_user).and_return(@current_user)
+      end
+  
+      it "should assign selected user" do
+        other = users(:rob_dingwell)
+        patient = patients(:joe_smith)
+        vendor = Vendor.find :first
+        kind = Kind.find :first
+        old_count = other.vendor_test_plans.count
+
+        post :create, :patient_id => patient.id.to_s, :vendor_test_plan => {:user_id => other.id.to_s, :vendor_id => vendor.id.to_s, :kind_id => kind.id.to_s }
+
+        other.vendor_test_plans(true).count.should == old_count + 1
+      end
+    end
+  end
+
 end

@@ -1,44 +1,4 @@
 class TestPlanManagerController < ApplicationController
-  def assign_patient
-
-    patient = Patient.find(params[:pd_id]).clone
-
-    # find the associated meta-data
-    test_plan = params[:vendor_test_plan]
-    vendor = Vendor.find(test_plan[:vendor_id])
-    kind = Kind.find(test_plan[:kind_id])
-    user = current_user.administrator? ? User.find(test_plan[:user_id]) : current_user
-
-    # save the vendor/kind selections for next time
-    self.last_selected_vendor_id = vendor.id
-    self.last_selected_kind_id   = kind.id
-
-    vtp = VendorTestPlan.new(:vendor => vendor, :kind => kind, :user => user)
-    if params[:metadata]
-      if params[:metadata].kind_of?(String)
-        vtp.metadata = YAML.load(params[:metadata])         
-      else
-        md = XDS::Metadata.new
-        md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
-        vtp.metadata = md
-      end
-
-    end
-    vtp.save!
-
-    patient.vendor_test_plan = vtp
-    patient.save!
-
-    if vtp.metadata 
-        doc = XDSUtils.retrieve_document(vtp.metadata)
-        cd = ClinicalDocument.new(:uploaded_data=>doc, :vendor_test_plan_id=>vtp.id)
-        vtp.clinical_document = cd   
-    end
-    
-    redirect_to vendor_test_plans_url
-
-  end
-
   def export
 
     @vendor_test_plans = self.current_user.vendor_test_plans
