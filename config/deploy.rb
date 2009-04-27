@@ -30,6 +30,7 @@ set :user_sudo, false
 set :scm,         'git'
 set :deploy_via,  :remote_cache
 set :branch,      'master'
+set :git_enable_submodules, true
 
 # application-specific configuration
 set :application, 'laika'
