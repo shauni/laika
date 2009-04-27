@@ -39,10 +39,6 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  map.with_options :controller => 'test_plan_manager' do |tpm|
-    tpm.export_test_plan "/test_plan_manager/export/:id", :action => 'export'
-  end
-
   # to support autocomplete actions, include each autocomplete-able field in the list
   %w[ snowmed_problem_name ].each do |field|
     map.connect ':controller/:action', :action => "auto_complete_for_#{field}"

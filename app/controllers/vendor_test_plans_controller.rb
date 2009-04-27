@@ -23,7 +23,10 @@ class VendorTestPlansController < ApplicationController
         end
         @vendors = @vendor_test_plans.keys
       end
-      format.xml  { render :xml => current_user.vendor_test_plans }
+      format.csv do
+        send_data VendorTestPlan.export_csv(current_user),
+          :filename => "report.csv", :type => 'application/x-download'
+      end
     end
   end
 
