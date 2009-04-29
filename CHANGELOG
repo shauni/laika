@@ -1,4 +1,5 @@
 
+    * Laika now works with a Java 6 software stack (#2769072)
     * Minor refactor of dashboard so the information fits (#2765847)
     * XDS manager now sorts data like the patient library (#2760001)
     * Removed modal dialog box on XDS forms (#2759609)
