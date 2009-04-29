@@ -41,7 +41,9 @@ module Validators
         factory = javax.xml.validation.SchemaFactory.newInstance(javax.xml.XMLConstants::W3C_XML_SCHEMA_NS_URI)
         schemaFile =  javax.xml.transform.stream.StreamSource.new(java.io.File.new(file));
         @schema = factory.newSchema(schemaFile)
-        @document_builder = javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder()
+        @document_builder_factory =  javax.xml.parsers.DocumentBuilderFactory.newInstance()
+        @document_builder_factory.setNamespaceAware(true)
+        @document_builder = @document_builder_factory.newDocumentBuilder()
       end
 
     end
