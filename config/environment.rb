@@ -100,9 +100,7 @@ ActionMailer::Base.smtp_settings = {
   :domain => "mitre.org",
 }
 
-
 XDS_HOST = "http://129.6.24.109:9080"
 XDS_REGISTRY_URLS = {:register_stored_query=>"#{XDS_HOST}/tf5/services/xdsregistryb",
                      :retrieve_document_set_request=>"#{XDS_HOST}/tf5/services/xdsrepositoryb"}
-                     
-AFFINITY_DOMAIN_CONFIG = XDS::AffinityDomainConfig.new(File.expand_path(File.dirname(__FILE__) + '/affinity_domain_config.xml'))
+

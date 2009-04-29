@@ -5,7 +5,7 @@ ERROR_EMAIL = "rmccready@mitre.org"
 CONTENT_INSPECTION="ContentInspection"
 XML_VALIDATION_INSPECTION="XmlValidationInspection"
 UMLS_CODESYSTEM_INSPECTION="UmlsCodeSystemInspection"
-
+AFFINITY_DOMAIN_CONFIG = XDS::AffinityDomainConfig.new(File.expand_path(File.dirname(__FILE__) + '/../affinity_domain_config.xml'))
 
 # Extract the subversion revision number from the
 # Capistrano REVISION file or the .svn/entries file
