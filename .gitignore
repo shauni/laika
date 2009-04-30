@@ -10,3 +10,4 @@ tmp/*
 config/deploy_local.rb
 *.sw[pon]
 tags
+config/glassfish.yml

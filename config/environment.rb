@@ -81,8 +81,8 @@ Rails::Initializer.run do |config|
 
   # These are dependencies for the tests.
   # We just want to make sure they're available without loading them.
-  config.gem 'rspec',       :lib => false, :version => '1.2.2'
-  config.gem 'rspec-rails', :lib => false, :version => '1.2.2'
+  config.gem 'rspec',       :lib => false, :version => '>= 1.2.2'
+  config.gem 'rspec-rails', :lib => false, :version => '>= 1.2.2'
 
   # Setting a default timezone, please change this to where ever you are deployed
   config.time_zone = "Eastern Time (US & Canada)"
