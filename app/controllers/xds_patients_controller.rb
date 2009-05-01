@@ -25,7 +25,7 @@ class XdsPatientsController < ApplicationController
     @vendors = current_user.vendors + Vendor.unclaimed
     @patient_identifier = pi
     @vendor_test_plan = VendorTestPlan.new( :user_id => current_user.id, :metadata => @metadata)
-    @query = Kind.find_by_name('Query and Retrieve').id
+    @kind = Kind.find_by_name('Query and Retrieve').id
   end
   
   # Creates the form that collects data for a provide and register test
