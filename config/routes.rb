@@ -39,9 +39,11 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  # to support autocomplete actions, include each autocomplete-able field in the list
-  %w[ snowmed_problem_name ].each do |field|
-    map.connect ':controller/:action', :action => "auto_complete_for_#{field}"
+  # to support autocomplete actions, include each autocomplete-able controller/action in the list
+  { 'conditions' => %w[ snowmed_problem_name ] }.each do |controller, actions|
+    actions.each do |action|
+      map.connect "autocomplete/#{controller}_#{action}", :controller => controller, :action => "auto_complete_for_#{action}"
+    end
   end
 
   map.root :controller => "vendor_test_plans"
