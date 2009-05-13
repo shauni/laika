@@ -49,6 +49,7 @@ class VendorTestPlansController < ApplicationController
         doc = XDSUtils.retrieve_document(vtp.metadata)
         cd = ClinicalDocument.new(:uploaded_data=>doc, :vendor_test_plan_id=>vtp.id)
         vtp.clinical_document = cd   
+        cd.save!
       end
     end
 
