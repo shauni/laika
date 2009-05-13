@@ -62,6 +62,8 @@ class VendorTestPlansController < ApplicationController
         self.last_selected_vendor_id = vtp.vendor_id
         self.last_selected_kind_id   = vtp.kind_id
       end
+    rescue XDSUtils::RetrieveFailed => e
+      flash[:notice] = "Failed to retrieve document from XDS: #{e}"
     rescue ActiveRecord::RecordInvalid => e
       # FIXME should be using record.class.human_name but
       # https://rails.lighthouseapp.com/projects/8994/tickets/2120
