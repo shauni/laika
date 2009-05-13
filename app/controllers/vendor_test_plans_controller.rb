@@ -32,33 +32,44 @@ class VendorTestPlansController < ApplicationController
 
   # POST /vendor_test_plans
   def create
-    patient = Patient.find(params[:patient_id]).clone
+    begin
+      Patient.transaction(:requires_new => true) do
+        patient = Patient.find(params[:patient_id]).clone
 
-    vtp = patient.vendor_test_plan = VendorTestPlan.new(params[:vendor_test_plan])
-    vtp.user = current_user if not current_user.administrator?
+        vtp = patient.vendor_test_plan = VendorTestPlan.create!(params[:vendor_test_plan])
+        vtp.user = current_user if not current_user.administrator?
 
-    if params[:metadata]
-      if params[:metadata].kind_of?(String)
-        vtp.metadata = YAML.load(params[:metadata])         
-      else
-        md = XDS::Metadata.new
-        md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
-        vtp.metadata = md
+        if params[:metadata]
+          if params[:metadata].kind_of?(String)
+            vtp.metadata = YAML.load(params[:metadata])         
+          else
+            md = XDS::Metadata.new
+            md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
+            vtp.metadata = md
+          end
+          if vtp.metadata 
+            doc = XDSUtils.retrieve_document(vtp.metadata)
+            cd = ClinicalDocument.new(:uploaded_data=>doc)
+            vtp.clinical_document = cd   
+            cd.save!
+          end
+        end
+
+        vtp.save!
+        patient.save!
+
+        # save the vendor/kind selections for next time
+        self.last_selected_vendor_id = vtp.vendor_id
+        self.last_selected_kind_id   = vtp.kind_id
       end
-      if vtp.metadata 
-        doc = XDSUtils.retrieve_document(vtp.metadata)
-        cd = ClinicalDocument.new(:uploaded_data=>doc, :vendor_test_plan_id=>vtp.id)
-        vtp.clinical_document = cd   
-        cd.save!
-      end
+    rescue ActiveRecord::RecordInvalid => e
+      # FIXME should be using record.class.human_name but
+      # https://rails.lighthouseapp.com/projects/8994/tickets/2120
+      flash[:notice] = %{
+        Failed to create #{e.record.class.name.underscore.humanize}:
+        #{e.record.errors.full_messages.join("\n")}
+      }
     end
-
-    vtp.save!
-    patient.save!
-
-    # save the vendor/kind selections for next time
-    self.last_selected_vendor_id = vtp.vendor_id
-    self.last_selected_kind_id   = vtp.kind_id
 
     redirect_to vendor_test_plans_path
   end
