@@ -39,6 +39,21 @@ class Patient < ActiveRecord::Base
   validates_presence_of :name
 
   has_select_options :conditions => 'vendor_test_plan_id IS NULL'
+
+  # Generate an OID using the time and the patient's activerecord id
+  def generate_unique_id
+    "1.3.6.1.4.1.21367.2009.5.14.#{id}.#{Time.now.to_i}"
+  end
+
+  # Returns a hash containing source_patient_info for use in XDS metadata
+  def source_patient_info
+    spi = {}
+    spi[:name] = name
+    spi[:gender] = registration_information.gender.code
+    spi[:date_of_birth] = registration_information.date_of_birth.strftime("%Y%m%d")
+    spi[:source_patient_identifier] = registration_information.person_identifier
+    spi
+  end
   
   # Create a deep copy of the given patient record.
   def clone

@@ -43,14 +43,18 @@ class VendorTestPlansController < ApplicationController
           if params[:metadata].kind_of?(String)
             vtp.metadata = YAML.load(params[:metadata])         
           else
+            params[:metadata][:source_patient_info] = patient.source_patient_info
             md = XDS::Metadata.new
             md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
+            md.unique_id = patient.generate_unique_id
+            md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
+            md.patient_id = patient.registration_information.person_identifier
             vtp.metadata = md
           end
           if vtp.metadata 
             doc = XDSUtils.retrieve_document(vtp.metadata)
             cd = ClinicalDocument.new(:uploaded_data=>doc)
-            vtp.clinical_document = cd   
+            vtp.clinical_document = cd
             cd.save!
           end
         end
