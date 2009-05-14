@@ -8,7 +8,7 @@ UMLS_CODESYSTEM_INSPECTION="UmlsCodeSystemInspection"
 AFFINITY_DOMAIN_CONFIG = XDS::AffinityDomainConfig.new(File.expand_path(File.dirname(__FILE__) + '/../affinity_domain_config.xml'))
 
 # FIXME we need to select a repo unique ID from the affinity domain config XXX
-XDS_REPOSITORY_UNIQUE_ID = '1.3.6.1.4.1.21367.2005.3.7'
+XDS_REPOSITORY_UNIQUE_ID = '&1.3.6.1.4.1.21367.2005.3.7&ISO'
 
 # Extract the subversion revision number from the
 # Capistrano REVISION file or the .svn/entries file
