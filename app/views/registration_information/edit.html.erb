@@ -4,7 +4,7 @@
 <h5>Person Information (Required)</h5>
 <table>
   <tr class="darkzebra">
-    <td class="lighttext">Document Timestamp <%= requirements_for(@registration_information, :person_identifier) %></td>
+    <td class="lighttext">Document Timestamp <%= requirements_for(@registration_information, :document_timestamp) %></td>
     <td><%= f.calendar_date_select :document_timestamp %></td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
