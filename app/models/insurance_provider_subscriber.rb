@@ -9,7 +9,7 @@ class InsuranceProviderSubscriber < ActiveRecord::Base
   def to_c32(xml)
     xml.participant("typeCode" => "HLD") do
       xml.participantRole("classCode" => "IND") do
-        xml.id('root'=>'AssignAuthorityGUID', 'extension'=>subscriber_id)
+        xml.id('root'=>assigning_authority_guid, 'extension'=>subscriber_id)
         address.andand.to_c32(xml)
         telecom.andand.to_c32(xml)
         xml.playingEntity do
@@ -31,6 +31,9 @@ class InsuranceProviderSubscriber < ActiveRecord::Base
     self.person_name.last_name = Faker::Name.last_name
     self.address.randomize()
     self.telecom.randomize()
+    
+    self.subscriber_id = random_id()
+    self.assigning_authority_guid = UUID.generate
   end
  
 end

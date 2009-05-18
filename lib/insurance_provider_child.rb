@@ -22,4 +22,16 @@ module InsuranceProviderChild
       end
     end
   end
+  
+
+  # convenience methods to generate random member/subscriber ids:
+  def random_char()
+    char = ('A'..'Z').to_a
+    char[rand(24)]
+  end
+
+  def random_id()
+    random_char() + random_char() + random_char() + (1000 + rand(8999)).to_s + random_char() + (10000 + rand(89999)).to_s
+  end
+  
 end

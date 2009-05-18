@@ -47,15 +47,5 @@ class InsuranceProviderPatient < ActiveRecord::Base
                        rand(12) + 1, rand(28) + 1)
   end
 
-protected
-
-  def random_char()
-    char = ('A'..'Z').to_a
-    char[rand(24)]
-  end
-
-  def random_id()
-    random_char() + random_char() + random_char() + (1000 + rand(8999)).to_s + random_char() + (10000 + rand(89999)).to_s
-  end
  
 end

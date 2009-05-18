@@ -5,7 +5,7 @@ module PersonLike
       has_one :person_name, :as => :nameable, :dependent => :destroy
       has_one :address, :as => :addressable, :dependent => :destroy
       has_one :telecom, :as => :reachable, :dependent => :destroy
-      accepts_nested_attributes_for :person_name, :address, :telecom
+      #accepts_nested_attributes_for :person_name, :address, :telecom
       include PersonLikeInstance
     end
   end
