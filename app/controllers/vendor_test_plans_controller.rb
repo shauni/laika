@@ -33,7 +33,8 @@ class VendorTestPlansController < ApplicationController
   # POST /vendor_test_plans
   def create
     begin
-      Patient.transaction(:requires_new => true) do
+      # Patient.transaction(:requires_new => true) do
+      Patient.transaction do
         patient = Patient.find(params[:patient_id]).clone
 
         vtp = patient.vendor_test_plan = VendorTestPlan.create!(params[:vendor_test_plan])
