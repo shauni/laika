@@ -25,7 +25,7 @@ class XdsPatientsController < ApplicationController
     @vendors = current_user.vendors + Vendor.unclaimed
     @patient_identifier = pi
     @vendor_test_plan = VendorTestPlan.new( :user_id => current_user.id, :metadata => @metadata)
-    @query = Kind.find_by_name('Query and Retrieve').id
+    @kind = Kind.find_by_name('Query and Retrieve').id
   end
   
   # Creates the form that collects data for a provide and register test
@@ -42,14 +42,21 @@ class XdsPatientsController < ApplicationController
   end
   
   def do_provide_and_register
+    pd = Patient.find(params[:pd_id])
+    params[:metadata][:source_patient_info] = pd.source_patient_info
+
     md = XDS::Metadata.new
     md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
+
+    md.unique_id = pd.generate_unique_id
+    md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
+    md.patient_id = pd.registration_information.person_identifier
     md.mime_type = 'text/xml'
     md.ss_unique_id = "1.3.6.1.4.1.21367.2009.1.2.1.#{Time.now.to_i}"
     md.source_id = "1.3.6.1.4.1.21367.2009.1.2.1"
     md.language_code = 'en-us'
     md.creation_time = Time.now.strftime('%Y%m%d')
-    pd = Patient.find(params[:pd_id])
+
     prdsr = XDS::ProvideAndRegisterDocumentSetBXop.new(XDS_REGISTRY_URLS[:retrieve_document_set_request],
                                                        md, pd.to_c32)
     response = prdsr.execute

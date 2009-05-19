@@ -40,7 +40,7 @@ Here is a quick run-through of how deployment works so far. The first
 step is to get a recent AMI of a base system. These instructions assume
 you're deploying to an instance of Amazon EC2 public AMI 89a345e0.
 
-Prerequisites:
+Prerequisites for the server instance:
 
 You should add jruby to you path:
 
@@ -49,6 +49,13 @@ You should add jruby to you path:
 Git must be installed:
 
  $ apt-get git-core
+
+You also need XDS facade:
+
+ $ git clone git://github.com/CCHIT/xds-facade.git
+ $ cd xds-facade
+ $ rake gem
+ $ jruby -S gem install pkg/xds-facade-0.1.0.gem
  
 The activerecord-jdbcpostgresql-adapter gem must be installed:
 
@@ -61,12 +68,13 @@ The glassfish gem is currently required for automatic deployment:
 Also of note, the lib/saxon/*.jar files need to be copied to 
 your Java's lib/ext/ to work around an issue with schematron validation.
 
-You'll have to do this after the first call to cap deploy:update.
+You'll have to do this after the first call to cap deploy:update so the
+files are available on the server.
 
 Instructions:
 
 The deployment scripts install laika into /var/www/laika/DATESTAMP and
-maintain a link to the latest deployd version as /var/www/laika/current.
+maintain a link to the latest deployed version as /var/www/laika/current.
 
 From a checked-out copy of the latest CCHIT/master on your local
 machine:
@@ -75,7 +83,6 @@ machine:
  $ ssh-add ~/ec2-keys/mykey.pem
 
  $ # customize your deployment config:
- $ cp config/glassfish.yml.template config/glassfish.yml
  $ cp config/deploy_local.rb.example config/deploy_local.rb
  $ vi config/deploy_local.rb
 

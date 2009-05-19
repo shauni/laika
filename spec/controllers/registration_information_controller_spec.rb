@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe RegistrationInformationController do
   integrate_views
 
-  fixtures :patients, :registration_information
+  fixtures :patients, :registration_information, :person_names
 
   before do
     @user = stub(:user)
