@@ -61,11 +61,12 @@ class XdsPatientsController < ApplicationController
                                                        md, pd.to_c32)
     response = prdsr.execute
     if response.success?
-      flash[:notice] = "Provide and Register successful"
+      @metadata = params[:metadata]
+      render 'xds_patients/assign_success'
     else
       flash[:notice] = "Provide and Register failed #{response.errors.inspect}"
+      redirect_to :action => :index
     end
-    redirect_to :action => :index
   end
 
 end
