@@ -32,8 +32,8 @@ class VendorTestPlansController < ApplicationController
 
   # POST /vendor_test_plans
   def create
+    xds_pnr_success = false
     begin
-      xds_pnr_success = false
       Patient.transaction(:requires_new => true) do
         patient = Patient.find(params[:patient_id]).clone
 
@@ -48,7 +48,6 @@ class VendorTestPlansController < ApplicationController
             md = XDS::Metadata.new
             md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
             md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
-            md.unique_id  = patient.registration_information.person_identifier
             md.patient_id = patient.registration_information.person_identifier
             vtp.metadata = md
           end
