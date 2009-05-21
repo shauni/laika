@@ -33,6 +33,7 @@ class VendorTestPlansController < ApplicationController
   # POST /vendor_test_plans
   def create
     begin
+      xds_pnr_success = false
       Patient.transaction(:requires_new => true) do
         patient = Patient.find(params[:patient_id]).clone
 
@@ -57,6 +58,8 @@ class VendorTestPlansController < ApplicationController
             cd = ClinicalDocument.new(:uploaded_data=>doc)
             vtp.clinical_document = cd
             cd.save!
+          elsif vtp.metadata
+            xds_pnr_success = true
           end
         end
 
@@ -78,8 +81,8 @@ class VendorTestPlansController < ApplicationController
       }
     end
 
-    # FIXME there should be a better way to do this
-    if params[:metadata] && flash[:notice].nil?
+    # TODO refactor xds assignment
+    if xds_pnr_success
       @metadata = params[:metadata]
       render 'xds_patients/assign_success'
     else
