@@ -48,6 +48,7 @@ class XdsPatientsController < ApplicationController
     md = XDS::Metadata.new
     md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
 
+    md.unique_id = pd.generate_unique_id
     md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
     md.patient_id = pd.registration_information.person_identifier
     md.mime_type = 'text/xml'
