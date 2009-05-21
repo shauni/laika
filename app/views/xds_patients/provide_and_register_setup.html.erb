@@ -13,7 +13,7 @@
     <td><%= f.select :user_id, User.select_options %></td>
   </tr>
   <% end -%>
-  <%= render :partial => 'provide_and_register_form' %>
+  <%= render :partial => 'provide_and_register_form', :locals => { :prompt_for_unique_id => true } %>
   <tr>
     <td></td>
     <td><input type="submit" value="Assign"/> or <%=link_to 'Back', xds_patients_path %> </td>

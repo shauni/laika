@@ -14,6 +14,12 @@
   <td>Author Specialty</td>
   <td><%= text_field_tag 'metadata[author][specialty]', '', :size => 45 %></td>
 </tr>
+<% if defined?(prompt_for_unique_id) && prompt_for_unique_id -%>
+<tr>
+  <td>Unique Id</td>
+  <td><%= text_field_tag 'metadata[unique_id]', '', :size => 45 %></td>
+</tr>
+<% end -%>
 <% coded_values = [:class_code, :confidentiality_code, :format_code, :healthcare_facility_type_code, :practice_setting_code, :type_code]
    coded_values.each do |cv|
 -%>
@@ -22,3 +28,5 @@
   <td><%= select_tag("metadata[#{cv.to_s}]", options_for_select(AFFINITY_DOMAIN_CONFIG.select_options(cv))) %></td>
 </tr>
 <% end -%>
+
+
