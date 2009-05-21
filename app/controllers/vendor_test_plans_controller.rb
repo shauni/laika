@@ -6,7 +6,7 @@ class VendorTestPlansController < ApplicationController
   self.valid_sort_fields = %w[ created_at updated_at patients.name kinds.name ]
 
   # GET /vendor_test_plans
-  # GET /vendor_test_plans.csv
+  # GET /vendor_test_plans.xml
   def index
     respond_to do |format|
       format.html do
@@ -78,7 +78,13 @@ class VendorTestPlansController < ApplicationController
       }
     end
 
-    redirect_to vendor_test_plans_path
+    # FIXME there should be a better way to do this
+    if params[:metadata] && flash[:notice].nil?
+      @metadata = params[:metadata]
+      render 'xds_patients/assign_success'
+    else
+      redirect_to vendor_test_plans_path
+    end
   end
 
   # DELETE /vendor_test_plans/1
