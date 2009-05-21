@@ -7,4 +7,9 @@ class Kind < ActiveRecord::Base
   def display_name
     "#{test_type} #{name}"
   end
+
+  # FIXME need a better way to identify kinds
+  def xds_qnr?
+    display_name == "XDS Query and Retrieve"
+  end
 end

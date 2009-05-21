@@ -51,7 +51,8 @@ class VendorTestPlansController < ApplicationController
             md.patient_id = patient.registration_information.person_identifier
             vtp.metadata = md
           end
-          if vtp.metadata 
+          # TODO refactor xds assignment
+          if vtp.metadata && vtp.kind.xds_qnr?
             doc = XDSUtils.retrieve_document(vtp.metadata)
             cd = ClinicalDocument.new(:uploaded_data=>doc)
             vtp.clinical_document = cd
