@@ -3,17 +3,21 @@
 <input type="hidden" name="patient_id" value="<%= @patient.id %>"/>
 <table>
   <tr>
-    <td>Vendor</td>
+    <td>Inspection</td>
     <td><%= f.select :vendor_id, Vendor.select_options(@vendors) %></td>
   </tr>
   <br/>
   <% if current_user.administrator? -%>
-  <tr>
-    <td>User</td>
-    <td><%= f.select :user_id, User.select_options %></td>
-  </tr>
+    <tr>
+      <td>User</td>
+      <td><%= f.select :user_id, User.select_options %></td>
+    </tr>
   <% end -%>
-  <%= render :partial => 'provide_and_register_form', :locals => { :prompt_for_unique_id => true } %>
+  <tr>
+    <td>Unique Id</td>
+    <td><%= text_field_tag 'metadata[unique_id]', '', :size => 45 %></td>
+  </tr>
+  <%= render :partial => 'provide_and_register_form' %>
   <tr>
     <td></td>
     <td><input type="submit" value="Assign"/> or <%=link_to 'Back', xds_patients_path %> </td>
