@@ -101,13 +101,13 @@
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext"></td>
         <% if @vendor_test_plan.test_result%>
-          <% if @vendor_test_plan.test_result.patient_identifier == patient_identifier.patient_identifier && @vendor_test_plan.test_result.assigning_authority == patient_identifier.identifier_domain_identifier %>
-        <td bgcolor="yellow"><%=h patient_identifier.patient_identifier %>^^^<%=h patient_identifier.identifier_domain_identifier %></td>
+          <% if @vendor_test_plan.test_result.patient_identifier == patient_identifier.patient_identifier && @vendor_test_plan.test_result.assigning_authority == patient_identifier.affinity_domain %>
+        <td bgcolor="yellow"><%=h patient_identifier.identifier_and_domain %></td>
           <% else %>
-        <td><%=h patient_identifier.patient_identifier %>^^^<%=h patient_identifier.identifier_domain_identifier %></td>
+        <td><%=h patient_identifier.identifier_and_domain %></td>
           <% end %>
         <% else %>
-        <td><%=h patient_identifier.patient_identifier %>^^^<%=h patient_identifier.identifier_domain_identifier %></td>
+        <td><%=h patient_identifier.identifier_and_domain %></td>
         <% end %>
       </tr>
     <% end %>

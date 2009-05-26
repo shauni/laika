@@ -11,7 +11,7 @@ describe PatientIdentifier do
     # XXX this doesn't test anything, it just verifies the contents of the fixture
     it "is valid" do
       @patient_id.patient_identifier.should == '1234567890'
-      @patient_id.identifier_domain_identifier.should == 'CCHIT&1.2.3.4.5.6.7.8.9&ISO'
+      @patient_id.affinity_domain.should == 'CCHIT&1.2.3.4.5.6.7.8.9&ISO'
     end
 
     it "should assemble an identifier string" do

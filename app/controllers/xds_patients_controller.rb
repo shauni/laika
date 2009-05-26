@@ -19,7 +19,7 @@ class XdsPatientsController < ApplicationController
   def query
     pi = PatientIdentifier.find(params[:id])
     rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], 
-                                                {"$XDSDocumentEntryPatientId" => "'#{pi.patient_identifier}^^^#{pi.identifier_domain_identifier}'",
+                                                {"$XDSDocumentEntryPatientId" => "'#{pi.identifier_and_domain}'",
                                                  "$XDSDocumentEntryStatus" => "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"})
     @metadata = rsqr.execute
     @vendors = current_user.vendors + Vendor.unclaimed
