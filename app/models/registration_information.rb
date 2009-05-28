@@ -7,6 +7,8 @@ class RegistrationInformation < ActiveRecord::Base
   belongs_to :marital_status
   belongs_to :gender
   belongs_to :religion
+  belongs_to :affinity_domain_identifier,
+    :foreign_key => 'affinity_domain_id', :class_name => 'PatientIdentifier'
 
   include PatientChild
   include PersonLike
@@ -14,11 +16,19 @@ class RegistrationInformation < ActiveRecord::Base
   def requirements
     {
       :document_timestamp => :required,
-      :person_identifier => :required,
+      :affinity_domain_id => :required,
       :gender_id => :required,
       :date_of_birth => :required,
       :marital_status_id => :hitsp_r2_optional,
     }
+  end
+
+  def person_identifier
+    affinity_domain_identifier.andand.patient_identifier
+  end
+
+  def affinity_domain
+    affinity_domain_identifier.andand.affinity_domain
   end
 
   def to_c32(xml = Builder::XmlMarkup.new)
@@ -63,7 +73,11 @@ class RegistrationInformation < ActiveRecord::Base
 
   def randomize(patient)
 
-    self.person_identifier = "1234567890"
+    pi = patient.patient_identifiers.build
+    pi.randomize
+    pi.save
+    self.affinity_domain_identifier = pi
+
     self.document_timestamp = DateTime.new(2000 + rand(8), rand(12) + 1, rand(28) + 1)
 
     self.person_name = patient

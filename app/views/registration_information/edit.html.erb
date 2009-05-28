@@ -8,8 +8,8 @@
     <td><%= f.calendar_date_select :document_timestamp %></td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Person Identifier <%= requirements_for(@registration_information, :person_identifier) %></td>
-    <td><%= f.text_field :person_identifier %></td>
+    <td class="lighttext">Person Identifier <%= requirements_for(@registration_information, :affinity_domain_id) %></td>
+    <td><%= f.collection_select :affinity_domain_id, @patient.patient_identifiers, 'id', 'identifier_and_domain' %></td>
   </tr>
   <%= f.person_name_fields %>
   <tr class="spacer"><td></td><td></td></tr>
