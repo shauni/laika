@@ -55,7 +55,7 @@ class Patient < ActiveRecord::Base
     spi[:name] = name
     spi[:gender] = registration_information.gender.code
     spi[:date_of_birth] = registration_information.date_of_birth.strftime("%Y%m%d")
-    spi[:source_patient_identifier] = registration_information.person_identifier
+    spi[:source_patient_identifier] = patient_identifier
     spi
   end
   
