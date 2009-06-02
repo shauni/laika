@@ -8,6 +8,12 @@ class Kind < ActiveRecord::Base
     "#{test_type} #{name}"
   end
 
+  def self.find_by_display_name(display_name)
+    find_by_sql(%{
+      SELECT * FROM kinds WHERE test_type||' '||name = '#{display_name}' LIMIT 1
+    }).first
+  end
+
   # FIXME need a better way to identify kinds
   def xds_qnr?
     display_name == "XDS Query and Retrieve"

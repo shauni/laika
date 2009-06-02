@@ -1,4 +1,5 @@
 require_dependency 'sort_order'
+require_dependency 'test_types'
 
 class VendorTestPlansController < ApplicationController
   page_title 'Laika Dashboard'
@@ -32,6 +33,33 @@ class VendorTestPlansController < ApplicationController
 
   # POST /vendor_test_plans
   def create
+    # XXX until all tests are implemented using the TestType facilities
+    # we need to continue using the database kinds.
+    kind = Kind.find(params[:vendor_test_plan][:kind_id])
+    test_type = TestType.get(kind.display_name)
+
+    if test_type
+      user    = User.find(params[:vendor_test_plan][:user_id])
+      vendor  = Vendor.find(params[:vendor_test_plan][:vendor_id])
+      patient = Patient.find(params[:patient_id])
+
+      begin
+        test_type.assign(
+          :user => current_user.administrator? ? user : current_user,
+          :vendor => vendor,
+          :patient => patient
+        )
+        redirect_to vendor_test_plans_url
+      rescue TestType::AssignFailure => e
+        flash[:notice] = "Assign failed: #{e}"
+        redirect_to patients_url
+      end
+    else
+      old_create
+    end
+  end
+
+  def old_create
     xds_pnr_success = false
     begin
       Patient.transaction(:requires_new => true) do
