@@ -58,7 +58,7 @@ describe VendorTestPlansController do
       it "should retain the previous vendor and kind selection" do
         patient = patients(:joe_smith)
         vendor = Vendor.find :first
-        kind = Kind.find :first
+        kind = Kind.find_by_display_name('C32 Display and File')
         controller.send( :last_selected_kind_id=,   nil)
         controller.send( :last_selected_vendor_id=, nil)
   
@@ -71,7 +71,7 @@ describe VendorTestPlansController do
       it "should auto-assign current user" do
         patient = patients(:joe_smith)
         vendor = Vendor.find :first
-        kind = Kind.find :first
+        kind = Kind.find_by_display_name('C32 Display and File')
   
         User.should_not_receive(:find)
   
@@ -82,7 +82,7 @@ describe VendorTestPlansController do
         other = users(:rob_dingwell)
         patient = patients(:joe_smith)
         vendor = Vendor.find :first
-        kind = Kind.find :first
+        kind = Kind.find_by_display_name('C32 Display and File')
         old_count = @current_user.vendor_test_plans.count
 
         post :create, :patient_id => patient.id.to_s, :vendor_test_plan => {:user_id => other.id.to_s, :vendor_id => vendor.id.to_s, :kind_id => kind.id.to_s }
@@ -103,7 +103,7 @@ describe VendorTestPlansController do
         other = users(:rob_dingwell)
         patient = patients(:joe_smith)
         vendor = Vendor.find :first
-        kind = Kind.find :first
+        kind = Kind.find_by_display_name('C32 Display and File')
         old_count = other.vendor_test_plans.count
 
         post :create, :patient_id => patient.id.to_s, :vendor_test_plan => {:user_id => other.id.to_s, :vendor_id => vendor.id.to_s, :kind_id => kind.id.to_s }

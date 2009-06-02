@@ -39,17 +39,31 @@ class VendorTestPlansController < ApplicationController
     test_type = TestType.get(kind.display_name)
 
     if test_type
-      user    = User.find(params[:vendor_test_plan][:user_id])
+      user = current_user.administrator? ?
+        User.find(params[:vendor_test_plan][:user_id]) : current_user
       vendor  = Vendor.find(params[:vendor_test_plan][:vendor_id])
       patient = Patient.find(params[:patient_id])
 
       begin
-        test_type.assign(
-          :user => current_user.administrator? ? user : current_user,
+        vtp = test_type.assign(
+          :user => user,
           :vendor => vendor,
-          :patient => patient
+          :patient => patient,
+          :cb_context => self
         )
+
+        # save the vendor/kind selections for next time
+        self.last_selected_vendor_id = vtp.vendor_id
+        self.last_selected_kind_id   = vtp.kind_id
+
         redirect_to vendor_test_plans_url
+      rescue ActionController::DoubleRenderError
+        # This means redirect was called in the assign callback,
+        # we should just ignore the second redirect.
+        # XXX There must be a better way to do this. A guarded
+        # render and redirect_to were considered but rejected
+        # because they're not localized enough. At least this way
+        # we only ignore double renders when we intend to.
       rescue TestType::AssignFailure => e
         flash[:notice] = "Assign failed: #{e}"
         redirect_to patients_url

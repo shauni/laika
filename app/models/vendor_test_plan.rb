@@ -17,6 +17,22 @@ class VendorTestPlan < ActiveRecord::Base
     puts self.errors
   end
   
+  # Accepts metadata as a string or hash.
+  def metadata=(raw_metadata)
+    if raw_metadata.instance_of? XDS::Metadata
+      super
+    elsif raw_metadata.kind_of?(String)
+      super YAML.load(raw_metadata)         
+    else
+      raw_metadata[:source_patient_info] = patient.source_patient_info
+      md = XDS::Metadata.new
+      md.from_hash(raw_metadata, AFFINITY_DOMAIN_CONFIG)
+      md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
+      md.patient_id = patient.patient_identifier
+      super md
+    end
+  end
+
   def validate_clinical_document_content
     document = clinical_document.as_xml_document
     validator = Validation.get_validator(clinical_document.doc_type)

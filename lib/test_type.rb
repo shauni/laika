@@ -30,14 +30,23 @@ class TestType
     test_types[ normalize_name(name) ] = new(name, &block)
   end
 
-  # Assign a test, must pass a hash containing:
-  # :patient, :user, :vendor
+  # Assign a test, returning a newly created vendor test plan.
+  #
+  # You must pass a hash containing :patient, :user, :vendor.
+  #
+  # Specify the callback context with :cb_context (optional).
+  #
+  # XXX This isn't a good way to pass the callback context.
+  # Ideally the context would be passed the same way with every
+  # action. Best idea I've had so far is a method with_context that
+  # returns a TestType wrapper with context attached.
   def assign(opt)
     raise 'patient required' if not opt.key?(:patient)
     raise 'user required'    if not opt.key?(:user)
     raise 'vendor required'  if not opt.key?(:vendor)
 
     patient = nil
+    context = opt[:cb_context]
 
     begin
       Patient.transaction do
@@ -50,19 +59,21 @@ class TestType
           :user   => opt[:user],
           :kind   => kind
         )
+        patient.save!
   
         if assign_cb
           begin
-            assign_cb.call(patient.vendor_test_plan) if assign_cb
+            if context
+              context.instance_exec(patient.vendor_test_plan, &assign_cb)
+            else
+              assign_cb.call(patient.vendor_test_plan)
+            end
           rescue RuntimeError => e
             raise AssignFailure, %{
-              Failed during assignment callback: #{e}
+              Failure during assignment: #{e}
             }
           end
         end
-  
-        patient.vendor_test_plan.save!
-        patient.save!
       end
     rescue ActiveRecord::RecordInvalid => e
       # FIXME should be using record.class.human_name but
