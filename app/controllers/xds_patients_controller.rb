@@ -50,7 +50,7 @@ class XdsPatientsController < ApplicationController
 
     md.unique_id = pd.generate_unique_id
     md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
-    md.patient_id = pd.registration_information.person_identifier
+    md.patient_id = pd.patient_identifier
     md.mime_type = 'text/xml'
     md.ss_unique_id = "1.3.6.1.4.1.21367.2009.1.2.1.#{Time.now.to_i}"
     md.source_id = "1.3.6.1.4.1.21367.2009.1.2.1"
