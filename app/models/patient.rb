@@ -45,6 +45,10 @@ class Patient < ActiveRecord::Base
     "1.3.6.1.4.1.21367.2009.5.14.#{id}.#{Time.now.to_i}"
   end
 
+  def patient_identifier
+    registration_information.andand.affinity_domain_identifier.to_s
+  end
+
   # Returns a hash containing source_patient_info for use in XDS metadata
   def source_patient_info
     spi = {}

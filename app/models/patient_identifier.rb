@@ -16,6 +16,7 @@ class PatientIdentifier < ActiveRecord::Base
   def identifier_and_domain
     "#{patient_identifier}^^^#{affinity_domain}"
   end
+  alias_method :to_s, :identifier_and_domain
 
   def randomize()
     self.patient_identifier = rand(10 ** 10).to_s.rjust(10,'0')
