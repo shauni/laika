@@ -30,16 +30,22 @@ class TestType
     test_types[ normalize_name(name) ] = new(name, &block)
   end
 
+  # Return a test type wrapper that automatically passes the included
+  # context to all callbacks.
+  def with_context(context)
+    # this feels too clever by half, but it works great
+    with_options(:cb_context => context) {|wrapped| return wrapped }
+  end
+
   # Assign a test, returning a newly created vendor test plan.
   #
   # You must pass a hash containing :patient, :user, :vendor.
   #
   # Specify the callback context with :cb_context (optional).
   #
-  # XXX This isn't a good way to pass the callback context.
-  # Ideally the context would be passed the same way with every
-  # action. Best idea I've had so far is a method with_context that
-  # returns a TestType wrapper with context attached.
+  # NOTE Rather than pass the context explicitly, you should use
+  # with_context to create a wrapper that automatically passes
+  # the context to every callback.
   def assign(opt)
     raise 'patient required' if not opt.key?(:patient)
     raise 'user required'    if not opt.key?(:user)

@@ -36,7 +36,7 @@ class VendorTestPlansController < ApplicationController
     # XXX until all tests are implemented using the TestType facilities
     # we need to continue using the database kinds.
     kind = Kind.find(params[:vendor_test_plan][:kind_id])
-    test_type = TestType.get(kind.display_name)
+    test_type = TestType.get(kind.display_name).with_context(self)
 
     if test_type
       user = current_user.administrator? ?
@@ -48,8 +48,7 @@ class VendorTestPlansController < ApplicationController
         vtp = test_type.assign(
           :user => user,
           :vendor => vendor,
-          :patient => patient,
-          :cb_context => self
+          :patient => patient
         )
 
         # save the vendor/kind selections for next time
