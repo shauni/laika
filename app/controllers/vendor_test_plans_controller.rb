@@ -48,7 +48,7 @@ class VendorTestPlansController < ApplicationController
             md = XDS::Metadata.new
             md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
             md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
-            md.patient_id = patient.registration_information.person_identifier
+            md.patient_id = patient.patient_identifier
             vtp.metadata = md
           end
           # TODO refactor xds assignment
