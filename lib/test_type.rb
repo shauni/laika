@@ -19,6 +19,18 @@ class TestType
     test_types.values.map(&:name)
   end
 
+  # Define global callbacks by passing a block.
+  #
+  # Without a block, returns the currently defined global
+  # callback registration.
+  def self.global(&block)
+    if block_given?
+      @global_callbacks = new('_global_', &block)
+    else
+      @global_callbacks
+    end
+  end
+
   # Get a registered test type given a name.
   # If there is no such test registered, returns nil.
   def self.get(type_name)
@@ -30,8 +42,14 @@ class TestType
     test_types[ normalize_name(name) ] = new(name, &block)
   end
 
-  # Return a test type wrapper that automatically passes the included
-  # context to all callbacks.
+  # Return the Kind instance that corresponds to the current test type.
+  # This accessor is available in global callbacks.
+  def kind
+    @kind ||= Kind.find_by_display_name(name)
+  end
+
+  # Return a test type wrapper that automatically uses the included
+  # context for non-global (e.g., test type-specific) callbacks.
   def with_context(context)
     # this feels too clever by half, but it works great
     with_options(:cb_context => context) {|wrapped| return wrapped }
@@ -47,41 +65,35 @@ class TestType
   # with_context to create a wrapper that automatically passes
   # the context to every callback.
   def assign(opt)
-    raise 'patient required' if not opt.key?(:patient)
-    raise 'user required'    if not opt.key?(:user)
-    raise 'vendor required'  if not opt.key?(:vendor)
 
-    patient = nil
     context = opt[:cb_context]
+    vendor_test_plan = nil
 
     begin
       Patient.transaction do
         # XXX currently still requires identically-named kinds in the database
         kind = Kind.find_by_display_name(name) || raise("No kind named #{name}")
 
-        patient = opt[:patient].clone
-        patient.create_vendor_test_plan(
-          :vendor => opt[:vendor],
-          :user   => opt[:user],
-          :kind   => kind
-        )
-        patient.save!
+        raise AssignFailure, "no global assign callback" if self.class.global.nil?
+
+        vendor_test_plan = instance_exec(opt, &self.class.global.assign_cb)
+
+        raise AssignFailure, "global assign returned nil" if vendor_test_plan.nil?
   
         if assign_cb
-          begin
-            if context
-              context.instance_exec(patient.vendor_test_plan, &assign_cb)
-            else
-              assign_cb.call(patient.vendor_test_plan)
+          if context
+            begin
+              context.instance_exec(vendor_test_plan, &assign_cb)
+            rescue ActionController::DoubleRenderError
+              # The controller needs to catch this error in case the second render
+              # happens outside the callback, but this means a double render during
+              # the callback would be ignored. Raise an AssignFailure instead.
+              #
+              # We're assuming that the passed context is the controller here.
+              raise AssignFailure, "Test assignment failed: double render in callback"
             end
-          rescue RuntimeError => e
-            raise AssignFailure, %{
-              Test assignment failed: #{e}
-            }
-          rescue ActionController::DoubleRenderError
-            raise AssignFailure, %{
-              Test assignment failed: double render during callback
-            }
+          else
+            assign_cb.call(vendor_test_plan)
           end
         end
       end
@@ -92,9 +104,21 @@ class TestType
         Failed to create #{e.record.class.name.underscore.humanize}:
         #{e.record.errors.full_messages.join("\n")}
       }
+    rescue RuntimeError => e
+      raise AssignFailure, "Test assignment failed: #{e}"
     end
 
-    patient.vendor_test_plan
+    vendor_test_plan
+  end
+
+  private
+
+  def self.test_types
+    @test_types ||= {}
+  end
+
+  def self.normalize_name(name)
+    name.strip.downcase.gsub(/\ba?nd?\b|&/i, '-').gsub(/\W+/, '-')
   end
 
   # Manage test type registration
@@ -107,15 +131,5 @@ class TestType
     def assign(&block)
       @test_type.assign_cb = block
     end
-  end
-
-  private
-
-  def self.test_types
-    @test_types ||= {}
-  end
-
-  def self.normalize_name(name)
-    name.strip.downcase.gsub(/\ba?nd?\b|&/i, '-').gsub(/\W+/, '-')
   end
 end

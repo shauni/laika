@@ -89,9 +89,9 @@ describe TestType, "with an existing test kind" do
       @test_type = TestType.get(@kind.display_name)
     end
 
-    it "should raise TestType::AssignError on assign" do
+    it "should raise TestType::AssignError on assign with a context" do
       lambda {
-        @test_type.assign(
+        @test_type.with_context(self).assign(
           :vendor  => @vendor,
           :patient => Patient.find(:first),
           :user    => User.find(:first)
