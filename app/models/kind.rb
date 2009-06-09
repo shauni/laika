@@ -8,11 +8,12 @@ class Kind < ActiveRecord::Base
     "#{test_type} #{name}"
   end
 
-  # FIXME This is SQL-standard concatenation which AFAIK isn't supported by mysql.
-  # We need to detect mysql and use the CONCAT function, or we need to officially
-  # declare mysql unsupported.
   def self.find_by_display_name(display_name)
-    find_by_sql(%{
+    # XXX mysql concatenation doesn't follow the standard
+    using_mysql = connection.config[:driver] =~ /mysql/i
+    find_by_sql(using_mysql ? %{
+      SELECT * FROM kinds WHERE CONCAT(test_type, ' ', name) = '#{display_name}' LIMIT 1
+    } : %{
       SELECT * FROM kinds WHERE test_type||' '||name = '#{display_name}' LIMIT 1
     }).first
   end
