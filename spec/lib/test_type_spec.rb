@@ -81,6 +81,25 @@ describe TestType, "with an existing test kind" do
     end
   end
 
+  describe "with a registered type, double render during assign" do
+    before do
+      TestType.register(@kind.display_name) do
+        assign { |vtp| raise ActionController::DoubleRenderError }
+      end
+      @test_type = TestType.get(@kind.display_name)
+    end
+
+    it "should raise TestType::AssignError on assign" do
+      lambda {
+        @test_type.assign(
+          :vendor  => @vendor,
+          :patient => Patient.find(:first),
+          :user    => User.find(:first)
+        )
+      }.should raise_error(TestType::AssignFailure)
+    end
+  end
+
   describe "with a registered type that wants context" do
     before do
       class ContextTester

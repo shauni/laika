@@ -76,7 +76,11 @@ class TestType
             end
           rescue RuntimeError => e
             raise AssignFailure, %{
-              Failure during assignment: #{e}
+              Test assignment failed: #{e}
+            }
+          rescue ActionController::DoubleRenderError
+            raise AssignFailure, %{
+              Test assignment failed: double render during callback
             }
           end
         end
