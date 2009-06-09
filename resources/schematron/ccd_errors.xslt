@@ -1579,9 +1579,11 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="count(cda:participant//cda:playingEntity)=1"/>
+         <xsl:when test="not(cda:participant) or (count(cda:participant//cda:playingEntity)=1)"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participant//cda:playingEntity)=1" role="">
+            <failed-assert id=""
+                           test="not(cda:participant) or (count(cda:participant//cda:playingEntity)=1)"
+                           role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1590,9 +1592,9 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="cda:participant[@typeCode='CSM']"/>
+         <xsl:when test="not(cda:participant) or (cda:participant[@typeCode='CSM'])"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:participant[@typeCode='CSM']" role="">
+            <failed-assert id="" test="not(cda:participant) or (cda:participant[@typeCode='CSM'])" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1601,9 +1603,11 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="cda:participant/cda:participantRole[@classCode='MANU']"/>
+         <xsl:when test="not(cda:participant) or (cda:participant/cda:participantRole[@classCode='MANU'])"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:participant/cda:participantRole[@classCode='MANU']" role="">
+            <failed-assert id=""
+                           test="not(cda:participant) or (cda:participant/cda:participantRole[@classCode='MANU'])"
+                           role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1612,10 +1616,10 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="cda:participant /cda:participantRole/cda:playingEntity[@classCode='MMAT']"/>
+         <xsl:when test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity[@classCode='MMAT'])"/>
          <xsl:otherwise>
             <failed-assert id=""
-                           test="cda:participant /cda:participantRole/cda:playingEntity[@classCode='MMAT']"
+                           test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity[@classCode='MMAT'])"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1625,9 +1629,11 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="count(cda:participant//cda:playingEntity//cda:code)=1"/>
+         <xsl:when test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity/cda:code)"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participant//cda:playingEntity//cda:code)=1" role="">
+            <failed-assert id=""
+                           test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity/cda:code)"
+                           role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
