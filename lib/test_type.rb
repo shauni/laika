@@ -57,16 +57,18 @@ class TestType
 
   # Assign a test, returning a newly created vendor test plan.
   #
-  # You must pass a hash containing :patient, :user, :vendor.
+  # You must pass an options hash, which will be passed to the
+  # global assign callback. Returns the result of that callback.
   #
-  # Specify the callback context with :cb_context (optional).
+  # Specify a non-global callback context with the option :cb_context.
+  # This option will not be passed to the global callback.
   #
   # NOTE Rather than pass the context explicitly, you should use
   # with_context to create a wrapper that automatically passes
   # the context to every callback.
   def assign(opt)
 
-    context = opt[:cb_context]
+    context = opt.delete(:cb_context)
     vendor_test_plan = nil
 
     begin
