@@ -68,65 +68,8 @@ class VendorTestPlansController < ApplicationController
         redirect_to patients_url
       end
     else
-      old_create
-    end
-  end
-
-  def old_create
-    xds_pnr_success = false
-    begin
-      Patient.transaction(:requires_new => true) do
-        patient = Patient.find(params[:patient_id]).clone
-
-        vtp = patient.vendor_test_plan = VendorTestPlan.create!(params[:vendor_test_plan])
-        vtp.user = current_user if not current_user.administrator?
-
-        if params[:metadata]
-          if params[:metadata].kind_of?(String)
-            vtp.metadata = YAML.load(params[:metadata])         
-          else
-            params[:metadata][:source_patient_info] = patient.source_patient_info
-            md = XDS::Metadata.new
-            md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
-            md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
-            md.patient_id = patient.registration_information.person_identifier
-            vtp.metadata = md
-          end
-          # TODO refactor xds assignment
-          if vtp.metadata && vtp.kind.xds_qnr?
-            doc = XDSUtils.retrieve_document(vtp.metadata)
-            cd = ClinicalDocument.new(:uploaded_data=>doc)
-            vtp.clinical_document = cd
-            cd.save!
-          elsif vtp.metadata
-            xds_pnr_success = true
-          end
-        end
-
-        vtp.save!
-        patient.save!
-
-        # save the vendor/kind selections for next time
-        self.last_selected_vendor_id = vtp.vendor_id
-        self.last_selected_kind_id   = vtp.kind_id
-      end
-    rescue XDSUtils::RetrieveFailed => e
-      flash[:notice] = "Failed to retrieve document from XDS: #{e}"
-    rescue ActiveRecord::RecordInvalid => e
-      # FIXME should be using record.class.human_name but
-      # https://rails.lighthouseapp.com/projects/8994/tickets/2120
-      flash[:notice] = %{
-        Failed to create #{e.record.class.name.underscore.humanize}:
-        #{e.record.errors.full_messages.join("\n")}
-      }
-    end
-
-    # TODO refactor xds assignment
-    if xds_pnr_success
-      @metadata = params[:metadata]
-      render 'xds_patients/assign_success'
-    else
-      redirect_to vendor_test_plans_path
+      flash[:notice] = "Test type not configured: #{kind.display_name}"
+      redirect_to patients_url
     end
   end
 
