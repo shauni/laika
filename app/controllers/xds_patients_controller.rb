@@ -24,10 +24,9 @@ class XdsPatientsController < ApplicationController
     @metadata = rsqr.execute
     @vendors = current_user.vendors + Vendor.unclaimed
     @patient_identifier = pi
-    @vendor_test_plan = VendorTestPlan.new( :user_id => current_user.id, :metadata => @metadata)
-    @kind = Kind.find_by_name('Query and Retrieve').id
+    @kind = Kind.find_by_name('Query and Retrieve')
   end
-  
+
   # Creates the form that collects data for a provide and register test
   def provide_and_register_setup
     @patient = Patient.find(params[:id])
