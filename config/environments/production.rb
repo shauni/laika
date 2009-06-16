@@ -18,4 +18,9 @@ config.action_controller.perform_caching             = true
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-VALIDATION_URL= "http://127.0.0.1:80/validation/validate.lk"
+XDS_HOST = "http://localhost:9080"
+XDS_REGISTRY_URLS =
+{:register_stored_query=>"#{XDS_HOST}/axis2/services/xdsregistryb",
+ 
+:retrieve_document_set_request=>"#{XDS_HOST}/axis2/services/xdsrepositor
+yb"}
