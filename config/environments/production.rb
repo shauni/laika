@@ -19,8 +19,7 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 XDS_HOST = "http://localhost:9080"
-XDS_REGISTRY_URLS =
-{:register_stored_query=>"#{XDS_HOST}/axis2/services/xdsregistryb",
- 
-:retrieve_document_set_request=>"#{XDS_HOST}/axis2/services/xdsrepositor
-yb"}
+XDS_REGISTRY_URLS = {
+  :register_stored_query         => "#{XDS_HOST}/axis2/services/xdsregistryb",
+  :retrieve_document_set_request => "#{XDS_HOST}/axis2/services/xdsrepositoryb"
+}
