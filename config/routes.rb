@@ -13,7 +13,8 @@ ActionController::Routing::Routes.draw do |map|
                                                 :xds_query_checklist => :get,
                                                 :checklist => :get,
                                                 :set_status => :get,
-                                                :validate_p_and_r => :get}
+                                                :prepare_p_and_r => :get,
+                                                :validate_p_and_r => :post}
 
   map.resources :patients,
       :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],

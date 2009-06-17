@@ -138,8 +138,19 @@ class VendorTestPlansController < ApplicationController
   end
   
 
+  def prepare_p_and_r
+    @vendor_test_plan = VendorTestPlan.find(params[:id])
+    rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], {
+      "$XDSDocumentEntryPatientId" => "'#{@vendor_test_plan.patient.patient_identifier}'",
+      "$XDSDocumentEntryStatus" => "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"
+    })
+    @metadata = rsqr.execute
+  end
+
   def validate_p_and_r
     @vendor_test_plan = VendorTestPlan.find(params[:id])
+    @vendor_test_plan.metadata = params[:metadata]
+    @vendor_test_plan.save!
     @vendor_test_plan.validate_xds_provide_and_register
   end
 
