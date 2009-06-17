@@ -18,6 +18,31 @@ Loading the seed data into the database
 
  $ jruby -S rake db:seed
 
+Workaround for C32 failure on Glassfish
+=======================================
+
+Currently Laika fails on Glassfish during C32 validation. The only known
+workaround for this is to copy the contents of lib/saxon to your JRE's
+lib/ext directory.
+
+Associated SF ticket: https://sourceforge.net/tracker/index.php?func=detail&aid=2769072&group_id=205665&atid=994554
+
+Workaround for JRuby bug
+========================
+
+Rails 2.3.2 can cause Laika to trigger a JRuby bug which results in a
+Java stacktrace. The following commit fixed this:
+
+http://github.com/rails/rails/commit/35c5727acea882f4cef2a8a2d12d87a8fda045c8
+
+Since this commit isn't in a released version of Rails, we have submodule
+pointing to the official Rails 2-3-stable branch:
+
+ $ git submodule init
+ $ git submodule update
+
+Associated SF ticket: https://sourceforge.net/tracker/index.php?func=detail&aid=2785138&group_id=205665&atid=994554
+
 Installing/using multiple version of Java in Ubuntu
 ===================================================
 
