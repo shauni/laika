@@ -89,7 +89,7 @@ class Medication < ActiveRecord::Base
                 xml.id("root" => quantity_ordered_unit, "extension" => "SCRIP#")
               end 
               if expiration_time 
-                  xml.effectiveTime("value" => expiration_time.strftime("%Y%m%d"))
+                  xml.effectiveTime("value" => expiration_time.to_s(:brief))
               end
               if quantity_ordered_value 
                 xml.quantity("value" => quantity_ordered_value)
@@ -166,7 +166,7 @@ class Medication < ActiveRecord::Base
                       xml.td
                     end   
                     if medication.expiration_time != nil
-                      xml.td medication.expiration_time.strftime("%Y%m%d")
+                      xml.td medication.expiration_time.to_s(:brief)
                     else
                       xml.td
                     end   

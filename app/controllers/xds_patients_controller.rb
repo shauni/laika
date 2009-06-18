@@ -54,7 +54,7 @@ class XdsPatientsController < ApplicationController
     md.ss_unique_id = "1.3.6.1.4.1.21367.2009.1.2.1.#{Time.now.to_i}"
     md.source_id = "1.3.6.1.4.1.21367.2009.1.2.1"
     md.language_code = 'en-us'
-    md.creation_time = Time.now.strftime('%Y%m%d')
+    md.creation_time = Time.now.to_s(:brief)
 
     prdsr = XDS::ProvideAndRegisterDocumentSetBXop.new(XDS_REGISTRY_URLS[:retrieve_document_set_request],
                                                        md, pd.to_c32)

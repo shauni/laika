@@ -116,7 +116,7 @@ class VendorTestPlan < ActiveRecord::Base
             report << "Number of errors:, --\n"		  				
           end
           report << "Last Modified:,"
-          report << vendor_test_plan.updated_at.strftime("%d.%b.%Y")
+          report << vendor_test_plan.updated_at.to_s
           report << "\n\n"
         end
       end

@@ -35,7 +35,7 @@ class Encounter < ActiveRecord::Base
         end
         if encounter_date != nil 
           xml.effectiveTime do
-            xml.low('value'=> encounter_date.strftime('%Y%m%d'))
+            xml.low('value'=> encounter_date.to_s(:brief))
           end
         end
         xml.participant('typeCode'=>'PRF') do

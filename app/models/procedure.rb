@@ -28,7 +28,7 @@ class Procedure < ActiveRecord::Base
         end
         xml.statusCode("code" => "completed")
         if self.procedure_date
-          xml.effectiveTime("value" => procedure_date.strftime("%Y"))
+          xml.effectiveTime("value" => procedure_date.to_s(:year))
         end 
       end
     end 
@@ -99,7 +99,7 @@ class Procedure < ActiveRecord::Base
                       xml.td
                     end 
                     if procedure.procedure_date
-                      xml.td(procedure.procedure_date.strftime("%Y"))
+                      xml.td(procedure.procedure_date.to_s(:year))
                     else
                       xml.td
                     end    

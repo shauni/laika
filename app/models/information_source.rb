@@ -17,7 +17,7 @@ class InformationSource < ActiveRecord::Base
   def to_c32(xml)
     xml.author do
       if self.time
-        xml.time("value"=>time.strftime("%Y%m%d"))
+        xml.time("value"=>time.to_s(:brief))
       end
       xml.assignedAuthor do
         xml.id("root"=>document_id)

@@ -43,10 +43,10 @@ class Allergy < ActiveRecord::Base
             if start_event != nil || end_event != nil
               xml.effectiveTime do
                 if start_event != nil 
-                  xml.low("value" => start_event.strftime("%Y%m%d"))
+                  xml.low("value" => start_event.to_s(:brief))
                 end
                 if end_event != nil
-                  xml.high("value" => end_event.strftime("%Y%m%d"))
+                  xml.high("value" => end_event.to_s(:brief))
                 else
                   xml.high("nullFlavor" => "UNK")
                 end

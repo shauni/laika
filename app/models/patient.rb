@@ -54,7 +54,7 @@ class Patient < ActiveRecord::Base
     spi = {}
     spi[:name] = name
     spi[:gender] = registration_information.gender.code
-    spi[:date_of_birth] = registration_information.date_of_birth.strftime("%Y%m%d")
+    spi[:date_of_birth] = registration_information.date_of_birth.to_s(:brief)
     spi[:source_patient_identifier] = patient_identifier
     spi
   end
@@ -262,7 +262,7 @@ class Patient < ActiveRecord::Base
  private
 
   def c32_timestamp(datetime)
-    datetime.strftime("%Y%m%d%H%M%S") + datetime.formatted_offset(false)
+    datetime.to_s(:brief_timestamp) + datetime.formatted_offset(false)
   end
 
   # If the patient is pregnant, this method will add the appropriate

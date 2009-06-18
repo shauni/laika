@@ -42,7 +42,7 @@ class RegistrationInformation < ActiveRecord::Base
       person_name.andand.to_c32(xml)
       gender.andand.to_c32(xml)
       if date_of_birth
-        xml.birthTime("value" => date_of_birth.strftime("%Y%m%d"))  
+        xml.birthTime("value" => date_of_birth.to_s(:brief))  
       end
 
       marital_status.andand.to_c32(xml)
