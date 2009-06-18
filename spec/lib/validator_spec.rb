@@ -37,7 +37,7 @@ describe Validation::Validator do
   medication_types no_immunization_reasons patients patient_identifiers person_names problem_types
   procedures provider_roles providers provider_types races registration_information
   relationships religions abstract_results result_type_codes role_class_relationship_formal_types
-  roles severity_terms supports telecoms user_roles users vaccines vendors zip_codes vendor_test_plans
+  severity_terms supports telecoms users vaccines vendors zip_codes vendor_test_plans
     ]
 
     before do

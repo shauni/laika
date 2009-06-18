@@ -51,7 +51,7 @@ describe VendorTestPlansController do
     describe "operated by a non-admin" do
       before do
         @current_user = users(:alex_kroman)
-        @current_user.roles.clear
+        @current_user.revoke_admin
         controller.stub!(:current_user).and_return(@current_user)
       end
   
@@ -94,8 +94,7 @@ describe VendorTestPlansController do
     describe "operated by an admin" do
       before do
         @current_user = users(:alex_kroman)
-        @current_user.roles.clear
-        @current_user.roles << Role.administrator
+        @current_user.grant_admin
         controller.stub!(:current_user).and_return(@current_user)
       end
   

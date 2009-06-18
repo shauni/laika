@@ -10,6 +10,7 @@ dennis_wilson:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
   
 amit_trivedi:
   first_name: Amit
@@ -23,6 +24,7 @@ amit_trivedi:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
 
 rob_mccready:
   first_name: Rob
@@ -36,6 +38,7 @@ rob_mccready:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
 
 rob_dingwell:
   first_name: Rob
@@ -49,6 +52,7 @@ rob_dingwell:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
     
 andy_gregorowicz:
   first_name: Andy
@@ -62,6 +66,7 @@ andy_gregorowicz:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
   
 harry_sleeper:
   first_name: Harry
@@ -75,6 +80,7 @@ harry_sleeper:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
   
 juhan_sonin:
   first_name: Juhan
@@ -88,6 +94,7 @@ juhan_sonin:
   updated_at: 2008-02-05
   terms_of_service: true
   send_updates: true
+  admin: true
 
 alex_kroman:
   first_name: Alex
@@ -101,6 +108,7 @@ alex_kroman:
   updated_at: 2008-08-29
   terms_of_service: true
   send_updates: true
+  admin: true
 
 zack_hobson:
   first_name: Zack
@@ -114,3 +122,4 @@ zack_hobson:
   updated_at: 2008-08-29
   terms_of_service: true
   send_updates: true
+  admin: true
