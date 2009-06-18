@@ -181,11 +181,8 @@ class Patient < ActiveRecord::Base
     @last_name = Faker::Name.last_name
     self.name = @first_name + " " +  @last_name
 
-    @name = PersonName.new
-    @name.first_name = @first_name
-    @name.last_name = @last_name
-
-    self.registration_information.randomize(@name)
+    registration_information.randomize(self)
+    self.name = registration_information.full_name
 
     # if patient is female, 10% chance patient is pregnant
     if self.registration_information.gender.code == 'F'

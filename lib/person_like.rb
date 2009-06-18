@@ -30,6 +30,10 @@ module PersonLike
     def person_blank?
       %w[ person_name address telecom ].all? {|a| read_attribute(a).blank? }
     end
+
+    def full_name
+      "#{person_name.first_name} #{person_name.last_name}"
+    end
   end
 
 end
