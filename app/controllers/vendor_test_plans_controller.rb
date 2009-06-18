@@ -149,9 +149,7 @@ class VendorTestPlansController < ApplicationController
 
   def validate_p_and_r
     @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @vendor_test_plan.metadata = params[:metadata]
-    @vendor_test_plan.save!
-    @vendor_test_plan.validate_xds_provide_and_register
+    @vendor_test_plan.validate_xds_provide_and_register(YAML.load(params[:metadata]))
   end
 
 end
