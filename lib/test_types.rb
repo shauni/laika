@@ -33,9 +33,10 @@ end
 # callbacks are needed, the test name must be registered and it must 
 # have a corresponding database record in the kinds table.
 #
-# Assign callbacks MUST accept a vendor_test_plan, which should be
+# All callbacks MUST accept a vendor_test_plan, which should be
 # returned by the global callback. The return value doesn't matter.
-# Assign callbacks are currently executed in controller context, so
+#
+# All callbacks are currently executed in controller context, so
 # calls like redirect_to and params work as you'd expect.
 #
 
@@ -50,6 +51,9 @@ TestType.register("PIX Feed")
 TestType.register("PIX Query")
 
 TestType.register("XDS Provide and Register") do
+  # XXX not used
+  execution :select_document, :compare
+
   # XDS P&R assign callback, executed on test_type.assign(opt).
   assign do |vendor_test_plan|
     vendor_test_plan.metadata = params[:metadata]
@@ -57,6 +61,24 @@ TestType.register("XDS Provide and Register") do
 
     @metadata = params[:metadata]
     render 'xds_patients/assign_success'
+  end
+
+  # XXX not used
+  select_document do |vendor_test_plan|
+    rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], {
+      "$XDSDocumentEntryPatientId" => "'#{vendor_test_plan.patient.patient_identifier}'",
+      "$XDSDocumentEntryStatus" => "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"
+    })
+    @metadata = rsqr.execute
+    @vendor_test_plan = vendor_test_plan
+    render 'vendor_test_plans/prepare_p_and_r'
+  end
+
+  # XXX not used
+  compare do |vendor_test_plan|
+    vendor_test_plan.validate_xds_provide_and_register(YAML.load(params[:metadata]))
+    @vendor_test_plan = vendor_test_plan
+    render 'vendor_test_plans/validate_p_and_r'
   end
 end
 

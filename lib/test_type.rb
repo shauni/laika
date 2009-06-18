@@ -1,12 +1,22 @@
 class TestType
-  attr_reader :name
-  attr_accessor :assign_cb
+  attr_reader :name, :callback
+  attr_writer :execution_callbacks
 
   class AssignFailure < StandardError; end
 
   def initialize(name, &block)
     @name = name
+    @callback = {}
     Registration.new(self, &block)
+  end
+
+  # implement accessors for individual callbacks, e.g. assign_cb, execute_cb
+  def method_missing(method_name, *args)
+    if method_name.to_s.match(/^(\w+)_cb$/)
+      callback[$1.to_sym]
+    else
+      raise NoMethodError.new("unrecognized method `#{method_name}'", method_name)
+    end
   end
 
   # Get all of the registered test types.
@@ -130,8 +140,12 @@ class TestType
       instance_eval(&block) if block_given?
     end
 
-    def assign(&block)
-      @test_type.assign_cb = block
+    def execution(*callbacks)
+      @test_type.execution_callbacks = callbacks
+    end
+
+    def method_missing(method_name, &block)
+      @test_type.callback[method_name.to_sym] = block
     end
   end
 end
