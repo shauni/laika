@@ -14,7 +14,7 @@
       <td><%= md.unique_id %></td>
       <td><%= md.creation_time %></td>
       <td>
-        <% form_tag(validate_p_and_r_vendor_test_plan_url(@vendor_test_plan)) do %>
+        <% form_tag(test_operation_url(@vendor_test_plan, 'compare')) do %>
           <%= hidden_field_tag :metadata, md.to_yaml %>
           <%= submit_tag 'Compare' %>
         <% end %>

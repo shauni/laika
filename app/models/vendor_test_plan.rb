@@ -11,6 +11,11 @@ class VendorTestPlan < ActiveRecord::Base
   
   serialize :metadata, XDS::Metadata
 
+  # Accessor for the associated TestType instance.
+  def test_type
+    kind.as_test_type
+  end
+
   #before_save :_bf
   #after_save :_bf
   def _bf

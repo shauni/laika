@@ -35,7 +35,7 @@ class VendorTestPlansController < ApplicationController
     # XXX until all tests are implemented using the TestType facilities
     # we need to continue using the database kinds.
     kind = Kind.find(params[:vendor_test_plan][:kind_id])
-    test_type = TestType.get(kind.display_name).with_context(self)
+    test_type = kind.as_test_type.with_context(self)
 
     if test_type
       user = current_user.administrator? ?
@@ -135,20 +135,4 @@ class VendorTestPlansController < ApplicationController
     end
     redirect_to vendor_test_plans_url
   end
-  
-
-  def prepare_p_and_r
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], {
-      "$XDSDocumentEntryPatientId" => "'#{@vendor_test_plan.patient.patient_identifier}'",
-      "$XDSDocumentEntryStatus" => "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"
-    })
-    @metadata = rsqr.execute
-  end
-
-  def validate_p_and_r
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @vendor_test_plan.validate_xds_provide_and_register(YAML.load(params[:metadata]))
-  end
-
 end

@@ -16,9 +16,7 @@ ActionController::Routing::Routes.draw do |map|
                                                 :validatepix => :get,
                                                 :xds_query_checklist => :get,
                                                 :checklist => :get,
-                                                :set_status => :get,
-                                                :prepare_p_and_r => :get,
-                                                :validate_p_and_r => :post}
+                                                :set_status => :get }
 
   map.resources :patients,
       :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
