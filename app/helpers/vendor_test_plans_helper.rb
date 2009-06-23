@@ -19,15 +19,6 @@ module VendorTestPlansHelper
     end
   end
   
-  def execution_div(vendor_test_plan)
-    case vendor_test_plan.kind.display_name
-    when 'C32 Generate and Format'
-      render :partial => 'generate_and_format_execution_div', :locals => {:vendor_test_plan => vendor_test_plan}
-    when 'PIX Feed'
-      render :partial => 'pix_feed_execution_div', :locals => {:vendor_test_plan => vendor_test_plan}
-    end
-  end
-  
   # method used to mark the elements in the document that have errors so they 
     # can be linked to
     def match_errors(errors, doc)

@@ -66,7 +66,7 @@ class TestType
   # Return a test type wrapper that automatically uses the included
   # context for non-global (e.g., test type-specific) callbacks.
   def with_context(context)
-    ActiveSupport::OptionMerger.new(self, { :cb_context => context })
+    ActiveSupport::OptionMerger.new(self, :cb_context => context)
   end
 
   # Assign a test, returning a newly created vendor test plan.

@@ -3,5 +3,6 @@
 <% if vendor_test_plan.test_result %> 
    | <%= link_to 'inspect', validatepix_vendor_test_plan_url(vendor_test_plan) %>
 <% else %>  
-   | <%= link_to 'execute', "javascript:toggle_div('execution_div_#{vendor_test_plan.id}')" %>
+  | <%= link_to_remote 'execute', :url => test_operation_url(vendor_test_plan, 'gather_expected'),
+        :update => "execution_div_#{vendor_test_plan.id}" %>
 <% end %>
