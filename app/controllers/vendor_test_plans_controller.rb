@@ -113,12 +113,6 @@ class VendorTestPlansController < ApplicationController
     end
   end
   
-  def xds_query_checklist
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @metadata = @vendor_test_plan.metadata
-    render :layout => false
-  end
- 
   def set_status
     vendor_test_plan = VendorTestPlan.find(params[:id])
     if vendor_test_plan.user == current_user

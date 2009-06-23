@@ -51,6 +51,7 @@ TestType.register("PIX Feed")
 TestType.register("PIX Query")
 
 TestType.register("XDS Provide and Register") do
+  execution :checklist
   execution :select_document, :compare
 
   # XDS P&R assign callback, executed on test_type.assign(opt).
@@ -62,6 +63,12 @@ TestType.register("XDS Provide and Register") do
     render 'xds_patients/assign_success'
   end
 
+  checklist do |vendor_test_plan|
+    @metadata = vendor_test_plan.metadata
+    @vendor_test_plan = vendor_test_plan
+    render 'testop/xds/checklist', :layout => false
+  end
+ 
   select_document do |vendor_test_plan|
     rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], {
       "$XDSDocumentEntryPatientId" => "'#{vendor_test_plan.patient.patient_identifier}'",
@@ -80,6 +87,14 @@ TestType.register("XDS Provide and Register") do
 end
 
 TestType.register("XDS Query and Retrieve") do
+  execution :checklist
+
+  checklist do |vendor_test_plan|
+    @metadata = vendor_test_plan.metadata
+    @vendor_test_plan = vendor_test_plan
+    render 'testop/xds/checklist', :layout => false
+  end
+ 
   # XDS Q&R assign callback, executed on test_type.assign(opt).
   assign do |vendor_test_plan|
     vendor_test_plan.metadata = params[:metadata]

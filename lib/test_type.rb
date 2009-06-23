@@ -1,6 +1,5 @@
 class TestType
-  attr_reader :name, :callback
-  attr_writer :execution_callbacks
+  attr_reader :name, :callback, :execution_callbacks
   alias_method :to_s, :name
 
   class AssignFailure < StandardError; end
@@ -8,6 +7,7 @@ class TestType
   def initialize(name, &block)
     @name = name
     @callback = {}
+    @execution_callbacks = []
     Registration.new(self, &block)
   end
 
@@ -129,7 +129,7 @@ class TestType
 
   def perform(operation, vendor_test_plan, opt)
     context = opt.delete(:cb_context)
-    if @execution_callbacks.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
+    if @execution_callbacks.flatten.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
       if context
         begin
           context.instance_exec(vendor_test_plan, &callback[operation.to_sym])
@@ -160,7 +160,7 @@ class TestType
     end
 
     def execution(*callbacks)
-      @test_type.execution_callbacks = callbacks
+      @test_type.execution_callbacks << callbacks
     end
 
     def method_missing(method_name, &block)
