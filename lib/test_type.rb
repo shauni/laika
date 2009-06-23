@@ -1,6 +1,7 @@
 class TestType
   attr_reader :name, :callback
   attr_writer :execution_callbacks
+  alias_method :to_s, :name
 
   class AssignFailure < StandardError; end
 
@@ -10,12 +11,16 @@ class TestType
     Registration.new(self, &block)
   end
 
+  def to_param
+    self.class.normalize_name(@name).gsub('-','_')
+  end
+
   # implement accessors for individual callbacks, e.g. assign_cb, execute_cb
   def method_missing(method_name, *args)
     if method_name.to_s.match(/^(\w+)_cb$/)
       callback[$1.to_sym]
     else
-      raise NoMethodError.new("unrecognized method `#{method_name}'", method_name)
+      raise NoMethodError.new("no such method `#{method_name}'", method_name)
     end
   end
 
@@ -61,8 +66,7 @@ class TestType
   # Return a test type wrapper that automatically uses the included
   # context for non-global (e.g., test type-specific) callbacks.
   def with_context(context)
-    # this feels too clever by half, but it works great
-    with_options(:cb_context => context) {|wrapped| return wrapped }
+    ActiveSupport::OptionMerger.new(self, { :cb_context => context })
   end
 
   # Assign a test, returning a newly created vendor test plan.
@@ -123,6 +127,21 @@ class TestType
     vendor_test_plan
   end
 
+  def perform(operation, vendor_test_plan, opt)
+    context = opt.delete(:cb_context)
+    if @execution_callbacks.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
+      if context
+        begin
+          context.instance_exec(vendor_test_plan, &callback[operation.to_sym])
+        rescue ActionController::DoubleRenderError
+          raise AssignFailure, "Test assignment failed: double render in callback"
+        end
+      else
+        callback[operation.to_sym].call(vendor_test_plan)
+      end
+    end
+  end
+
   private
 
   def self.test_types
@@ -130,7 +149,7 @@ class TestType
   end
 
   def self.normalize_name(name)
-    name.strip.downcase.gsub(/\ba?nd?\b|&/i, '-').gsub(/\W+/, '-')
+    name.strip.downcase.gsub('_','-').gsub(/\ba?nd?\b|&/i, '-and-').gsub(/\W+/, '-')
   end
 
   # Manage test type registration
@@ -149,3 +168,8 @@ class TestType
     end
   end
 end
+
+# In development mode this file can be reloaded, wiping the class instance
+# var that stores the test_types global. In order to counter this we must
+# re-register the test types manually when the TestType class gets reloaded.
+load 'test_types.rb'

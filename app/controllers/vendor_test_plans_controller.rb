@@ -1,5 +1,4 @@
 require_dependency 'sort_order'
-require_dependency 'test_types'
 
 class VendorTestPlansController < ApplicationController
   page_title 'Laika Dashboard'

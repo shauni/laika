@@ -6,6 +6,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
+  # test operations on vendor test plans
+  map.testop '/vendor_test_plans/:vendor_test_plan_id/testop/:test_type/:test_operation',
+    :controller => 'testop', :action => 'perform_test_operation'
+
   map.resources :vendor_test_plans, :has_one => [:clinical_document, :test_result],
                                     :member => {:inspect_content => :get,
                                                 :validate => :get,
