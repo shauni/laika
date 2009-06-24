@@ -81,10 +81,6 @@ class VendorTestPlansController < ApplicationController
     redirect_to vendor_test_plans_path
   end
 
-  def inspect_content
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-  end
-
   # perform the external validation and display the results
   def validate 
     @vendor_test_plan = VendorTestPlan.find(params[:id])  

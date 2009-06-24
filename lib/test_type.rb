@@ -1,5 +1,5 @@
 class TestType
-  attr_reader :name, :callback, :execution_callbacks
+  attr_reader :name, :callback, :execution_paths
   alias_method :to_s, :name
 
   class AssignFailure < StandardError; end
@@ -7,7 +7,7 @@ class TestType
   def initialize(name, &block)
     @name = name
     @callback = {}
-    @execution_callbacks = []
+    @execution_paths = []
     Registration.new(self, &block)
   end
 
@@ -20,7 +20,7 @@ class TestType
     if method_name.to_s.match(/^(\w+)_cb$/)
       callback[$1.to_sym]
     else
-      raise NoMethodError.new("no such method `#{method_name}'", method_name)
+      super
     end
   end
 
@@ -129,7 +129,7 @@ class TestType
 
   def perform(operation, vendor_test_plan, opt)
     context = opt.delete(:cb_context)
-    if @execution_callbacks.flatten.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
+    if execution_paths.flatten.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
       if context
         begin
           context.instance_exec(vendor_test_plan, &callback[operation.to_sym])
@@ -159,8 +159,8 @@ class TestType
       instance_eval(&block) if block_given?
     end
 
-    def execution(*callbacks)
-      @test_type.execution_callbacks << callbacks
+    def execution(*callback_names)
+      @test_type.execution_paths << callback_names
     end
 
     def method_missing(method_name, &block)
