@@ -153,7 +153,7 @@ class TestType
   end
 
   # Manage test type registration
-  class Registration
+  class Registration < ActiveSupport::BasicObject
     def initialize(test_type, &block)
       @test_type = test_type
       instance_eval(&block) if block_given?

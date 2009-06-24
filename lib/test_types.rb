@@ -64,7 +64,7 @@ end
 TestType.register("PDQ Query")
 
 TestType.register("PIX Feed") do
-  execution :gather_expected, :compare, :results
+  execution :gather_expected, :compare, :inspect
 
   gather_expected do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
@@ -86,7 +86,7 @@ TestType.register("PIX Feed") do
     @vendor_test_plan.test_result = @test_result
   end
 
-  results do |vendor_test_plan|
+  inspect do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     @patient = vendor_test_plan.patient
     render 'testop/pix_feed/results'
