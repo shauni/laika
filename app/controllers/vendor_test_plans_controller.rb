@@ -86,11 +86,6 @@ class VendorTestPlansController < ApplicationController
     @vendor_test_plan = VendorTestPlan.find(params[:id])  
   end
 
-  def validatepix
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @patient = @vendor_test_plan.patient
-  end
-
   def checklist 
     @vendor_test_plan = VendorTestPlan.find(params[:id])
     clinical_document = @vendor_test_plan.clinical_document

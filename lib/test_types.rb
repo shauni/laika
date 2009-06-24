@@ -93,7 +93,15 @@ TestType.register("PIX Feed") do
   end
 end
 
-TestType.register("PIX Query")
+TestType.register("PIX Query") do
+  execution :checklist
+
+  checklist do |vendor_test_plan|
+    @vendor_test_plan = vendor_test_plan
+    @patient = vendor_test_plan.patient
+    render 'testop/pix_feed/results'
+  end
+end
 
 TestType.register("XDS Provide and Register") do
   execution :checklist
