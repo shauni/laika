@@ -64,14 +64,32 @@ end
 TestType.register("PDQ Query")
 
 TestType.register("PIX Feed") do
-  execution :gather_expected, :compare
+  execution :gather_expected, :compare, :results
 
   gather_expected do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     render 'testop/pix_feed/gather_expected', :layout => false
   end
 
-  validate do |vendor_test_plan|
+  compare do |vendor_test_plan|
+    @vendor_test_plan = vendor_test_plan
+    @test_result = TestResult.new(params[:test_result])
+
+    @vendor_test_plan.patient.patient_identifiers.each do |pi|
+      if pi.patient_identifier == @test_result.patient_identifier &&
+          pi.affinity_domain == @test_result.assigning_authority
+        @test_result.result = 'PASS'
+        break
+      end
+    end
+
+    @vendor_test_plan.test_result = @test_result
+  end
+
+  results do |vendor_test_plan|
+    @vendor_test_plan = vendor_test_plan
+    @patient = vendor_test_plan.patient
+    render 'testop/pix_feed/results'
   end
 end
 
