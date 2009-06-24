@@ -40,7 +40,14 @@ end
 # calls like redirect_to and params work as you'd expect.
 #
 
-TestType.register("C32 Display and File")
+TestType.register("C32 Display and File") do
+  execution :checklist
+
+  checklist do |vendor_test_plan|
+    @patient = vendor_test_plan.patient
+    render 'testop/c32_display_and_file/checklist.xml', :layout => false
+  end
+end
 
 TestType.register("C32 Generate and Format") do
   execution :upload_document, :validate
@@ -61,7 +68,15 @@ TestType.register("C32 Generate and Format") do
   end
 end
 
-TestType.register("PDQ Query")
+TestType.register("PDQ Query") do
+  execution :checklist
+
+  checklist do |vendor_test_plan|
+    @vendor_test_plan = vendor_test_plan
+    @patient = vendor_test_plan.patient
+    render 'testop/pix_feed/results'
+  end
+end
 
 TestType.register("PIX Feed") do
   execution :gather_expected, :compare, :inspect

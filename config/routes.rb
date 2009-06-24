@@ -11,7 +11,6 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'testop', :action => 'perform_test_operation'
 
   map.resources :vendor_test_plans, :member => {:validate => :get,
-                                                :validatepix => :get,
                                                 :checklist => :get,
                                                 :set_status => :get }
 
@@ -22,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get },
+      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get },
       :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|

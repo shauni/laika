@@ -9,6 +9,6 @@
     | <%= link_to_remote 'execute', :url => test_operation_url(vendor_test_plan, 'upload_document'), :update => "execution_div_#{vendor_test_plan.id}" %>
   <% else %>
     | <%= link_to 'xml', patient_url(vendor_test_plan.patient, :format => 'xml') %> 
-    | <%= link_to 'checklist', checklist_patient_url(vendor_test_plan.patient) %>
+    | <%= link_to 'checklist', test_operation_url(vendor_test_plan, 'checklist') %>
   <% end %>
 <% end %>
