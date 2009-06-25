@@ -18,10 +18,7 @@ class XdsPatientsController < ApplicationController
   
   def query
     pi = PatientIdentifier.find(params[:id])
-    rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], 
-                                                {"$XDSDocumentEntryPatientId" => "'#{pi.identifier_and_domain}'",
-                                                 "$XDSDocumentEntryStatus" => "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"})
-    @metadata = rsqr.execute
+    @metadata = XDSUtils.list_document_metadata(pi)
     @vendors = current_user.vendors + Vendor.unclaimed
     @patient_identifier = pi
     @kind = Kind.find_by_name('Query and Retrieve')
@@ -56,9 +53,7 @@ class XdsPatientsController < ApplicationController
     md.language_code = 'en-us'
     md.creation_time = Time.now.to_s(:brief)
 
-    prdsr = XDS::ProvideAndRegisterDocumentSetBXop.new(XDS_REGISTRY_URLS[:retrieve_document_set_request],
-                                                       md, pd.to_c32)
-    response = prdsr.execute
+    response = XDSUtils.provide_and_register(md, pd.to_c32)
     if response.success?
       flash[:notice] = "Provide and Register successful"
     else

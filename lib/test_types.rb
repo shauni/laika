@@ -138,11 +138,7 @@ TestType.register("XDS Provide and Register") do
   end
  
   select_document do |vendor_test_plan|
-    rsqr = XDS::RegistryStoredQueryRequest.new(XDS_REGISTRY_URLS[:register_stored_query], {
-      "$XDSDocumentEntryPatientId" => "'#{vendor_test_plan.patient.patient_identifier}'",
-      "$XDSDocumentEntryStatus" => "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"
-    })
-    @metadata = rsqr.execute
+    @metadata = XDSUtils.list_document_metadata(vendor_test_plan.patient.patient_identifier)
     @vendor_test_plan = vendor_test_plan
     render 'testop/xds_provide_and_register/select_document'
   end
