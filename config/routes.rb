@@ -10,6 +10,8 @@ ActionController::Routing::Routes.draw do |map|
   map.testop '/vendor_test_plans/:vendor_test_plan_id/testop/:test_type/:test_operation',
     :controller => 'testop', :action => 'perform_test_operation'
 
+  map.resources :settings, :only => [:index, :update]
+
   map.resources :vendor_test_plans, :has_one => [:test_result],
                                     :member => {:validate => :get,
                                                 :checklist => :get,
