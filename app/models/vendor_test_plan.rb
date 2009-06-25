@@ -65,6 +65,7 @@ class VendorTestPlan < ActiveRecord::Base
       validator = Validators::XdsMetadataValidator.new
       validation_errors = validator.validate(metadata, metadata_of_interest)
       if validation_errors.empty?
+        content_errors.clear
         self.test_result = TestResult.new(:result => 'PASS')
       else
         content_errors << validation_errors
