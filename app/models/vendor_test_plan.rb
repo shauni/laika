@@ -32,7 +32,7 @@ class VendorTestPlan < ActiveRecord::Base
       raw_metadata[:source_patient_info] = patient.source_patient_info
       md = XDS::Metadata.new
       md.from_hash(raw_metadata, AFFINITY_DOMAIN_CONFIG)
-      md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
+      md.repository_unique_id = Setting.xds_repository_unique_id
       md.patient_id = patient.patient_identifier
       super md
     end
