@@ -13,10 +13,6 @@
       <td><%= f.select :user_id, User.select_options %></td>
     </tr>
   <% end -%>
-  <tr>
-    <td>Unique Id</td>
-    <td><%= text_field_tag 'metadata[unique_id]', '', :size => 45 %></td>
-  </tr>
   <%= render :partial => 'provide_and_register_form' %>
   <tr>
     <td></td>

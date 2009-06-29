@@ -41,10 +41,10 @@ class Condition < ActiveRecord::Base
             if start_event.present? || end_event.present?
               xml.effectiveTime do
                 if start_event.present?
-                  xml.low("value" => start_event.strftime("%Y%m%d"))
+                  xml.low("value" => start_event.to_s(:brief))
                 end
                 if end_event.present?
-                  xml.high("value" => end_event.strftime("%Y%m%d"))
+                  xml.high("value" => end_event.to_s(:brief))
                 else
                   xml.high("nullFlavor" => "UNK")
                 end
@@ -112,7 +112,7 @@ class Condition < ActiveRecord::Base
                       xml.td
                     end  
                     if condition.start_event != nil
-                      xml.td condition.start_event.strftime("%Y%m%d")
+                      xml.td condition.start_event.to_s(:brief)
                     else
                       xml.td
                     end

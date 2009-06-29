@@ -88,8 +88,16 @@ Rails::Initializer.run do |config|
   config.time_zone = "Eastern Time (US & Canada)"
 end
 
-ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] = '%d.%b.%Y'
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:default]  = '%d.%b.%Y'
+[
+  ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS,
+  ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS
+].each do |df|
+  df[:default]         = '%B %d, %Y'
+  df[:brief]           = '%Y%m%d'
+  df[:year]            = '%Y'
+  df[:brief_timestamp] = '%Y%m%d%H%M%S'
+  df[:long_timestamp]  = '%d.%b.%Y %I:%M %p %Z'
+end
 
 ENV['HOST_URL'] = 'http://demo.cchit.org/laika'
 ENV['HELP_LIST'] = 'talk@projectlaika.org'
@@ -99,8 +107,4 @@ ActionMailer::Base.smtp_settings = {
   :port => 25,
   :domain => "mitre.org",
 }
-
-XDS_HOST = "http://129.6.24.109:9080"
-XDS_REGISTRY_URLS = {:register_stored_query=>"#{XDS_HOST}/tf5/services/xdsregistryb",
-                     :retrieve_document_set_request=>"#{XDS_HOST}/tf5/services/xdsrepositoryb"}
 

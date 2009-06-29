@@ -19,15 +19,6 @@ module VendorTestPlansHelper
     end
   end
   
-  def execution_div(vendor_test_plan)
-    case vendor_test_plan.kind.display_name
-    when 'C32 Generate and Format'
-      render :partial => 'generate_and_format_execution_div', :locals => {:vendor_test_plan => vendor_test_plan}
-    when 'PIX Feed'
-      render :partial => 'pix_feed_execution_div', :locals => {:vendor_test_plan => vendor_test_plan}
-    end
-  end
-  
   # method used to mark the elements in the document that have errors so they 
     # can be linked to
     def match_errors(errors, doc)
@@ -59,37 +50,6 @@ module VendorTestPlansHelper
       error_map
     end
     
-  def xds_metadata_single_attribute(metadata, attribute)
-    "<tr>
-      <td><strong>#{attribute.to_s.humanize}</strong></td>
-      <td>#{metadata.send(attribute)}</td>
-      <td></td>
-    </tr>"
-  end
-  
-  def xds_metadata_coded_attribute(metadata, attribute)
-    "<tr>
-      <td><strong>#{attribute.to_s.humanize}</strong></td>
-      <td><strong>Display name</strong></td>
-      <td>#{metadata.send(attribute).display_name}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><strong>Code</strong></td>
-      <td>#{metadata.send(attribute).code}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><strong>Coding Scheme</strong></td>
-      <td>#{metadata.send(attribute).coding_scheme}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><strong>Classification Scheme</strong></td>
-      <td>#{metadata.send(attribute).classification_scheme}</td>
-    </tr>"
-  end
-  
   def vendor_test_plan_status(vtp)
     
         

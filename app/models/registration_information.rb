@@ -42,7 +42,7 @@ class RegistrationInformation < ActiveRecord::Base
       person_name.andand.to_c32(xml)
       gender.andand.to_c32(xml)
       if date_of_birth
-        xml.birthTime("value" => date_of_birth.strftime("%Y%m%d"))  
+        xml.birthTime("value" => date_of_birth.to_s(:brief))  
       end
 
       marital_status.andand.to_c32(xml)
@@ -72,15 +72,16 @@ class RegistrationInformation < ActiveRecord::Base
   end
 
   def randomize(patient)
-
     pi = patient.patient_identifiers.build
     pi.randomize
-    pi.save
     self.affinity_domain_identifier = pi
 
     self.document_timestamp = DateTime.new(2000 + rand(8), rand(12) + 1, rand(28) + 1)
 
-    self.person_name = patient
+    name = PersonName.new
+    name.first_name = Faker::Name.first_name
+    name.last_name = Faker::Name.last_name
+    self.person_name = name
     self.gender = Gender.find(:all).sort_by{rand}.first
     self.race = Race.find(:all).sort_by{rand}.first
     self.ethnicity = Ethnicity.find(:all).sort_by{rand}.first

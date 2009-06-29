@@ -15,7 +15,7 @@ class InsuranceProviderSubscriber < ActiveRecord::Base
         xml.playingEntity do
             person_name.andand.to_c32(xml)
           if !date_of_birth.blank?
-             xml.sdtc(:birthTime, "value" => date_of_birth.strftime("%Y%m%d"))
+             xml.sdtc(:birthTime, "value" => date_of_birth.to_s(:brief))
           end
         end
       end

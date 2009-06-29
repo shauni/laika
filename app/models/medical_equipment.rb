@@ -14,7 +14,7 @@ class MedicalEquipment < ActiveRecord::Base
         xml.statusCode("code" => "completed")
         if date_supplied
           xml.effectiveTime("xsi:type"=>"IVL_TS") do 
-            xml.center("value" => date_supplied.strftime("%Y%m%d"))
+            xml.center("value" => date_supplied.to_s(:brief))
           end
         end
         xml.participant("typeCode" => "DEV") do

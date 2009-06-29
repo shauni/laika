@@ -32,7 +32,12 @@
           <%= action_area(vendor_test_plan) %>
         </td>
       </tr>
-      <%= execution_div(vendor_test_plan) %>
+      <tr>
+        <td colspan="7" align="right">
+          <div id="execution_div_<%=vendor_test_plan.id%>"></div>
+        </td>
+      </tr>
+
     <% end %> <!-- vendor_test_plan loop -->
   </table> <!-- .dashboard -->
   <span id="export-report">

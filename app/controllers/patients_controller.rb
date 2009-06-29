@@ -37,12 +37,6 @@ class PatientsController < ApplicationController
     redirect_to patients_url
   end
   
-  def checklist
-    respond_to do |format|
-      format.xml  
-    end
-  end
-
   def show
     if @patient.vendor_test_plan_id 
       @show_dashboard = true

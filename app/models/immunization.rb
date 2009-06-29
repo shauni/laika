@@ -26,7 +26,7 @@ class Immunization < ActiveRecord::Base
         xml.statusCode('code' => 'completed')
         if administration_date
           xml.effectiveTime('xsi:type' => "IVL_TS") do
-            xml.center('value' => administration_date.strftime("%Y%m%d")) 
+            xml.center('value' => administration_date.to_s(:brief)) 
           end
         end
         xml.consumable do

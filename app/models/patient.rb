@@ -54,7 +54,7 @@ class Patient < ActiveRecord::Base
     spi = {}
     spi[:name] = name
     spi[:gender] = registration_information.gender.code
-    spi[:date_of_birth] = registration_information.date_of_birth.strftime("%Y%m%d")
+    spi[:date_of_birth] = registration_information.date_of_birth.to_s(:brief)
     spi[:source_patient_identifier] = patient_identifier
     spi
   end
@@ -181,11 +181,8 @@ class Patient < ActiveRecord::Base
     @last_name = Faker::Name.last_name
     self.name = @first_name + " " +  @last_name
 
-    @name = PersonName.new
-    @name.first_name = @first_name
-    @name.last_name = @last_name
-
-    self.registration_information.randomize(@name)
+    registration_information.randomize(self)
+    self.name = registration_information.full_name
 
     # if patient is female, 10% chance patient is pregnant
     if self.registration_information.gender.code == 'F'
@@ -265,7 +262,7 @@ class Patient < ActiveRecord::Base
  private
 
   def c32_timestamp(datetime)
-    datetime.strftime("%Y%m%d%H%M%S") + datetime.formatted_offset(false)
+    datetime.to_s(:brief_timestamp) + datetime.formatted_offset(false)
   end
 
   # If the patient is pregnant, this method will add the appropriate
