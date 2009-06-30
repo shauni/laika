@@ -62,6 +62,23 @@ describe TestType, "with an existing test kind" do
     end
   end
 
+  describe "with a shared type" do
+    before do
+      TestType.shared('Your Mom') do
+        execution :foo
+        foo {|vtp| "ran #{vtp}" }
+      end
+      TestType.register(@kind.display_name) do
+        include_shared 'Your Mom'
+      end
+      @test_type = TestType.get(@kind.display_name)
+    end
+
+    it "should execute shared operation" do
+      @test_type.perform(:foo, 'shared').should == 'ran shared'
+    end
+  end
+
   describe "with a registered type, error during assign" do
     before do
       TestType.register(@kind.display_name) do

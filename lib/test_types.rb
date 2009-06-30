@@ -68,14 +68,21 @@ TestType.register("C32 Generate and Format") do
   end
 end
 
-TestType.register("PDQ Query") do
+TestType.shared("PIX/PDQ") do
   execution :checklist
-
   checklist do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     @patient = vendor_test_plan.patient
     render 'testop/pix_feed/results'
   end
+end
+
+TestType.register("PDQ Query") do
+  include_shared "PIX/PDQ"
+end
+
+TestType.register("PIX Query") do
+  include_shared "PIX/PDQ"
 end
 
 TestType.register("PIX Feed") do
@@ -108,18 +115,19 @@ TestType.register("PIX Feed") do
   end
 end
 
-TestType.register("PIX Query") do
+TestType.shared('XDS') do
   execution :checklist
 
   checklist do |vendor_test_plan|
+    @metadata = vendor_test_plan.metadata
     @vendor_test_plan = vendor_test_plan
-    @patient = vendor_test_plan.patient
-    render 'testop/pix_feed/results'
+    render 'testop/xds/checklist', :layout => false
   end
 end
 
 TestType.register("XDS Provide and Register") do
-  execution :checklist
+  include_shared 'XDS'
+
   execution :select_document, :compare
 
   # XDS P&R assign callback, executed on test_type.assign(opt).
@@ -131,12 +139,6 @@ TestType.register("XDS Provide and Register") do
     render 'xds_patients/assign_success'
   end
 
-  checklist do |vendor_test_plan|
-    @metadata = vendor_test_plan.metadata
-    @vendor_test_plan = vendor_test_plan
-    render 'testop/xds/checklist', :layout => false
-  end
- 
   select_document do |vendor_test_plan|
     @metadata = XDSUtils.list_document_metadata(vendor_test_plan.patient.patient_identifier)
     @vendor_test_plan = vendor_test_plan
@@ -151,14 +153,8 @@ TestType.register("XDS Provide and Register") do
 end
 
 TestType.register("XDS Query and Retrieve") do
-  execution :checklist
+  include_shared 'XDS'
 
-  checklist do |vendor_test_plan|
-    @metadata = vendor_test_plan.metadata
-    @vendor_test_plan = vendor_test_plan
-    render 'testop/xds/checklist', :layout => false
-  end
- 
   # XDS Q&R assign callback, executed on test_type.assign(opt).
   assign do |vendor_test_plan|
     vendor_test_plan.metadata = params[:metadata]

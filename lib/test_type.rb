@@ -46,6 +46,16 @@ class TestType
     end
   end
 
+  # Define shared operations by passing a block.
+  def self.shared name, &block
+    @shared_operations ||= {}
+    if block_given?
+      @shared_operations[ normalize_name name ] = block
+    else
+      @shared_operations[ normalize_name name ]
+    end
+  end
+
   # Get a registered test type given a name.
   # If there is no such test registered, returns nil.
   def self.get(type_name)
@@ -127,7 +137,7 @@ class TestType
     vendor_test_plan
   end
 
-  def perform(operation, vendor_test_plan, opt)
+  def perform(operation, vendor_test_plan, opt = {})
     context = opt.delete(:cb_context)
     if execution_paths.flatten.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
       if context
@@ -157,6 +167,10 @@ class TestType
     def initialize(test_type, &block)
       @test_type = test_type
       instance_eval(&block) if block_given?
+    end
+
+    def include_shared name
+      instance_eval &TestType.shared(name)
     end
 
     def execution(*callback_names)
