@@ -6,7 +6,7 @@
      <% unless vendor_test_plan.test_result.try(:result) == "FAIL"  %>  
        <div><%= link_to test_fail ,set_status_vendor_test_plan_url(vendor_test_plan,:status=>:fail) %></div>
      <% end %>
-     <% unless vendor_test_plan.test_result.nil? || vendor_test_plan.test_result.andand.result == "IN-PROGRESS" %>
+     <% unless vendor_test_plan.test_result.nil? || vendor_test_plan.test_result.try(:result) == "IN-PROGRESS" %>
     <div><%= link_to test_in_progress, set_status_vendor_test_plan_url(vendor_test_plan,:status=>:inprogress) %></div>
     <% end %>
 

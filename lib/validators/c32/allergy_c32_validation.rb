@@ -53,7 +53,7 @@
           #  if severity_element
           #   errors.concat(self.severity_term.validate_c32(severity_element))
           #  else
-          #    errors << ContentError.new(:section => 'allergies', :subsection => 'severity_term', :error_message => "Unable to find severity", :location => adverse_event.andand.xpath)
+          #    errors << ContentError.new(:section => 'allergies', :subsection => 'severity_term', :error_message => "Unable to find severity", :location => adverse_event.try(:xpath))
           #  end
           #end
         else
