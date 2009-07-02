@@ -28,8 +28,9 @@ module SortOrder
     klass.class_eval do
       hide_action :sort_order
       hide_action :sort_spec
+      include InstanceMethods
+      extend ClassMethods
     end
-    klass.extend(ClassMethods)
   end
 
   # This provides a getter and setter for the class-wide valid_sort_fields accessor.
@@ -43,34 +44,35 @@ module SortOrder
     end
   end
 
-  # Get the requested sort order from the params or session. This is a string suitable for passing
-  # to an activerecord finder as :order.
-  def sort_order
-    case sort_spec
-    when /^\-([\w\.]+)$/
-      invalid_sort_spec?($1) ? nil : "#{$1} DESC"
-    when /^[\w\.]+$/
-      invalid_sort_spec?(sort_spec) ? nil : "#{sort_spec} ASC"
-    else
-      nil
+  module InstanceMethods
+    # Get the requested sort order from the params or session. This is a string suitable for passing
+    # to an activerecord finder as :order.
+    def sort_order
+      case sort_spec
+      when /^\-([\w\.]+)$/
+        invalid_sort_spec?($1) ? nil : "#{$1} DESC"
+      when /^[\w\.]+$/
+        invalid_sort_spec?(sort_spec) ? nil : "#{sort_spec} ASC"
+      else
+        nil
+      end
     end
-  end
 
-  # This is the accessor for the current sort specifier. It comes from the params or session.
-  # The sort specifier is a string containing the identifier name, optionally preceded with a table (and a dot).
-  # If there is a leading dash ("-") in the string the result sorts descending, otherwise it sorts ascending.
-  def sort_spec
-    session[session_sort_key] = params[:sort] || session[session_sort_key]
-  end
+    # This is the accessor for the current sort specifier. It comes from the params or session.
+    # The sort specifier is a string containing the identifier name, optionally preceded with a table (and a dot).
+    # If there is a leading dash ("-") in the string the result sorts descending, otherwise it sorts ascending.
+    def sort_spec
+      session[session_sort_key] = params[:sort] || session[session_sort_key]
+    end
 
-  private
-
-  def invalid_sort_spec?(sort)
-    self.class.valid_sort_fields && !self.class.valid_sort_fields.include?(sort)
-  end
-  
-  def session_sort_key
-    "#{controller_name}:#{action_name}:sort".to_sym
+    private
+    def invalid_sort_spec?(sort)
+      self.class.valid_sort_fields && !self.class.valid_sort_fields.include?(sort)
+    end
+    
+    def session_sort_key
+      "#{controller_name}:#{action_name}:sort".to_sym
+    end
   end
 end
 
