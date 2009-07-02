@@ -42,8 +42,8 @@ module SupportC32Validation
           errors.concat self.telecom.validate_c32(support)
         end
         # classcode
-        errors << match_value(support, "@classCode", "contact_type", contact_type.andand.code)
-        errors << match_value(support, "cda:code[@codeSystem='2.16.840.1.113883.5.111']/@code", "relationship", relationship.andand.code)
+        errors << match_value(support, "@classCode", "contact_type", contact_type.try(:code))
+        errors << match_value(support, "cda:code[@codeSystem='2.16.840.1.113883.5.111']/@code", "relationship", relationship.try(:code))
       else
         # add the error for no support object being there 
         errors <<  ContentError.new(:section=> "Support", 

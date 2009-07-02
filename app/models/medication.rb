@@ -140,7 +140,7 @@ class Medication < ActiveRecord::Base
                 end
               end
               xml.tbody do
-                medications.andand.each do |medication|
+                medications.try(:each) do |medication|
                   xml.tr do
                     if medication.product_coded_display_name != nil
                       xml.td do

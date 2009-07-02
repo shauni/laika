@@ -20,8 +20,8 @@
           if problem_type
             errors.concat problem_type.validate_c32(code)
           end
-          errors << match_value(observation, "cda:effectiveTime/cda:low/@value", "start_event", start_event.andand.to_formatted_s(:hl7_ts))
-          errors << match_value(observation, "cda:effectiveTime/cda:high/@value", "end_event", end_event.andand.to_formatted_s(:hl7_ts))
+          errors << match_value(observation, "cda:effectiveTime/cda:low/@value", "start_event", start_event.try(:to_formatted_s, :hl7_ts))
+          errors << match_value(observation, "cda:effectiveTime/cda:high/@value", "end_event", end_event.try(:to_formatted_s, :hl7_ts))
           if free_text_name
             text =  REXML::XPath.first(observation,"cda:text",MatchHelper::DEFAULT_NAMESPACES)
             deref_text = deref(text)

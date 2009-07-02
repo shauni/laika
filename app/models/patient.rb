@@ -46,7 +46,7 @@ class Patient < ActiveRecord::Base
   end
 
   def patient_identifier
-    registration_information.andand.affinity_domain_identifier.to_s
+    registration_information.try(:affinity_domain_identifier).to_s
   end
 
   # Returns a hash containing source_patient_info for use in XDS metadata
@@ -108,7 +108,7 @@ class Patient < ActiveRecord::Base
                "codeSystemName" => "LOINC")
       xml.title(name)
 
-      if registration_information.andand.document_timestamp
+      if registration_information.try(:document_timestamp)
         xml.effectiveTime("value" => c32_timestamp(registration_information.document_timestamp))
       else
         xml.effectiveTime("value" => c32_timestamp(updated_at))
@@ -119,12 +119,12 @@ class Patient < ActiveRecord::Base
       # Start Person (Registation) Information
       xml.recordTarget do
         xml.patientRole do
-          registration_information.andand.to_c32(xml)
+          registration_information.try(:to_c32, xml)
         end
       end
       # End Person (Registation) Information
 
-      information_source.andand.to_c32(xml)
+      information_source.try(:to_c32, xml)
 
       xml.custodian do
         xml.assignedCustodian do
@@ -154,7 +154,7 @@ class Patient < ActiveRecord::Base
 
           medications.to_c32(xml)
 
-          advance_directive.andand.to_c32(xml)
+          advance_directive.try(:to_c32, xml)
 
           vital_signs.to_c32(xml)
 

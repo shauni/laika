@@ -34,11 +34,11 @@
           errors << match_value(adverse_event, 
                                "cda:effectiveTime/cda:low/@value", 
                                'start_event', 
-                               self.start_event.andand.to_formatted_s(:hl7_ts))
+                               self.start_event.try(:to_formatted_s, :hl7_ts))
           errors << match_value(adverse_event, 
                                "cda:effectiveTime/cda:high/@value", 
                                'end_event', 
-                               self.end_event.andand.to_formatted_s(:hl7_ts))
+                               self.end_event.try(:to_formatted_s, :hl7_ts))
           errors << match_value(adverse_event, 
                                 "cda:participant[@typeCode='CSM']/cda:participantRole[@classCode='MANU']/cda:playingEntity[@classCode='MMAT']/cda:name", 
                                 'free_text_product', 
@@ -59,7 +59,7 @@
         else
           errors << ContentError.new(:section => 'allergies', 
                                      :error_message => "Unable to find product #{free_text_product}", 
-                                     :location => section.andand.xpath)
+                                     :location => section.try(:xpath))
         end
       rescue
         errors << ContentError.new(:section => 'Allergy', 
@@ -91,7 +91,7 @@
           errors << ContentError.new(:section => 'allergies', :error_message => "Unable to find observation", :location => section.xpath)
         end
       else
-        errors << ContentError.new(:section => 'allergies', :error_message => "Unable to find allergies section", :location => clinical_document.andand.xpath)
+        errors << ContentError.new(:section => 'allergies', :error_message => "Unable to find allergies section", :location => clinical_document.try(:xpath))
       end
       errors.compact
     end

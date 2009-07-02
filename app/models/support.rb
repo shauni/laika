@@ -28,8 +28,8 @@ class Support < ActiveRecord::Base
                    "codeSystem" => "2.16.840.1.113883.5.111",
                    "codeSystemName" => "RoleCode")
         end
-        address.andand.to_c32(xml)
-        telecom.andand.to_c32(xml)
+        address.try(:to_c32, xml)
+        telecom.try(:to_c32, xml)
         xml.guardianPerson do
           person_name.to_c32(xml)
         end
@@ -52,10 +52,10 @@ class Support < ActiveRecord::Base
                      "codeSystem" => "2.16.840.1.113883.5.111",
                      "codeSystemName" => "RoleCode")
           end
-          address.andand.to_c32(xml)
-          telecom.andand.to_c32(xml) 
+          address.try(:to_c32, xml)
+          telecom.try(:to_c32, xml) 
           xml.associatedPerson do
-            person_name.andand.to_c32(xml)
+            person_name.try(:to_c32, xml)
           end
         end
       end

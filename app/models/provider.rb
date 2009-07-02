@@ -41,11 +41,11 @@ class Provider < ActiveRecord::Base
 
       xml.assignedEntity do
         xml.id
-        provider_type.andand.to_c32(xml)
-        address.andand.to_c32(xml)
-        telecom.andand.to_c32(xml)  
+        provider_type.try(:to_c32, xml)
+        address.try(:to_c32, xml)
+        telecom.try(:to_c32, xml)  
         xml.assignedPerson do
-          person_name.andand.to_c32(xml)
+          person_name.try(:to_c32, xml)
         end
 
         unless organization.blank?
