@@ -61,7 +61,7 @@
                   errors << match_value(code_element, "@codeSystemName", "code_system_name", self.code_system.try(:name))
                 end
                 errors << match_value(result_element, "cda:statusCode/@code", "status_code", self.status_code)
-                errors << match_value(result_element, "cda:effectiveTime/@value", "result_date", self.result_date.try(:to_formatted_s, :hl7_ts))
+                errors << match_value(result_element, "cda:effectiveTime/@value", "result_date", self.result_date.try(:to_formatted_s, :brief))
                 errors << match_value(result_element, "cda:value/@value", "value_scalar", self.value_scalar)
                 errors << match_value(result_element, "cda:value/@unit", "value_unit", self.value_unit)
               end

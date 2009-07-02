@@ -34,11 +34,11 @@
           errors << match_value(adverse_event, 
                                "cda:effectiveTime/cda:low/@value", 
                                'start_event', 
-                               self.start_event.try(:to_formatted_s, :hl7_ts))
+                               self.start_event.try(:to_formatted_s, :brief))
           errors << match_value(adverse_event, 
                                "cda:effectiveTime/cda:high/@value", 
                                'end_event', 
-                               self.end_event.try(:to_formatted_s, :hl7_ts))
+                               self.end_event.try(:to_formatted_s, :brief))
           errors << match_value(adverse_event, 
                                 "cda:participant[@typeCode='CSM']/cda:participantRole[@classCode='MANU']/cda:playingEntity[@classCode='MMAT']/cda:name", 
                                 'free_text_product', 

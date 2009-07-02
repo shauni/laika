@@ -16,10 +16,10 @@ module SupportC32Validation
         time_element = REXML::XPath.first(support, "../cda:time", {'cda' => 'urn:hl7-org:v3'})
         if time_element
           if self.start_support
-            errors << match_value(time_element, "cda:low/@value", "start_support", self.start_support.to_formatted_s(:hl7_ts))
+            errors << match_value(time_element, "cda:low/@value", "start_support", self.start_support.to_formatted_s(:brief))
           end
           if self.end_support
-            errors << match_value(time_element, "cda:high/@value", "end_support", self.end_support.to_formatted_s(:hl7_ts))
+            errors << match_value(time_element, "cda:high/@value", "end_support", self.end_support.to_formatted_s(:brief))
           end
         else
           errors <<  ContentError.new(:section => "Support", 

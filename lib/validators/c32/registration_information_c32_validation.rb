@@ -52,7 +52,7 @@
           errors << match_value(patient_element, 'cda:patient/cda:ethnicGroupCode/@code', 'ethnicity', self.ethnicity.try(:code))
           errors << match_value(patient_element, 'cda:patient/cda:ethnicGroupCode/@displayName', 'ethnicity', self.ethnicity.try(:name))
 
-          errors << match_value(patient_element, 'cda:patient/cda:birthTime/@value', 'date_of_birth', self.date_of_birth.try(:to_formatted_s, :hl7_ts))
+          errors << match_value(patient_element, 'cda:patient/cda:birthTime/@value', 'date_of_birth', self.date_of_birth.try(:to_formatted_s, :brief))
         else
           errors << ContentError.new(:section => 'registration_information', 
                                      :error_message => 'No patientRole element found',
