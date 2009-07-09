@@ -19,8 +19,6 @@ class User < ActiveRecord::Base
   validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
   before_save               :encrypt_password
 
-  has_many :roles, :through => :user_roles
-  has_many :user_roles, :dependent => :destroy
   has_many :vendor_test_plans, :order => "vendor_id", :dependent => :destroy
   has_many :vendors, :dependent => :destroy
 
@@ -87,7 +85,15 @@ class User < ActiveRecord::Base
   end
 
   def administrator?
-    roles.include? Role.administrator
+    !!admin
+  end
+
+  def grant_admin
+    update_attributes(:admin => true)
+  end
+
+  def revoke_admin
+    update_attributes(:admin => false)
   end
 
   protected

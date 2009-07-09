@@ -13,6 +13,36 @@ Dependencies
 See http://laika.wiki.sourceforge.net/LaikaXDSPIXPDQAlpha for information
 about getting an Amazon EC2 system prepared to run Laika.
 
+Loading the seed data into the database
+=======================================
+
+ $ jruby -S rake db:seed
+
+Workaround for C32 failure on Glassfish
+=======================================
+
+Currently Laika fails on Glassfish during C32 validation. The only known
+workaround for this is to copy the contents of lib/saxon to your JRE's
+lib/ext directory.
+
+Associated SF ticket: https://sourceforge.net/tracker/index.php?func=detail&aid=2769072&group_id=205665&atid=994554
+
+Workaround for JRuby bug
+========================
+
+Rails 2.3.2 can cause Laika to trigger a JRuby bug which results in a
+Java stacktrace. The following commit fixed this:
+
+http://github.com/rails/rails/commit/35c5727acea882f4cef2a8a2d12d87a8fda045c8
+
+Since this commit isn't in a released version of Rails, we have submodule
+pointing to the official Rails 2-3-stable branch:
+
+ $ git submodule init
+ $ git submodule update
+
+Associated SF ticket: https://sourceforge.net/tracker/index.php?func=detail&aid=2785138&group_id=205665&atid=994554
+
 Installing/using multiple version of Java in Ubuntu
 ===================================================
 
@@ -38,40 +68,7 @@ Deploying to Amazon EC2
 
 Here is a quick run-through of how deployment works so far. The first
 step is to get a recent AMI of a base system. These instructions assume
-you're deploying to an instance of Amazon EC2 public AMI 89a345e0.
-
-Prerequisites for the server instance:
-
-You should add jruby to you path:
-
- $ export PATH=/usr/local/jruby/bin:$PATH
-
-Git must be installed:
-
- $ apt-get git-core
-
-You also need XDS facade:
-
- $ git clone git://github.com/CCHIT/xds-facade.git
- $ cd xds-facade
- $ rake gem
- $ jruby -S gem install pkg/xds-facade-0.1.0.gem
- 
-The activerecord-jdbcpostgresql-adapter gem must be installed:
-
- $ jruby -S gem install activerecord-jdbcpostgresql-adapter
-
-The glassfish gem is currently required for automatic deployment:
-
- $ jruby -S gem install glassfish
-
-Also of note, the lib/saxon/*.jar files need to be copied to 
-your Java's lib/ext/ to work around an issue with schematron validation.
-
-You'll have to do this after the first call to cap deploy:update so the
-files are available on the server.
-
-Instructions:
+you're deploying to an instance of Amazon EC2 public AMI 95fc1afc
 
 The deployment scripts install laika into /var/www/laika/DATESTAMP and
 maintain a link to the latest deployed version as /var/www/laika/current.
@@ -97,8 +94,4 @@ machine:
 
  $ # once the setup is done, this should be the only command needed to deploy
  $ cap deploy:migrations
-
-If you don't have glassfish available it's possible to start with webrick instead:
-
- $ cap deploy:start_webrick
 

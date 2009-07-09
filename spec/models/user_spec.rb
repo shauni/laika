@@ -6,8 +6,7 @@ describe User do
   describe "with administrator role" do
     before(:each) do
       @user = users(:alex_kroman)
-      @user.roles.clear
-      @user.roles << Role.administrator
+      @user.grant_admin
     end
 
     it "is an administrator" do
@@ -18,7 +17,7 @@ describe User do
   describe "without administrator role" do
     before(:each) do
       @user = users(:alex_kroman)
-      @user.roles.delete(Role.administrator)
+      @user.revoke_admin
     end
 
     it "is not an administrator" do

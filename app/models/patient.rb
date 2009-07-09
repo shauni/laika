@@ -45,13 +45,17 @@ class Patient < ActiveRecord::Base
     "1.3.6.1.4.1.21367.2009.5.14.#{id}.#{Time.now.to_i}"
   end
 
+  def patient_identifier
+    registration_information.try(:affinity_domain_identifier).to_s
+  end
+
   # Returns a hash containing source_patient_info for use in XDS metadata
   def source_patient_info
     spi = {}
     spi[:name] = name
     spi[:gender] = registration_information.gender.code
-    spi[:date_of_birth] = registration_information.date_of_birth.strftime("%Y%m%d")
-    spi[:source_patient_identifier] = registration_information.person_identifier
+    spi[:date_of_birth] = registration_information.date_of_birth.to_s(:brief)
+    spi[:source_patient_identifier] = patient_identifier
     spi
   end
   
@@ -104,7 +108,7 @@ class Patient < ActiveRecord::Base
                "codeSystemName" => "LOINC")
       xml.title(name)
 
-      if registration_information.andand.document_timestamp
+      if registration_information.try(:document_timestamp)
         xml.effectiveTime("value" => c32_timestamp(registration_information.document_timestamp))
       else
         xml.effectiveTime("value" => c32_timestamp(updated_at))
@@ -115,12 +119,12 @@ class Patient < ActiveRecord::Base
       # Start Person (Registation) Information
       xml.recordTarget do
         xml.patientRole do
-          registration_information.andand.to_c32(xml)
+          registration_information.try(:to_c32, xml)
         end
       end
       # End Person (Registation) Information
 
-      information_source.andand.to_c32(xml)
+      information_source.try(:to_c32, xml)
 
       xml.custodian do
         xml.assignedCustodian do
@@ -150,7 +154,7 @@ class Patient < ActiveRecord::Base
 
           medications.to_c32(xml)
 
-          advance_directive.andand.to_c32(xml)
+          advance_directive.try(:to_c32, xml)
 
           vital_signs.to_c32(xml)
 
@@ -177,11 +181,8 @@ class Patient < ActiveRecord::Base
     @last_name = Faker::Name.last_name
     self.name = @first_name + " " +  @last_name
 
-    @name = PersonName.new
-    @name.first_name = @first_name
-    @name.last_name = @last_name
-
-    self.registration_information.randomize(@name)
+    registration_information.randomize(self)
+    self.name = registration_information.full_name
 
     # if patient is female, 10% chance patient is pregnant
     if self.registration_information.gender.code == 'F'
@@ -261,7 +262,7 @@ class Patient < ActiveRecord::Base
  private
 
   def c32_timestamp(datetime)
-    datetime.strftime("%Y%m%d%H%M%S") + datetime.formatted_offset(false)
+    datetime.to_s(:brief_timestamp) + datetime.formatted_offset(false)
   end
 
   # If the patient is pregnant, this method will add the appropriate

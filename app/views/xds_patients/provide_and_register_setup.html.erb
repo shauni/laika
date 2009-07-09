@@ -3,15 +3,15 @@
 <input type="hidden" name="patient_id" value="<%= @patient.id %>"/>
 <table>
   <tr>
-    <td>Vendor</td>
+    <td>Inspection</td>
     <td><%= f.select :vendor_id, Vendor.select_options(@vendors) %></td>
   </tr>
   <br/>
   <% if current_user.administrator? -%>
-  <tr>
-    <td>User</td>
-    <td><%= f.select :user_id, User.select_options %></td>
-  </tr>
+    <tr>
+      <td>User</td>
+      <td><%= f.select :user_id, User.select_options %></td>
+    </tr>
   <% end -%>
   <%= render :partial => 'provide_and_register_form' %>
   <tr>

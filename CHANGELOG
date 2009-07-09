@@ -1,4 +1,8 @@
+2009-05-28 Laika v1.3.7
 
+    * Use patient record to populate metadata for XDS P&R assignment (#2782276)
+    * Use patient record to populate metadata for XDS P&R utility (#2782235)
+    * Show results page after XDS P&R assignmnet (#2782350)
     * Laika now works with a Java 6 software stack (#2769072)
     * Minor refactor of dashboard so the information fits (#2765847)
     * XDS manager now sorts data like the patient library (#2760001)

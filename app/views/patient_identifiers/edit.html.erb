@@ -14,9 +14,9 @@
      </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Identifier domain identifier <%= requirements_for @patient_identifier, :identifier_domain_identifier_id %></td>
+    <td class="lighttext">Affinity Domain <%= requirements_for @patient_identifier, :affinity_domain %></td>
     <td>
-      <%= f.text_field  :identifier_domain_identifier %>
+      <%= f.text_field  :affinity_domain %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">

@@ -1,5 +1,5 @@
 <div class="message" id="message_<%= message.id %>">
-  <%= simple_format message.body %>
+  <%= simple_format h(message.body) %>
   <span class="byline">
     Posted by <%=h message.author.display_name %> on <%= message.created_at %>
     <% if message.updated? %><br />

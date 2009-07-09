@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_administrator
-    if current_user.andand.administrator?
+    if current_user.try(:administrator?)
       true
     else
       redirect_to :controller => 'vendor_test_plans'

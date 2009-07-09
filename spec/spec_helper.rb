@@ -6,6 +6,13 @@ require 'spec'
 require 'spec/rails'
 require File.expand_path(File.dirname(__FILE__) + '/laika_spec_helper')
 
+ModelFactory.configure do
+  default(Setting) do
+    name  { |i| "factory setting #{i}" }
+    value { |i| "factory value #{i}" }
+  end
+end
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record

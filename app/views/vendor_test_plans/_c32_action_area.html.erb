@@ -6,9 +6,9 @@
    <%= link_to 'edit', patient_url(vendor_test_plan.patient)%>
    | <%= link_to 'delete', vendor_test_plan, :confirm => 'Are you sure you want to delete this Laika test?', :method => :delete %>
   <% if vendor_test_plan.kind.name == "Generate and Format" %>
-    | <a href="javascript:toggle_div('execution_div_<%=vendor_test_plan.id%>');">execute</a>
+    | <%= link_to_remote 'execute', :url => test_operation_url(vendor_test_plan, 'upload_document'), :update => "execution_div_#{vendor_test_plan.id}" %>
   <% else %>
     | <%= link_to 'xml', patient_url(vendor_test_plan.patient, :format => 'xml') %> 
-    | <%= link_to 'checklist', checklist_patient_url(vendor_test_plan.patient) %>
+    | <%= link_to 'checklist', test_operation_url(vendor_test_plan, 'checklist') %>
   <% end %>
 <% end %>

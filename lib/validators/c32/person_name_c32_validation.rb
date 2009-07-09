@@ -19,7 +19,7 @@ module PersonNameC32Validation
     else
       errors << ContentError.new(:section => self.nameable_type.underscore,
                                  :error_message => "name element was null",
-                                 :location => name_element.andand.xpath)
+                                 :location => name_element.try(:xpath))
     end
     errors.compact
   end

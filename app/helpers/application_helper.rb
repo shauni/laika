@@ -1,6 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def test_operation_url(vendor_test_plan, operation)
+    testop_url(vendor_test_plan, vendor_test_plan.test_type, operation)
+  end
+
   def current_controller?(name)
     controller.controller_name == name.to_s
   end

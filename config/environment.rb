@@ -71,7 +71,6 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 
   # These are dependencies we need to run the application.
-  config.gem 'andand',               :version => '1.3.1'
   config.gem 'faker',                :version => '0.3.1'
   config.gem 'calendar_date_select', :version => '1.15'
   config.gem 'mislav-will_paginate', :version => '>= 2.3.6', :lib => 'will_paginate', :source => 'http://gems.github.com'
@@ -88,9 +87,6 @@ Rails::Initializer.run do |config|
   config.time_zone = "Eastern Time (US & Canada)"
 end
 
-ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] = '%d.%b.%Y'
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:default]  = '%d.%b.%Y'
-
 ENV['HOST_URL'] = 'http://demo.cchit.org/laika'
 ENV['HELP_LIST'] = 'talk@projectlaika.org'
 
@@ -99,8 +95,4 @@ ActionMailer::Base.smtp_settings = {
   :port => 25,
   :domain => "mitre.org",
 }
-
-XDS_HOST = "http://129.6.24.109:9080"
-XDS_REGISTRY_URLS = {:register_stored_query=>"#{XDS_HOST}/tf5/services/xdsregistryb",
-                     :retrieve_document_set_request=>"#{XDS_HOST}/tf5/services/xdsrepositoryb"}
 
