@@ -17,7 +17,7 @@ TestType.shared("PIX/PDQ") do
   checklist do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     @patient = vendor_test_plan.patient
-    render 'testop/pix_feed/results'
+    render 'testop/pix_pdq/checklist'
   end
 end
 
@@ -55,7 +55,7 @@ TestType.register("PIX Feed") do
   inspect do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     @patient = vendor_test_plan.patient
-    render 'testop/pix_feed/results'
+    render 'testop/pix_pdq/checklist'
   end
 end
 
