@@ -46,7 +46,7 @@ class Patient < ActiveRecord::Base
   end
 
   def patient_identifier
-    registration_information.try(:affinity_domain_identifier).to_s
+    registration_information.try(:affinity_domain_identifier)
   end
 
   # Returns a hash containing source_patient_info for use in XDS metadata

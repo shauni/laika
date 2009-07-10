@@ -27,6 +27,13 @@ TestType.register("XDS Provide and Register") do
 
   execution :select_document, :compare
 
+  setup do |patient|
+    @kind = test_type.kind
+    @patient = patient
+    @vendors = current_user.vendors + Vendor.unclaimed
+    @vendor_test_plan = VendorTestPlan.new(:user_id => current_user.id)
+  end
+
   # XDS P&R assign callback, executed on test_type.assign(opt).
   assign do |vendor_test_plan|
     vendor_test_plan.metadata = params[:metadata]
@@ -51,6 +58,13 @@ end
 
 TestType.register("XDS Query and Retrieve") do
   include_shared 'XDS'
+
+  setup do |patient|
+    @kind = test_type.kind
+    @patient_identifier = patient.patient_identifier
+    @metadata = XDSUtils.list_document_metadata(@patient_identifier)
+    @vendors = current_user.vendors + Vendor.unclaimed
+  end
 
   # XDS Q&R assign callback, executed on test_type.assign(opt).
   assign do |vendor_test_plan|

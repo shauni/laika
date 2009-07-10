@@ -79,6 +79,22 @@ class TestType
     ActiveSupport::OptionMerger.new(self, :cb_context => context)
   end
 
+  def setup patient, opt = {}
+    context = opt.delete :cb_context
+    if setup_cb
+      if context
+        begin
+          context.instance_exec(patient, &setup_cb)
+        rescue ActionController::DoubleRenderError
+          raise AssignFailure,
+            "Test assignment failed: double render in callback"
+        end
+      else
+        setup_cb.call(patient)
+      end
+    end
+  end
+
   # Assign a test, returning a newly created vendor test plan.
   #
   # You must pass an options hash, which will be passed to the

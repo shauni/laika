@@ -9,6 +9,8 @@ ActionController::Routing::Routes.draw do |map|
   # test operations on vendor test plans
   map.testop '/vendor_test_plans/:vendor_test_plan_id/testop/:test_type/:test_operation',
     :controller => 'testop', :action => 'perform_test_operation'
+  map.test_setup '/patients/:patient_id/testop/:test_type/setup',
+    :controller => 'testop', :action => 'setup'
 
   map.resources :settings, :only => [:index, :update]
 
