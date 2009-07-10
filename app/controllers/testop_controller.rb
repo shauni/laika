@@ -23,7 +23,7 @@ class TestopController < ApplicationController
   def perform_test_operation
     test_operation   = params.delete(:test_operation)
     vendor_test_plan = VendorTestPlan.find params.delete(:vendor_test_plan_id)
-    page_title "#{test_type} #{test_operation}" 
+    page_title "#{test_type} #{test_operation.humanize}" 
 
     begin
       if vendor_test_plan.user == current_user || current_user.administrator?
@@ -32,7 +32,7 @@ class TestopController < ApplicationController
         flash[:notice] = 'You are not authorized to perform this operation.'
       end
 
-      redirect_to vendor_test_plans_url
+      render "testop/#{test_type.to_param}/#{test_operation}"
     rescue ActionController::DoubleRenderError
       # ignore double render
     end
