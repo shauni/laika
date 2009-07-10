@@ -18,11 +18,11 @@
       <td><%= patient.updated_at %></td>
       <td class="actions" width=270px>
         <%= link_to 'query', "javascript:toggle_div('query_div_#{patient.id}')" %>
-        | <%= link_to 'assign', test_setup_url(patient, 'xds_provide_and_register') %>
+        | <%= link_to 'assign', test_setup_url(patient, 'xds provide and register') %>
         | <%= link_to 'provide and register', provide_and_register_xds_patient_url(patient) %>
         <div id="query_div_<%=patient.id%>" style="display:none">
           <% if patient.patient_identifiers.count > 0 %>
-            <% form_tag test_setup_url(patient, 'xds_provide_and_register') do |f| %>
+            <% form_tag test_setup_url(patient, 'xds query and retrieve') do |f| %>
               <%= select_tag "id", options_for_select(patient.patient_identifiers.collect{|pi|[pi.identifier_and_domain, pi.id]}) %>
               <%= submit_tag 'Query XDS' %>
             <% end %>

@@ -1,16 +1,3 @@
-#
-# Test type definitions
-#
-# For each test type, optional callbacks can be specified. Even if no
-# callbacks are needed, the test name must be registered and it must 
-# have a corresponding database record in the kinds table.
-#
-# All callbacks MUST accept a vendor_test_plan, which should be
-# returned by the global callback. The return value doesn't matter.
-#
-# All callbacks are currently executed in controller context, so
-# calls like redirect_to and params work as you'd expect.
-#
 
 TestType.shared('XDS') do
   execution :checklist
@@ -40,7 +27,7 @@ TestType.register("XDS Provide and Register") do
     vendor_test_plan.save!
 
     @metadata = params[:metadata]
-    render 'xds_patients/assign_success'
+    render 'testop/xds_provide_and_register/assign'
   end
 
   select_document do |vendor_test_plan|
