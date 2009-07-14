@@ -1,4 +1,4 @@
 [submodule "vendor/rails"]
 	path = vendor/rails
-	url = http://github.com/zenhob/rails
+	url = http://github.com/rails/rails.git
 
