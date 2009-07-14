@@ -26,7 +26,7 @@ class Immunization < ActiveRecord::Base
         xml.statusCode('code' => 'completed')
         if administration_date
           xml.effectiveTime('xsi:type' => "IVL_TS") do
-            xml.center('value' => administration_date.strftime("%Y%m%d")) 
+            xml.center('value' => administration_date.to_s(:brief)) 
           end
         end
         xml.consumable do
@@ -34,14 +34,14 @@ class Immunization < ActiveRecord::Base
             xml.templateId('root' => '2.16.840.1.113883.10.20.1.53')
             xml.manufacturedMaterial do
               if vaccine
-                vaccine.andand.to_c32(xml)
+                vaccine.try(:to_c32, xml)
               end 
               xml.lotNumberText(lot_number_text)
             end
           end
         end
         if no_immunization_reason
-          no_immunization_reason.andand.to_c32(xml)
+          no_immunization_reason.try(:to_c32, xml)
         end 
       end
     end

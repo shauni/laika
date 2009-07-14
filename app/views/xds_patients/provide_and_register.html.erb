@@ -2,6 +2,22 @@
 <% form_tag do_provide_and_register_xds_patient_url do |f| -%>
   <%= hidden_field_tag 'pd_id', @patient.id %> 
   <table>
+    <tr>
+      <td>Author Person</td>
+      <td><%= text_field_tag 'metadata[author][person]', '', :size => 45 %></td>
+    </tr>
+    <tr>
+      <td>Author Institution</td>
+      <td><%= text_field_tag 'metadata[author][institution]', '', :size => 45 %></td>
+    </tr>
+    <tr>
+      <td>Author Role</td>
+      <td><%= text_field_tag 'metadata[author][role]', '', :size => 45 %></td>
+    </tr>
+    <tr>
+      <td>Author Specialty</td>
+      <td><%= text_field_tag 'metadata[author][specialty]', '', :size => 45 %></td>
+    </tr>
     <%= render :partial => 'provide_and_register_form' %>
     <tr>
       <td>&nbsp;</td>

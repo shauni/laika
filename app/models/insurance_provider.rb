@@ -85,7 +85,7 @@ class InsuranceProvider < ActiveRecord::Base
               attrs = (represented_organization) ? {} : {"typeCode" => "PRF"}
               xml.performer(attrs) do
                 if !insurance_provider_guarantor.effective_date.blank?
-                  xml.time("value" => insurance_provider_guarantor.effective_date.strftime("%Y%m%d"))
+                  xml.time("value" => insurance_provider_guarantor.effective_date.to_s(:brief))
                 end
                 xml.assignedEntity do
                   xml.id
@@ -116,16 +116,16 @@ class InsuranceProvider < ActiveRecord::Base
                              "codeSystemName" => "RoleCode") 
                   end
                   xml.playingEntity do
-                    insurance_provider_patient.person_name.andand.to_c32(xml)
+                    insurance_provider_patient.person_name.try(:to_c32, xml)
                     if !insurance_provider_patient.date_of_birth.blank?
-                      xml.sdtc(:birthTime, "value" => insurance_provider_patient.date_of_birth.strftime("%Y%m%d"))
+                      xml.sdtc(:birthTime, "value" => insurance_provider_patient.date_of_birth.to_s(:brief))
                     end
                   end
                 end
               end
             end
 
-            insurance_provider_subscriber.andand.to_c32(xml)
+            insurance_provider_subscriber.try(:to_c32, xml)
 
           end
         end
@@ -176,7 +176,7 @@ class InsuranceProvider < ActiveRecord::Base
                 end
               end
               xml.tbody do
-               insurance_providers.andand.each do |insurance_provider|
+               insurance_providers.try(:each) do |insurance_provider|
                  xml.tr do
                     if insurance_provider.represented_organization != nil
                       xml.td insurance_provider.represented_organization

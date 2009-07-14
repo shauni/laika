@@ -25,18 +25,6 @@ class Condition < ActiveRecord::Base
         xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.7", "assigningAuthorityName" => "HITSP/C32")
         xml.id
         xml.code("nullFlavor"=>"NA")
-        if start_event != nil || end_event != nil
-          xml.effectiveTime do
-            if start_event != nil 
-              xml.low("value" => start_event.strftime("%Y%m%d"))
-            end
-            if end_event != nil
-              xml.high("value" => end_event.strftime("%Y%m%d"))
-            else
-              xml.high("nullFlavor" => "UNK")
-            end
-          end
-        end
         xml.entryRelationship("typeCode" => "SUBJ") do
           xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
             xml.templateId("root" => "2.16.840.1.113883.10.20.1.28", "assigningAuthorityName" => "CCD")
@@ -50,6 +38,18 @@ class Condition < ActiveRecord::Base
               xml.reference("value" => "#problem-"+id.to_s)
             end
             xml.statusCode("code" => "completed")
+            if start_event.present? || end_event.present?
+              xml.effectiveTime do
+                if start_event.present?
+                  xml.low("value" => start_event.to_s(:brief))
+                end
+                if end_event.present?
+                  xml.high("value" => end_event.to_s(:brief))
+                else
+                  xml.high("nullFlavor" => "UNK")
+                end
+              end
+            end
             # only write out the coded value if the name of the condition is in the SNOMED list
             if free_text_name
               snowmed_problem = SnowmedProblem.find(:first, :conditions => {:name => free_text_name})
@@ -96,7 +96,7 @@ class Condition < ActiveRecord::Base
                 end
               end
               xml.tbody do
-               conditions.andand.each do |condition|
+               conditions.try(:each) do |condition|
                   xml.tr do
                     if condition.free_text_name != nil
                       xml.td do
@@ -112,7 +112,7 @@ class Condition < ActiveRecord::Base
                       xml.td
                     end  
                     if condition.start_event != nil
-                      xml.td condition.start_event.strftime("%Y%m%d")
+                      xml.td condition.start_event.to_s(:brief)
                     else
                       xml.td
                     end

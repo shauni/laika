@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Encounter, "can generate random values for itself" do
-  fixtures :iso_countries, :zip_codes
+  fixtures :iso_countries, :zip_codes, :encounter_types, :encounter_location_codes
   it 'should create a valid Encounter when randomized' do
     encounter = Encounter.new
     encounter.randomize(Date.parse('1978-06-05'))

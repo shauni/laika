@@ -20,7 +20,7 @@ You must identify the user by USER_ID or EMAIL:
     user = find_user ENV
     raise 'There is no such user.' unless user
     raise "#{user.display_name} is already an administrator." if user.administrator?
-    user.roles << Role.administrator
+    user.grant_admin
     puts "#{user.display_name} is now an administrator"
   end
 
@@ -36,7 +36,7 @@ You must identify the user by USER_ID or EMAIL:
     user = find_user ENV
     raise 'There is no such user.' unless user
     raise "#{user.display_name} is not an administrator." if not user.administrator?
-    user.roles.delete(Role.administrator)
+    user.revoke_admin
     puts "#{user.display_name} is no longer an administrator"
   end
 end

@@ -1,0 +1,12 @@
+<% form_for(:test_result, :url => test_operation_url(@vendor_test_plan, 'compare')) do |f| %>
+  <%= f.error_messages %>
+  <%= f.label :local_patient_identifier %>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <%= f.text_field :patient_identifier %>
+  <br/>
+  <%= f.label :local_assigning_authority %>
+  <%= f.text_field :assigning_authority %>
+  <br/>
+  <input type="hidden" id="test_result_result" name="test_result[result]" value="FAIL"/>
+  <%= f.submit "Verify" %>
+<% end %>

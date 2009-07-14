@@ -28,8 +28,8 @@ class Support < ActiveRecord::Base
                    "codeSystem" => "2.16.840.1.113883.5.111",
                    "codeSystemName" => "RoleCode")
         end
-        address.andand.to_c32(xml)
-        telecom.andand.to_c32(xml)
+        address.try(:to_c32, xml)
+        telecom.try(:to_c32, xml)
         xml.guardianPerson do
           person_name.to_c32(xml)
         end
@@ -39,10 +39,10 @@ class Support < ActiveRecord::Base
         xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.3")
         xml.time do
           if start_support 
-            xml.low('value'=> start_support.strftime("%Y%m%d"))
+            xml.low('value'=> start_support.to_s(:brief))
           end
           if end_support
-            xml.high('value'=> end_support.strftime("%Y%m%d"))
+            xml.high('value'=> end_support.to_s(:brief))
           end
         end
         xml.associatedEntity("classCode" => contact_type.code) do
@@ -52,10 +52,10 @@ class Support < ActiveRecord::Base
                      "codeSystem" => "2.16.840.1.113883.5.111",
                      "codeSystemName" => "RoleCode")
           end
-          address.andand.to_c32(xml)
-          telecom.andand.to_c32(xml) 
+          address.try(:to_c32, xml)
+          telecom.try(:to_c32, xml) 
           xml.associatedPerson do
-            person_name.andand.to_c32(xml)
+            person_name.try(:to_c32, xml)
           end
         end
       end

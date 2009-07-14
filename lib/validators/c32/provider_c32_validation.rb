@@ -16,7 +16,7 @@ module ProviderC32Validation
       unless provider
         return [ContentError.new(:section => 'Provider', 
                                  :error_message => "Provider not found", 
-                                 :location => document.andand.xpath)]    
+                                 :location => document.try(:xpath))]    
       end     
       date_range = REXML::XPath.first(provider, 'cda:time',namespaces)
       assigned = REXML::XPath.first(provider,'cda:assignedEntity',namespaces)

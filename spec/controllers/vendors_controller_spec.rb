@@ -21,7 +21,7 @@ describe VendorsController do
   describe "in use by an admin" do
     before(:each) do
       @user = users(:alex_kroman)
-      @user.roles << Role.administrator
+      @user.grant_admin
       controller.stub!(:current_user).and_return(@user)
       @vendor = Vendor.create!(:public_id => 'SOMETHING', :user => nil)
     end
@@ -43,7 +43,7 @@ describe VendorsController do
   describe "in use by a non-admin" do
     before(:each) do
       @user = users(:alex_kroman)
-      @user.roles.clear
+      @user.revoke_admin
       controller.stub!(:current_user).and_return(@user)
       @vendor = Vendor.create!(:public_id => 'SOMETHING', :user => nil)
     end

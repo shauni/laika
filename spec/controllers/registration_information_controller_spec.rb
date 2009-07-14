@@ -68,8 +68,8 @@ describe RegistrationInformationController do
   it "should update registration_information on put update" do
     old_value = @patient.registration_information
     put :update, :patient_id => @patient.id.to_s,
-        :registration_information => { :person_identifier => 'foobar' }
-    @patient.registration_information(true).person_identifier.should == 'foobar'
+        :registration_information => { :affinity_domain_id => '1' }
+    @patient.registration_information(true).affinity_domain_id.should == 1
   end
 
   it "should render show partial on delete destroy" do

@@ -67,7 +67,7 @@ class AbstractResult < ActiveRecord::Base
                   "displayName" => result_type_code.name)
           xml.statusCode("code" => act_status_code.code)
           if self.result_date
-            xml.effectiveTime("value" => self.result_date.to_formatted_s(:hl7_ts))
+            xml.effectiveTime("value" => self.result_date.to_formatted_s(:brief))
           end
           xml.component do
             append_result_data_to_c32(xml)
@@ -119,11 +119,11 @@ class AbstractResult < ActiveRecord::Base
                                     result_element.xpath) do |code_element|
               errors << match_value(code_element, "@code", "result_code", self.result_code)
               errors << match_value(code_element, "@displayName", "result_code_display_name", self.result_code_display_name)
-              errors << match_value(code_element, "@codeSystem", "code_system", self.code_system.andand.code)
-              errors << match_value(code_element, "@codeSystemName", "code_system_name", self.code_system.andand.name)
+              errors << match_value(code_element, "@codeSystem", "code_system", self.code_system.try(:code))
+              errors << match_value(code_element, "@codeSystemName", "code_system_name", self.code_system.try(:name))
             end
             errors << match_value(result_element, "cda:statusCode/@code", "status_code", self.status_code)
-            errors << match_value(result_element, "cda:effectiveTime/@value", "result_date", self.result_date.andand.to_formatted_s(:hl7_ts))
+            errors << match_value(result_element, "cda:effectiveTime/@value", "result_date", self.result_date.try(:to_formatted_s,  :brief))
             errors << match_value(result_element, "cda:value/@value", "value_scalar", self.value_scalar)
             errors << match_value(result_element, "cda:value/@unit", "value_unit", self.value_unit)
           end
@@ -174,14 +174,14 @@ class AbstractResult < ActiveRecord::Base
       end
       if self.result_code
         xml.code("code" => self.result_code, "displayName" => self.result_code_display_name,
-                 "codeSystem" => self.code_system.andand.code,
-                 "codeSystemName" => self.code_system.andand.name)
+                 "codeSystem" => self.code_system.try(:code),
+                 "codeSystemName" => self.code_system.try(:name))
       end
       if self.status_code
         xml.statusCode("code" => self.status_code)
       end
       if self.result_date
-        xml.effectiveTime("value" => self.result_date.to_formatted_s(:hl7_ts))
+        xml.effectiveTime("value" => self.result_date.to_formatted_s(:brief))
       end
       xml.value("xsi:type" => "PQ", "value" => self.value_scalar, "unit" => self.value_unit)
     end

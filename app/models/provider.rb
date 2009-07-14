@@ -32,20 +32,20 @@ class Provider < ActiveRecord::Base
     
       xml.time do
         if start_service 
-          xml.low('value'=> start_service.strftime("%Y%m%d"))
+          xml.low('value'=> start_service.to_s(:brief))
         end
         if end_service 
-          xml.high('value'=> end_service.strftime("%Y%m%d"))
+          xml.high('value'=> end_service.to_s(:brief))
         end
       end
 
       xml.assignedEntity do
         xml.id
-        provider_type.andand.to_c32(xml)
-        address.andand.to_c32(xml)
-        telecom.andand.to_c32(xml)  
+        provider_type.try(:to_c32, xml)
+        address.try(:to_c32, xml)
+        telecom.try(:to_c32, xml)  
         xml.assignedPerson do
-          person_name.andand.to_c32(xml)
+          person_name.try(:to_c32, xml)
         end
 
         unless organization.blank?

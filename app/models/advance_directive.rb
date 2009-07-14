@@ -54,10 +54,10 @@ class AdvanceDirective < ActiveRecord::Base
             if start_effective_time != nil || start_effective_time != nil
               xml.effectiveTime do
                 if start_effective_time != nil 
-                  xml.low("value" => start_effective_time.strftime("%Y%m%d"))
+                  xml.low("value" => start_effective_time.to_s(:brief))
                 end
                 if end_effective_time != nil
-                  xml.high("value" => end_effective_time.strftime("%Y%m%d"))
+                  xml.high("value" => end_effective_time.to_s(:brief))
                 else
                   xml.high("nullFlavor" => "UNK")
                 end
@@ -66,10 +66,10 @@ class AdvanceDirective < ActiveRecord::Base
 
             xml.participant("typeCode" => "CST") do
               xml.participantRole("classCode" => "AGNT") do
-                address.andand.to_c32(xml)
-                telecom.andand.to_c32(xml) 
+                address.try(:to_c32, xml)
+                telecom.try(:to_c32, xml) 
                 xml.playingEntity do
-                  person_name.andand.to_c32(xml)
+                  person_name.try(:to_c32, xml)
                 end
               end
             end

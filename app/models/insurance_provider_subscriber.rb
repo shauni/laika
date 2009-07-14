@@ -9,13 +9,15 @@ class InsuranceProviderSubscriber < ActiveRecord::Base
   def to_c32(xml)
     xml.participant("typeCode" => "HLD") do
       xml.participantRole("classCode" => "IND") do
+
         xml.id('root'=>assigning_authority_guid, 'extension'=>subscriber_id)
-        address.andand.to_c32(xml)
-        telecom.andand.to_c32(xml)
+        address.try(:to_c32, xml)
+        telecom.try(:to_c32, xml)
+
         xml.playingEntity do
-            person_name.andand.to_c32(xml)
+            person_name.try(:to_c32, xml)
           if !date_of_birth.blank?
-             xml.sdtc(:birthTime, "value" => date_of_birth.strftime("%Y%m%d"))
+             xml.sdtc(:birthTime, "value" => date_of_birth.to_s(:brief))
           end
         end
       end

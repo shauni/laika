@@ -15,22 +15,22 @@
       <tr>
         <td><strong>Author</strong></td>
         <td><strong>Person</strong></td>
-        <td><%= @metadata.author.andand.person %></td>
+        <td><%= @metadata.author.try :person %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Institution</strong></td>
-        <td><%= @metadata.author.andand.institution %></td>
+        <td><%= @metadata.author.try :institution %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Role</strong></td>
-        <td><%= @metadata.author.andand.role %></td>
+        <td><%= @metadata.author.try :role %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Specialty</strong></td>
-        <td><%= @metadata.author.andand.specialty %></td>
+        <td><%= @metadata.author.try :specialty %></td>
       </tr>
       <%= xds_metadata_single_attribute(@metadata, :availability_status) %>
       <%= xds_metadata_coded_attribute(@metadata, :class_code) %>
@@ -49,27 +49,27 @@
       <tr>
         <td><strong>Source patient info</strong></td>
         <td><strong>Identifier</strong></td>
-        <td><%= @metadata.source_patient_info.andand.source_patient_identifier %></td>
+        <td><%= @metadata.source_patient_info.try :source_patient_identifier %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Name</strong></td>
-        <td><%= @metadata.source_patient_info.andand.name %></td>
+        <td><%= @metadata.source_patient_info.try :name %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Gender</strong></td>
-        <td><%= @metadata.source_patient_info.andand.gender %></td>
+        <td><%= @metadata.source_patient_info.try :gender %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Date of birth</strong></td>
-        <td><%= @metadata.source_patient_info.andand.date_of_birth %></td>
+        <td><%= @metadata.source_patient_info.try :date_of_birth %></td>
       </tr>
       <tr>
         <td></td>
         <td><strong>Address</strong></td>
-        <td><%= @metadata.source_patient_info.andand.address %></td>
+        <td><%= @metadata.source_patient_info.try :address %></td>
       </tr>
       <%= xds_metadata_coded_attribute(@metadata, :type_code) %>
       <%= xds_metadata_single_attribute(@metadata, :repository_unique_id) %>

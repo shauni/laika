@@ -6,14 +6,16 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
-  map.resources :vendor_test_plans, :has_one => [:clinical_document, :test_result],
-                                    :member => {:inspect_content => :get,
-                                                :validate => :get,
-                                                :validatepix => :get,
-                                                :xds_query_checklist => :get,
+  # test operations on vendor test plans
+  map.testop '/vendor_test_plans/:vendor_test_plan_id/testop/:test_type/:test_operation',
+    :controller => 'testop', :action => 'perform_test_operation'
+
+  map.resources :settings, :only => [:index, :update]
+
+  map.resources :vendor_test_plans, :has_one => [:test_result],
+                                    :member => {:validate => :get,
                                                 :checklist => :get,
-                                                :set_status => :get,
-                                                :validate_p_and_r => :get}
+                                                :set_status => :get }
 
   map.resources :patients,
       :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
@@ -22,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :checklist => :get, :edit_template_info => :get },
+      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get },
       :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|

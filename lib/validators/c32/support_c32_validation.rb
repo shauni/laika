@@ -16,10 +16,10 @@ module SupportC32Validation
         time_element = REXML::XPath.first(support, "../cda:time", {'cda' => 'urn:hl7-org:v3'})
         if time_element
           if self.start_support
-            errors << match_value(time_element, "cda:low/@value", "start_support", self.start_support.to_formatted_s(:hl7_ts))
+            errors << match_value(time_element, "cda:low/@value", "start_support", self.start_support.to_formatted_s(:brief))
           end
           if self.end_support
-            errors << match_value(time_element, "cda:high/@value", "end_support", self.end_support.to_formatted_s(:hl7_ts))
+            errors << match_value(time_element, "cda:high/@value", "end_support", self.end_support.to_formatted_s(:brief))
           end
         else
           errors <<  ContentError.new(:section => "Support", 
@@ -42,8 +42,8 @@ module SupportC32Validation
           errors.concat self.telecom.validate_c32(support)
         end
         # classcode
-        errors << match_value(support, "@classCode", "contact_type", contact_type.andand.code)
-        errors << match_value(support, "cda:code[@codeSystem='2.16.840.1.113883.5.111']/@code", "relationship", relationship.andand.code)
+        errors << match_value(support, "@classCode", "contact_type", contact_type.try(:code))
+        errors << match_value(support, "cda:code[@codeSystem='2.16.840.1.113883.5.111']/@code", "relationship", relationship.try(:code))
       else
         # add the error for no support object being there 
         errors <<  ContentError.new(:section=> "Support", 

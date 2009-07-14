@@ -5,7 +5,7 @@ joe_smith:
   race: european
   ethnicity: spaniard
   marital_status: never_married
-  person_identifier: 1234567890
+  affinity_domain_identifier: joe_smith_pid
   document_timestamp: 1972-04-12
   patient: joe_smith
 
@@ -16,7 +16,7 @@ joe_smith_test:
   race: european
   ethnicity: spaniard
   marital_status: never_married
-  person_identifier: 1234567890
+  affinity_domain_identifier: joe_smith_vendor_test_pid
   document_timestamp: 1985-05-23
   patient: joe_smith_vendor_test
 
@@ -27,7 +27,7 @@ emily_jones:
   race: polish
   ethnicity: not_hispanic_or_latino
   marital_status: married
-  person_identifier: 1234567890
+  affinity_domain_identifier: emily_jones_pid
   document_timestamp: 2007-03-26
   patient: emily_jones
 
@@ -38,7 +38,7 @@ will_haynes:
   race: scottish
   ethnicity: not_hispanic_or_latino
   marital_status: divorced
-  person_identifier: 1234567890
+  affinity_domain_identifier: will_haynes_pid
   document_timestamp: 2007-06-08
   patient: will_haynes
 
@@ -49,7 +49,7 @@ jennifer_thompson:
   race: mexican_american_indian
   ethnicity: mexican
   marital_status: polygamous
-  person_identifier: 1234567890
+  affinity_domain_identifier: jennifer_thompson_pid
   document_timestamp: 1987-06-18
   patient: jennifer_thompson
 
@@ -60,7 +60,7 @@ theodore_smith:
   race: israeili
   ethnicity: not_hispanic_or_latino
   marital_status: domestic_partner
-  person_identifier: 1234567890
+  affinity_domain_identifier: theodore_smith_pid
   document_timestamp: 1999-02-28
   patient: theodore_smith
 
@@ -71,6 +71,6 @@ david_carter:
   race: irish
   ethnicity: not_hispanic_or_latino
   marital_status: annulled
-  person_identifier: 1234567890
+  affinity_domain_identifier: david_carter_pid
   document_timestamp: 2003-01-06
   patient: david_carter

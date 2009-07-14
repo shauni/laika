@@ -9,16 +9,17 @@ class PatientIdentifier < ActiveRecord::Base
   def requirements
     {
       :patient_identifier => :required,
-      :identifier_domain_identifier => :required,
+      :affinity_domain => :required,
     }
   end
 
   def identifier_and_domain
-    "#{patient_identifier}^^^#{identifier_domain_identifier}"
+    "#{patient_identifier}^^^#{affinity_domain}"
   end
+  alias_method :to_s, :identifier_and_domain
 
   def randomize()
     self.patient_identifier = rand(10 ** 10).to_s.rjust(10,'0')
-    self.identifier_domain_identifier = "CCHIT&1.2.3.4.5.6.7.8.9&ISO"
+    self.affinity_domain = "CCHIT&1.2.3.4.5.6.7.8.9&ISO"
   end
 end

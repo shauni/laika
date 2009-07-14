@@ -32,58 +32,44 @@ class VendorTestPlansController < ApplicationController
 
   # POST /vendor_test_plans
   def create
-    begin
-      # Patient.transaction(:requires_new => true) do
-      Patient.transaction do
-        patient = Patient.find(params[:patient_id]).clone
 
-        vtp = patient.vendor_test_plan = VendorTestPlan.create!(params[:vendor_test_plan])
-        vtp.user = current_user if not current_user.administrator?
+    # XXX until all tests are implemented using the TestType facilities
+    # we need to continue using the database kinds.
+    kind = Kind.find(params[:vendor_test_plan][:kind_id])
+    test_type = kind.as_test_type.with_context(self)
 
-        if params[:metadata]
-          if params[:metadata].kind_of?(String)
-            vtp.metadata = YAML.load(params[:metadata])         
-          else
-            params[:metadata][:source_patient_info] = patient.source_patient_info
-            md = XDS::Metadata.new
-            md.from_hash(params[:metadata], AFFINITY_DOMAIN_CONFIG)
-            md.repository_unique_id = XDS_REPOSITORY_UNIQUE_ID
-            md.unique_id  = patient.registration_information.person_identifier
-            md.patient_id = patient.registration_information.person_identifier
-            vtp.metadata = md
-          end
-          if vtp.metadata 
-            doc = XDSUtils.retrieve_document(vtp.metadata)
-            cd = ClinicalDocument.new(:uploaded_data=>doc)
-            vtp.clinical_document = cd
-            cd.save!
-          end
-        end
+    if test_type
+      user = current_user.administrator? ?
+        User.find(params[:vendor_test_plan][:user_id]) : current_user
+      vendor  = Vendor.find(params[:vendor_test_plan][:vendor_id])
+      patient = Patient.find(params[:patient_id]) # .clone?
 
-        vtp.save!
-        patient.save!
+      begin
+        vtp = test_type.assign(
+          :user => user,
+          :vendor => vendor,
+          :patient => patient
+        )
 
         # save the vendor/kind selections for next time
         self.last_selected_vendor_id = vtp.vendor_id
         self.last_selected_kind_id   = vtp.kind_id
-      end
-    rescue XDSUtils::RetrieveFailed => e
-      flash[:notice] = "Failed to retrieve document from XDS: #{e}"
-    rescue ActiveRecord::RecordInvalid => e
-      # FIXME should be using record.class.human_name but
-      # https://rails.lighthouseapp.com/projects/8994/tickets/2120
-      flash[:notice] = %{
-        Failed to create #{e.record.class.name.underscore.humanize}:
-        #{e.record.errors.full_messages.join("\n")}
-      }
-    end
 
-    # FIXME there should be a better way to do this
-    if params[:metadata] && flash[:notice].nil?
-      @metadata = params[:metadata]
-      render 'xds_patients/assign_success'
+        redirect_to vendor_test_plans_url
+      rescue ActionController::DoubleRenderError
+        # This means redirect was called in the assign callback,
+        # we should just ignore the second redirect.
+        # XXX There must be a better way to do this. A guarded
+        # render and redirect_to were considered but rejected
+        # because they're not localized enough. At least this way
+        # we only ignore double renders when we intend to.
+      rescue TestType::AssignFailure => e
+        flash[:notice] = "Assign failed: #{e}"
+        redirect_to patients_url
+      end
     else
-      redirect_to vendor_test_plans_path
+      flash[:notice] = "Test type not configured: #{kind.display_name}"
+      redirect_to patients_url
     end
   end
 
@@ -96,18 +82,9 @@ class VendorTestPlansController < ApplicationController
     redirect_to vendor_test_plans_path
   end
 
-  def inspect_content
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-  end
-
   # perform the external validation and display the results
   def validate 
     @vendor_test_plan = VendorTestPlan.find(params[:id])  
-  end
-
-  def validatepix
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @patient = @vendor_test_plan.patient
   end
 
   def checklist 
@@ -128,12 +105,6 @@ class VendorTestPlansController < ApplicationController
     end
   end
   
-  def xds_query_checklist
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @metadata = @vendor_test_plan.metadata
-    render :layout => false
-  end
- 
   def set_status
     vendor_test_plan = VendorTestPlan.find(params[:id])
     if vendor_test_plan.user == current_user
@@ -150,11 +121,4 @@ class VendorTestPlansController < ApplicationController
     end
     redirect_to vendor_test_plans_url
   end
-  
-
-  def validate_p_and_r
-    @vendor_test_plan = VendorTestPlan.find(params[:id])
-    @vendor_test_plan.validate_xds_provide_and_register
-  end
-
 end

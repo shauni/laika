@@ -135,10 +135,6 @@
               <templateId assigningAuthorityName="HITSP/C32" root="2.16.840.1.113883.3.88.11.32.7"/>
               <id/>
               <code nullFlavor="NA"/>
-              <effectiveTime>
-                <low value="20060221"/>
-                <high nullFlavor="UNK"/>
-              </effectiveTime>
               <entryRelationship typeCode="SUBJ">
                 <observation classCode="OBS" moodCode="EVN">
                   <templateId assigningAuthorityName="CCD" root="2.16.840.1.113883.10.20.1.28"/>
@@ -147,6 +143,10 @@
                     <reference value="#problem-1021520352"/>
                   </text>
                   <statusCode code="completed"/>
+                  <effectiveTime>
+                    <low value="20060221"/>
+                    <high nullFlavor="UNK"/>
+                  </effectiveTime>
                 </observation>
               </entryRelationship>
             </act>

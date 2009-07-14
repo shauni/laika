@@ -35,15 +35,15 @@ class Encounter < ActiveRecord::Base
         end
         if encounter_date != nil 
           xml.effectiveTime do
-            xml.low('value'=> encounter_date.strftime('%Y%m%d'))
+            xml.low('value'=> encounter_date.to_s(:brief))
           end
         end
         xml.participant('typeCode'=>'PRF') do
           xml.participantRole('classCode' => 'PROV') do
-            address.andand.to_c32(xml)
-            telecom.andand.to_c32(xml)  
+            address.try(:to_c32, xml)
+            telecom.try(:to_c32, xml)  
             xml.playingEntity do
-              person_name.andand.to_c32(xml)
+              person_name.try(:to_c32, xml)
             end
           end
         end

@@ -37,22 +37,22 @@
             errors.concat(self.address.validate_c32(address_element))
           end
 
-          errors << match_value(patient_element, 'cda:patient/cda:administrativeGenderCode/@code', 'gender', self.gender.andand.code)
-          errors << match_value(patient_element, 'cda:patient/cda:administrativeGenderCode/@displayName', 'gender', self.gender.andand.name)
+          errors << match_value(patient_element, 'cda:patient/cda:administrativeGenderCode/@code', 'gender', self.gender.try(:code))
+          errors << match_value(patient_element, 'cda:patient/cda:administrativeGenderCode/@displayName', 'gender', self.gender.try(:name))
 
-          errors << match_value(patient_element, 'cda:patient/cda:maritalStatusCode/@code', 'marital_status', self.marital_status.andand.code)
-          errors << match_value(patient_element, 'cda:patient/cda:maritalStatusCode/@displayName', 'marital_status', self.marital_status.andand.name)
+          errors << match_value(patient_element, 'cda:patient/cda:maritalStatusCode/@code', 'marital_status', self.marital_status.try(:code))
+          errors << match_value(patient_element, 'cda:patient/cda:maritalStatusCode/@displayName', 'marital_status', self.marital_status.try(:name))
 
-          errors << match_value(patient_element, 'cda:patient/cda:religiousAffiliationCode/@code', 'religion', self.religion.andand.code)
-          errors << match_value(patient_element, 'cda:patient/cda:religiousAffiliationCode/@displayName', 'religion', self.religion.andand.name)
+          errors << match_value(patient_element, 'cda:patient/cda:religiousAffiliationCode/@code', 'religion', self.religion.try(:code))
+          errors << match_value(patient_element, 'cda:patient/cda:religiousAffiliationCode/@displayName', 'religion', self.religion.try(:name))
 
-          errors << match_value(patient_element, 'cda:patient/cda:raceCode/@code', 'race', self.race.andand.code)
-          errors << match_value(patient_element, 'cda:patient/cda:raceCode/@displayName', 'race', self.race.andand.name)
+          errors << match_value(patient_element, 'cda:patient/cda:raceCode/@code', 'race', self.race.try(:code))
+          errors << match_value(patient_element, 'cda:patient/cda:raceCode/@displayName', 'race', self.race.try(:name))
 
-          errors << match_value(patient_element, 'cda:patient/cda:ethnicGroupCode/@code', 'ethnicity', self.ethnicity.andand.code)
-          errors << match_value(patient_element, 'cda:patient/cda:ethnicGroupCode/@displayName', 'ethnicity', self.ethnicity.andand.name)
+          errors << match_value(patient_element, 'cda:patient/cda:ethnicGroupCode/@code', 'ethnicity', self.ethnicity.try(:code))
+          errors << match_value(patient_element, 'cda:patient/cda:ethnicGroupCode/@displayName', 'ethnicity', self.ethnicity.try(:name))
 
-          errors << match_value(patient_element, 'cda:patient/cda:birthTime/@value', 'date_of_birth', self.date_of_birth.andand.to_formatted_s(:hl7_ts))
+          errors << match_value(patient_element, 'cda:patient/cda:birthTime/@value', 'date_of_birth', self.date_of_birth.try(:to_formatted_s, :brief))
         else
           errors << ContentError.new(:section => 'registration_information', 
                                      :error_message => 'No patientRole element found',
