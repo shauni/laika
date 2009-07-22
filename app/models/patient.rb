@@ -149,6 +149,7 @@ class Patient < ActiveRecord::Base
           conditions.to_c32(xml)
 
           allergies.to_c32(xml)
+          no_known_allergies_c32(xml)
 
           insurance_providers.to_c32(xml)
 
@@ -293,4 +294,40 @@ class Patient < ActiveRecord::Base
       end
     end
   end
+  
+  # If the "No known allergies" flag is marked, this will add the required CCD xml
+  # to the provided XML::Builder object
+  def no_known_allergies_c32(xml)
+    if no_known_allergies
+      xml.component do
+        xml.section do
+          xml.templateId("root" => "2.16.840.1.113883.10.20.1.2", 
+                         "assigningAuthorityName" => "CCD")
+          xml.code("code" => "48765-2", 
+                   "codeSystem" => "2.16.840.1.113883.6.1")
+          xml.title "Allergies, Adverse Reactions, Alerts"
+          xml.text "No known allergies"
+          xml.entry do
+            xml.act("classCode" => "ACT", "moodCode" => "EVN") do
+              xml.templateId("root" => "2.16.840.1.113883.10.20.1.27")
+              xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.6")
+              xml.id("root" => "2C748172-7CC2-4902-8AF0-23A105C4401B")
+              xml.code("nullFlavor"=>"NA")
+              xml.entryRelationship("typeCode" => "SUBJ") do
+                xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
+                  xml.templateId("root" => "2.16.840.1.113883.10.20.1.18")
+                  xml.value("xsi:type" => "CD",
+                             "code" => "160244002", 
+                             "displayName" => "No known allergies", 
+                             "codeSystem" => "2.16.840.1.113883.6.96", 
+                             "codeSystemName" => "SNOMED CT")
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  
 end
