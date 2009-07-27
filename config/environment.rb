@@ -17,9 +17,12 @@ require "lib/saxon/saxon9-dom.jar"
 require 'activerecord'
 require_dependency 'has_select_options'
 require_dependency 'has_c32_component'
+require_dependency 'find_random'
+
 class ActiveRecord::Base
   extend HasSelectOptionsExtension
   extend HasC32ComponentExtension
+  extend FindRandom
 end
 
 Rails::Initializer.run do |config|
@@ -94,5 +97,12 @@ ActionMailer::Base.smtp_settings = {
   :address => "mail.mitre.org",
   :port => 25,
   :domain => "mitre.org",
+}
+
+XDS_HOST = "http://129.6.24.109:9080"
+
+XDS_REGISTRY_URLS = {
+  :register_stored_query         => "#{XDS_HOST}/axis2/services/xdsregistryb",
+  :retrieve_document_set_request => "#{XDS_HOST}/axis2/services/xdsrepositoryb"
 }
 

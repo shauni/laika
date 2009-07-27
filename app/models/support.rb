@@ -72,8 +72,8 @@ class Support < ActiveRecord::Base
     self.address.randomize()
     self.telecom = Telecom.new
     self.telecom.randomize()
-    self.contact_type = ContactType.find(:all).sort_by{rand}.first
-    self.relationship = Relationship.find(:all).sort_by{rand}.first
+    self.contact_type = ContactType.find_random
+    self.relationship = Relationship.find_random
   end
 
 end

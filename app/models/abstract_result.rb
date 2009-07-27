@@ -156,8 +156,8 @@ class AbstractResult < ActiveRecord::Base
     # Only create organizer data 1/2 the time
     if (rand < 0.5)
       organizer_id = "33d07056-bd27-4c90-891d-eb716d3170c4"
-      result_type_code = ResultTypeCode.find(:all).sort_by {rand}.first
-      act_status_code = ActStatusCode.find(:all).sort_by {rand}.first
+      result_type_code = ResultTypeCode.find_random
+      act_status_code = ActStatusCode.find_random
     end
 
   end

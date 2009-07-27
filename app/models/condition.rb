@@ -69,8 +69,8 @@ class Condition < ActiveRecord::Base
 
   def randomize(birth_date)
     self.start_event = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
-    self.problem_type = ProblemType.find(:all).sort_by{rand}.first
-    self.free_text_name = SnowmedProblem.find(:all).sort_by{rand}.first.name
+    self.problem_type = ProblemType.find_random
+    self.free_text_name = SnowmedProblem.find_random
   end
 
 

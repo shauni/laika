@@ -44,9 +44,9 @@ class Language < ActiveRecord::Base
   end
 
   def randomize()
-    self.iso_country = IsoCountry.find(:all).sort_by{rand}.first
-    self.iso_language = IsoLanguage.find(:all).sort_by{rand}.first
-    self.language_ability_mode = LanguageAbilityMode.find(:all).sort_by{rand}.first
+    self.iso_country = IsoCountry.find_random
+    self.iso_language = IsoLanguage.find_random
+    self.language_ability_mode = LanguageAbilityMode.find_random
     self.preference = false
   end
 

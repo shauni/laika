@@ -144,9 +144,9 @@ class InsuranceProvider < ActiveRecord::Base
     self.insurance_provider_guarantor = InsuranceProviderGuarantor.new
     self.insurance_provider_guarantor.randomize()
 
-    self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find(:first, :offset => rand(RoleClassRelationshipFormalType.count))
-    self.coverage_role_type = CoverageRoleType.find(:first, :offset => rand(CoverageRoleType.count))
-    self.insurance_type = InsuranceType.find(:first, :offset => rand(InsuranceType.count))
+    self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find_random
+    self.coverage_role_type = CoverageRoleType.find_random
+    self.insurance_type = InsuranceType.find_random
     
     self.group_number = (100000000 + rand(8999999999)) #generates a random 9 digit group or contract number
 
