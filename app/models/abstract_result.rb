@@ -139,7 +139,7 @@ class AbstractResult < ActiveRecord::Base
 
     self.result_id = rand(100).to_s + 'd' + rand(100000).to_s + '-bd' + rand(100).to_s + '-4c90-891d-eb716d' + rand(10000).to_s + 'c4'
     self.result_date = DateTime.new(2000 + rand(9), rand(12) + 1, rand(28) + 1)
-    self.code_system = CodeSystem.find 143755023 # sets code system as LOINC
+    self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.6.1") # sets code system as LOINC
     self.status_code = 'N'
     self.value_scalar = (100 + rand(100)).to_s
 
