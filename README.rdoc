@@ -1,3 +1,5 @@
+= Laika
+
 This is Laika, an open source electronic health record (EHR) testing framework.
 
 Laika is an web based testing suite for systems that interact with HITSP C32
@@ -9,6 +11,8 @@ correctness and completeness of the clinical data being transmitted.
 
 The target platform is JRuby on Rails, running under Glassfish.
 
+== Running the Test Suite
+
 To run the spec suite:
 
  $ jruby -S rake spec
@@ -17,11 +21,17 @@ To run the selenium test suite (the app server must be running in test mode at p
 
  $ jruby -S rake selenium:test
 
-For complete validation functionality the UMLS database (including SNOMED)
-is required, see: http://www.nlm.nih.gov/research/umls/
+== Additional Dependencies
 
-The Laika Git repository is hosted on GitHub:
+For complete validation functionality the UMLS database (including SNOMED)
+is required, see http://www.nlm.nih.gov/research/umls/
+
+== Resources
+
+The source repository is hosted on GitHub:
 http://github.com/CCHIT/laika/tree/master
 
-For more info about this project: http://laika.sourceforge.net/about.html
+The project page is hosted on SourceForge:
+http://laika.sourceforge.net/
+
 

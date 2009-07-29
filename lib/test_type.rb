@@ -1,5 +1,5 @@
 #
-# == Test type definitions ==
+# == Test type definitions
 #
 # For each test type, optional callbacks can be specified. Even if no
 # callbacks are needed, the test name must be registered and it must 

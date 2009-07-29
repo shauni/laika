@@ -1,0 +1,134 @@
+= Laika Design and Architecture
+
+== Application-specific Code
+
+=== Models
+
+{ErrorMailer}:: error notification email handler
+{Setting}:: run-time application configuration setting
+{SystemMessage}:: news post
+{User}:: application user
+{UserNotifier}:: ???
+{UserObserver}:: ???
+
+=== Controllers
+
+The Dashboard tab is implemented by {VendorTestPlansController#index} and the
+Library tab is implemented by {PatientsController#index}.
+
+{AccountController}:: login, logout and registration
+{ApplicationController}:: application-wide controller functionality
+{NewsController}:: display and post news items
+{SettingsController}:: manage run-time configuration
+{UsersController}:: list and update users
+{VendorsController}:: add and update vendors
+{VendorTestPlansController}:: manage test plans
+
+== Tests and Test Types
+
+Remember that we're talking about the EHR testing performed by Laika, *not*
+the automated test suite used to check for regressions in Laika itself. The
+test types are enumerated using {Kind} but implemented using {TestType}.
+
+=== Models
+
+The state of an individual test plan is represented by {VendorTestPlan}.
+
+{MessageLog}:: references an external table, used for ???
+{AtnaAudit}:: references an external table, used for viewing ATNA logs
+{ClinicalDocument}:: C32 document attachment
+{ContentError}:: C32 validation error
+{Kind}:: test type enumeration (e.g. XDS P&R, C32 D&F)
+{TestResult}:: pass/fail info and PIX/PDQ-specific result data
+{Vendor}:: categorize tests by an arbitrary string
+
+=== Controllers
+
+{TestopController}:: test-specific actions
+{XdsPatientsController}:: XDS utility operations
+
+=== Library Code
+
+{TestType}:: Callback-based test type specification
+
+== Patients
+
+A {Patient} instance represents a single patient's medical history. Most of the
+models in Laika are part of this structure and represent different sections or
+subsections of patient data. Patient and its subordinate types are based on
+the C32 document standard: http://wiki.hitsp.org/docs/C32/C32-1.html
+
+=== Controllers
+
+Most of the controllers involved in updating patient data are descendants of
+either {PatientChildController} or {PatientChildrenController} depending on
+whether the patient has one or many of the given resource, respectively.
+
+=== Patient Data Models
+
+The following models are used to construct a complete patient record. Each
+one represents a section or subsection of patient data.
+
+{AbstractResult}:: abstract parent of {Result} and {VitalSign}
+{Address}:: patient address
+{AdvanceDirective}:: advance directive data
+{Allergy}:: patient allergy information
+{Comment}:: section comment (not currently used)
+{Condition}:: patient condition information
+{Encounter}:: doctor visit
+{Immunization}:: patient immunization
+{InformationSource}:: patient info source
+{InsuranceProvider}:: patient insurance provider
+{InsuranceProviderGuarantor}:: ... and guarantor info
+{InsuranceProviderPatient}:: ... and patient info
+{InsuranceProviderSubscriber}:: ... and subscriber info
+{Language}:: spoken or written language
+{MedicalEquipment}:: medical device, e.g. pacemaker
+{Medication}:: prescribed medication
+{PatientIdentifier}:: patient affinity domain identifiers
+{PersonName}:: full name
+{Procedure}:: medical procedure
+{Provider}:: doctor or hospital
+{RegistrationInformation}:: general patient and contact info
+{Result}:: medical test results
+{Support}:: supporting contacts
+{Telecom}:: phone contacts
+{VitalSign}:: patient vitals
+
+=== Lookup Data Models
+
+These models represent lookup data needed for the UI and validation.
+
+* {ActStatusCode}
+* {AdvanceDirectiveStatusCode}
+* {AdvanceDirectiveType}
+* {AllergyStatusCode}
+* {AllergyTypeCode}
+* {CodeSystem}
+* {ContactType}
+* {CoverageRoleType}
+* {EncounterLocationCode}
+* {EncounterType}
+* {Ethnicity}
+* {Gender}
+* {InsuranceType}
+* {IsoCountry}
+* {IsoLanguage}
+* {IsoState}
+* {LanguageAbilityMode}
+* {LoincLabCode}
+* {MaritalStatus}
+* {MedicationType}
+* {NoImmunizationReason}
+* {ProblemType}
+* {ProviderRole}
+* {ProviderType}
+* {Race}
+* {Relationship}
+* {Religion}
+* {ResultTypeCode}
+* {RoleClassRelationshipFormalType}
+* {SeverityTerm}
+* {SnowmedProblem}
+* {Vaccine}
+* {ZipCode}
