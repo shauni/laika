@@ -1,27 +1,28 @@
 # Include this module in controllers that need to handle sorting.
 #
-# The sort specifier should be set using the :sort parameter. After the first use, the sort will be
-# saved in the session for the current controller and action. When sort_order is called by the same
-# controller and action in the same session, the results will include the previously specified sort order.
+# The sort specifier should be set using the :sort parameter. After the first
+# use, the sort will be saved in the session for the current controller and
+# action. When sort_order is called by the same controller and action in the
+# same session, the results will include the previously specified sort order.
 #
 # To use this module:
 #
-# require 'sort_order'
-# class SomeController < Application
-#   include SortOrder
-#   self.valid_sort_fields = %w[ field1 field2 ] # optional
+#  require 'sort_order'
+#  class SomeController < Application
+#    include SortOrder
+#    self.valid_sort_fields = %w[ field1 field2 ] # optional
 #
-#   def action
-#     render :text => "requested sort is #{sort_order}"
-#   end
-# end
+#    def action
+#      render :text => "requested sort is #{sort_order}"
+#    end
+#  end
 #
 # Then, in the helper:
 #
-# require 'sort_order'
-# module SomeHelper
-#   include SortOrderHelper
-# end
+#  require 'sort_order'
+#  module SomeHelper
+#    include SortOrderHelper
+#  end
 #
 module SortOrder
   def self.included(klass)

@@ -1,5 +1,11 @@
 = Laika Design and Architecture
 
+The classes covered in this document are grouped into three sections.
+Application-specific code is the scaffolding and business logic that holds
+Laika together. Test and test type code manages EHR testing state and related
+data. Patient code is responsible for reading, updating, processing and
+generating C32 from patient data.
+
 == Application-specific Code
 
 === Models
@@ -8,8 +14,8 @@
 {Setting}:: run-time application configuration setting
 {SystemMessage}:: news post
 {User}:: application user
-{UserNotifier}:: ???
-{UserObserver}:: ???
+{UserNotifier}:: password reset notification
+{UserObserver}:: user callbacks (sends notification)
 
 === Controllers
 
@@ -22,7 +28,10 @@ Library tab is implemented by {PatientsController#index}.
 {SettingsController}:: manage run-time configuration
 {UsersController}:: list and update users
 {VendorsController}:: add and update vendors
-{VendorTestPlansController}:: manage test plans
+
+==== Controller Support
+
+* {SortOrder}
 
 == Tests and Test Types
 
@@ -45,6 +54,7 @@ The state of an individual test plan is represented by {VendorTestPlan}.
 === Controllers
 
 {TestopController}:: test-specific actions
+{VendorTestPlansController}:: manage test plans
 {XdsPatientsController}:: XDS utility operations
 
 === Library Code
@@ -58,18 +68,11 @@ models in Laika are part of this structure and represent different sections or
 subsections of patient data. Patient and its subordinate types are based on
 the C32 document standard: http://wiki.hitsp.org/docs/C32/C32-1.html
 
-=== Controllers
-
-Most of the controllers involved in updating patient data are descendants of
-either {PatientChildController} or {PatientChildrenController} depending on
-whether the patient has one or many of the given resource, respectively.
-
 === Patient Data Models
 
 The following models are used to construct a complete patient record. Each
 one represents a section or subsection of patient data.
 
-{AbstractResult}:: abstract parent of {Result} and {VitalSign}
 {Address}:: patient address
 {AdvanceDirective}:: advance directive data
 {Allergy}:: patient allergy information
@@ -90,10 +93,18 @@ one represents a section or subsection of patient data.
 {Procedure}:: medical procedure
 {Provider}:: doctor or hospital
 {RegistrationInformation}:: general patient and contact info
-{Result}:: medical test results
+{Result}:: medical test results (child of {AbstractResult})
 {Support}:: supporting contacts
 {Telecom}:: phone contacts
-{VitalSign}:: patient vitals
+{VitalSign}:: patient vitals (child of {AbstractResult})
+
+==== Patient Support
+
+* {Commentable}
+* {HasC32ComponentExtension}
+* {InsuranceProviderChild}
+* {PatientChild}
+* {PersonLike}
 
 === Lookup Data Models
 
@@ -132,3 +143,38 @@ These models represent lookup data needed for the UI and validation.
 * {SnowmedProblem}
 * {Vaccine}
 * {ZipCode}
+
+==== Lookup Support
+
+* {HasSelectOptionsExtension}
+
+=== Controllers
+
+Most of the controllers involved in updating patient data are descendants of
+either {PatientChildController} or {PatientChildrenController} depending on
+whether the patient has one or many of the given resource, respectively.
+{PatientsController} controls high-level patient operations and the Library
+view.
+
+* {AdvanceDirectivesController}
+* {AllergiesController}
+* {ConditionsController}
+* {EncountersController}
+* {ImmunizationsController}
+* {InformationSourcesController}
+* {InsuranceProviderGuarantorsController}
+* {InsuranceProviderPatientsController}
+* {InsuranceProviderSubscribersController}
+* {InsuranceProvidersController}
+* {LanguagesController}
+* {MedicalEquipmentsController}
+* {MedicationsController}
+* {PatientIdentifiersController}
+* {PregnanciesController}
+* {ProceduresController}
+* {ProvidersController}
+* {RegistrationInformationController}
+* {ResultsController}
+* {SupportsController}
+* {VitalSignsController}
+
