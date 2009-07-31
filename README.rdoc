@@ -21,6 +21,15 @@ To run the selenium test suite (the app server must be running in test mode at p
 
  $ jruby -S rake selenium:test
 
+== Generating Documentation
+
+You can generate the complete documentation for the Laika source using the
+YARD documentation tool. You don't need to use JRuby to do this:
+
+ $ sudo gem install yard
+ $ rake yardoc
+ $ open doc/index.html
+
 == Additional Dependencies
 
 For complete validation functionality the UMLS database (including SNOMED)
