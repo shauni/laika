@@ -1,6 +1,22 @@
 === Upcoming Laika
 
-* Refactored test flow into callback-based test types.
+* New dependency: ModelFactory 0.9.1.
+* Removed dependency: andand gem.
+* Updated CCD schematron rules.
+* Run-time configuration of XDS URLs and repository unique ID.
+* Refactored test flow into callback-based test types, SF #2799737.
+* Moved effectiveTime into the observation on Conditions. SF #2803600.
+* XDS P&R: select document for comparison, SF #2794897.
+* XDS P&R: fixed comparison of metadata, SF #2808044.
+* Add a nav link to the top of patient editing page, SF #2725509.
+* More consistent date formatting, SF #2802059.
+* Header link back to root, SF #2801934.
+* Fixed: Provide complete ID in P&R utility, SF #2788085.
+* Fixed: Use full patient identifier on XDS assignment, SF #2800804.
+* Fixed: Signup: Fix incorrect min pass length, SF #2802093.
+* Fixed: News: html escape body, SF #2801915.
+* Fixed autocreate, SF #2801908.
+* Fixed: Signup: Error display formatting, SF #2802091.
 
 === 2009-05-28 Laika v1.3.7
 
