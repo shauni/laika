@@ -51,12 +51,13 @@ Install the rest of the gem dependencies; from the root of your Laika project:
 Get a copy of the xds-facade code from http://github.com/CCHIT/xds-facade/
 Navigate to the xds-facade directory, build the XDS gem and install it:
 
-cd xds-facade
- jruby -S rake gem
- cd pkg
- jruby -S gem install xds-facade-0.1.0.gem
+ $ cd xds-facade
+ $ jruby -S rake gem
+ $ cd pkg
+ $ jruby -S gem install xds-facade-0.1.0.gem
 
-(soon to be replaced by: jruby -S gem install CCHIT-xds-facade -s http://gems.github.com)
+_Above instructions soon to be replaced by_: 
+ $ jruby -S gem install CCHIT-xds-facade -s http://gems.github.com
 
 == XDS HOST
 The default XDS setup on Laika points to localhost. You can change the initial XDS endpoints by editing the settings.yml in spec/fixtures. If you do not have your own XDS set up, you can use the public registry provided by NIST (more information at http://129.6.24.109:9080/index.html); simply change localhost to the following IP address: http://129.6.24.109:9080.
@@ -69,12 +70,12 @@ Install the database adapters:
 
 Make sure your local database server is running and create a new user *laika* with password *laika* and a new database/schema called *laika*. Find the database.yml.template file in laika/config under your local Laika project and edit it to include your database settings, for example:
 
-development:
-  adapter: jdbcpostgresql
-  database: laika
-  host: localhost
-  port: 5432
-  <<: *login
+  development:
+   adapter: jdbcpostgresql
+   database: laika
+   host: localhost
+   port: 5432
+   <<: *login
 
 Save the file as database.yml (i.e., without .template extension). Run the database migrations and load the seed data:
 
