@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require 'sort_order'
 
 class SortOrderTestController < ActionController::Base
+  def rescue_action(e) raise e end
+
   include SortOrder
   def foo
     render :text => 'hi foo'

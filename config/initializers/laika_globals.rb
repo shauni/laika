@@ -1,5 +1,5 @@
 
-LAIKA_VERSION = "1.3.7"
+LAIKA_VERSION = "1.3.8"
 FEEDBACK_EMAIL = "talk@projectlaika.org"
 ERROR_EMAIL = "rmccready@mitre.org"
 CONTENT_INSPECTION="ContentInspection"

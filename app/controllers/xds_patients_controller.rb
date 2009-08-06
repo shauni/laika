@@ -16,22 +16,6 @@ class XdsPatientsController < ApplicationController
     @previous_vendor = last_selected_vendor
   end
   
-  def query
-    pi = PatientIdentifier.find(params[:id])
-    @metadata = XDSUtils.list_document_metadata(pi)
-    @vendors = current_user.vendors + Vendor.unclaimed
-    @patient_identifier = pi
-    @kind = Kind.find_by_name('Query and Retrieve')
-  end
-
-  # Creates the form that collects data for a provide and register test
-  def provide_and_register_setup
-    @patient = Patient.find(params[:id])
-    @vendors = current_user.vendors + Vendor.unclaimed
-    @kind = Kind.find_by_name('Provide and Register').id
-    @vendor_test_plan = VendorTestPlan.new(:user_id => current_user.id)
-  end
-
   # Creates the form that collects data to actuall provide and register a document to an XDS Repository
   def provide_and_register
     @patient = Patient.find(params[:id])

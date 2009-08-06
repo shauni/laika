@@ -1,0 +1,3 @@
+app/**/*.rb
+lib/**/*.rb
+*.rdoc

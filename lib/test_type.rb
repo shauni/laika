@@ -1,3 +1,21 @@
+#
+# == Test type definitions
+#
+# For each test type, optional callbacks can be specified. Even if no
+# callbacks are needed, the test name must be registered and it must 
+# have a corresponding database record in the kinds table.
+#
+# The setup callback is the first step for gathering test data, and is
+# intended to be used to set up a form that registers the test. The setup
+# callback accepts a single argument: the patient selected by the user
+# for the test. The return value doesn't matter.
+#
+# All other callbacks MUST accept a vendor_test_plan, which should be
+# returned by the assign callback. The return value doesn't matter.
+#
+# All callbacks are currently executed in controller context, so
+# calls like redirect_to and params work as you'd expect.
+#
 class TestType
   attr_reader :name, :callback, :execution_paths
   alias_method :to_s, :name
@@ -15,7 +33,10 @@ class TestType
     self.class.normalize_name(@name).gsub('-','_')
   end
 
-  # implement accessors for individual callbacks, e.g. assign_cb, execute_cb
+  # Implement accessors for individual callbacks, e.g. assign_cb, setup_cb.
+  #
+  # Users should not use these callback directly. Instead use +perform+,
+  # +assign+ or +setup+.
   def method_missing(method_name, *args)
     if method_name.to_s.match(/^(\w+)_cb$/)
       callback[$1.to_sym]
@@ -47,6 +68,9 @@ class TestType
   end
 
   # Define shared operations by passing a block.
+  # 
+  # You can define execution steps and operations in a shared block
+  # and include them in any test type using +
   def self.shared name, &block
     @shared_operations ||= {}
     if block_given?
@@ -74,9 +98,20 @@ class TestType
   end
 
   # Return a test type wrapper that automatically uses the included
-  # context for non-global (e.g., test type-specific) callbacks.
+  # context for non-global (e.g., test type-specific) callbacks. Use
+  # it like this:
+  #
+  #  test_type.with_context(self).setup(vendor_test_plan)
+  #
+  # This is the preferred way to pass the callback context.
   def with_context(context)
     ActiveSupport::OptionMerger.new(self, :cb_context => context)
+  end
+
+  # Execute the setup callback. Accepts the patient selected by the user for
+  # the test. This is just a wrapper around +perform+.
+  def setup patient, opt = {}
+    perform :setup, patient, opt
   end
 
   # Assign a test, returning a newly created vendor test plan.
@@ -137,17 +172,24 @@ class TestType
     vendor_test_plan
   end
 
-  def perform(operation, vendor_test_plan, opt = {})
+  # The perform method can be used to execute callbacks.
+  #
+  # Specify a callback context with the option :cb_context.
+  #
+  # NOTE Rather than pass the context explicitly, you should use
+  # with_context to create a wrapper that automatically passes
+  # the context to every callback.
+  def perform(operation, test_data, opt = {})
     context = opt.delete(:cb_context)
-    if execution_paths.flatten.map(&:to_s).include?(operation.to_s) && !opt[:dry_run]
+    if callback[operation.to_sym] && !opt[:dry_run]
       if context
         begin
-          context.instance_exec(vendor_test_plan, &callback[operation.to_sym])
+          context.instance_exec(test_data, &callback[operation.to_sym])
         rescue ActionController::DoubleRenderError
           raise AssignFailure, "Test assignment failed: double render in callback"
         end
       else
-        callback[operation.to_sym].call(vendor_test_plan)
+        callback[operation.to_sym].call(test_data)
       end
     end
   end

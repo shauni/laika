@@ -1,23 +1,10 @@
-#
-# Test type definitions
-#
-# For each test type, optional callbacks can be specified. Even if no
-# callbacks are needed, the test name must be registered and it must 
-# have a corresponding database record in the kinds table.
-#
-# All callbacks MUST accept a vendor_test_plan, which should be
-# returned by the global callback. The return value doesn't matter.
-#
-# All callbacks are currently executed in controller context, so
-# calls like redirect_to and params work as you'd expect.
-#
 
 TestType.shared("PIX/PDQ") do
   execution :checklist
   checklist do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     @patient = vendor_test_plan.patient
-    render 'testop/pix_feed/results'
+    render 'testop/pix_pdq/checklist'
   end
 end
 
@@ -50,12 +37,13 @@ TestType.register("PIX Feed") do
     end
 
     @vendor_test_plan.test_result = @test_result
+    render vendor_test_plans_url
   end
 
   inspect do |vendor_test_plan|
     @vendor_test_plan = vendor_test_plan
     @patient = vendor_test_plan.patient
-    render 'testop/pix_feed/results'
+    render 'testop/pix_pdq/checklist'
   end
 end
 
