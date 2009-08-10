@@ -1,0 +1,26 @@
+<% @page_header = 'XDS Utility' %>
+
+<table id="dashboard">
+
+  
+
+  <% @patients.each do |patient| -%>
+    <tr>
+      <td><%= patient[ 'value' ] %> - <%= patient[ 'identificationscheme' ]%></td>
+ 	  <td class="actions" width=270px>
+        <% if @documents[ patient ].empty? %>
+			no documents associated with this record
+		<% else %>
+			<%= link_to 'show documents', "javascript:toggle_div('document_div_#{patient.id}')" %>
+		<% end %>
+        <div id="document_div_<%=patient.id%>" style="display:none">
+          <% @documents[ patient ].each do |document| %>
+   			   <p><%= document.inspect %><%= submit_tag 'Retrieve Document' %></p>
+           <% end %>
+         </div>
+       </td>
+      
+     </tr>
+   <% end -%>
+ </table>
+
