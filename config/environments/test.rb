@@ -23,4 +23,4 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-config.gem 'modelfactory', :version => '>=0.9.1'
+config.gem 'modelfactory', :version => '>=0.9.2'

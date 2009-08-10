@@ -24,6 +24,16 @@ ModelFactory.configure do
     password { "secret " }
     password_confirmation { password }
   end
+
+  default(Vendor) do
+    public_id { |i| "FACTORYVENDOR#{i}" }
+  end
+
+  default(TestPlan) do
+    patient { Patient.factory.create }
+    user { User.factory.create }
+    vendor { Vendor.factory.create }
+  end
 end
 
 

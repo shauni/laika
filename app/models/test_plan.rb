@@ -7,7 +7,15 @@
 #  end
 #
 class TestPlan < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :vendor
+  belongs_to :patient,           :dependent => :destroy
+  belongs_to :clinical_document, :dependent => :destroy
 
+  validates_presence_of :user_id
+  validates_presence_of :vendor_id
+  validates_presence_of :patient_id
+  
   private
 
   # Accessor for the test plan type registry.
@@ -27,7 +35,7 @@ class TestPlan < ActiveRecord::Base
   # @param [String] name Unambiguous test plan type identifier.
   # @return [Class] The requested test plan type.
   def self.get name
-    test_types[name]
+    test_types[normalize_name name]
   end
 
   # Return the names of all registered test plan types.
@@ -37,21 +45,35 @@ class TestPlan < ActiveRecord::Base
   #
   # @return [Array<String>] Test plan type names.
   def self.names
-    test_types.keys
+    test_types.values.map { |t| t.test_name }
   end
 
   # Use this in subclasses to declare the name of the test and to register it
-  # in the list of test plan types.
+  # in the list of test plan types. With no arguments, returns the name of the
+  # test.
   #
   # @example
   #  class MyTest < TestPlan
   #    test_name "My Test"
   #  end
+  #  MyTest.test_name #=> "My Test"
   #
   # @param [String] Test plan type name.
-  def self.test_name name
-    test_types[name] = self
-    @test_name = name
+  def self.test_name name = nil
+    if name.nil?
+      @test_name
+    else
+      test_types[normalize_name name] = self
+      @test_name = name
+    end
+  end
+
+  # Normalize the given name for easy comparison.
+  #
+  # @param [String] name non-normalized name
+  # @return [String] normalized name
+  def self.normalize_name name
+    name.strip.downcase.gsub('_','-').gsub(/\ba?nd?\b|&/i, '-and-').gsub(/\W+/, '-')
   end
 
   state_machine :initial => :pending do
