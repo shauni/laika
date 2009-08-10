@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe AdvanceDirectivesController do
   integrate_views
 
-  fixtures :patients, :advance_directives
+  fixtures :patients, :advance_directives, :registration_information
 
   before do
     @user = stub(:user)
