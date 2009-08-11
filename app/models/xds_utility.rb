@@ -1,6 +1,10 @@
 class XdsUtility < ActiveRecord::Base
   establish_connection :nist_xds
   
+  def self.patient_template
+  
+  end
+  
   def self.patients
       xds_all_ids = "SELECT patId.value, patId.identificationScheme FROM ExternalIdentifier patId"
       begin
