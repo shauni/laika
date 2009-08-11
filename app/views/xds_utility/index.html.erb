@@ -27,7 +27,7 @@
 	
 		
       <td><%= patient[ 'value' ] %></td>
- 	  <td class="actions" width=270px>
+ 	  <td class="actions">
         <% if @documents[ patient ].empty? %>
 			no documents associated with this record
 		<% else %>
@@ -35,7 +35,7 @@
 		<% end %>
         <div id="document_div_<%=patient.id%>" style="display:none">
           <% @documents[ patient ].each do |document| %>
-   			   <p><%= document %> | <%= submit_tag 'Retrieve Document' %></p>
+   			   <p><b>Document ID:</b> <%= document %></p>
            <% end %>
          </div>
        </td>
