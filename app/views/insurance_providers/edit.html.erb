@@ -25,6 +25,12 @@
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+    <td class="lighttext">Health Plan <%= requirements_for @insurance_provider, :health_plan %></td>
+    <td>
+      <%= f.text_field :health_plan %>
+    </td>
+  </tr>
+  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Relationship to Subscriber <%= requirements_for @insurance_provider, :coverage_role_type_id %></td>
     <td>
       <%= f.select :coverage_role_type_id, CoverageRoleType.select_options %>
