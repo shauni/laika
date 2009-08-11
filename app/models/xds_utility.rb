@@ -1,11 +1,35 @@
 class XdsUtility < ActiveRecord::Base
   establish_connection :nist_xds
   
-  def self.patient_template
-  
+  def self.patients
+    
+    patients = []
+    
+    all_identifiers.each do |identifier|
+     
+      xds_record = XDSUtils::XDSRecord.new
+      xds_record.documents = documents(  identifier[ 'identificationscheme' ], identifier['value'] )
+      xds_record.id = identifier['value']
+      
+      split_id = identifier[ 'value' ].split('^^^')
+      patient_id = PatientIdentifier.find( :first, 
+          :conditions => {  :patient_identifier => split_id.first, 
+                            :affinity_domain => split_id.second }
+       ).andand.patient_id
+      xds_record.patient = Patient.find( patient_id ) unless patient_id.nil?
+      
+      patients << xds_record
+    end
+    
+    patients
+    
   end
   
-  def self.patients
+
+  
+  private
+  
+  def self.all_identifiers
       xds_all_ids = "SELECT patId.value, patId.identificationScheme FROM ExternalIdentifier patId"
       begin
         connection.select_all( "#{xds_all_ids}\n" )
@@ -31,6 +55,4 @@ class XdsUtility < ActiveRecord::Base
       return 
     end  
   end
-  
-  
 end

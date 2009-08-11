@@ -11,13 +11,13 @@
     <th><div>Documents</div></th>
   </tr>
 
-  <% @patients.each do |patient| -%>
+  <% @patients.each do |xds_patient| -%>
     <tr>
-	  <% if !@laika_patients[ patient ].nil? %>
-	  <td><%= link_to h(@laika_patients[ patient ].name), patient_url(@laika_patients[ patient ]) %></td>
-      <td><%=h @laika_patients[ patient ].user.first_name %> <%=h @laika_patients[ patient ].user.last_name %></td>
-      <td><%= @laika_patients[ patient ].created_at %></td>
-      <td><%= @laika_patients[ patient ].updated_at %></td>
+	  <% if !xds_patient.patient.nil? %>
+	  <td><%= link_to h(xds_patient.patient.name), patient_url(xds_patient.patient) %></td>
+      <td><%=h xds_patient.patient.user.first_name %> <%=h xds_patient.patient.user.last_name %></td>
+      <td><%= xds_patient.patient.created_at %></td>
+      <td><%= xds_patient.patient.updated_at %></td>
 	  <% else %>
 		<td></td>
 		<td></td>
@@ -26,15 +26,15 @@
 	  <% end %>
 	
 		
-      <td><%= patient[ 'value' ] %></td>
+      <td><%= xds_patient.id %></td>
  	  <td class="actions">
-        <% if @documents[ patient ].empty? %>
+        <% if xds_patient.documents.empty? %>
 			no documents associated with this record
 		<% else %>
-			<%= link_to 'show documents', "javascript:toggle_div('document_div_#{patient.id}')" %>
+			<%= link_to 'show documents', "javascript:toggle_div('document_div_#{xds_patient.id}')" %>
 		<% end %>
-        <div id="document_div_<%=patient.id%>" style="display:none">
-          <% @documents[ patient ].each do |document| %>
+        <div id="document_div_<%=xds_patient.id%>" style="display:none">
+          <% xds_patient.documents.each do |document| %>
    			   <p><b>Document ID:</b> <%= document %></p>
            <% end %>
          </div>
