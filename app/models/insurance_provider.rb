@@ -131,7 +131,7 @@ class InsuranceProvider < ActiveRecord::Base
             # if health plan name is provided 
             if health_plan
               xml.entryRelationship("typeCode" => "REFR") do
-                xml.act("classCode" => "ACT", moodCode => "DEF") do
+                xml.act("classCode" => "ACT", "moodCode" => "DEF") do
                   xml.id("id" => "id", "extension" => "PlanCode")
                   xml.code("code" => "HMO", 
                            "displayName" => "health maintenance organization policy", 
