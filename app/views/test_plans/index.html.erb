@@ -1,0 +1,47 @@
+<h3>Laika Inspection ID: <%= @vendor.public_id %></h3>
+<table id="dashboard">
+  <tr>
+    <th><div>Status</div></th>
+    <th class="<%= sort_order_class('kinds.name') %>"><%= link_to_sort 'kinds.name', 'Test Type' %></th>
+    <th class="<%= sort_order_class('patient.name') %>"><%= link_to_sort 'patient.name', 'Patient' %></th>
+    <th><div>Errors</div></th>
+    <th><div>Warnings</div></th>
+    <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'Last Tested' %></th>
+    <th><div>Actions</div></th>
+  </tr>
+  <% @vendor.test_plans.each do |test_plan| -%>
+    <tr id="test_plan_<%= test_plan.id %>">
+      <td><%= test_plan.state %></td>
+      <td><%= test_plan.class.test_name %></td>
+      <td>
+        <% if test_plan.clinical_document%>
+          <%= test_plan.patient.name %>
+        <% else %>
+          <%= link_to h(test_plan.patient.name), patient_url(test_plan.patient) %>
+        <% end %>
+      </td>
+      <td>         
+        <%#= link_to pluralize(@errors[test_plan], "Error"), validate_test_plan_url(test_plan) %>          
+      </td>
+      <td>         
+        <%#= link_to pluralize(@warnings[test_plan], "Warning"), validate_test_plan_url(test_plan) %>
+      </td>
+      <td><%= time_ago_in_words test_plan.updated_at %> ago</td>
+      <td class="actions">
+        <%#= action_area(test_plan) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="7" align="right">
+        <div id="execution_div_<%=test_plan.id%>"></div>
+      </td>
+    </tr>
+
+  <% end %> <!-- test_plan loop -->
+</table> <!-- .dashboard -->
+
+<% if @vendor.test_plans.count == 0 %>
+  <div id="not-assigned">
+    You have not assigned any tests to yourself.
+  </div>
+<% end %>

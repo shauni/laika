@@ -1,11 +1,12 @@
-class TestPlan::XDS::ProvideAndRegister < TestPlan::XDS
+class XdsProvideAndRegisterPlan < TestPlan
+  serialize :test_plan_data, ::XDS::Metadata
   test_name 'XDS Provide & Register'
 
   def fetch_xds_metadata
     XDSUtils.list_document_metadata patient.patient_identifier
   end
 
-  def validate metadata_of_interest
+  def validate_xds_metadata metadata_of_interest
     if metadata_of_interest
       validator = Validators::XdsMetadataValidator.new
       validation_errors = validator.validate test_plan_data, metadata_of_interest

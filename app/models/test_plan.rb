@@ -30,7 +30,7 @@ class TestPlan < ActiveRecord::Base
   # Get a test plan type given a test name.
   #
   # @example
-  #  TestPlan.get('XDS Provide and Register') #=> TestPlan::XDS::ProvideAndRegister
+  #  TestPlan.get('XDS Provide and Register') #=> XDSProvideAndRegisterPlan
   #
   # @param [String] name Unambiguous test plan type identifier.
   # @return [Class] The requested test plan type.
@@ -65,6 +65,7 @@ class TestPlan < ActiveRecord::Base
     else
       test_types[normalize_name name] = self
       @test_name = name
+
     end
   end
 
@@ -86,8 +87,7 @@ class TestPlan < ActiveRecord::Base
   end
 end
 
-# Whenever this file is reloaded it will cause the index of available test
-# types to be reset. To avoid this the child test plan types must be reloaded
-# as well.
-Dir[File.dirname(__FILE__) + '/test_plan/**/*.rb'].each { |f| load f }
+# Declare test plan types here to make sure they are loaded
+# when this class is loaded.
+XdsProvideAndRegisterPlan
 

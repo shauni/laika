@@ -22,22 +22,21 @@
         | <%= link_to 'delete', patient_path(patient), :confirm => 'Are you sure you want to delete this Laika template?', :method => :delete %>
         | <a href="javascript:toggle_div('assignment_div_<%=patient.id%>');">assign</a>
         <div id="assignment_div_<%=patient.id%>" style="display:none">
-          <% form_for VendorTestPlan.new(:kind_id => @previous_kind, :vendor_id => @previous_vendor, :user_id => current_user.id),
-            :method => 'post' do |f| -%>
-              <input type="hidden" name="patient_id" value="<%= patient.id %>"/>
-              <%= f.select :vendor_id, Vendor.select_options(@vendors) %>
-              <%= f.select :kind_id, Kind.dashboard_options %>
-              <% if current_user.administrator? -%>
-                <%= f.select :user_id, User.select_options %>
-              <% end -%>
-              <p/>
-              <input type="submit" value="Assign"/>
-            <% end -%>
-          </div>
-        </td>
-      </tr>
-    <% end -%>
-  </table>
+          <% form_for TestPlan.new(:vendor_id => current_user.current_vendor,
+                                   :user_id => current_user,
+                                   :patient_id => patient.id),
+              :method => 'post' do |f| -%>
+            <%= f.hidden_field :patient_id %>
+            <%= f.collection_select :vendor_id, current_user.vendors, :id, :public_id %>
+            <%= f.select :type, TestPlan.names %>
+            <p/>
+            <input type="submit" value="Assign"/>
+          <% end -%>
+        </div>
+      </td>
+    </tr>
+  <% end -%>
+</table>
 
 <div class="column span-8 box">
   <h3>Create a new patient</h3>

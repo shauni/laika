@@ -1,0 +1,3 @@
+class XdsPlan < TestPlan
+end
+
