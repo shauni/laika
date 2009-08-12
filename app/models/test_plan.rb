@@ -6,17 +6,39 @@
 #    test_name "My Awesome Test"
 #  end
 #
+# Test plans use an internal state machine to track progress. All test
+# plans start out in the +pending+ state. You can use the methods +pass+
+# or +fail+ to change the state:
+#
+#  plan = TestPlan.new
+#  plan.state             #=> 'pending'
+#  plan.tap(&:pass).state #=> 'passed'
+#
+# You cannot change the state of a plan once it has passed
+# or failed, so you can only pass or fail pending tests.
+#
+#  plan = TestPlan.new
+#  plan.state             #=> 'pending'
+#  plan.tap(&:fail).state #=> 'failed'
+#
 class TestPlan < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
   belongs_to :patient,           :dependent => :destroy
   belongs_to :clinical_document, :dependent => :destroy
+  before_create :clone_patient
 
   validates_presence_of :user_id
   validates_presence_of :vendor_id
   validates_presence_of :patient_id
   
-  private
+  protected
+
+  # Automatically clone the patient record before creating
+  # a new test plan.
+  def clone_patient
+    self.patient = Patient.find(patient_id).clone
+  end
 
   # Accessor for the test plan type registry.
   #
@@ -26,6 +48,21 @@ class TestPlan < ActiveRecord::Base
   end
 
   public
+
+  state_machine :initial => :pending do
+    event :pass do
+      transition :pending => :passed
+    end
+    event :fail do
+      transition :pending => :failed
+    end
+  end
+
+  # Return the normalized name of this test plan, but with underscores instead
+  # of dashes. Useful for building URLs and file paths.
+  def parameterized_name
+    self.class.normalize_name(self.class.test_name).gsub('-','_')
+  end
 
   # Get a test plan type given a test name.
   #
@@ -76,18 +113,10 @@ class TestPlan < ActiveRecord::Base
   def self.normalize_name name
     name.strip.downcase.gsub('_','-').gsub(/\ba?nd?\b|&/i, '-and-').gsub(/\W+/, '-')
   end
-
-  state_machine :initial => :pending do
-    event :pass do
-      transition :pending => :passed
-    end
-    event :fail do
-      transition :pending => :failed
-    end
-  end
 end
 
 # Declare test plan types here to make sure they are loaded
 # when this class is loaded.
 XdsProvideAndRegisterPlan
+XdsQueryAndRetrievePlan
 

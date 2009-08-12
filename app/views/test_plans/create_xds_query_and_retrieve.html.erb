@@ -1,0 +1,29 @@
+<h2>XDS Query Results</h2>
+<table>
+  <tr>
+    <th>Author Name</th>
+    <th>Format</th>
+    <th>Document Id</th>
+    <th>Creation Time</th>
+    <th></th>
+  </tr>
+  <% @plan.fetch_xds_metadata.each do |md| %>
+    <tr>
+      <td><%= md.author.person %></td>
+      <td><%= md.format_code.display_name %></td>
+      <td><%= md.unique_id %></td>
+      <td><%= md.creation_time %></td>
+      <td>
+        <% form_for(:test_plan, @plan, :method => 'post') do |f| -%>
+          <%= hidden_field_tag 'test_plan[type]', @plan.class.test_name %>
+          <%= f.hidden_field :patient_id %>
+          <%= f.hidden_field :vendor_id %>
+          <%= hidden_field 'test_plan[test_type_data]', md.to_yaml %>
+          <%= submit_tag "Assign" %>
+        <% end -%>
+      </td>
+    </tr>
+  <% end -%>
+</table>
+
+
