@@ -31,7 +31,7 @@ class TestPlan < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :vendor_id
   validates_presence_of :patient_id
-  
+
   protected
 
   # Automatically clone the patient record before creating
