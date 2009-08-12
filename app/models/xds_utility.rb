@@ -1,7 +1,8 @@
 class XdsUtility < ActiveRecord::Base
   establish_connection :nist_xds
   
-  def self.patients
+  #instantiate all identifiers in the registry as XDSRecords
+  def self.all_patients
     
     patients = []
     
@@ -10,13 +11,8 @@ class XdsUtility < ActiveRecord::Base
       xds_record = XDSUtils::XDSRecord.new
       xds_record.documents = documents(  identifier[ 'identificationscheme' ], identifier['value'] )
       xds_record.id = identifier['value']
-      
-      split_id = identifier[ 'value' ].split('^^^')
-      patient_id = PatientIdentifier.find( :first, 
-          :conditions => {  :patient_identifier => split_id.first, 
-                            :affinity_domain => split_id.second }
-       ).andand.patient_id
-      xds_record.patient = Patient.find( patient_id ) unless patient_id.nil?
+      xds_record.id_scheme = identifier[ 'identificationscheme' ]
+      xds_record.patient = find_patient( identifier[ 'value' ] )
       
       patients << xds_record
     end
@@ -25,23 +21,34 @@ class XdsUtility < ActiveRecord::Base
     
   end
   
-
+  #find the patient template from the XDS id
+  def self.find_patient( id )
   
-  private
+    split_id = id.split('^^^')
+    patient_id = PatientIdentifier.find( :first, 
+        :conditions => {  :patient_identifier => split_id.first, 
+                          :affinity_domain => split_id.second }
+     ).andand.patient_id
+     
+     Patient.find( patient_id ) unless patient_id.nil?
+  end
   
+  
+  #get all identifiers in the registry
   def self.all_identifiers
-      xds_all_ids = "SELECT patId.value, patId.identificationScheme FROM ExternalIdentifier patId"
+      xds_all_ids_query = "SELECT patId.value, patId.identificationScheme FROM ExternalIdentifier patId"
       begin
-        connection.select_all( "#{xds_all_ids}\n" )
+        connection.select_all( "#{xds_all_ids_query}\n" )
       rescue ActiveRecord::StatementInvalid
          flash[:notice] = "Could not find any patients."
          return
       end
   end
   
+  #get documents/object ids associated with an identifier in the registry
   def self.documents( id_scheme, id )
     
-    xds_docs = "SELECT doc.id
+    xds_docs_query = "SELECT doc.id
                 FROM ExtrinsicObject doc, ExternalIdentifier patId
                 WHERE
                   doc.id = patId.registryobject AND      
@@ -49,10 +56,11 @@ class XdsUtility < ActiveRecord::Base
                 AND
                   patId.value = '#{id}';" 
     begin
-      connection.select_values( "#{xds_docs}\n" )
+      connection.select_values( "#{xds_docs_query}\n" )
     rescue ActiveRecord::StatementInvalid
       flash[:notice] = "Could not find documents associated with that record."
       return 
     end  
   end
+  
 end

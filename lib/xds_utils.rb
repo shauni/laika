@@ -2,7 +2,7 @@ module XDSUtils
   class RetrieveFailed < StandardError; end
   
   class XDSRecord
-    attr_accessor :patient, :documents, :id
+    attr_accessor :patient, :documents, :id, :id_scheme
   end
   
   def self.retrieve_document(metadata)
