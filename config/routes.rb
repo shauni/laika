@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :settings, :only => [:index, :update]
 
-  map.resources :test_plans
+  map.resources :test_plans, :member => {:mark => :post}
 
   map.resources :vendor_test_plans, :has_one => [:test_result],
                                     :member => {:validate => :get,

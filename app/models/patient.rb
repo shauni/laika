@@ -25,6 +25,8 @@ class Patient < ActiveRecord::Base
   # dependent because results and vital_signs already do that.
   has_many :all_results, :class_name => 'AbstractResult'
 
+  named_scope :templates, :conditions => { :vendor_test_plan_id => nil }
+
   # these are used in the insurance_provider_* controllers
   def insurance_provider_guarantors
     InsuranceProviderGuarantor.by_patient(self)

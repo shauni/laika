@@ -27,6 +27,7 @@ class TestPlan < ActiveRecord::Base
   belongs_to :patient,           :dependent => :destroy
   belongs_to :clinical_document, :dependent => :destroy
   before_create :clone_patient
+  default_scope :order => 'created_at ASC'
 
   validates_presence_of :user_id
   validates_presence_of :vendor_id
@@ -102,7 +103,6 @@ class TestPlan < ActiveRecord::Base
     else
       test_types[normalize_name name] = self
       @test_name = name
-
     end
   end
 
@@ -117,6 +117,14 @@ end
 
 # Declare test plan types here to make sure they are loaded
 # when this class is loaded.
+# XXX For some reason this class will not autoload like the rest of them,
+#  and only during the tests! What the heck is going on?
+#C32DisplayAndFilePlan
+load 'c32_display_and_file_plan.rb'
+C32GenerateAndFormatPlan
+PdqQueryPlan
+PixQueryPlan
+PixFeedPlan
 XdsProvideAndRegisterPlan
 XdsQueryAndRetrievePlan
 

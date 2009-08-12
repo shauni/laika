@@ -1,0 +1,12 @@
+<a href="javascript:toggle_div('plan_state_<%=plan.id%>')" ><%= plan.state %></a>
+<div id="plan_state_<%=plan.id%>" style="display:none">
+    <% if plan.pending? %>  
+      <div><%= link_to 'mark passed', mark_test_plan_url(plan,:state => :pass),
+        :method => :post %></div>
+      <div><%= link_to 'mark failed', mark_test_plan_url(plan,:state => :fail),
+        :method => :post %></div>
+      <div><%= link_to_function 'leave pending', "toggle_div('plan_state_#{plan.id}')" %></div>
+    <% end %>
+
+</div>
+

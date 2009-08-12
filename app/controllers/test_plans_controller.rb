@@ -2,6 +2,14 @@ class TestPlansController < ApplicationController
   include SortOrder
   self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
 
+  #include C32DisplayAndFileController
+  #include C32GenerateAndFormatController
+  #include XdsProvideAndRegisterController
+  #include XdsQueryAndRetrieveController
+  #include PixFeedController
+  #include PixQueryController
+  #include PdqQueryController
+
   def index
     @vendor = last_selected_vendor || current_user.vendors.first
     @test_plans = @vendor.test_plans.all(:order => sort_order)
@@ -18,8 +26,26 @@ class TestPlansController < ApplicationController
       redirect_to :action => :index
     else
       @plan = plan
-      render :template => "test_plans/create_#{@plan.parameterized_name}"
+      render "test_plans/create_#{plan.parameterized_name}"
     end
   end
+
+  def destroy
+    plan = TestPlan.find params[:id]
+    plan.destroy if plan.user == current_user
+    redirect_to test_plans_path
+  end
+
+  def mark
+    plan = TestPlan.find params[:id]
+    if plan.user == current_user
+      case params['state']
+      when "pass"; plan.pass!
+      when "fail"; plan.fail!
+      end
+    end
+    redirect_to test_plans_url
+  end
+
 end
 

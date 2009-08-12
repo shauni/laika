@@ -11,7 +11,9 @@
   </tr>
   <% @vendor.test_plans.each do |test_plan| -%>
     <tr id="test_plan_<%= test_plan.id %>">
-      <td><%= test_plan.state %></td>
+      <td>
+        <%= render :partial => 'mark_state', :locals => { :plan => test_plan } %>
+      </td>
       <td><%= test_plan.class.test_name %></td>
       <td>
         <% if test_plan.clinical_document%>
