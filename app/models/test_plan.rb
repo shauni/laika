@@ -117,10 +117,11 @@ end
 
 # Declare test plan types here to make sure they are loaded
 # when this class is loaded.
-# XXX For some reason this class will not autoload like the rest of them,
-#  and only during the tests! What the heck is going on?
-#C32DisplayAndFilePlan
-load 'c32_display_and_file_plan.rb'
+# XXX For some reason the C32 display and file class was not autoloading
+# with the default name. Also it was only failing in this manner during
+# the tests! For whatever reason using a slightly different name seems
+# to work around the problem.
+DisplayAndFileC32Plan
 C32GenerateAndFormatPlan
 PdqQueryPlan
 PixQueryPlan

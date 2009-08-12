@@ -1,4 +1,6 @@
 class TestPlansController < ApplicationController
+  page_title 'Laika Dashboard'
+
   include SortOrder
   self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
 
