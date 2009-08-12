@@ -1,4 +1,4 @@
-class C32GenerateAndFormatPlan < TestPlan
+class GenerateAndFormatC32Plan < TestPlan
   test_name "C32 Generate and Format"
 end
 

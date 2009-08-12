@@ -122,7 +122,7 @@ end
 # the tests! For whatever reason using a slightly different name seems
 # to work around the problem.
 DisplayAndFileC32Plan
-C32GenerateAndFormatPlan
+GenerateAndFormatC32Plan
 PdqQueryPlan
 PixQueryPlan
 PixFeedPlan
