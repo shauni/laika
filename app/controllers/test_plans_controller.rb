@@ -4,14 +4,14 @@ class TestPlansController < ApplicationController
   include SortOrder
   self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
 
-  #include C32DisplayAndFileController
-  #include C32GenerateAndFormatController
-  #include XdsProvideAndRegisterController
-  #include XdsQueryAndRetrieveController
-  #include PixFeedController
-  #include PixQueryController
-  #include PdqQueryController
-
+  #include DisplayAndFileC32Plan::Actions
+  #include C32GenerateAndFormatPlan::Actions
+  #include XdsProvideAndRegisterPlan::Actions
+  #include XdsQueryAndRetrievePlan::Actions
+  #include PixFeedControllerPlan::Actions
+  #include PixQueryControllerPlan::Actions
+  #include PdqQueryControllerPlan::Actions
+  
   def index
     @vendor = last_selected_vendor || current_user.vendors.first
     @test_plans = @vendor.test_plans.all(:order => sort_order)
@@ -49,5 +49,10 @@ class TestPlansController < ApplicationController
     redirect_to test_plans_url
   end
 
+  def checklist
+    test_plan = TestPlan.find params[:id]
+    @patient = test_plan.patient
+    render 'test_plans/checklist.xml', :layout => false
+  end
 end
 
