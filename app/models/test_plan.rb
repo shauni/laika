@@ -52,6 +52,14 @@ class TestPlan < ActiveRecord::Base
 
   public
 
+  def count_errors
+    content_errors.count(:conditions => {:msg_type => 'error'})
+  end
+
+  def count_warnings
+    content_errors.count(:conditions => {:msg_type => 'warning'})
+  end
+
   state_machine :initial => :pending do
     event :pass do
       transition :pending => :passed

@@ -23,11 +23,11 @@
             patient_url(test_plan.patient) %>
         <% end %>
       </td>
-      <td>         
-        <%#= link_to pluralize(@errors[test_plan], "Error"), validate_test_plan_url(test_plan) %>          
+      <td>
+        <%= pluralize test_plan.count_errors, 'error' %>
       </td>
-      <td>         
-        <%#= link_to pluralize(@warnings[test_plan], "Warning"), validate_test_plan_url(test_plan) %>
+      <td>
+        <%= pluralize test_plan.count_warnings, 'warning' %>
       </td>
       <td><%= time_ago_in_words test_plan.updated_at %> ago</td>
       <td class="actions">
