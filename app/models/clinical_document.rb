@@ -4,7 +4,8 @@ class ClinicalDocument < ActiveRecord::Base
                  :storage => :file_system, 
                  :max_size => 500.kilobytes
 
-  belongs_to :vendor_test_plan
+  has_one :test_plan
+
   attr_accessible :doc_type
   # prevent records from being created when there is no associated file data
   validates_presence_of :filename, :size

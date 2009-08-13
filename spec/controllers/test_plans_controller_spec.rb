@@ -15,6 +15,12 @@ describe TestPlansController do
       @vendor = Vendor.factory.create(:user => @user)
       @patient = Patient.factory.create
       @controller.stub(:current_user).and_return(@user)
+      Laika::TEST_PLAN_TYPES['My Complex Test'] = MyComplexTestPlan
+      Laika::TEST_PLAN_TYPES['My Simple Test'] = MySimpleTestPlan
+    end
+    after do
+      Laika::TEST_PLAN_TYPES.delete 'My Complex Test'
+      Laika::TEST_PLAN_TYPES.delete 'My Simple Test'
     end
 
     it "should display tests for the current vendor" do
@@ -32,7 +38,7 @@ describe TestPlansController do
     it "should assign a simple test" do
       old_count = TestPlan.count
       post :create, :test_plan => {
-        :type => 'My Simple Test',
+        :type => 'MySimpleTestPlan',
         :patient_id => @patient.id.to_s,
         :user_id => @user.id.to_s,
         :vendor_id => @vendor.id.to_s
@@ -43,7 +49,7 @@ describe TestPlansController do
     it "should request more info for a complex test" do
       old_count = TestPlan.count
       post :create, :test_plan => {
-        :type => 'My Complex Test',
+        :type => 'MyComplexTestPlan',
         :patient_id => @patient.id.to_s,
         :user_id => @user.id.to_s,
         :vendor_id => @vendor.id.to_s

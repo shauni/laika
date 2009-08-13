@@ -31,7 +31,7 @@
               :method => 'post' do |f| -%>
             <%= f.hidden_field :patient_id %>
             <%= f.collection_select :vendor_id, current_user.vendors, :id, :public_id %>
-            <%= f.select :type, TestPlan.names %>
+            <%= f.select :type, TestPlan.test_types %>
             <p/>
             <input type="submit" value="Assign"/>
           <% end -%>

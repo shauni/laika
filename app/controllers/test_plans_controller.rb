@@ -17,7 +17,7 @@ class TestPlansController < ApplicationController
   public
 
   include DisplayAndFileC32Plan::Actions
-  #include C32GenerateAndFormatPlan::Actions
+  include GenerateAndFormatC32Plan::Actions
   #include XdsProvideAndRegisterPlan::Actions
   #include XdsQueryAndRetrievePlan::Actions
   #include PixFeedControllerPlan::Actions
@@ -31,7 +31,7 @@ class TestPlansController < ApplicationController
   end
 
   def create
-    test_type = TestPlan.get params[:test_plan].delete(:type)
+    test_type = params[:test_plan].delete(:type).constantize
     plan = test_type.new params[:test_plan].merge(:user => current_user)
     if plan.valid?
       plan.save!

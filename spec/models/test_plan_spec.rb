@@ -6,12 +6,11 @@ class MyTestPlan < TestPlan
 end
 
 describe TestPlan do
-  it "should list all test plan names" do
-    TestPlan.names.should include('My Test Plan')
-  end
+  before { Laika::TEST_PLAN_TYPES['My Test Plan'] = MyTestPlan }
+  after { Laika::TEST_PLAN_TYPES.delete 'My Test Plan' }
 
-  it "should get a test plan type" do
-    TestPlan.get('my test plan').should == MyTestPlan
+  it "should list all test plans" do
+    TestPlan.test_types.values.should include(MyTestPlan)
   end
 
   it "should start in pending state" do
