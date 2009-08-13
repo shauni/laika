@@ -34,14 +34,12 @@
 			<%= link_to 'show documents', "javascript:toggle_div('document_div_#{xds_patient.id}')" %>
 		<% end %>
         <div id="document_div_<%=xds_patient.id%>" style="display:none">
-          <% xds_patient.documents.each do |document| %>
-			
+        
 			 <% form_tag test_setup_url(xds_patient.patient, 'xds query and retrieve') do |f| %>
-	              <%= select_tag "id", options_for_select( [ [xds_patient.id, document] ] ) %>
+	              <%= select_tag "id", options_for_select( xds_patient.documents ) %>
 	              <%= submit_tag 'Query XDS' %>
 	         <% end %>
-			
-           <% end %>
+		
          </div>
        </td>
       
