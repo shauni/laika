@@ -2,10 +2,17 @@ require 'sort_order'
 module TestPlansHelper
   include SortOrderHelper
 
-  def action_list_items test_plan
+  def action_list_items test_plan, opts
     test_plan.test_actions.map do |k, v|
-      content_tag 'li',
-        link_to(k, :controller => 'test_plans', :action => v, :id => test_plan)
+      if k =~ />$/
+        content_tag 'li',
+          link_to_remote(k[0..-2], :url => {
+            :controller => 'test_plans', :action => v, :id => test_plan
+          }, :update => opts[:update])
+      else
+        content_tag 'li',
+          link_to(k, :controller => 'test_plans', :action => v, :id => test_plan)
+      end
     end
   end
 
@@ -17,7 +24,6 @@ module TestPlansHelper
     @error_attributes = []
     locs = errors.collect{|e| e.location}
     locs.compact!
-
 
     locs.each do |location|
       node = REXML::XPath.first(doc ,location)

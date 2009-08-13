@@ -74,6 +74,18 @@ class TestPlan < ActiveRecord::Base
     Laika::TEST_PLAN_TYPES
   end
 
+  def self.manual_inspection flag = true
+    @manual_inspection = flag
+  end
+
+  def self.manual_inspection?
+    !!@manual_inspection
+  end
+
+  def manual_inspection?
+    self.class.manual_inspection?
+  end
+
   def self.test_name name = nil
     if name.nil?
       @test_name

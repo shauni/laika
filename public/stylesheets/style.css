@@ -207,6 +207,21 @@ table#dashboard a {
     margin-right: 1ex;
 }
 
+#dashboard .test_state ul {
+    margin: 0px;
+}
+#dashboard .test_state ul > li {
+	list-style: none;
+    margin-right: 1ex;
+}
+
+#dashboard .test_plan.passed {
+  background: #cfc;
+}
+#dashboard .test_plan.failed {
+  background: #fcc;
+}
+
 #dashboard td img {
 	margin:0 5px 0 0;
 }

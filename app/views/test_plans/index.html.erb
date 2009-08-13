@@ -10,8 +10,8 @@
     <th><div>Actions</div></th>
   </tr>
   <% @vendor.test_plans.each do |test_plan| -%>
-    <tr id="test_plan_<%= test_plan.id %>">
-      <td>
+    <tr class="test_plan <%= test_plan.state %>" id="test_plan_<%= test_plan.id %>">
+      <td class="test_state">
         <%= render :partial => 'mark_state', :locals => { :plan => test_plan } %>
       </td>
       <td><%= test_plan.class.test_name %></td>
@@ -31,9 +31,8 @@
       </td>
       <td><%= time_ago_in_words test_plan.updated_at %> ago</td>
       <td class="actions">
-        <%#= action_area(test_plan) %>
         <ul>
-          <%= action_list_items test_plan %>
+          <%= action_list_items test_plan, :update => "execution_div_#{test_plan.id}" %>
           <li><%= link_to 'delete', test_plan_path(test_plan), :method => 'delete',
             :confirm => 'Are you sure you want to delete this test plan?' %></li>
         </ul>
