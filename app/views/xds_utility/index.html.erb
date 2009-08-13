@@ -34,12 +34,14 @@
 			<%= link_to 'show documents', "javascript:toggle_div('document_div_#{xds_patient.id}')" %>
 		<% end %>
         <div id="document_div_<%=xds_patient.id%>" style="display:none">
-        
-			 <% form_tag test_setup_url(xds_patient.patient, 'xds query and retrieve') do |f| %>
-	              <%= select_tag "id", options_for_select( xds_patient.documents ) %>
-	              <%= submit_tag 'Query XDS' %>
-	         <% end %>
-		
+        	<% if !xds_patient.patient.nil? %>
+			 	<% form_tag test_setup_url(xds_patient.patient, 'xds query and retrieve') do |f| %>
+		              <%= select_tag "id", options_for_select( xds_patient.documents ) %>
+		              <%= submit_tag 'Query XDS' %>
+		         <% end %>
+			 <% else %>
+				Can't find a patient template for this document.
+			<% end %>
          </div>
        </td>
       
