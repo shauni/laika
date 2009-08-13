@@ -1,6 +1,7 @@
 class XdsUtility < ActiveRecord::Base
   establish_connection :nist_xds
   
+  
   #instantiate all identifiers in the registry as XDSRecords
   def self.all_patients
     

@@ -14,10 +14,10 @@
   <% @patients.each do |xds_patient| -%>
     <tr>
 	  <% if !xds_patient.patient.nil? %>
-	  <td><%= link_to h(xds_patient.patient.name), patient_url(xds_patient.patient) %></td>
-      <td><%=h xds_patient.patient.user.first_name %> <%=h xds_patient.patient.user.last_name %></td>
-      <td><%= xds_patient.patient.created_at %></td>
-      <td><%= xds_patient.patient.updated_at %></td>
+		  <td><%= link_to h(xds_patient.patient.name), patient_url(xds_patient.patient) %></td>
+	      <td><%=h xds_patient.patient.user.first_name %> <%=h xds_patient.patient.user.last_name %></td>
+	      <td><%= xds_patient.patient.created_at %></td>
+	      <td><%= xds_patient.patient.updated_at %></td>
 	  <% else %>
 		<td></td>
 		<td></td>
@@ -35,7 +35,12 @@
 		<% end %>
         <div id="document_div_<%=xds_patient.id%>" style="display:none">
           <% xds_patient.documents.each do |document| %>
-   			   <p><b>Document ID:</b> <%= document %></p>
+			
+			 <% form_tag test_setup_url(xds_patient.patient, 'xds query and retrieve') do |f| %>
+	              <%= select_tag "id", options_for_select( [ [xds_patient.id, document] ] ) %>
+	              <%= submit_tag 'Query XDS' %>
+	         <% end %>
+			
            <% end %>
          </div>
        </td>
