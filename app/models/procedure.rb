@@ -88,7 +88,7 @@ class Procedure < ActiveRecord::Base
                 end
               end
               xml.tbody do
-               procedures.andand.each do |procedure|
+               procedures.try(:each) do |procedure|
                   xml.tr do
                     if procedure.name
                       xml.td do

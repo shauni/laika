@@ -71,7 +71,6 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 
   # These are dependencies we need to run the application.
-  config.gem 'andand',               :version => '1.3.1'
   config.gem 'faker',                :version => '0.3.1'
   config.gem 'calendar_date_select', :version => '1.15'
   config.gem 'mislav-will_paginate', :version => '>= 2.3.6', :lib => 'will_paginate', :source => 'http://gems.github.com'
@@ -86,17 +85,6 @@ Rails::Initializer.run do |config|
 
   # Setting a default timezone, please change this to where ever you are deployed
   config.time_zone = "Eastern Time (US & Canada)"
-end
-
-[
-  ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS,
-  ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS
-].each do |df|
-  df[:default]         = '%B %d, %Y'
-  df[:brief]           = '%Y%m%d'
-  df[:year]            = '%Y'
-  df[:brief_timestamp] = '%Y%m%d%H%M%S'
-  df[:long_timestamp]  = '%d.%b.%Y %I:%M %p %Z'
 end
 
 ENV['HOST_URL'] = 'http://demo.cchit.org/laika'

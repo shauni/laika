@@ -66,10 +66,10 @@ class AdvanceDirective < ActiveRecord::Base
 
             xml.participant("typeCode" => "CST") do
               xml.participantRole("classCode" => "AGNT") do
-                address.andand.to_c32(xml)
-                telecom.andand.to_c32(xml) 
+                address.try(:to_c32, xml)
+                telecom.try(:to_c32, xml) 
                 xml.playingEntity do
-                  person_name.andand.to_c32(xml)
+                  person_name.try(:to_c32, xml)
                 end
               end
             end

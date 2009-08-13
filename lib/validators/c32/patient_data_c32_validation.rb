@@ -7,7 +7,7 @@
       errors = []
 
       # Registration information
-       errors.concat((self.registration_information.andand.validate_c32(clinical_document)).to_a)
+       errors.concat((self.registration_information.try(:validate_c32, clinical_document)).to_a)
       # Languages
         self.languages.each do |language|
           errors.concat(language.validate_c32(clinical_document))

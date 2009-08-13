@@ -11,7 +11,21 @@ ModelFactory.configure do
     name  { |i| "factory setting #{i}" }
     value { |i| "factory value #{i}" }
   end
+
+  default(Patient) do
+    name { "Harry Manchester" }
+    user { User.factory.create }
+  end
+
+  default(User) do
+    email { |i| "factoryuser#{i}@example.com" }
+    first_name { "Harry" }
+    last_name { "Manchester" }
+    password { "secret " }
+    password_confirmation { password }
+  end
 end
+
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these

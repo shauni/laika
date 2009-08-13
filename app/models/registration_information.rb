@@ -24,31 +24,31 @@ class RegistrationInformation < ActiveRecord::Base
   end
 
   def person_identifier
-    affinity_domain_identifier.andand.patient_identifier
+    affinity_domain_identifier.try(:patient_identifier)
   end
 
   def affinity_domain
-    affinity_domain_identifier.andand.affinity_domain
+    affinity_domain_identifier.try(:affinity_domain)
   end
 
   def to_c32(xml = Builder::XmlMarkup.new)
 
     xml.id("extension" => person_identifier)
 
-    address.andand.to_c32(xml)
-    telecom.andand.to_c32(xml)
+    address.try(:to_c32, xml)
+    telecom.try(:to_c32, xml)
 
     xml.patient do
-      person_name.andand.to_c32(xml)
-      gender.andand.to_c32(xml)
+      person_name.try(:to_c32, xml)
+      gender.try(:to_c32, xml)
       if date_of_birth
         xml.birthTime("value" => date_of_birth.to_s(:brief))  
       end
 
-      marital_status.andand.to_c32(xml)
-      religion.andand.to_c32(xml)
-      race.andand.to_c32(xml)
-      ethnicity.andand.to_c32(xml)
+      marital_status.try(:to_c32, xml)
+      religion.try(:to_c32, xml)
+      race.try(:to_c32, xml)
+      ethnicity.try(:to_c32, xml)
 
       # do the gaurdian stuff here non gaurdian is placed elsewhere
       if patient.support &&

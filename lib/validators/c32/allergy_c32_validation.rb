@@ -34,11 +34,11 @@
           errors << match_value(adverse_event, 
                                "cda:effectiveTime/cda:low/@value", 
                                'start_event', 
-                               self.start_event.andand.to_formatted_s(:hl7_ts))
+                               self.start_event.try(:to_formatted_s, :brief))
           errors << match_value(adverse_event, 
                                "cda:effectiveTime/cda:high/@value", 
                                'end_event', 
-                               self.end_event.andand.to_formatted_s(:hl7_ts))
+                               self.end_event.try(:to_formatted_s, :brief))
           errors << match_value(adverse_event, 
                                 "cda:participant[@typeCode='CSM']/cda:participantRole[@classCode='MANU']/cda:playingEntity[@classCode='MMAT']/cda:name", 
                                 'free_text_product', 
@@ -53,13 +53,13 @@
           #  if severity_element
           #   errors.concat(self.severity_term.validate_c32(severity_element))
           #  else
-          #    errors << ContentError.new(:section => 'allergies', :subsection => 'severity_term', :error_message => "Unable to find severity", :location => adverse_event.andand.xpath)
+          #    errors << ContentError.new(:section => 'allergies', :subsection => 'severity_term', :error_message => "Unable to find severity", :location => adverse_event.try(:xpath))
           #  end
           #end
         else
           errors << ContentError.new(:section => 'allergies', 
                                      :error_message => "Unable to find product #{free_text_product}", 
-                                     :location => section.andand.xpath)
+                                     :location => section.try(:xpath))
         end
       rescue
         errors << ContentError.new(:section => 'Allergy', 
@@ -91,7 +91,7 @@
           errors << ContentError.new(:section => 'allergies', :error_message => "Unable to find observation", :location => section.xpath)
         end
       else
-        errors << ContentError.new(:section => 'allergies', :error_message => "Unable to find allergies section", :location => clinical_document.andand.xpath)
+        errors << ContentError.new(:section => 'allergies', :error_message => "Unable to find allergies section", :location => clinical_document.try(:xpath))
       end
       errors.compact
     end

@@ -140,7 +140,7 @@ class Allergy < ActiveRecord::Base
                 end
               end
               xml.tbody do
-                allergies.andand.each do |allergy|
+                allergies.try(:each) do |allergy|
                   xml.tr do
                     if allergy.free_text_product != nil
                       xml.td allergy.free_text_product

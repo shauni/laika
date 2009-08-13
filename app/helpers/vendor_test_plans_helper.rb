@@ -102,9 +102,9 @@ module VendorTestPlansHelper
   
   
   def test_results_status(vtp)
-     if vtp.test_result.andand.result == "PASS"   
+     if vtp.test_result.try(:result) == "PASS"   
       test_pass
-    elsif vtp.test_result.andand.result == "FAIL"
+    elsif vtp.test_result.try(:result) == "FAIL"
       test_fail
     else
       test_in_progress

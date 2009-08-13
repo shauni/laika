@@ -62,7 +62,7 @@ class MedicalEquipment < ActiveRecord::Base
                 end
               end
               xml.tbody do
-               medical_equipments.andand.each do |medical_equipment|
+               medical_equipments.try(:each) do |medical_equipment|
                   xml.tr do
                     if medical_equipment.name
                       xml.td(medical_equipment.name)

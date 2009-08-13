@@ -96,7 +96,7 @@ class Condition < ActiveRecord::Base
                 end
               end
               xml.tbody do
-               conditions.andand.each do |condition|
+               conditions.try(:each) do |condition|
                   xml.tr do
                     if condition.free_text_name != nil
                       xml.td do

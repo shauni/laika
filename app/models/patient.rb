@@ -1,3 +1,6 @@
+#
+# This is the central record representing patient data.
+#
 class Patient < ActiveRecord::Base
   has_many_c32 :languages
   has_many_c32 :providers
@@ -40,16 +43,20 @@ class Patient < ActiveRecord::Base
 
   has_select_options :conditions => 'vendor_test_plan_id IS NULL'
 
-  # Generate an OID using the time and the patient's activerecord id
+  # Generate an OID using the time and the patient's ActiveRecord ID.
+  #
+  # @return [String] generated OID
   def generate_unique_id
     "1.3.6.1.4.1.21367.2009.5.14.#{id}.#{Time.now.to_i}"
   end
 
   def patient_identifier
-    registration_information.andand.affinity_domain_identifier.to_s
+    registration_information.try(:affinity_domain_identifier)
   end
 
-  # Returns a hash containing source_patient_info for use in XDS metadata
+  # Generate a hash containing source_patient_info for use in XDS metadata.
+  #
+  # @return [Hash] patient info
   def source_patient_info
     spi = {}
     spi[:name] = name
@@ -60,6 +67,8 @@ class Patient < ActiveRecord::Base
   end
   
   # Create a deep copy of the given patient record.
+  #
+  # @return [Patient] cloned instance
   def clone
     copy = super
     transaction do
@@ -84,6 +93,9 @@ class Patient < ActiveRecord::Base
     copy
   end
 
+  # Build a C32 XML document representing the patient.
+  #
+  # @return [Builder::XmlMarkup] C32 XML representation of patient data
   def to_c32(xml = nil)
     xml ||= Builder::XmlMarkup.new(:indent => 2)
 
@@ -108,7 +120,7 @@ class Patient < ActiveRecord::Base
                "codeSystemName" => "LOINC")
       xml.title(name)
 
-      if registration_information.andand.document_timestamp
+      if registration_information.try(:document_timestamp)
         xml.effectiveTime("value" => c32_timestamp(registration_information.document_timestamp))
       else
         xml.effectiveTime("value" => c32_timestamp(updated_at))
@@ -119,12 +131,12 @@ class Patient < ActiveRecord::Base
       # Start Person (Registation) Information
       xml.recordTarget do
         xml.patientRole do
-          registration_information.andand.to_c32(xml)
+          registration_information.try(:to_c32, xml)
         end
       end
       # End Person (Registation) Information
 
-      information_source.andand.to_c32(xml)
+      information_source.try(:to_c32, xml)
 
       xml.custodian do
         xml.assignedCustodian do
@@ -154,7 +166,7 @@ class Patient < ActiveRecord::Base
 
           medications.to_c32(xml)
 
-          advance_directive.andand.to_c32(xml)
+          advance_directive.try(:to_c32, xml)
 
           vital_signs.to_c32(xml)
 
@@ -173,6 +185,8 @@ class Patient < ActiveRecord::Base
     end
   end
 
+  # Populate a patient record with random values. This does not generate
+  # semantically valid C32 documents.
   def randomize()
 
     # need to ensure that the random name for registration is
