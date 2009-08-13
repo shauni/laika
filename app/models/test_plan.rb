@@ -6,6 +6,13 @@
 #    test_name "My Awesome Test"
 #  end
 #
+# To use the test plan you need to add it to the global list:
+#
+#  Laika::TEST_PLAN_TYPES[MyAwesomeTestPlan.test_name] = MyAwesomeTestPlan
+#
+# This list is initialized in config/initializers/load_test_plan_types.rb.
+# If you want to add a new test plan type to Laika you should add it there.
+#
 # Test plans use an internal state machine to track progress. All test
 # plans start out in the +pending+ state. You can use the methods +pass+
 # or +fail+ to change the state:
