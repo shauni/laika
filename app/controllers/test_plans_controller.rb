@@ -16,8 +16,8 @@ class TestPlansController < ApplicationController
 
   public
 
-  include DisplayAndFileC32Plan::Actions
-  include GenerateAndFormatC32Plan::Actions
+  include C32DisplayAndFilePlan::Actions
+  include C32GenerateAndFormatPlan::Actions
   #include XdsProvideAndRegisterPlan::Actions
   #include XdsQueryAndRetrievePlan::Actions
   #include PixFeedControllerPlan::Actions

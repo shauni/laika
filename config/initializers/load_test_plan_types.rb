@@ -4,12 +4,12 @@
 # to work around the problem.
 module Laika
   TEST_PLAN_TYPES = {
-    'C32 Display & File' => DisplayAndFileC32Plan,
-    'C32 Generate & Format' => GenerateAndFormatC32Plan,
-    'PDQ Query' => PdqQueryPlan,
-    'PIX Query' => PixQueryPlan,
-    'PIX Feed' => PixFeedPlan,
-    'XDS Provide & Register' => XdsProvideAndRegisterPlan,
-    'XDS Query & Retrieve' => XdsQueryAndRetrievePlan
+    C32DisplayAndFilePlan.test_name     => C32DisplayAndFilePlan,
+    C32GenerateAndFormatPlan.test_name  => C32GenerateAndFormatPlan,
+    PdqQueryPlan.test_name              => PdqQueryPlan,
+    PixQueryPlan.test_name              => PixQueryPlan,
+    PixFeedPlan.test_name               => PixFeedPlan,
+    XdsProvideAndRegisterPlan.test_name => XdsProvideAndRegisterPlan,
+    XdsQueryAndRetrievePlan.test_name   => XdsQueryAndRetrievePlan
   }
 end

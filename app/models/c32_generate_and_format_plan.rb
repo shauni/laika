@@ -1,4 +1,4 @@
-class GenerateAndFormatC32Plan < TestPlan
+class C32GenerateAndFormatPlan < TestPlan
   test_name "C32 Generate and Format"
   test_actions 'execute' => :c32_upload
 
