@@ -3,10 +3,10 @@
 <table id="dashboard">
 
   	<tr>
-    <th class="sortable">Template</th>
+    <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
     <th><div>Created by</div></th>
-    <th class="sortable">Created on</th>
-    <th class="sortable">Last modified</th>
+	<th class="<%= sort_order_class('created_at') %>"><%= link_to_sort 'created_at', 'Created on' %></th>
+    <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'Last modified' %></th>
     <th><div>XDS ID</div></th>
     <th><div>Documents</div></th>
   </tr>
