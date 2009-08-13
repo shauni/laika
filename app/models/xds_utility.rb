@@ -30,7 +30,7 @@ class XdsUtility < ActiveRecord::Base
     patient_id = PatientIdentifier.find( :first, 
         :conditions => {  :patient_identifier => split_id.first, 
                           :affinity_domain => split_id.second }
-     ).andand.patient_id
+     ).try( :patient_id )
      
      Patient.find( patient_id ) unless patient_id.nil?
   end
