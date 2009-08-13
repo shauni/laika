@@ -4,7 +4,19 @@ class TestPlansController < ApplicationController
   include SortOrder
   self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
 
-  #include DisplayAndFileC32Plan::Actions
+  before_filter :set_test_plan, :except => [:index, :create]
+
+  protected
+
+  attr_reader :test_plan
+
+  def set_test_plan
+    @test_plan = TestPlan.find params[:id]
+  end
+
+  public
+
+  include DisplayAndFileC32Plan::Actions
   #include C32GenerateAndFormatPlan::Actions
   #include XdsProvideAndRegisterPlan::Actions
   #include XdsQueryAndRetrievePlan::Actions
@@ -33,26 +45,19 @@ class TestPlansController < ApplicationController
   end
 
   def destroy
-    plan = TestPlan.find params[:id]
-    plan.destroy if plan.user == current_user
+    test_plan.destroy if test_plan.user == current_user
     redirect_to test_plans_path
   end
 
   def mark
-    plan = TestPlan.find params[:id]
-    if plan.user == current_user
+    if test_plan.user == current_user
       case params['state']
-      when "pass"; plan.pass!
-      when "fail"; plan.fail!
+      when "pass"; test_plan.pass!
+      when "fail"; test_plan.fail!
       end
     end
     redirect_to test_plans_url
   end
 
-  def checklist
-    test_plan = TestPlan.find params[:id]
-    @patient = test_plan.patient
-    render 'test_plans/checklist.xml', :layout => false
-  end
 end
 

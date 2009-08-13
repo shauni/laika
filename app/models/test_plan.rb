@@ -106,6 +106,18 @@ class TestPlan < ActiveRecord::Base
     end
   end
 
+  def self.test_actions actions = nil
+    if actions.nil?
+      @test_actions ||= {}
+    else
+      @test_actions = actions
+    end
+  end
+
+  def test_actions
+    self.class.test_actions
+  end
+
   # Normalize the given name for easy comparison.
   #
   # @param [String] name non-normalized name
