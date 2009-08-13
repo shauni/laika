@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-
 describe XdsUtility do
   
   fixtures :patient_identifiers, :patients
   
   before(:each) do
+    #prep our comparison
     @patients = []
     @patients << XDSUtils::XDSRecord.new
     @patients[0].documents = ['urn:uuid:265e5f4e-9723-4d34-bfa6-f709cb92abbb']
@@ -36,6 +36,13 @@ describe XdsUtility do
     ap.first.documents.should eql(@patients.first.documents)
     ap.first.id_scheme.should eql(@patients.first.id_scheme)
     ap.first.patient.should eql(@patients.first.patient)
+  end
+  
+  it "should return an empty set of XDSRecords" do
+    
+    XdsUtility.should_receive(:all_identifiers).and_return( [] )
+    ap = XdsUtility.all_patients          
+    ap.should eql( [] )  
   end
   
  
