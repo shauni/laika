@@ -33,11 +33,9 @@
       <td class="actions">
         <%#= action_area(test_plan) %>
         <ul>
-        <% test_plan.test_actions.each do |k, v| -%>
-          <li><%= link_to k, :controller => 'test_plans', :action => v, :id => test_plan %></li>
-        <% end -%>
-        <li><%= link_to 'delete', test_plan_path(test_plan), :method => 'delete',
-          :confirm => 'Are you sure you want to delete this test plan?' %></li>
+          <%= action_list_items test_plan %>
+          <li><%= link_to 'delete', test_plan_path(test_plan), :method => 'delete',
+            :confirm => 'Are you sure you want to delete this test plan?' %></li>
         </ul>
       </td>
     </tr>

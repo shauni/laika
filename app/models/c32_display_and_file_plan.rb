@@ -1,6 +1,6 @@
 class C32DisplayAndFilePlan < TestPlan
   test_name "C32 Display and File"
-  test_actions 'xml' => :c32_xml, 'checklist' => :c32_checklist
+  pending_actions 'xml' => :c32_xml, 'checklist' => :c32_checklist
 
   module Actions
     def c32_xml

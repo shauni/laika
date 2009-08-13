@@ -1,6 +1,7 @@
 class C32GenerateAndFormatPlan < TestPlan
   test_name "C32 Generate and Format"
-  test_actions 'execute' => :c32_upload
+  pending_actions 'execute>' => :c32_upload
+  completed_actions 'inspect' => :c32_inspect, 'checklist' => :c32_checklist
 
   def validate_clinical_document_content
     document = clinical_document.as_xml_document
@@ -13,6 +14,13 @@ class C32GenerateAndFormatPlan < TestPlan
 
     content_errors.clear
     content_errors.concat errors
+
+    if content_errors.empty?
+      pass
+    else
+      fail
+    end
+
     content_errors
   end
 
@@ -32,6 +40,9 @@ class C32GenerateAndFormatPlan < TestPlan
       end
       redirect_to test_plans_url
     end
+  end
+
+  def c32_inspect
   end
 end
 

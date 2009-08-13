@@ -82,16 +82,42 @@ class TestPlan < ActiveRecord::Base
     end
   end
 
-  def self.test_actions actions = nil
+  # Return either pending_actions or completed_actions depending
+  # on the test plan state.
+  def test_actions
+    pending? ? pending_actions : completed_actions
+  end
+
+  # Used to get and set the actions for a completed test plan.
+  #
+  # @params [Hash<String => Symbol>] actions available actions when pending
+  def self.completed_actions actions = nil
     if actions.nil?
-      @test_actions ||= {}
+      @completed_actions ||= {}
     else
-      @test_actions = actions
+      @completed_actions = actions
     end
   end
 
-  def test_actions
-    self.class.test_actions
+  # Convenience method to get the actions for a completed test plan.
+  def completed_actions
+    self.class.completed_actions
+  end
+
+  # Used to get and set the actions for a pending test plan.
+  #
+  # @params [Hash<String => Symbol>] actions available actions when pending
+  def self.pending_actions actions = nil
+    if actions.nil?
+      @pending_actions ||= {}
+    else
+      @pending_actions = actions
+    end
+  end
+
+  # Convenience method to get the actions for a pending test plan.
+  def pending_actions
+    self.class.pending_actions
   end
 
   # Normalize the given name for easy comparison.
