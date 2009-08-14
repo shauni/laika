@@ -4,7 +4,7 @@ class XdsPlan < TestPlan
 
   # Return a list of XDS metadata objects corresponding to the current patient identifier
   def fetch_xds_metadata
-    XDSUtils.list_document_metadata patient.patient_identifier
+    XDSUtils.list_document_metadata(patient.patient_identifier) || []
   end
 
   # Accepts metadata as a string or hash.
@@ -20,6 +20,13 @@ class XdsPlan < TestPlan
       md.repository_unique_id = Setting.xds_repository_unique_id
       md.patient_id = patient.patient_identifier
       super md
+    end
+  end
+
+  module Actions
+    def xds_checklist
+      @metadata = test_plan.test_type_data
+      render :layout => false
     end
   end
 end
