@@ -26,10 +26,9 @@
               provide_and_register_xds_patient_url(patient) %>
         <div id="assignment_div_<%=patient.id%>" style="display:none">
           <% form_for TestPlan.new(:vendor_id => @vendor.try(:id),
-                                   :user_id => current_user.id,
-                                   :patient_id => patient.id),
+                                   :user_id => current_user.id),
               :method => 'post' do |f| -%>
-            <%= f.hidden_field :patient_id %>
+            <%= hidden_field_tag :patient_id, patient.id %>
             <%= f.collection_select :vendor_id, current_user.vendors, :id, :public_id %>
             <%= f.select :type, TestPlan.test_types %>
             <p/>

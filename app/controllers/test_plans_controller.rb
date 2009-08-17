@@ -20,11 +20,8 @@ class TestPlansController < ApplicationController
   include C32GenerateAndFormatPlan::Actions
   include XdsPlan::Actions
   include XdsProvideAndRegisterPlan::Actions
-  #include XdsQueryAndRetrievePlan::Actions
   include PixPdqPlan::Actions
   include PixFeedPlan::Actions
-  #include PixQueryPlan::Actions
-  #include PdqQueryPlan::Actions
   
   def index
     @vendor = last_selected_vendor || current_user.vendors.first
@@ -34,14 +31,21 @@ class TestPlansController < ApplicationController
 
   def create
     test_type = params[:test_plan].delete(:type).constantize
+    patient = Patient.find params[:patient_id]
     plan = test_type.new params[:test_plan].merge(:user => current_user)
     if plan.valid?
-      plan.save!
-      flash[:notice] = "Created a new #{test_type.test_name} test plan."
-      self.last_selected_vendor_id = params[:test_plan][:vendor_id]
+      TestPlan.transaction do
+        plan.save!
+        patient = patient.clone
+        patient.test_plan = plan
+        patient.save!
+        flash[:notice] = "Created a new #{test_type.test_name} test plan."
+        self.last_selected_vendor_id = params[:test_plan][:vendor_id]
+      end
       redirect_to :action => :index
     else
       @plan = plan
+      @patient = patient
       render "test_plans/create_#{plan.parameterized_name}"
     end
   end

@@ -31,26 +31,14 @@
 class TestPlan < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
-  belongs_to :patient,           :dependent => :destroy
+  has_one    :patient,           :dependent => :destroy
   belongs_to :clinical_document, :dependent => :destroy
   has_many   :content_errors,    :dependent => :destroy
 
-  before_create :clone_patient
   default_scope :order => 'created_at ASC'
 
   validates_presence_of :user_id
   validates_presence_of :vendor_id
-  validates_presence_of :patient_id
-
-  protected
-
-  # Automatically clone the patient record before creating
-  # a new test plan.
-  def clone_patient
-    self.patient = Patient.find(patient_id).clone
-  end
-
-  public
 
   def count_errors
     content_errors.count(:conditions => {:msg_type => 'error'})

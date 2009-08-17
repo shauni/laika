@@ -26,7 +26,6 @@ describe TestPlansController do
     it "should display tests for the current vendor" do
       @controller.send(:last_selected_vendor_id=, @vendor.id)
       plan = MySimpleTestPlan.create \
-        :patient_id => @patient.id.to_s,
         :user_id => @user.id.to_s,
         :vendor_id => @vendor.id.to_s
       get :index
@@ -38,22 +37,20 @@ describe TestPlansController do
     it "should assign a simple test" do
       old_count = TestPlan.count
       post :create, :test_plan => {
-        :type => 'MySimpleTestPlan',
-        :patient_id => @patient.id.to_s,
-        :user_id => @user.id.to_s,
-        :vendor_id => @vendor.id.to_s
-      }
+          :type => 'MySimpleTestPlan',
+          :user_id => @user.id.to_s,
+          :vendor_id => @vendor.id.to_s
+        }, :patient_id => @patient.id.to_s
       TestPlan.count.should == old_count + 1
     end
 
     it "should request more info for a complex test" do
       old_count = TestPlan.count
       post :create, :test_plan => {
-        :type => 'MyComplexTestPlan',
-        :patient_id => @patient.id.to_s,
-        :user_id => @user.id.to_s,
-        :vendor_id => @vendor.id.to_s
-      }
+          :type => 'MyComplexTestPlan',
+          :user_id => @user.id.to_s,
+          :vendor_id => @vendor.id.to_s
+        }, :patient_id => @patient.id.to_s
       TestPlan.count.should == old_count
     end
   end

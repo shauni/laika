@@ -15,8 +15,8 @@
       <td><%= md.creation_time %></td>
       <td>
         <% form_for(:test_plan, @plan, :method => 'post') do |f| -%>
+          <%= hidden_field_tag :patient_id, @patient.id %>
           <%= f.hidden_field :type %>
-          <%= f.hidden_field :patient_id %>
           <%= f.hidden_field :vendor_id %>
           <%= hidden_field_tag 'test_plan[test_type_data]', md.to_yaml %>
           <%= submit_tag "Assign" %>
