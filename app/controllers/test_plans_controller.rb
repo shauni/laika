@@ -21,9 +21,10 @@ class TestPlansController < ApplicationController
   include XdsPlan::Actions
   include XdsProvideAndRegisterPlan::Actions
   #include XdsQueryAndRetrievePlan::Actions
-  #include PixFeedControllerPlan::Actions
-  #include PixQueryControllerPlan::Actions
-  #include PdqQueryControllerPlan::Actions
+  include PixPdqPlan::Actions
+  include PixFeedPlan::Actions
+  #include PixQueryPlan::Actions
+  #include PdqQueryPlan::Actions
   
   def index
     @vendor = last_selected_vendor || current_user.vendors.first
