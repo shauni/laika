@@ -110,7 +110,7 @@ class TestPlan < ActiveRecord::Base
 
   # Used to get and set the actions for a completed test plan.
   #
-  # @params [Hash<String => Symbol>] actions available actions when pending
+  # @param [Hash<String => Symbol>] actions available actions when pending
   def self.completed_actions actions = nil
     if actions.nil?
       @completed_actions ||= {}
@@ -126,7 +126,7 @@ class TestPlan < ActiveRecord::Base
 
   # Used to get and set the actions for a pending test plan.
   #
-  # @params [Hash<String => Symbol>] actions available actions when pending
+  # @param [Hash<String => Symbol>] actions available actions when pending
   def self.pending_actions actions = nil
     if actions.nil?
       @pending_actions ||= {}
