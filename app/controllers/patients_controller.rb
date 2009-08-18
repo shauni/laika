@@ -12,17 +12,16 @@ class PatientsController < ApplicationController
       :conditions => {:vendor_test_plan_id => nil},
       :order => sort_order || "name ASC")
     
-     xds_all = XdsUtility.all_patients
+     @xds_patients = {};
      
-      @xds_patients = {};
-     xds_all.each do |x| 
-       
-       if x.patient
-         @xds_patients[ x.patient ] = x
+     if Setting.nist_xds == "1"
+       xds_all = XdsUtility.all_patients
+       xds_all.each do |x| 
+         if x.patient
+           @xds_patients[ x.patient ] = x
+         end  
        end
-        
-      end
-
+     end
     
      
     @vendors = current_user.vendors + Vendor.unclaimed

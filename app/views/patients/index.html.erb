@@ -13,12 +13,13 @@
 
   <% @patients.each do |patient| -%>
     <tr>
+		<% if Setting.nist_xds == "1" %>
 		<% if @xds_patients[ patient ]%>
-	  <td>XDS</td>
+	  		<td>XDS</td>
 		<% else %>
-		<td></td>
+			<td></td>
 		<% end %>
-		
+		<% end %>
       <td><%= link_to h(patient.name), patient_path(patient) %></td>
       <!--td>CCD/C32</td-->
       <td><%=h patient.user.first_name %> <%=h patient.user.last_name %></td>
