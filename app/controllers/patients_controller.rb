@@ -11,7 +11,20 @@ class PatientsController < ApplicationController
     @patients = Patient.find(:all,
       :conditions => {:vendor_test_plan_id => nil},
       :order => sort_order || "name ASC")
+    
+     xds_all = XdsUtility.all_patients
+     
+      @xds_patients = {};
+     xds_all.each do |x| 
+       
+       if x.patient
+         @xds_patients[ x.patient ] = x
+       end
+        
+      end
 
+    
+     
     @vendors = current_user.vendors + Vendor.unclaimed
 
     @previous_vendor = last_selected_vendor
