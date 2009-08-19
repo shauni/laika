@@ -14,15 +14,15 @@ describe AccountController do
     end
 
     it "should redirect to patients after successful login (no test plans)" do
-      controller.stub!(:current_user).and_return mock_model(User, :vendor_test_plans => [])
+      controller.stub!(:current_user).and_return mock_model(User, :count_test_plans => 0)
       post :login, { :email => 'foo@bar.com', :password => 'barfoo' }
       response.should redirect_to(patients_url)
     end
 
     it "should redirect to vendor_test_plans after successful login (with test plans)" do
-      controller.stub!(:current_user).and_return mock_model(User, :vendor_test_plans => [mock_model(VendorTestPlan)])
+      controller.stub!(:current_user).and_return mock_model(User, :count_test_plans => 1)
       post :login, { :email => 'foo@bar.com', :password => 'barfoo' }
-      response.should redirect_to(vendor_test_plans_url)
+      response.should redirect_to(test_plans_url)
     end
 
     it "should return success on get signup" do

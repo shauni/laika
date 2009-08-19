@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :vendor_test_plans, :order => "vendor_id", :dependent => :destroy
   has_many :vendors, :dependent => :destroy
 
-  has_many :test_plans do
+  has_many :test_plans, :dependent => :destroy do
     def by_vendor
       inject({}) do |tp, all|
         all[tp.vendor] ||= []
@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def current_vendor
-    vendors.first
+  def count_test_plans
+    test_plans.count
   end
 
   # Authenticates a user by their email name and unencrypted password.  Returns the user or nil.

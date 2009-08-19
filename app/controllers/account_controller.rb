@@ -14,10 +14,10 @@ class AccountController < ApplicationController
       end
       
       # Either direct to the Dashboard or the Library, depending on if the user has vendor test plans
-      if current_user.vendor_test_plans.size == 0
+      if current_user.count_test_plans == 0
         redirect_to patients_url
       else
-        redirect_to vendor_test_plans_url
+        redirect_to test_plans_url
       end
       
     else
