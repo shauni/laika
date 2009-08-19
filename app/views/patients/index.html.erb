@@ -2,6 +2,7 @@
 <table id="dashboard">
 
   <tr>
+	<th><div>XDS</div></th>
     <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
     <!--th><div>Test Type</div></th-->
     <th><div>Created by</div></th>
@@ -12,6 +13,13 @@
 
   <% @patients.each do |patient| -%>
     <tr>
+		<% if Setting.nist_xds == "1" %>
+		<% if @xds_patients[ patient ]%>
+	  		<td>&#10003;</td>
+		<% else %>
+			<td></td>
+		<% end %>
+		<% end %>
       <td><%= link_to h(patient.name), patient_path(patient) %></td>
       <!--td>CCD/C32</td-->
       <td><%=h patient.user.first_name %> <%=h patient.user.last_name %></td>

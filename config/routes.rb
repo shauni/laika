@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :atna_audits
   map.resources :vendors
   map.resources :users
+  map.resources :xds_utility, :singular => "xds_utility_instance"
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
