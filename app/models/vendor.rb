@@ -7,6 +7,10 @@ class Vendor < ActiveRecord::Base
   has_many :test_plans, :dependent => :destroy
   validates_presence_of :public_id
 
+  def count_test_plans
+    test_plans.count
+  end
+
   def to_s
     public_id
   end
