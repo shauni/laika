@@ -24,7 +24,7 @@ umls_test:
   password: umls
 
 # NIST XDS local repository
-nist_xds:
+nist_xds_registry:
     adapter: jdbcpostgresql
     database: registry
     host: localhost
