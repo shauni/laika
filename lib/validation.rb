@@ -60,7 +60,7 @@ module Validation
     end
     
     def contains_kind_of?(validator)
-      validators.any? {|v| kind_of?(validator)}
+      validators.any? {|v| v.kind_of?(validator)}
     end
   end 
   

@@ -15,6 +15,10 @@ class C32GenerateAndFormatPlan < TestPlan
     content_errors.clear
     content_errors.concat errors
 
+    if validator.contains_kind_of?(::Validators::Umls::UmlsValidator)
+      self.umls_enabled = true
+    end
+
     if content_errors.empty?
       pass
     else
