@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.find(:all)
-    @vendors = current_user.vendors + Vendor.unclaimed
+    @vendors = current_user.vendors
   end
 
   def edit

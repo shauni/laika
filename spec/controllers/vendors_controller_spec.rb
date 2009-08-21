@@ -27,17 +27,6 @@ describe VendorsController do
     end
 
     it_should_behave_like "vendor all users"
-
-    it "permits renaming of other users' vendors" do
-      put :update, :id => @vendor.id, :vendor => { :public_id => 'GOODIDEA' }
-      @vendor.reload
-      @vendor.public_id.should == 'GOODIDEA'
-    end
-
-    it "permits deletion of other users' vendors" do
-      delete :destroy, :id => @vendor.id.to_s
-      lambda { @vendor.reload }.should raise_error(ActiveRecord::RecordNotFound)
-    end
   end
 
   describe "in use by a non-admin" do

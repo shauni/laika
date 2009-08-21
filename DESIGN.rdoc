@@ -19,7 +19,7 @@ generating C32 from patient data.
 
 === Controllers
 
-The Dashboard tab is implemented by {VendorTestPlansController#index} and the
+The Dashboard tab is implemented by {TestPlansController#index} and the
 Library tab is implemented by {PatientsController#index}.
 
 {AccountController}:: login, logout and registration
@@ -37,29 +37,41 @@ Library tab is implemented by {PatientsController#index}.
 
 Remember that we're talking about the EHR testing performed by Laika, *not*
 the automated test suite used to check for regressions in Laika itself. The
-test types are enumerated using {Kind} but implemented using {TestType}.
+test types are all sub-classes of {TestPlan}. The list of test plan typess is
+enumerated in config/initializers/load_test_plan_types.rb.
+
+=== Test Types
+
+The state of an individual test plan is represented by a sub-class of {TestPlan}:
+
+* {C32DisplayAndFilePlan}
+* {C32GenerateAndFormatPlan}
+* {PdqQueryPlan}
+* {PixFeedPlan}
+* {PixQueryPlan}
+* {XdsProvideAndRegisterPlan}
+* {XdsQueryAndRetrievePlan}
 
 === Models
-
-The state of an individual test plan is represented by {VendorTestPlan}.
 
 {MessageLog}:: references an external table, used for ???
 {AtnaAudit}:: references an external table, used for viewing ATNA logs
 {ClinicalDocument}:: C32 document attachment
 {ContentError}:: C32 validation error
-{Kind}:: test type enumeration (e.g. XDS P&R, C32 D&F)
-{TestResult}:: pass/fail info and PIX/PDQ-specific result data
 {Vendor}:: categorize tests by an arbitrary string
+{Kind}:: test type enumeration (e.g. XDS P&R, C32 D&F) *DEPRECATED*
+{TestResult}:: pass/fail info and PIX/PDQ-specific result data *DEPRECATED*
 
 === Controllers
 
-{TestopController}:: test-specific actions
-{VendorTestPlansController}:: manage test plans
+{TestPlansController}:: test plan operations, includes several test-specific actions
 {XdsPatientsController}:: XDS utility operations
+{VendorTestPlansController}:: manage test plans *DEPRECATED*
+{TestopController}:: test-specific actions *DEPRECATED*
 
 === Library Code
 
-{TestType}:: Callback-based test type specification
+{TestType}:: Callback-based test type specification *DEPRECATED*
 
 == Patients
 

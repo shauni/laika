@@ -14,6 +14,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :settings, :only => [:index, :update]
 
+  map.resources :test_plans, :member => {:mark => :post, :checklist => :get}
+  # additional test-specific actions
+  map.test_action '/test_plans/:id/:action', :controller => 'test_plans'
+
   map.resources :vendor_test_plans, :has_one => [:test_result],
                                     :member => {:validate => :get,
                                                 :checklist => :get,
@@ -30,9 +34,6 @@ ActionController::Routing::Routes.draw do |map|
       :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|
-    xds_patients.xds_patients '/xds_patients', :action => 'index'
-    xds_patients.query_xds_patient '/xds_patients/query/:id', :action => 'query'
-    xds_patients.provide_and_register_setup_xds_patient '/xds_patients/provide_and_register_setup/:id', :action => 'provide_and_register_setup'
     xds_patients.provide_and_register_xds_patient '/xds_patients/provide_and_register/:id', :action => 'provide_and_register'
     xds_patients.do_provide_and_register_xds_patient '/xds_patients/do_provide_and_register', :action => 'do_provide_and_register'
   end
@@ -51,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  map.root :controller => "vendor_test_plans"
+  map.root :controller => "test_plans"
 
   # The priority is based upon order of creation: first created -> highest priority.
 
