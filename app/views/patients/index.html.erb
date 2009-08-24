@@ -2,7 +2,9 @@
 <table id="dashboard">
 
   <tr>
-	<th><div>XDS</div></th>
+	<% if Setting.nist_xds == "1" %>
+		<th><div>XDS</div></th>
+	<% end %>
     <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
     <!--th><div>Test Type</div></th-->
     <th><div>Created by</div></th>

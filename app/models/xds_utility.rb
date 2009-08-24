@@ -1,5 +1,5 @@
 class XdsUtility < ActiveRecord::Base
-  establish_connection :nist_xds
+  establish_connection :nist_xds_registry
   
   
   #instantiate all identifiers in the registry as XDSRecords

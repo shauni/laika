@@ -11,23 +11,25 @@ class XdsUtilityController < ApplicationController
       @patients = XdsUtility.all_patients      
    
       
-      sort_field = sort_order.split( ' ' ).first
-      sort_direction = sort_order.split( ' ' ).second
+      unless sort_order.nil?
+        sort_field = sort_order.split( ' ' ).first 
+        sort_direction = sort_order.split( ' ' ).second 
       
-      @patients.sort!{ |a,b|
-        val_a = a.patient.try( sort_field.intern ) || ""
+        @patients.sort!{ |a,b|
+          val_a = a.patient.try( sort_field.intern ) || ""
         
-        val_b = b.patient.try( sort_field.intern ) || val_a.clone
+          val_b = b.patient.try( sort_field.intern ) || val_a.clone
        
-        if ( val_a.class != val_b.class && val_a.class == String )
-          -1
-        else
-          val_a <=> val_b
-        end
-      }
+          if ( val_a.class != val_b.class && val_a.class == String )
+            -1
+          else
+            val_a <=> val_b
+          end
+        }
       
-      if sort_direction == "DESC"
-        @patients.reverse!
+        if sort_direction == "DESC"
+          @patients.reverse!
+        end
       end
       
   end
