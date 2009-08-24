@@ -6,5 +6,5 @@
   <td><%= select_tag("test_plan[test_type_data][#{cv.to_s}]", options_for_select(AFFINITY_DOMAIN_CONFIG.select_options(cv))) %></td>
 </tr>
 <% end -%>
-
+<%= hidden_field_tag "test_plan[test_type_data][patient_id]", @patient.id %>
 
