@@ -41,11 +41,9 @@ class Patient < ActiveRecord::Base
   belongs_to :test_plan
   belongs_to :user
 
-  belongs_to :vendor_test_plan # FIXME deprecated
-
   validates_presence_of :name
 
-  has_select_options :conditions => 'vendor_test_plan_id IS NULL'
+  has_select_options :conditions => 'test_plan_id IS NULL'
 
   # Generate an OID using the time and the patient's ActiveRecord ID.
   #

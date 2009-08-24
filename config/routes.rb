@@ -6,22 +6,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
-  # test operations on vendor test plans
-  map.testop '/vendor_test_plans/:vendor_test_plan_id/testop/:test_type/:test_operation',
-    :controller => 'testop', :action => 'perform_test_operation'
-  map.testop_setup '/patients/:patient_id/testop/:test_type/setup',
-    :controller => 'testop', :action => 'setup'
-
   map.resources :settings, :only => [:index, :update]
 
   map.resources :test_plans, :member => {:mark => :post, :checklist => :get}
   # additional test-specific actions
   map.test_action '/test_plans/:id/:action', :controller => 'test_plans'
-
-  map.resources :vendor_test_plans, :has_one => [:test_result],
-                                    :member => {:validate => :get,
-                                                :checklist => :get,
-                                                :set_status => :get }
 
   map.resources :patients,
       :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],

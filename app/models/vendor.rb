@@ -3,7 +3,6 @@ class Vendor < ActiveRecord::Base
 
   belongs_to :user
   attr_protected :user
-  has_many :vendor_test_plans, :dependent => :destroy
   has_many :test_plans, :dependent => :destroy
   validates_presence_of :public_id
 
