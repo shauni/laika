@@ -3,8 +3,8 @@ class XdsPlan < TestPlan
   validates_presence_of :test_type_data
 
   # Return a list of XDS metadata objects corresponding to the current patient identifier
-  def fetch_xds_metadata
-    XDSUtils.list_document_metadata(patient.patient_identifier) || []
+  def fetch_xds_metadata patient_identifier
+    XDSUtils.list_document_metadata(patient_identifier) || []
   end
 
   # Accepts metadata as a string or hash.
