@@ -197,12 +197,29 @@ table#dashboard a {
 	line-height:2.5em;
 }
 
-#dashboard td a {
-	display:block;
+#dashboard .actions ul {
+    display: inline;
+    margin: 0px;
+}
+#dashboard .actions ul > li {
+	list-style: none;
+	display: inline;
+    margin-right: 1ex;
 }
 
-#dashboard td.actions a {
-	display:inline;
+#dashboard .test_state ul {
+    margin: 0px;
+}
+#dashboard .test_state ul > li {
+	list-style: none;
+    margin-right: 1ex;
+}
+
+#dashboard .test_plan.passed {
+  background: #cfc;
+}
+#dashboard .test_plan.failed {
+  background: #fcc;
 }
 
 #dashboard td img {

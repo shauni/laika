@@ -4,15 +4,18 @@ class Vendor < ActiveRecord::Base
   belongs_to :user
   attr_protected :user
   has_many :vendor_test_plans, :dependent => :destroy
+  has_many :test_plans, :dependent => :destroy
   validates_presence_of :public_id
 
-  has_many :test_users, :through => :vendor_test_plans, :source => :user, :uniq => true
+  def count_test_plans
+    test_plans.count
+  end
 
-  def self.unclaimed
-    find :all, :conditions => { :user_id => nil }
+  def to_s
+    public_id
   end
 
   def editable_by?(vendor_user)
-    user == vendor_user or vendor_user.administrator?
+    user == vendor_user
   end
 end

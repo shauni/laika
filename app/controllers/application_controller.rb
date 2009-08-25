@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
     if current_user.try(:administrator?)
       true
     else
-      redirect_to :controller => 'vendor_test_plans'
+      redirect_to test_plans_url
       false
     end
   end

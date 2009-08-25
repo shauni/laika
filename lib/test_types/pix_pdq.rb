@@ -37,7 +37,7 @@ TestType.register("PIX Feed") do
     end
 
     @vendor_test_plan.test_result = @test_result
-    render vendor_test_plans_url
+    redirect_to vendor_test_plans_url
   end
 
   inspect do |vendor_test_plan|

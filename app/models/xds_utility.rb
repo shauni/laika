@@ -24,6 +24,8 @@ class XdsUtility < ActiveRecord::Base
   end
   
   #find the patient template from the XDS id
+  # FIXME This should be Patient.find_by_patient_identifier. Also, these
+  # lookup values are neither indexed nor guaranteed to be unique. XXX
   def self.find_patient( id )
   
     split_id = id.split('^^^')

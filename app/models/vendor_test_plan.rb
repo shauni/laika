@@ -11,17 +11,11 @@ class VendorTestPlan < ActiveRecord::Base
   
   serialize :metadata, XDS::Metadata
 
-  # Accessor for the associated TestType instance.
+  # Accessor for the associated {TestType} instance.
   def test_type
     kind.as_test_type
   end
 
-  #before_save :_bf
-  #after_save :_bf
-  def _bf
-    puts self.errors
-  end
-  
   # Accepts metadata as a string or hash.
   def metadata=(raw_metadata)
     if raw_metadata.instance_of? XDS::Metadata
@@ -53,6 +47,10 @@ class VendorTestPlan < ActiveRecord::Base
   end
 
 
+  # Count the error and warnings respectively, and return
+  # the results in a two-element array.
+  #
+  # @return [Array<Number>] error and warning counts
   def count_errors_and_warnings
     errors = content_errors.count(:conditions=>["msg_type = 'error' "])
     warnings = content_errors.count(:conditions=>["msg_type = 'warning' "])
@@ -60,6 +58,10 @@ class VendorTestPlan < ActiveRecord::Base
     return errors, warnings
   end
 
+  # Validate against the provided XDS metadata.
+  # Assumes the {Kind} of the recieving plan is "XDS Provide and Register".
+  #
+  # @param [XDS::Metadata] metadata_of_interest metadata object for comparison.
   def validate_xds_provide_and_register(metadata_of_interest)
     if metadata_of_interest
       validator = Validators::XdsMetadataValidator.new

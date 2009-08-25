@@ -18,10 +18,8 @@
           </div>
           <div class="right">
             <ul id="bignav">
-              <li <%= 'id="active"' if @show_dashboard || current_controller?('vendor_test_plans') %>>
-                <%= link_to('Dashboard', vendor_test_plans_url) %></li>
-				<li <%= 'id="active"' if !@show_dashboard && current_controller?('xds_patients') %>>
-			                <%= link_to('XDS', xds_patients_url) %></li>
+              <li <%= 'id="active"' if @show_dashboard || current_controller?('test_plans') %>>
+                <%= link_to('Dashboard', test_plans_url) %></li>
               <li <%= 'id="active"' if !@show_dashboard && current_controller?('patients') %>>
                 <%= link_to('Library', patients_url) %></li>
             </ul>

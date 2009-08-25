@@ -10,7 +10,7 @@ end
 describe NewsController do
   integrate_views
 
-  fixtures :users
+  fixtures :users, :settings
 
   describe "in use by a non-admin" do
     before(:each) do

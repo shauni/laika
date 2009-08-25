@@ -1,3 +1,6 @@
+#
+# This is the central record representing patient data.
+#
 class Patient < ActiveRecord::Base
   has_many_c32 :languages
   has_many_c32 :providers
@@ -22,6 +25,8 @@ class Patient < ActiveRecord::Base
   # dependent because results and vital_signs already do that.
   has_many :all_results, :class_name => 'AbstractResult'
 
+  named_scope :templates, :conditions => { :test_plan_id => nil }
+
   # these are used in the insurance_provider_* controllers
   def insurance_provider_guarantors
     InsuranceProviderGuarantor.by_patient(self)
@@ -33,14 +38,18 @@ class Patient < ActiveRecord::Base
     InsuranceProviderSubscriber.by_patient(self)
   end
 
-  belongs_to :vendor_test_plan
+  belongs_to :test_plan
   belongs_to :user
+
+  belongs_to :vendor_test_plan # FIXME deprecated
 
   validates_presence_of :name
 
   has_select_options :conditions => 'vendor_test_plan_id IS NULL'
 
-  # Generate an OID using the time and the patient's activerecord id
+  # Generate an OID using the time and the patient's ActiveRecord ID.
+  #
+  # @return [String] generated OID
   def generate_unique_id
     "1.3.6.1.4.1.21367.2009.5.14.#{id}.#{Time.now.to_i}"
   end
@@ -49,7 +58,9 @@ class Patient < ActiveRecord::Base
     registration_information.try(:affinity_domain_identifier)
   end
 
-  # Returns a hash containing source_patient_info for use in XDS metadata
+  # Generate a hash containing source_patient_info for use in XDS metadata.
+  #
+  # @return [Hash] patient info
   def source_patient_info
     spi = {}
     spi[:name] = name
@@ -60,6 +71,8 @@ class Patient < ActiveRecord::Base
   end
   
   # Create a deep copy of the given patient record.
+  #
+  # @return [Patient] cloned instance
   def clone
     copy = super
     transaction do
@@ -84,6 +97,9 @@ class Patient < ActiveRecord::Base
     copy
   end
 
+  # Build a C32 XML document representing the patient.
+  #
+  # @return [Builder::XmlMarkup] C32 XML representation of patient data
   def to_c32(xml = nil)
     xml ||= Builder::XmlMarkup.new(:indent => 2)
 
@@ -173,6 +189,8 @@ class Patient < ActiveRecord::Base
     end
   end
 
+  # Populate a patient record with random values. This does not generate
+  # semantically valid C32 documents.
   def randomize()
 
     # need to ensure that the random name for registration is

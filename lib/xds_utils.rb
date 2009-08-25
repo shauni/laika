@@ -3,8 +3,15 @@ module XDSUtils
   
   class XDSRecord
     attr_accessor :patient, :documents, :id, :id_scheme, :value
+
+    def eql? other
+      %w[ value id documents id_scheme patient ].all? do |f|
+        send(f) == other.send(f)
+      end
+    end
+    alias == eql?
   end
-  
+
   def self.retrieve_document(metadata)
     req = XDS::RetrieveDocumentSetRequest.new(Setting.xds_retrieve_document_set_request_url)
     req.add_ids_to_request(metadata.repository_unique_id,metadata.unique_id)

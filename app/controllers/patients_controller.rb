@@ -8,26 +8,19 @@ class PatientsController < ApplicationController
   self.valid_sort_fields = %w[ name created_at updated_at ]
 
   def index
-    @patients = Patient.find(:all,
-      :conditions => {:vendor_test_plan_id => nil},
-      :order => sort_order || "name ASC")
+    @patients = Patient.templates.all :order => sort_order || "name ASC"
+    @vendor = last_selected_vendor
     
-     @xds_patients = {};
-     
-     if Setting.nist_xds == "1"
-       xds_all = XdsUtility.all_patients
-       xds_all.each do |x| 
-         if x.patient
-           @xds_patients[ x.patient ] = x
-         end  
-       end
-     end
+    @xds_patients = {};
     
-     
-    @vendors = current_user.vendors + Vendor.unclaimed
-
-    @previous_vendor = last_selected_vendor
-    @previous_kind   = last_selected_kind
+    if Setting.nist_xds == "1"
+      xds_all = XdsUtility.all_patients
+      xds_all.each do |x| 
+        if x.patient
+          @xds_patients[ x.patient ] = x
+        end  
+      end
+    end
   end
   
   def autoCreate

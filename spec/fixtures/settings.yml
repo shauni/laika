@@ -12,4 +12,4 @@ xds_retrieve_document_set_request_url:
   
 nist_xds:
     name: "nist_xds"
-    value: "1"
+    value: "0"
