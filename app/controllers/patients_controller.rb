@@ -32,7 +32,7 @@ class PatientsController < ApplicationController
   end
   
   def show
-    if @patient.vendor_test_plan_id 
+    if @patient.test_plan_id 
       @show_dashboard = true
     else
       @show_dashboard = false

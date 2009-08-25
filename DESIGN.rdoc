@@ -59,19 +59,11 @@ The state of an individual test plan is represented by a sub-class of {TestPlan}
 {ClinicalDocument}:: C32 document attachment
 {ContentError}:: C32 validation error
 {Vendor}:: categorize tests by an arbitrary string
-{Kind}:: test type enumeration (e.g. XDS P&R, C32 D&F) *DEPRECATED*
-{TestResult}:: pass/fail info and PIX/PDQ-specific result data *DEPRECATED*
 
 === Controllers
 
 {TestPlansController}:: test plan operations, includes several test-specific actions
 {XdsPatientsController}:: XDS utility operations
-{VendorTestPlansController}:: manage test plans *DEPRECATED*
-{TestopController}:: test-specific actions *DEPRECATED*
-
-=== Library Code
-
-{TestType}:: Callback-based test type specification *DEPRECATED*
 
 == Patients
 

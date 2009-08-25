@@ -19,7 +19,7 @@ describe AccountController do
       response.should redirect_to(patients_url)
     end
 
-    it "should redirect to vendor_test_plans after successful login (with test plans)" do
+    it "should redirect to test_plans after successful login (with test plans)" do
       controller.stub!(:current_user).and_return mock_model(User, :count_test_plans => 1)
       post :login, { :email => 'foo@bar.com', :password => 'barfoo' }
       response.should redirect_to(test_plans_url)

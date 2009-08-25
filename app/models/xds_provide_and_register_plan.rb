@@ -28,7 +28,7 @@ class XdsProvideAndRegisterPlan < XdsPlan
 
   module Actions
     def xds_select_document
-      @metadata = test_plan.fetch_xds_metadata patient.patient_identifier
+      @metadata = test_plan.fetch_xds_metadata test_plan.patient.patient_identifier
     end
 
     def xds_compare
