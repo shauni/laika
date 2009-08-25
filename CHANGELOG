@@ -1,3 +1,7 @@
+
+* Refactored test types into ActiveRecord models and controller mixins, SF #2832938.
+* Removed XDS tab, all assignment is now done from the Library, SF #2831703.
+
 === 2009-08-03 Laika v1.3.8
 
 * New dependency: ModelFactory 0.9.1.
