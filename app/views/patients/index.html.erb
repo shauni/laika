@@ -3,8 +3,6 @@
 
   <tr>
     <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
-    <!--th><div>Test Type</div></th-->
-    <th><div>Created by</div></th>
     <th class="<%= sort_order_class('created_at') %>"><%= link_to_sort 'created_at', 'Created on' %></th>
     <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'Last modified' %></th>
     <th><div>Actions</div></th>
@@ -13,8 +11,6 @@
   <% @patients.each do |patient| -%>
     <tr>
       <td><%= link_to h(patient.name), patient_path(patient) %></td>
-      <!--td>CCD/C32</td-->
-      <td><%=h patient.user.first_name %> <%=h patient.user.last_name %></td>
       <td><%= patient.created_at %></td>
       <td><%= patient.updated_at %></td>
       <td class="actions" width=270px>

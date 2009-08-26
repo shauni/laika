@@ -27,6 +27,7 @@ ModelFactory.configure do
 
   default(Vendor) do
     public_id { |i| "FACTORYVENDOR#{i}" }
+    user { User.factory.create }
   end
 
   default(TestPlan) do

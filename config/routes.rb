@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :message_logs
   map.resources :atna_audits
   map.resources :vendors
-  map.resources :users
+  map.resources :users, :except => [:index]
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
