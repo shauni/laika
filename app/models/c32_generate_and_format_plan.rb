@@ -2,7 +2,25 @@ class C32GenerateAndFormatPlan < TestPlan
   test_name "C32 Generate and Format"
   pending_actions 'execute>' => :c32_upload
   completed_actions 'inspect' => :c32_inspect, 'checklist' => :c32_checklist
+  serialize :test_type_data, Hash
 
+  def initialize *args
+    super
+    self.test_type_data ||= {}
+  end
+
+  # @return true if UMLS is enabled for this test, false otherwise.
+  def umls_enabled?
+    !!test_type_data[:umls_enabled]
+  end
+
+  # Used by validate_clinical_document_content to indicate whether UMLS
+  # was used. You can check for this flag by calling umls_enabled?
+  def umls_enabled= flag
+    test_type_data[:umls_enabled] = flag
+  end
+
+  # This is the primary validation operation for C32 Generate and Format.
   def validate_clinical_document_content
     document = clinical_document.as_xml_document
     validator = Validation.get_validator(clinical_document.doc_type)
