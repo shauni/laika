@@ -247,6 +247,16 @@ table#dashboard a {
 	list-style: none;
     margin-right: 1ex;
 }
+#dashboard .test_state a { padding-left: 18px; }
+#dashboard .test_state a.passed {
+  background: url(/images/icons/accept.png) no-repeat;
+}
+#dashboard .test_state a.pending {
+  background: url(/images/icons/cog.png) no-repeat;
+}
+#dashboard .test_state a.failed {
+  background: url(/images/icons/exclamation.png) no-repeat;
+}
 
 #dashboard .test_plan.passed {
   background: #cfc;
