@@ -4,6 +4,8 @@ class C32GenerateAndFormatPlan < TestPlan
   completed_actions 'inspect' => :c32_inspect, 'checklist' => :c32_checklist
   serialize :test_type_data, Hash
 
+  class ValidationError < StandardError; end
+
   def initialize *args
     super
     self.test_type_data ||= {}
@@ -26,7 +28,13 @@ class C32GenerateAndFormatPlan < TestPlan
     validator = Validation.get_validator(clinical_document.doc_type)
 
     logger.debug(validator.inspect)
-    errors = validator.validate(patient, document)
+    errors = nil
+    begin
+      errors = validator.validate(patient, document)
+    rescue Exception => e # XXX rescuing everything is almost never a good idea
+      logger.info("ERROR DURING VALIDATION: #{e}")
+      raise ValidationError
+    end
     logger.debug(errors.inspect)
     logger.debug("PD #{patient}  doc #{document}")
 
@@ -56,8 +64,7 @@ class C32GenerateAndFormatPlan < TestPlan
         ClinicalDocument.create!(params[:clinical_document])
       begin
         test_plan.validate_clinical_document_content
-      rescue Exception => e # XXX rescuing everything is almost never a good idea
-        logger.debug("ERROR DURING VALIDATION: #{e}")
+      rescue ValidationError
         flash[:notice] = "An error occurred while validating the document"
       end
       redirect_to test_plans_url
