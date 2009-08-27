@@ -19,8 +19,20 @@ class User < ActiveRecord::Base
   validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
   before_save               :encrypt_password
 
-  has_many :vendor_test_plans, :order => "vendor_id", :dependent => :destroy
   has_many :vendors, :dependent => :destroy
+
+  has_many :test_plans, :dependent => :destroy do
+    def by_vendor
+      inject({}) do |tp, all|
+        all[tp.vendor] ||= []
+        all[tp.vendor] << tp
+      end
+    end
+  end
+
+  def count_test_plans
+    test_plans.count
+  end
 
   # Authenticates a user by their email name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)

@@ -1,3 +1,3 @@
 class ContentError < ActiveRecord::Base
-  belongs_to :vendor_test_plan
+  belongs_to :test_plan
 end

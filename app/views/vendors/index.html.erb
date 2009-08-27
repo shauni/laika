@@ -1,0 +1,36 @@
+<h3>Vendor Inspections</h3>
+
+<h3></h3>
+<% form_for(Vendor.new) do |f| %>
+  <br/>
+  <div class="column span-4"><label for="public_id">Vendor Inspection ID:</label></div>
+  <div class="column span-4"><%= f.text_field :public_id %></div>
+  <br/><br/>
+  <div class="column span-4">&nbsp;</div>
+  <div class="column span-4"><%= f.submit "Create" %></div>
+  <br/><br/>
+<% end %>
+
+<% @vendors.each do |vendor| -%>
+  <div class="column span-6">
+    <div class="vendorinfo">
+      <% form_for vendor do |vendor_form| -%>
+        <div>Inspection ID:
+          <span id="vendor_<%= vendor.id %>"><strong><%=h vendor.public_id %></strong>
+            <%= link_to_function 'rename',
+              "$('vendor_#{vendor.id}').hide();$('vendor_edit_#{vendor.id}').show();" %>&nbsp;|&nbsp;<%=
+            link_to 'delete', vendor_url(vendor), :method => 'DELETE',
+            :confirm => "Inspection #{vendor} has #{pluralize vendor.count_test_plans, 'test case'} assigned, are you sure you want to delete it?" %>
+          </span>
+          <span id="vendor_edit_<%= vendor.id %>" style="display:none">
+              <br />
+              <%= vendor_form.text_field :public_id, :size => 10 %>
+              <%= vendor_form.submit 'Rename' %>
+          </span>
+        </div>
+        <br clear="all"/><small>Created <%= distance_of_time_in_words(Time.now, vendor.created_at) %> ago</small>
+        <br/><small>Edited <%= distance_of_time_in_words(Time.now, vendor.updated_at) %> ago</small>
+      <% end -%>
+    </div>
+  </div>
+<% end -%>

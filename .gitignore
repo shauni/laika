@@ -12,3 +12,5 @@ config/deploy_local.rb
 tags
 config/glassfish.yml
 *.pid
+doc
+.yardoc
