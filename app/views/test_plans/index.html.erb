@@ -52,3 +52,7 @@
     You have not assigned any tests to yourself.
   </div>
 <% end %>
+
+<% @other_vendors.each do |vendor| -%>
+  <li><%= link_to vendor, vendor_test_plans_path(vendor) %></li>
+<% end -%>

@@ -5,6 +5,7 @@ class TestPlansController < ApplicationController
   self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
 
   before_filter :set_test_plan, :except => [:index, :create]
+  before_filter :set_vendor, :only => [:index]
 
   protected
 
@@ -12,6 +13,21 @@ class TestPlansController < ApplicationController
 
   def set_test_plan
     @test_plan = TestPlan.find params[:id]
+  end
+
+  def set_vendor
+    @vendor = Vendor.find_by_id(params[:vendor_id])
+    if @vendor.nil?
+      vendor = last_selected_vendor || current_user.vendors.first
+      if vendor
+        redirect_to vendor_test_plans_path(vendor)
+      else
+        flash[:notice] = 'You have not yet created any vendor inspections.'
+        redirect_to patients_path
+      end
+    else
+      self.last_selected_vendor_id = @vendor.id
+    end
   end
 
   public
@@ -24,7 +40,6 @@ class TestPlansController < ApplicationController
   include PixFeedPlan::Actions
   
   def index
-    @vendor = last_selected_vendor || current_user.vendors.first
     @test_plans = @vendor.test_plans.all(:order => sort_order)
     @other_vendors = current_user.vendors - [@vendor]
   end
