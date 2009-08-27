@@ -17,7 +17,7 @@
         <ul>
           <li><%= link_to 'Edit', patient_path(patient) %></li>
           <li><%= link_to_function 'Assign',
-            "javascript:toggle_div('assignment_div_#{patient.id}');" %></li>
+            "toggle_div('assignment_div_#{patient.id}')" %></li>
           <li><%= link_to h('Provide & Register'),
             provide_and_register_xds_patient_url(patient) %>
         </ul>
