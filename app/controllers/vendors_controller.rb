@@ -2,10 +2,6 @@ class VendorsController < ApplicationController
   page_title 'Laika Vendor Inspections'
   before_filter :find_vendor, :only => [:update, :destroy]
 
-  def index
-    @vendors = current_user.vendors
-  end
-
   def create
     vendor = Vendor.new(params[:vendor])
     vendor.user = current_user
