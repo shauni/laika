@@ -240,6 +240,11 @@ table#dashboard a {
     -webkit-border-radius: 5px;
 }
 
+#dashboard .test_state a:link {
+ /* text-decoration: underline; */
+  font-style: italic;
+}
+
 #dashboard .test_state ul {
     margin: 0px;
 }
