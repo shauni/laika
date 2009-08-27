@@ -8,7 +8,7 @@ class XdsUtilityController < ApplicationController
   self.valid_sort_fields = %w[ name created_at updated_at ]
    
   def index
-      @patients = XdsUtility.all_patients      
+      @patients = XdsRecordUtility.all_patients      
    
       
       unless sort_order.nil?

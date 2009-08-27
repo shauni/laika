@@ -1,5 +1,15 @@
-module XdsUtility 
+class XdsRecordUtility 
 
+  class XDSRecord
+    attr_accessor :patient, :documents, :id, :id_scheme, :value
+
+    def eql? other
+      %w[ value id documents id_scheme patient ].all? do |f|
+        send(f) == other.send(f)
+      end
+    end
+    alias == eql?
+  end
   
   #instantiate all identifiers in the registry as XDSRecords
   def self.all_patients
@@ -8,7 +18,7 @@ module XdsUtility
     
     all_identifiers.each do |identifier|
      
-      xds_record = XDSUtils::XDSRecord.new
+      xds_record = XDSRecord.new
       xds_record.documents = documents(  identifier[ 'identificationscheme' ], identifier['value'] )
       xds_record.value = identifier['value']
       xds_record.id = identifier['id']
@@ -60,7 +70,7 @@ module XdsUtility
   #connect to XDS registry via ActiveRecord
   def self.establish_connection
     
-     unless ActiveRecord::Base.connection_handler.connected?( self )
+     if ActiveRecord::Base.connection_handler.connection_pools[ self.name ].nil?
        
      
       spec = ActiveRecord::Base.configurations['nist_xds_registry'] #get the nist configuration
