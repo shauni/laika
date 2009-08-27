@@ -1,7 +1,7 @@
 class XdsProvideAndRegisterPlan < XdsPlan
   test_name 'XDS Provide & Register'
-  pending_actions 'checklist' => :xds_checklist, 'execute' => :xds_select_document
-  completed_actions 'inspect' => :xds_inspect
+  pending_actions 'Checklist' => :xds_checklist, 'Execute' => :xds_select_document
+  completed_actions 'Inspect' => :xds_inspect
 
   def validate_xds_metadata metadata_of_interest
     if metadata_of_interest

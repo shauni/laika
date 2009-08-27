@@ -231,7 +231,13 @@ table#dashboard a {
 #dashboard .actions ul > li {
 	list-style: none;
 	display: inline;
-    margin-right: 1ex;
+    margin-right: 1em;
+    padding: 2px;
+    background: #eff;
+    border: 1px solid #acc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 #dashboard .test_state ul {
