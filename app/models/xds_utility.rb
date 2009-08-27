@@ -1,6 +1,5 @@
-class XdsUtility < ActiveRecord::Base
-  establish_connection :nist_xds_registry
-  
+class XdsUtility 
+
   
   #instantiate all identifiers in the registry as XDSRecords
   def self.all_patients
@@ -23,22 +22,24 @@ class XdsUtility < ActiveRecord::Base
     
   end
   
-
-  
   
   #get all identifiers in the registry
   def self.all_identifiers
+     
+     establish_connection
+          
       xds_all_ids_query = "SELECT patId.value, patId.identificationScheme, patId.id FROM ExternalIdentifier patId"
       begin
-        connection.select_all( "#{xds_all_ids_query}\n" )
+        ActiveRecord::Base.connection_handler.retrieve_connection( self ).select_all( "#{xds_all_ids_query}\n" )
       rescue ActiveRecord::StatementInvalid
-         flash[:notice] = "Could not find any patients."
          return
       end
   end
   
   #get documents/object ids associated with an identifier in the registry
   def self.documents( id_scheme, value )
+  
+    establish_connection
     
     xds_docs_query = "SELECT doc.id
                 FROM ExtrinsicObject doc, ExternalIdentifier patId
@@ -48,11 +49,51 @@ class XdsUtility < ActiveRecord::Base
                 AND
                   patId.value = '#{value}';" 
     begin
-      connection.select_values( "#{xds_docs_query}\n" )
+      ActiveRecord::Base.connection_handler.retrieve_connection( self ).select_values( "#{xds_docs_query}\n" )
     rescue ActiveRecord::StatementInvalid
-      flash[:notice] = "Could not find documents associated with that record."
-      return 
+      return
     end  
+  end
+  
+  private
+  
+  #connect to XDS registry via ActiveRecord
+  def self.establish_connection
+    
+     unless ActiveRecord::Base.connection_handler.connected?( self )
+       
+     
+      spec = ActiveRecord::Base.configurations['nist_xds_registry'] #get the nist configuration
+      
+      #borrowed from ActiveRecord::Base.establish_connection
+      spec = spec.symbolize_keys
+      unless spec.key?(:adapter) then raise ActiveRecord::AdapterNotSpecified, "database configuration does not specify adapter" end
+      
+  
+      begin
+        require 'rubygems'
+        gem "activerecord-#{spec[:adapter]}-adapter"
+        require "active_record/connection_adapters/#{spec[:adapter]}_adapter"
+      rescue ActiveRecord::LoadError
+          begin
+            require "active_record/connection_adapters/#{spec[:adapter]}_adapter"
+          rescue ActiveRecord::LoadError
+            raise "Please install the #{spec[:adapter]} adapter: `gem install activerecord-#{spec[:adapter]}-adapter` (#{$!})"
+          end
+      end
+      
+      adapter_method = "#{spec[:adapter]}_connection"
+     
+     #make ourselves a new connection specification
+      connection_spec = ActiveRecord::Base::ConnectionSpecification.new( spec, adapter_method )
+      
+      #clear any existing connections with this class
+      ActiveRecord::Base.connection_handler.remove_connection( self )
+      
+      #establish a new connection only associated with this class
+      ActiveRecord::Base.connection_handler.establish_connection( self.name, connection_spec )
+    end
+    
   end
   
 end
