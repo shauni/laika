@@ -1,3 +1,9 @@
+
+* C32 G&F plans now record whether UMLS was used during validation.
+* Do not expose users to each other, SF #2831708
+* Refactored test types into ActiveRecord models and controller mixins, SF #2832938.
+* Removed XDS tab, all assignment is now done from the Library, SF #2831703.
+
 === 2009-08-03 Laika v1.3.8
 
 * New dependency: ModelFactory 0.9.1.

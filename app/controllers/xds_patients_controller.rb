@@ -1,21 +1,6 @@
-require_dependency 'sort_order'
-
 class XdsPatientsController < ApplicationController
   page_title 'XDS Registry'
 
-  include SortOrder
-  self.valid_sort_fields = %w[ name created_at updated_at ]
-
-  def index
-    @patients = Patient.find(:all,
-      :conditions => {:vendor_test_plan_id => nil},
-      :order => sort_order || 'name ASC')
-      
-    @vendors = current_user.vendors + Vendor.unclaimed
-
-    @previous_vendor = last_selected_vendor
-  end
-  
   # Creates the form that collects data to actuall provide and register a document to an XDS Repository
   def provide_and_register
     @patient = Patient.find(params[:id])
@@ -39,11 +24,11 @@ class XdsPatientsController < ApplicationController
 
     response = XDSUtils.provide_and_register(md, pd.to_c32)
     if response.success?
-      flash[:notice] = "Provide and Register successful"
+      flash[:notice] = "XDS Provide and Register successful."
     else
-      flash[:notice] = "Provide and Register failed #{response.errors.inspect}"
+      flash[:error] = "XDS Provide and Register failed. #{response.errors.first[:code_context]}."
     end
-    redirect_to :action => :index
+    redirect_to patients_url
   end
 
 end

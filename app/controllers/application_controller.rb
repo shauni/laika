@@ -18,8 +18,7 @@ class ApplicationController < ActionController::Base
 
   # Set the last selected vendor by id. The value is saved in the session.
   #
-  # This method (along with last_selected_kind_id=) is used by
-  # VendorTestPlan#create to retain previous selections as a convenience
+  # This method is used by TestPlan#create to retain previous selections as a convenience
   # in the UI.
   def last_selected_vendor_id=(vendor_id)
     session[:previous_vendor_id] = vendor_id
@@ -28,16 +27,6 @@ class ApplicationController < ActionController::Base
   # Get the last selected vendor from the session.
   def last_selected_vendor
     Vendor.find_by_id(session[:previous_vendor_id]) if session[:previous_vendor_id]
-  end
-
-  # Set the last selected kind by id. The value is saved in the session.
-  def last_selected_kind_id=(kind_id)
-    session[:previous_kind_id] = kind_id
-  end
-
-  # Get the last selected kind from the session.
-  def last_selected_kind
-    Kind.find_by_id(session[:previous_kind_id]) if session[:previous_kind_id]
   end
 
   # Set the page title for the controller, can be overridden by calling page_title in any controller action.
@@ -59,7 +48,7 @@ class ApplicationController < ActionController::Base
     if current_user.try(:administrator?)
       true
     else
-      redirect_to :controller => 'vendor_test_plans'
+      redirect_to test_plans_url
       false
     end
   end

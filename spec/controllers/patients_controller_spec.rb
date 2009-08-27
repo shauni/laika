@@ -22,7 +22,7 @@ describe PatientsController do
   it "should return xml content as downloadable" do
     pd_mock = mock('pd')
     pd_mock.stub!(:to_c32).and_return('<ClinicalDocument/>')
-    pd_mock.stub!(:vendor_test_plan_id).and_return(false)
+    pd_mock.stub!(:test_plan_id).and_return(nil)
     pd_mock.stub!(:id).and_return(7)
     Patient.stub!(:find).and_return(pd_mock)
     get :show, :id => 1, :format => 'xml'
@@ -32,7 +32,7 @@ describe PatientsController do
   it "should return xml content with xml declaration" do
     pd_mock = mock('pd')
     pd_mock.should_receive(:to_c32).with(Builder::XmlMarkup.new(:indent => 2).instruct!).and_return("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ClinicalDocument/>")
-    pd_mock.stub!(:vendor_test_plan_id).and_return(false)
+    pd_mock.stub!(:test_plan_id).and_return(nil)
     pd_mock.stub!(:id).and_return(1)
     Patient.stub!(:find).and_return(pd_mock)
     get :show, :id => 1, :format => 'xml'
