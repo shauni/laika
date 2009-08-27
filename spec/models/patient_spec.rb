@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require "lib/validators/c32_validator"
 
 describe Patient do
-  fixtures :patients, :registration_information, :person_names, :addresses, :telecoms, :genders
+  fixtures :patients, :registration_information, :person_names, :addresses, :telecoms, :genders, :patient_identifiers
   before(:each) do
      @patient = patients(:joe_smith) 
   end
@@ -11,6 +11,16 @@ describe Patient do
     @patient.name = ''
     @patient.should_not be_valid
   end
+
+  it "should return nothing when given a bad XDS id" do
+      Patient.find_by_patient_identifier('abc').should be_nil
+    end
+
+
+   it "should return the found patient as a Laika model" do
+    Patient.find_by_patient_identifier('1234567890^^^CCHIT&1.2.3.4.5.6.7.8.9&ISO').should_not be_nil
+  end
+
 
   describe "copied with clone" do
   

@@ -14,7 +14,7 @@ class XdsUtility < ActiveRecord::Base
       xds_record.value = identifier['value']
       xds_record.id = identifier['id']
       xds_record.id_scheme = identifier[ 'identificationscheme' ]
-      xds_record.patient = find_patient( identifier[ 'value' ] )
+      xds_record.patient = Patient.find_by_patient_identifier( identifier[ 'value' ] )
       
       patients << xds_record
     end
@@ -23,19 +23,7 @@ class XdsUtility < ActiveRecord::Base
     
   end
   
-  #find the patient template from the XDS id
-  # FIXME This should be Patient.find_by_patient_identifier. Also, these
-  # lookup values are neither indexed nor guaranteed to be unique. XXX
-  def self.find_patient( id )
-  
-    split_id = id.split('^^^')
-    patient_id = PatientIdentifier.find( :first, 
-        :conditions => {  :patient_identifier => split_id.first, 
-                          :affinity_domain => split_id.second }
-     ).try( :patient_id )
-     
-     Patient.find( patient_id ) unless patient_id.nil?
-  end
+
   
   
   #get all identifiers in the registry
