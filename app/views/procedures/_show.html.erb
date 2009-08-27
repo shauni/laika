@@ -22,6 +22,10 @@
     <td><%=h procedure.procedure_date %></td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+    <td class="lighttext">Procedure Status Code</td>
+    <td><%=h procedure.procedure_status_code.description %></td>
+  </tr>
+  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td></td>
     <td>
     <span>
