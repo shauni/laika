@@ -138,6 +138,33 @@ table {
 	border-collapse:separate;
 }
 
+.vendor-info {
+  float:left;
+}
+
+ul.vendor-actions {
+    float: right;
+    display: inline;
+    margin: 0px;
+}
+ul.vendor-actions > li {
+	list-style: none;
+	display: inline;
+    margin-right: 1em;
+}
+
+#dashboard .delete > a {
+  padding: 4px 0px 0px 0px;
+  margin: 0px;
+  width: 16px;
+  height: 16px;
+  display:block;
+  background: url(/images/icons/delete.png) no-repeat bottom center;
+}
+#dashboard .delete > a span {
+  display:none;
+}
+
 #dashboard {
   font-size: 12px;
 }
