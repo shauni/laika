@@ -27,18 +27,7 @@ describe XdsUtility do
                                                               'value' => '1234567890^^^CCHIT&1.2.3.4.5.6.7.8.9&ISO',
                                                               'id' => 'urn:uuid:c5fab40b-9e16-4a30-8c19-c11387d4ab56' }])                                        
     
-    #eql/== doesn't work for this and I have no idea why - GNJ
-    # The two instances have identical contents but are not the same instance,
-    # which is what == checks for by default. You can implement
-    # XDSUtils::XDSRecord#eql?/== if you want to compare by value. -hobson
     XdsUtility.all_patients.should == @patients
-      
-    #ap = XdsUtility.all_patients
-    #ap.first.value.should eql(@patients.first.value)                
-    #ap.first.id.should eql(@patients.first.id)
-    #ap.first.documents.should eql(@patients.first.documents)
-    #ap.first.id_scheme.should eql(@patients.first.id_scheme)
-    #ap.first.patient.should eql(@patients.first.patient)
   end
   
   it "should return an empty set of XDSRecords" do

@@ -1,4 +1,4 @@
-class XdsUtility 
+module XdsUtility 
 
   
   #instantiate all identifiers in the registry as XDSRecords
