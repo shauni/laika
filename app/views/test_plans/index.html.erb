@@ -30,7 +30,7 @@
         <%= render :partial => 'mark_state', :locals => { :plan => test_plan } %>
       </td>
       <td><%= test_plan.class.test_name %></td>
-      <td>
+      <td class="edit">
         <% if test_plan.clinical_document%>
           <%= test_plan.patient.name %>
         <% else %>

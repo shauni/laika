@@ -245,6 +245,11 @@ table#dashboard a {
   font-style: italic;
 }
 
+#dashboard .edit a {
+  padding-left: 18px;
+  background: url(/images/icons/page_edit.png) no-repeat;
+}
+
 #dashboard .test_state ul {
     margin: 0px;
 }
