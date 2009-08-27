@@ -13,8 +13,8 @@ class PatientsController < ApplicationController
     
     @xds_patients = {};
     
-    if Setting.nist_xds == "1"
-      xds_all = XdsUtility.all_patients
+    if LOCAL_NIST_XDS
+      xds_all = XdsRecordUtility.all_patients
       xds_all.each do |x| 
         if x.patient
           @xds_patients[ x.patient ] = x

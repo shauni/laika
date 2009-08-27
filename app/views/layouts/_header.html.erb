@@ -7,7 +7,7 @@
           <div class="doggy"><%= link_to image_tag("laika.png", :alt => 'Laika'), root_url %></div>
           <div class="right">
             <ul id="smallnav">
-			  <% if Setting.nist_xds == "1" %><li <% if current_controller? 'xds_utility' %>id="active"<% end %>><%= link_to 'XDS Utility', xds_utility_path %></li><% end %>
+			  <% if LOCAL_NIST_XDS %><li <% if current_controller? 'xds_utility' %>id="active"<% end %>><%= link_to 'XDS Utility', xds_utility_path %></li><% end %>
               <li <% if current_controller? 'atna_audits' %>id="active"<% end %>><%= link_to 'ATNA Log', atna_audits_path %></li>
               <li <% if current_controller? 'news' %>id="active"<% end %>><%= link_to 'News', news_path %></li>
               <li <% if current_controller? 'users' %>id="active"<% end %>><%= link_to 'People &amp; Inspections', users_path %></li>

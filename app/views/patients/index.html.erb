@@ -2,7 +2,7 @@
 <table id="dashboard">
 
   <tr>
-	<% if Setting.nist_xds == "1" %>
+	<% if LOCAL_NIST_XDS %>
 		<th><div>XDS</div></th>
 	<% end %>
     <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
@@ -15,7 +15,7 @@
 
   <% @patients.each do |patient| -%>
     <tr>
-		<% if Setting.nist_xds == "1" %>
+		<% if LOCAL_NIST_XDS %>
 		<% if @xds_patients[ patient ]%>
 	  		<td>&#10003;</td>
 		<% else %>

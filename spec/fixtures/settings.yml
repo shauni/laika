@@ -9,7 +9,3 @@ xds_register_stored_query_url:
 xds_retrieve_document_set_request_url:
   name: "xds_retrieve_document_set_request_url"
   value: "http://localhost:9080/axis2/services/xdsrepositoryb"
-  
-nist_xds:
-    name: "nist_xds"
-    value: "0"

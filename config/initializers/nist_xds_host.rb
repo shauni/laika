@@ -7,3 +7,12 @@ if not defined?(XDS_HOST)
     :retrieve_document_set_request =>"#{XDS_HOST}/tf5/services/xdsrepositoryb"
   }
 end
+
+if not defined?(LOCAL_NIST_XDS)
+  
+  if ActiveRecord::Base.configurations['nist_xds_registry']
+    LOCAL_NIST_XDS = true
+  else
+    LOCAL_NIST_XDS = false
+  end
+end

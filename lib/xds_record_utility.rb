@@ -1,4 +1,4 @@
-class XdsRecordUtility 
+module XdsRecordUtility 
 
   class XDSRecord
     attr_accessor :patient, :documents, :id, :id_scheme, :value
@@ -70,6 +70,8 @@ class XdsRecordUtility
   #connect to XDS registry via ActiveRecord
   def self.establish_connection
     
+    #check to see if we've already opened a connection...have to do this manually
+    #as connected? only checks classes that inherit from ActiveRecord::Base
      if ActiveRecord::Base.connection_handler.connection_pools[ self.name ].nil?
        
      
