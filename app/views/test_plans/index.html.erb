@@ -6,7 +6,7 @@
     <th class="<%= sort_order_class('patient.name') %>"><%= link_to_sort 'patient.name', 'Patient' %></th>
     <th><div>Errors</div></th>
     <th><div>Warnings</div></th>
-    <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'Last Tested' %></th>
+    <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'When Tested' %></th>
     <th><div>Actions</div></th>
   </tr>
   <% @vendor.test_plans.each do |test_plan| -%>
@@ -29,7 +29,7 @@
       <td>
         <%= pluralize test_plan.count_warnings, 'warning' %>
       </td>
-      <td><%= time_ago_in_words test_plan.updated_at %> ago</td>
+      <td><%= plan_when_tested test_plan %></td>
       <td class="actions">
         <ul>
           <%= action_list_items test_plan, :update => "execution_div_#{test_plan.id}" %>
@@ -49,7 +49,7 @@
 
 <% if @vendor.test_plans.count == 0 %>
   <div id="not-assigned">
-    You have not assigned any tests to yourself.
+    You have not assigned any tests to <%=h @vendor %>.
   </div>
 <% end %>
 

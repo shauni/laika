@@ -24,10 +24,6 @@
 # You cannot change the state of a plan once it has passed
 # or failed, so you can only pass or fail pending tests.
 #
-#  plan = TestPlan.new
-#  plan.state             #=> 'pending'
-#  plan.tap(&:fail).state #=> 'failed'
-#
 class TestPlan < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
