@@ -12,6 +12,10 @@ class PatientsController < ApplicationController
     @vendor = last_selected_vendor
   end
   
+  def root
+    
+  end
+  
   def autoCreate
     @patient = Patient.new    
     @patient.registration_information = RegistrationInformation.new
