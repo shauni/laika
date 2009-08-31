@@ -25,7 +25,14 @@ class Patient < ActiveRecord::Base
   # dependent because results and vital_signs already do that.
   has_many :all_results, :class_name => 'AbstractResult'
 
-  named_scope :templates, :conditions => { :test_plan_id => nil }
+  named_scope :templates, :conditions => { :test_plan_id => nil, :user_id => nil }
+  named_scope :owned_by, lambda { |user|
+    { :conditions => { :test_plan_id => nil, :user_id => user.id } }
+  }
+
+  def editable_by? owner
+    user == owner
+  end
 
   # these are used in the insurance_provider_* controllers
   def insurance_provider_guarantors
@@ -42,8 +49,6 @@ class Patient < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :name
-
-  has_select_options :conditions => 'test_plan_id IS NULL'
 
   # Generate an OID using the time and the patient's ActiveRecord ID.
   #
