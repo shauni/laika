@@ -10,6 +10,17 @@ class PatientsController < ApplicationController
   def index
     @patients = Patient.templates.all :order => sort_order || "name ASC"
     @vendor = last_selected_vendor
+    
+    @xds_patients = {};
+    
+    if LOCAL_NIST_XDS
+      xds_all = XdsRecordUtility.all_patients
+      xds_all.each do |x| 
+        if x.patient
+          @xds_patients[ x.patient ] = x
+        end  
+      end
+    end
   end
   
   def autoCreate

@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
     vendors.resources :test_plans, :only => :index
   end
   map.resources :users, :except => [:index]
+  map.resources :xds_utility, :singular => "xds_utility_instance"
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 

@@ -2,6 +2,9 @@
 <table id="dashboard">
 
   <tr>
+	<% if LOCAL_NIST_XDS %>
+		<th><div>XDS</div></th>
+	<% end %>
     <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
     <th class="<%= sort_order_class('created_at') %>"><%= link_to_sort 'created_at', 'Created on' %></th>
     <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'Last modified' %></th>
@@ -10,6 +13,13 @@
 
   <% @patients.each do |patient| -%>
     <tr>
+		<% if LOCAL_NIST_XDS %>
+		  <% if @xds_patients[ patient ]%>
+	  		<td>&#10003;</td>
+		  <% else %>
+			  <td></td>
+		  <% end %>
+		<% end %>
       <td class="edit"><%= link_to h(patient.name), patient_path(patient) %></td>
       <td><%= patient.created_at %></td>
       <td><%= patient.updated_at %></td>

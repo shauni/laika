@@ -274,6 +274,19 @@ class Patient < ActiveRecord::Base
     self.patient_identifiers << @patient_identifier
 
   end
+  
+  #find the patient template from the XDS id
+  #these lookup values are neither indexed nor guaranteed to be unique. XXX
+  def self.find_by_patient_identifier( id )
+  
+    split_id = id.split('^^^')
+    patient_id = PatientIdentifier.find( :first, 
+        :conditions => {  :patient_identifier => split_id.first, 
+                          :affinity_domain => split_id.second }
+     ).try( :patient_id )
+     
+     Patient.find( patient_id ) unless patient_id.nil?
+  end
 
  private
 
