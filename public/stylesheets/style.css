@@ -246,7 +246,7 @@ table#dashboard a {
 }
 
 #dashboard .edit a {
-  padding-left: 18px;
+  padding: 0px 0px 3px 18px;
   background: url(/images/icons/page_edit.png) no-repeat;
 }
 
@@ -257,7 +257,9 @@ table#dashboard a {
 	list-style: none;
     margin-right: 1ex;
 }
-#dashboard .test_state a { padding-left: 18px; }
+#dashboard .test_state a {
+  padding: 0px 0px 3px 18px;
+}
 #dashboard .test_state a.passed {
   background: url(/images/icons/accept.png) no-repeat;
 }
