@@ -26,6 +26,7 @@
       <% if advance_directive.advance_directive_status_code %><%=h advance_directive.advance_directive_status_code.name %><% end %>
     </td>
   </tr>
+  <% if @patient.editable_by? current_user -%>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td></td>
     <td>
@@ -42,6 +43,7 @@
     </span>
     </td>
   </tr>
+<% end -%>
 <% else -%>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">There is no advance directive data for this test case</td>

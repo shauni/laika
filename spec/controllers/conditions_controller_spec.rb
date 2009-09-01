@@ -10,12 +10,9 @@ describe ConditionsController do
   describe "with a patient" do
     integrate_views
 
-    fixtures :patients, :conditions
-
     before do
-      @user = stub(:user)
-      controller.stub!(:current_user).and_return(@user)
-      @patient = patients(:joe_smith)
+      @patient = Patient.factory.create
+      controller.stub!(:current_user).and_return(@patient.user)
     end
 
     it "should update comment record" do

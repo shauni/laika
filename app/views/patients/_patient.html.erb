@@ -6,8 +6,8 @@
   	  <td></td>
     <% end -%>
   <% end -%>
-  <td class="edit">
-    <%= link_to_if patient.editable_by?(current_user), h(patient.name), patient_path(patient) %>
+  <td class="<%= patient.editable_by?(current_user) ? 'edit' : 'locked' %>">
+    <%= link_to h(patient.name), patient_path(patient) %>
   </td>
   <td><%= patient.created_at %></td>
   <td><%= patient.updated_at %></td>

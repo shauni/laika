@@ -153,6 +153,12 @@ ul.vendor-actions > li {
     margin-right: 1em;
 }
 
+#templateInformationContainer {
+  position:fixed;
+}
+#templateInformationContainer h3 {
+  position:fixed;
+}
 #dashboard .delete > a {
   padding: 4px 0px 0px 0px;
   margin: 0px;
@@ -248,6 +254,10 @@ table#dashboard a {
 #dashboard .edit a {
   padding: 0px 0px 3px 18px;
   background: url(/images/icons/page_edit.png) no-repeat;
+}
+#dashboard .locked a {
+  padding: 0px 0px 3px 18px;
+  /* background: url(/images/icons/page.png) no-repeat; */
 }
 
 #dashboard .test_state ul {

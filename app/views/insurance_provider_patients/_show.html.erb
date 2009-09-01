@@ -21,14 +21,16 @@
   </tr>
   <%= render :partial => '/addresses/show', :locals => {:address => insurance_provider_patient.address}%>
   <%= render :partial => '/telecoms/show', :locals => {:telecom => insurance_provider_patient.telecom}%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td>
-    <span>
-      <%= link_to_remote('Edit', :update => "insurance_provider_patient#{insurance_provider_patient.id}",
-                                 :url => edit_patient_insurance_provider_patient_path(patient, insurance_provider_patient),
-                                 :method => 'get') unless insurance_provider_patient.new_record? %>
-    </span> 
-    </td>
-  </tr>
+  <% if @patient.editable_by? current_user -%>
+    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+      <td></td>
+      <td>
+      <span>
+        <%= link_to_remote('Edit', :update => "insurance_provider_patient#{insurance_provider_patient.id}",
+                                   :url => edit_patient_insurance_provider_patient_path(patient, insurance_provider_patient),
+                                   :method => 'get') unless insurance_provider_patient.new_record? %>
+      </span> 
+      </td>
+    </tr>
+  <% end -%>
 </table>
