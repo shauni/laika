@@ -54,6 +54,7 @@
        <%=h provider.patient_identifier %>
     </td>
   </tr>
+  <% if @patient.editable_by? current_user -%>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td></td>
     <td>
@@ -71,5 +72,6 @@
     </span>    
     </td>
   </tr>
+  <% end -%>
 </table>
 </div>

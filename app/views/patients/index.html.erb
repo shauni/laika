@@ -2,6 +2,9 @@
 <table id="dashboard">
 
   <tr>
+	<% if LOCAL_NIST_XDS %>
+		<th><div>XDS</div></th>
+	<% end %>
     <th class="<%= sort_order_class('name') %>"><%= link_to_sort 'name', 'Template' %></th>
     <th class="<%= sort_order_class('created_at') %>"><%= link_to_sort 'created_at', 'Created on' %></th>
     <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'Last modified' %></th>
@@ -9,44 +12,7 @@
   </tr>
 
   <% @patients.each do |patient| -%>
-    <tr>
-      <td class="edit"><%= link_to h(patient.name), patient_path(patient) %></td>
-      <td><%= patient.created_at %></td>
-      <td><%= patient.updated_at %></td>
-      <td class="actions">
-        <ul>
-          <li><%= link_to_function 'Add to Test Plan',
-            "toggle_div('assignment_div_#{patient.id}')" %></li>
-          <li><%= link_to h('Provide & Register'),
-            provide_and_register_xds_patient_url(patient) %>
-        </ul>
-        <div id="assignment_div_<%=patient.id%>" style="display:none">
-          <% form_for(TestPlan.new(:vendor_id => @vendor.try(:id),
-              :user_id => current_user.id),
-              :html => {
-              :onSubmit => <<-EOJ,
-                if (this['test_plan[vendor_id]'].value == '') {
-                  this.vendor_name.value = window.prompt('Provide a name for the new inspection.');
-                  return !(this.vendor_name.value == '');
-                }
-                EOJ
-              :method => 'post' }) do |f| -%>
-            <%= hidden_field_tag :patient_id, patient.id %>
-            <%= hidden_field_tag :vendor_name, '' %>
-            <%= f.collection_select :vendor_id, current_user.vendors, :id, :public_id,
-              :include_blank => 'New Inspection' %><br/>
-            <%= f.select :type, TestPlan.test_types %><br/>
-            <input type="submit" value="Assign"
-            />
-          <% end -%>
-        </div>
-      </td>
-      <td class="delete">
-        <%= link_to content_tag('span','delete'), patient_path(patient), :method => :delete,
-          :confirm => 'Are you sure you want to delete this patient record?',
-          :title => 'delete this patient record' %>
-      </td>
-    </tr>
+    <%= render patient %>
   <% end -%>
 </table>
 

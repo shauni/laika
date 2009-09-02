@@ -9,6 +9,7 @@
 #
 class PatientChildController < ApplicationController
   before_filter :find_patient
+  before_filter :check_edit_permissions
   layout false
 
   def new
@@ -60,6 +61,13 @@ class PatientChildController < ApplicationController
       @patient = Patient.find params[:patient_id]
     end
     redirect_to patients_url unless @patient
+  end
+
+  def check_edit_permissions
+    if not @patient.editable_by? current_user
+      flash[:error] = "You are not permitted to edit this patient template."
+      redirect_to @patient
+    end
   end
 
 end

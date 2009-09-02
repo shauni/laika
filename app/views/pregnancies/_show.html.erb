@@ -4,6 +4,7 @@
     <td class="lighttext">Pregnant</td>
     <td><%= h @patient.pregnant %></td>
   </tr>
+  <% if @patient.editable_by? current_user -%>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td></td>
     <td>
@@ -16,4 +17,5 @@
                                    :method => 'delete' %>
     </td>
   </tr>
+  <% end -%>
 </table>

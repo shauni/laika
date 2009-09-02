@@ -131,16 +131,18 @@
                                    :patient => @patient} %>
           </div>
         <% end %>
-        <table id="addPatientIdentifier">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_patient_identifier_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addPatientIdentifier',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addPatientIdentifier">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_patient_identifier_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addPatientIdentifier',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
     </div>
         <!-- End Patient Identifier Module -->
 
@@ -152,17 +154,19 @@
                                                                   :patient => @patient} %>
           </div>
         <% end -%>
-        <table id="addLanguage">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td>
-              <%= link_to_remote 'Add', :url => new_patient_language_path(@patient),
-                                        :method => 'get', 
-                                        :update => 'addLanguage', 
-                                        :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+         <table id="addLanguage">
+           <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+             <td></td>
+             <td>
+               <%= link_to_remote 'Add', :url => new_patient_language_path(@patient),
+                                         :method => 'get', 
+                                         :update => 'addLanguage', 
+                                         :position => :before %>
+             </td>
+           </tr>
+         </table>
+        <% end -%>
         </div> 
         <!-- End Languages Module -->
 
@@ -180,17 +184,19 @@
             <%= render :partial => '/providers/show', :locals => {:provider  => provider,
                                                                   :patient => @patient} %>
         <% end -%>
-        <table id="addProvider">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td>
-              <%= link_to_remote 'Add', :url => new_patient_provider_path(@patient),
-                                        :method => 'get',
-                                        :update => 'addProvider',
-                                        :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addProvider">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td>
+                <%= link_to_remote 'Add', :url => new_patient_provider_path(@patient),
+                                          :method => 'get',
+                                          :update => 'addProvider',
+                                          :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Healthcare Provider Module -->
 
@@ -204,17 +210,19 @@
                                    :patient => @patient} %>
           </div>
         <% end %>  
-        <table id="addInsuranceProvider">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td>
-              <%= link_to_remote 'Add', :url => new_patient_insurance_provider_path(@patient),
-                                        :method => 'get',
-                                        :update => 'addInsuranceProvider',
-                                        :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addInsuranceProvider">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td>
+                <%= link_to_remote 'Add', :url => new_patient_insurance_provider_path(@patient),
+                                          :method => 'get',
+                                          :update => 'addInsuranceProvider',
+                                          :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Insurance Provider Module -->
 
@@ -242,17 +250,19 @@
               <%= render :partial => '/allergies/no_known_allergies_link', :locals => { :patient => @patient} %>
         <%   end -%>
         <% end -%>
-        <table id="addAllergy">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td>
-              <%= link_to_remote 'Add', :url => new_patient_allergy_path(@patient),
-                                        :method => 'get',
-                                        :update => 'addAllergy',
-                                        :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addAllergy">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td>
+                <%= link_to_remote 'Add', :url => new_patient_allergy_path(@patient),
+                                          :method => 'get',
+                                          :update => 'addAllergy',
+                                          :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Allergies and Drugs Module -->
 
@@ -265,16 +275,18 @@
                        :locals => {:condition  => condition, :patient => @patient} %>
           </div>
         <% end %>
-        <table id="addCondition">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_condition_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addCondition',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addCondition">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_condition_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addCondition',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Conditions Module -->
 
@@ -287,16 +299,18 @@
                                                                     :patient => @patient} %>
           </div>
         <% end -%>
-        <table id="addMedication">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_medication_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addMedication',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addMedication">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_medication_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addMedication',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Medications Module -->
 
@@ -331,17 +345,19 @@
                                                                 :patient => @patient} %>
           </div>
         <% end -%>
-        <table id="addVital">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <!-- Callback at the end to modify the form and let the controller we are creating a vital sign instead of a result -->
-            <td><%= link_to_remote 'Add', :url => new_patient_vital_sign_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addVital',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addVital">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <!-- Callback at the end to modify the form and let the controller we are creating a vital sign instead of a result -->
+              <td><%= link_to_remote 'Add', :url => new_patient_vital_sign_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addVital',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Vital Signs Module  -->
 
@@ -354,16 +370,18 @@
                                                                 :patient => @patient} %>
           </div>
         <% end -%>
-        <table id="addResult">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_result_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addResult',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addResult">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_result_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addResult',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Results Module -->
 
@@ -377,16 +395,18 @@
                                    :patient => @patient} %>
           </div>
         <% end %>
-        <table id="addImmunization">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_immunization_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addImmunization',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addImmunization">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_immunization_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addImmunization',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Immunizations Module -->
 
@@ -399,16 +419,18 @@
                        :locals => {:encounter => encounter, :patient => @patient} %>
           </div>
         <% end %>
-        <table id="addEncounter">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_encounter_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addEncounter', 
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addEncounter">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_encounter_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addEncounter', 
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Encounters Module -->
 
@@ -421,16 +443,18 @@
                        :locals => {:procedure => procedure, :patient => @patient} %>
           </div>
         <% end %>
-        <table id="addProcedure">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_procedure_path(@patient),
-                                          :method => 'get',
-                                          :update => 'addProcedure',
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addProcedure">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_procedure_path(@patient),
+                                            :method => 'get',
+                                            :update => 'addProcedure',
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Procedures Module -->
 
@@ -442,16 +466,18 @@
                        :locals => {:medical_equipment => medical_equipment,
                                    :patient => @patient} %>
         <% end %>
-        <table id="addMedicalEquipment">
-          <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-            <td></td>
-            <td><%= link_to_remote 'Add', :url => new_patient_medical_equipment_path(@patient),
-                                          :method => 'get', 
-                                          :update => 'addMedicalEquipment', 
-                                          :position => :before %>
-            </td>
-          </tr>
-        </table>
+        <% if @patient.editable_by? current_user -%>
+          <table id="addMedicalEquipment">
+            <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+              <td></td>
+              <td><%= link_to_remote 'Add', :url => new_patient_medical_equipment_path(@patient),
+                                            :method => 'get', 
+                                            :update => 'addMedicalEquipment', 
+                                            :position => :before %>
+              </td>
+            </tr>
+          </table>
+        <% end -%>
         </div>
         <!-- End Medical Equipment Module -->
 

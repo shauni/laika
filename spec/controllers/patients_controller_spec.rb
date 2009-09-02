@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PatientsController do
-  fixtures :users
 
   before(:each) do
-    controller.stub!(:current_user).and_return(mock_model(User))
+    @user = User.factory.create
+    controller.stub!(:current_user).and_return(@user)
   end
 
   it "should create a named template" do
@@ -40,7 +40,7 @@ describe PatientsController do
   end
 
   it "should update template name" do
-    template = Patient.create!(:name => 'Me', :user => users(:alex_kroman))
+    template = Patient.create!(:name => 'Me', :user => @user)
     put :update, :id => template.id, :patient => { :name => 'You' }
     template.reload
     template.name.should == 'You'
