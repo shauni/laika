@@ -48,6 +48,16 @@ class TestPlansController < ApplicationController
     test_type = params[:test_plan].delete(:type).constantize
     patient = Patient.find params[:patient_id]
     plan = test_type.new params[:test_plan].merge(:user => current_user)
+    if plan.vendor.nil?
+      vendor_name = params[:vendor_name]
+      begin
+        plan.vendor = Vendor.create!(:public_id => vendor_name, :user_id => current_user.id)
+      rescue ActiveRecord::RecordInvalid => e
+        flash[:notice] = "Failed to create inspection #{vendor_name}: #{e}"
+        redirect_to patients_url
+        return
+      end
+    end
     if plan.valid?
       TestPlan.transaction do
         plan.save!
@@ -55,7 +65,7 @@ class TestPlansController < ApplicationController
         patient.test_plan = plan
         patient.save!
         flash[:notice] = "Created a new #{test_type.test_name} test plan."
-        self.last_selected_vendor_id = params[:test_plan][:vendor_id]
+        self.last_selected_vendor_id = plan.vendor.id
       end
       redirect_to :action => :index
     else

@@ -1,8 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :message_logs
   map.resources :atna_audits
-  map.resources :vendors do |vendors|
-    vendors.resources :test_plans, :only => [:index]
+  map.resources :vendors, :only => [:create, :update, :destroy] do |vendors|
+    vendors.resources :test_plans, :only => :index
   end
   map.resources :users, :except => [:index]
   map.resources :document_locations

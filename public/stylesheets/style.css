@@ -138,6 +138,33 @@ table {
 	border-collapse:separate;
 }
 
+.vendor-info {
+  float:left;
+}
+
+ul.vendor-actions {
+    float: right;
+    display: inline;
+    margin: 0px;
+}
+ul.vendor-actions > li {
+	list-style: none;
+	display: inline;
+    margin-right: 1em;
+}
+
+#dashboard .delete > a {
+  padding: 4px 0px 0px 0px;
+  margin: 0px;
+  width: 16px;
+  height: 16px;
+  display:block;
+  background: url(/images/icons/delete.png) no-repeat bottom center;
+}
+#dashboard .delete > a span {
+  display:none;
+}
+
 #dashboard {
   font-size: 12px;
 }
@@ -204,7 +231,23 @@ table#dashboard a {
 #dashboard .actions ul > li {
 	list-style: none;
 	display: inline;
-    margin-right: 1ex;
+    margin-right: 1em;
+    padding: 2px;
+    background: #eff;
+    border: 1px solid #acc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+#dashboard .test_state a:link {
+ /* text-decoration: underline; */
+  font-style: italic;
+}
+
+#dashboard .edit a {
+  padding-left: 18px;
+  background: url(/images/icons/page_edit.png) no-repeat;
 }
 
 #dashboard .test_state ul {
@@ -213,6 +256,16 @@ table#dashboard a {
 #dashboard .test_state ul > li {
 	list-style: none;
     margin-right: 1ex;
+}
+#dashboard .test_state a { padding-left: 18px; }
+#dashboard .test_state a.passed {
+  background: url(/images/icons/accept.png) no-repeat;
+}
+#dashboard .test_state a.pending {
+  background: url(/images/icons/cog.png) no-repeat;
+}
+#dashboard .test_state a.failed {
+  background: url(/images/icons/exclamation.png) no-repeat;
 }
 
 #dashboard .test_plan.passed {

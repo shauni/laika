@@ -1,7 +1,7 @@
 class PixFeedPlan < PixPdqPlan
   test_name 'PIX Feed'
-  pending_actions 'compare>' => :pix_feed_setup
-  completed_actions 'inspect' => :pix_pdq_inspect
+  pending_actions 'Compare>' => :pix_feed_setup
+  completed_actions 'Inspect' => :pix_pdq_inspect
 
   serialize :test_type_data, Hash
 

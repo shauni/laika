@@ -2,6 +2,10 @@ require 'sort_order'
 module TestPlansHelper
   include SortOrderHelper
 
+  def plan_when_tested plan
+      plan.pending? ? 'not yet tested' : "#{time_ago_in_words plan.updated_at} ago"
+  end
+
   def action_list_items test_plan, opts
     test_plan.test_actions.map do |k, v|
       if k =~ />$/
