@@ -26,7 +26,10 @@ class ApplicationController < ActionController::Base
 
   # Get the last selected vendor from the session.
   def last_selected_vendor
-    Vendor.find_by_id(session[:previous_vendor_id]) if session[:previous_vendor_id]
+    begin
+      Vendor.find_by_id(session[:previous_vendor_id]) if session[:previous_vendor_id]
+    rescue ActiveRecord::StatementInvalid
+    end
   end
 
   # Set the page title for the controller, can be overridden by calling page_title in any controller action.

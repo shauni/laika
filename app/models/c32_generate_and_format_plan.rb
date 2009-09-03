@@ -1,7 +1,7 @@
 class C32GenerateAndFormatPlan < TestPlan
   test_name "C32 Generate and Format"
-  pending_actions 'execute>' => :c32_upload
-  completed_actions 'inspect' => :c32_inspect, 'checklist' => :c32_checklist
+  pending_actions 'Execute>' => :c32_upload
+  completed_actions 'Inspect' => :c32_inspect, 'Checklist' => :c32_checklist
   serialize :test_type_data, Hash
 
   class ValidationError < StandardError; end
