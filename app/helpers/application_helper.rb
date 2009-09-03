@@ -25,7 +25,7 @@ module ApplicationHelper
       when :hitsp_r2_required
         '<span class="validation_for required">Required (HITSP R2)</span>'
       when :hitsp_optional
-        '<span class="validation_for">Optional (HITSP O)</span>'
+        '<span class="validation_for">Optional (HITSP R)</span>'
       when :hitsp_r2_optional
         '<span class="validation_for">Optional (HITSP R2)</span>'
       else
