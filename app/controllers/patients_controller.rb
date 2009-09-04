@@ -3,7 +3,7 @@ require_dependency 'sort_order'
 class PatientsController < ApplicationController
   page_title 'Laika Test Library'
   before_filter :set_patient, :except => %w[ index create autoCreate ]
-  before_filter :check_edit_permission, :only => %w[ copy destroy update ]
+  before_filter :check_edit_permission, :only => %w[ destroy update ]
 
   include SortOrder
   self.valid_sort_fields = %w[ name created_at updated_at ]
