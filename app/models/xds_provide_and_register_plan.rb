@@ -7,11 +7,11 @@ class XdsProvideAndRegisterPlan < XdsPlan
     if metadata_of_interest
       validator = Validators::XdsMetadataValidator.new
       validation_errors = validator.validate test_type_data, metadata_of_interest
+      content_errors.clear
       if validation_errors.empty?
-        content_errors.clear
         pass
       else
-        content_errors << validation_errors
+        self.content_errors += validation_errors
         fail
       end
       cdoc = ClinicalDocument.new \

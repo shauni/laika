@@ -1,7 +1,7 @@
 <div class="column span-6 append-1">
   <h3>Inspection Results</h3>
   <div id="results">
-    <% if @test_plan.content_errors.size == 0 -%>
+    <% if @test_plan.passed? -%>
       <div class="pass">PASS</div>
     <% else -%>
       <div class="fail">FAIL</div>
@@ -16,7 +16,6 @@
           </div>
           <span class="number"><%= @test_plan.content_errors.size %></span> violations
         </div>
-        <a href="#"><div class="right on">ON</div></a>
       </div>
       <table id="details">
         <tr>
@@ -40,22 +39,14 @@
     <table id="dashboard">
       <tr valign="top">
         <th>Section</th>
-        <th>Subsection</th>
         <th>Field</th>
         <th>Message</th>
-        <th>Location</th>
-         <th>Inspection Type</th>
-          <th>Validator</th>
       </tr>
       <% @test_plan.content_errors.each do |error| %>
       <tr>
-        <td><%= error.section %></td>
         <td><%= error.subsection %></td>
         <td><%= error.field_name %></td>
         <td><%= error.error_message %></td>
-         <td><%= error.location %></td>
-         <td><%= error.inspection_type %></td>
-         <td><%= error.validator %></td>
       </tr>
       <% end -%>
     </table> 
