@@ -34,8 +34,12 @@
   </div>
 </div>
 <div class="column span-13 last">
-  <div id="template">
-    <h3>Verification Results</h3>
+  <div class="inspection-results">
+    <h3>Validation Results</h3>
+    <dl>
+      <dt>Test</dt><dd><%= @test_plan.test_name %></dd>
+      <dt>Validator</dt><dd><%= @test_plan.validators.join(', ') %></dd>
+    </dl>
     <table id="dashboard">
       <tr valign="top">
         <th>Section</th>

@@ -26,6 +26,14 @@ class XdsProvideAndRegisterPlan < XdsPlan
     end
   end
 
+  # Once a plan has been completed, this method returns the list
+  # of validators used to get the results.
+  #
+  # @return [Array<String>] validators
+  def validators
+    content_errors.map(&:validator).uniq if not pending?
+  end
+
   module Actions
     def xds_select_document
       @metadata = test_plan.fetch_xds_metadata test_plan.patient.patient_identifier
