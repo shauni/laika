@@ -43,11 +43,11 @@
         <th>Message</th>
       </tr>
       <% @test_plan.content_errors.each do |error| %>
-      <tr>
-        <td><%= error.section %></td>
-        <td><%= error.field_name %></td>
-        <td><%= error.error_message %></td>
-      </tr>
+        <tr class="<%= cycle 'darkzebra','lightzebra' %>">
+          <td><%= error.section %></td>
+          <td><%= error.field_name %></td>
+          <td><%= error.error_message %></td>
+        </tr>
       <% end -%>
     </table> 
   </div>
