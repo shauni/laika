@@ -1,6 +1,5 @@
 *.log
 *.sqlite3
-db/schema.rb
 public/clinical_documents
 config/database.yml
 coverage
