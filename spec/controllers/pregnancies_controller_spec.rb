@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PregnanciesController do
-  integrate_views
-
   before do
     controller.stub!(:current_user).and_return(stub_model User)
   end
