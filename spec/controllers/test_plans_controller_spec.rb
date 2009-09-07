@@ -23,6 +23,27 @@ describe TestPlansController do
       response.should redirect_to(vendor_test_plans_url(@vendor))
     end
 
+    describe "with a XDS Provide and Register plan" do
+      before do
+        @plan = XdsProvideAndRegisterPlan.factory.create
+      end
+
+      it "should prompt for XDS document selection" do
+        TestPlan.stub!(:find).and_return(@plan)
+        metadata = [XDS::Metadata.new]
+        @plan.should_receive(:fetch_xds_metadata).and_return(metadata)
+
+        get :xds_select_document, :id => @plan.id
+        assigns(:metadata).should == metadata
+      end
+
+      it "should compare metadata" do
+        TestPlan.stub!(:find).and_return(@plan)
+        @plan.should_receive(:validate_xds_metadata).with(:a => 'b')
+        get :xds_compare, :id => @plan.id, :test_type_data => "---\n:a: b\n"
+      end
+    end
+
     describe "with a PIX Feed plan" do
       before do
         @plan = PixFeedPlan.factory.create
