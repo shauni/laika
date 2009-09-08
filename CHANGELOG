@@ -1,3 +1,4 @@
+* Filter password parameter values out of the activity logs, SF #2854713.
 * C32 G&F plans now record whether UMLS was used during validation.
 * Do not expose users to one another, SF #2831708.
 * All lookup columns in the database schema are now indexed.
