@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe MedicalEquipmentsController do
-  integrate_views
-
   before do
     @patient = Patient.factory.create
     controller.stub!(:current_user).and_return(@patient.user)

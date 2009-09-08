@@ -153,6 +153,20 @@ ul.vendor-actions > li {
     margin-right: 1em;
 }
 
+.inspection-results h3 {
+  margin-bottom: .5ex;
+}
+.inspection-results dl {
+  margin: .5ex 0 1ex 1ex;
+}
+.inspection-results dl > dt {
+  float:left;
+  margin-right: 1ex;
+}
+.inspection-results dl > dt:after {
+  content: ": ";
+}
+
 #templateInformationContainer {
   position:fixed;
 }

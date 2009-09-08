@@ -11,7 +11,7 @@ class XdsProvideAndRegisterPlan < XdsPlan
         content_errors.clear
         pass
       else
-        content_errors << validation_errors
+        self.content_errors = validation_errors
         fail
       end
       cdoc = ClinicalDocument.new \
@@ -24,6 +24,14 @@ class XdsProvideAndRegisterPlan < XdsPlan
         :inspection_type => 'XDS Provide and Register')
       fail
     end
+  end
+
+  # Once a plan has been completed, this method returns the list
+  # of validators used to get the results.
+  #
+  # @return [Array<String>] validators
+  def validators
+    content_errors.map(&:validator).uniq if not pending?
   end
 
   module Actions
