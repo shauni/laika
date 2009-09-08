@@ -1,8 +1,13 @@
-
 * C32 G&F plans now record whether UMLS was used during validation.
-* Do not expose users to each other, SF #2831708
+* Do not expose users to one another, SF #2831708.
+* All lookup columns in the database schema are now indexed.
+* Inspections are now managed from the library and dashboard, SF #2831706.
+* Developer users removed from the fixture data, SF #2831714.
+* Patient templates are now read-only, SF #2831709.
+* Users are now isolated from one another, SF #2831708.
 * Refactored test types into ActiveRecord models and controller mixins, SF #2832938.
 * Removed XDS tab, all assignment is now done from the Library, SF #2831703.
+* Fixed: Layout issues on signup page, SF #2849556.
 
 === 2009-08-03 Laika v1.3.8
 
