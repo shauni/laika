@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090903154517) do
+ActiveRecord::Schema.define(:version => 20090908151128) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -126,10 +126,10 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "section"
     t.string  "subsection"
     t.string  "field_name"
-    t.string  "error_message"
+    t.string  "error_message",   :limit => 2000
     t.string  "location"
-    t.string  "msg_type",        :default => "error"
-    t.string  "validator",                            :null => false
+    t.string  "msg_type",                        :default => "error"
+    t.string  "validator",                                            :null => false
     t.string  "inspection_type"
     t.integer "test_plan_id"
   end
@@ -242,6 +242,13 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string "iso_abbreviation"
     t.string "old_format"
   end
+
+  create_table "kinds", :force => true do |t|
+    t.string "name"
+    t.string "test_type"
+  end
+
+  add_index "kinds", ["name", "test_type"], :name => "index_kinds_on_test_type_and_name", :unique => true
 
   create_table "language_ability_modes", :force => true do |t|
     t.string "name"
@@ -467,6 +474,13 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer  "vendor_id",            :null => false
   end
 
+  create_table "test_results", :force => true do |t|
+    t.integer "vendor_test_plan_id", :null => false
+    t.string  "assigning_authority"
+    t.string  "patient_identifier"
+    t.string  "result"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "first_name"
@@ -489,6 +503,16 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
   create_table "vaccines", :force => true do |t|
     t.string "name"
     t.string "code"
+  end
+
+  create_table "vendor_test_plans", :force => true do |t|
+    t.integer  "vendor_id"
+    t.integer  "kind_id"
+    t.integer  "user_id"
+    t.float    "compliance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "metadata"
   end
 
   create_table "vendors", :force => true do |t|
