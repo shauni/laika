@@ -31,12 +31,8 @@
       </td>
       <td><%= test_plan.class.test_name %></td>
       <td class="edit">
-        <% if test_plan.clinical_document%>
-          <%= test_plan.patient.name %>
-        <% else %>
-          <%= link_to_if test_plan.pending?, h(test_plan.patient.name),
-            patient_url(test_plan.patient) %>
-        <% end %>
+        <%= link_to_if test_plan.pending?, h(test_plan.patient.name),
+          patient_url(test_plan.patient) %>
       </td>
       <td>
         <%= pluralize test_plan.count_errors, 'error' %>
