@@ -195,12 +195,7 @@ class Patient < ActiveRecord::Base
   # Populate a patient record with random values. This does not generate
   # semantically valid C32 documents.
   def randomize()
-
-    # need to ensure that the random name for registration is
-    # the same name as this patient data
-    @first_name = Faker::Name.first_name
-    @last_name = Faker::Name.last_name
-    self.name = @first_name + " " +  @last_name
+    self.registration_information ||= RegistrationInformation.new
 
     registration_information.randomize(self)
     self.name = registration_information.full_name
@@ -278,6 +273,7 @@ class Patient < ActiveRecord::Base
     @patient_identifier.randomize()
     self.patient_identifiers << @patient_identifier
 
+    self
   end
   
   #find the patient template from the XDS id

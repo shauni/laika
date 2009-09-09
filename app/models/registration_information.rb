@@ -82,11 +82,11 @@ class RegistrationInformation < ActiveRecord::Base
     name.first_name = Faker::Name.first_name
     name.last_name = Faker::Name.last_name
     self.person_name = name
-    self.gender = Gender.find(:all).sort_by{rand}.first
-    self.race = Race.find(:all).sort_by{rand}.first
-    self.ethnicity = Ethnicity.find(:all).sort_by{rand}.first
-    self.religion = Religion.find(:all).sort_by{rand}.first
-    self.marital_status = MaritalStatus.find(:all).sort_by{rand}.first
+    self.gender = Gender.find :random
+    self.race = Race.find :random
+    self.ethnicity = Ethnicity.find :random
+    self.religion = Religion.find :random
+    self.marital_status = MaritalStatus.find :random
     self.date_of_birth = DateTime.new(1930 + rand(78), rand(12) + 1, rand(28) + 1)
 
     self.address = Address.new
