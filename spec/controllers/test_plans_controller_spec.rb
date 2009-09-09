@@ -34,18 +34,46 @@ describe TestPlansController do
         response.should render_template('test_plans/c32_upload')
       end
 
-      it "should validate the test case" do
-        validator = stub(:validator)
-        validator.stub!(:contains_kind_of?).and_return(false)
-        validator.stub!(:validate).and_return([])
-        Validation.stub!(:get_validator).and_return(validator)
+      describe "with validation stubbed out" do
+        before do
+          @validator = stub(:validator)
+          @validator.stub!(:contains_kind_of?).and_return(false)
+          Validation.stub!(:get_validator).and_return(@validator)
+        end
 
-        get :c32_validate, :id => @plan.id,
-          :clinical_document => {
-            :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
-          }
-        @plan.reload
-        @plan.should be_passed
+        it "should pass the test case" do
+          @validator.stub!(:validate).and_return([])
+
+          get :c32_validate, :id => @plan.id,
+            :clinical_document => {
+              :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+            }
+          @plan.reload
+          @plan.should be_passed
+        end
+
+        it "should fail the test case" do
+          @validator.stub!(:validate).and_return([ContentError.factory.create])
+
+          get :c32_validate, :id => @plan.id,
+            :clinical_document => {
+              :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+            }
+          @plan.reload
+          @plan.should be_failed
+        end
+
+        it "should leave the test case pending" do
+          @validator.stub!(:validate).and_return \
+            { raise C32GenerateAndFormat::ValidationError }
+
+          get :c32_validate, :id => @plan.id,
+            :clinical_document => {
+              :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+            }
+          flash[:notice].should =~ /error/
+          @plan.should be_pending
+        end
       end
 
       it "should display inspection results" do
