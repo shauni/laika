@@ -23,9 +23,42 @@ describe TestPlansController do
       response.should redirect_to(vendor_test_plans_url(@vendor))
     end
 
+    describe "with a C32 Generate and Format plan" do
+      before do
+        @plan = C32GenerateAndFormatPlan.factory.create(:user => @user)
+      end
+
+      it "should prompt for an XML document upload" do
+        get :c32_upload, :id => @plan.id
+        assigns(:test_plan).should == @plan
+        response.should render_template('test_plans/c32_upload')
+      end
+
+      it "should validate the test case" do
+        validator = stub(:validator)
+        validator.stub!(:contains_kind_of?).and_return(false)
+        validator.stub!(:validate).and_return([])
+        Validation.stub!(:get_validator).and_return(validator)
+
+        get :c32_validate, :id => @plan.id,
+          :clinical_document => {
+            :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+          }
+        @plan.reload
+        @plan.should be_passed
+      end
+
+      it "should display inspection results" do
+        get :c32_inspect, :id => @plan.id
+        assigns(:test_plan).should == @plan
+        response.should render_template('test_plans/c32_inspect.html.erb')
+      end
+
+    end
+
     describe "with a XDS Provide and Register plan" do
       before do
-        @plan = XdsProvideAndRegisterPlan.factory.create
+        @plan = XdsProvideAndRegisterPlan.factory.create(:user => @user)
       end
 
       it "should prompt for XDS document selection" do
@@ -46,7 +79,7 @@ describe TestPlansController do
 
     describe "with a PIX Feed plan" do
       before do
-        @plan = PixFeedPlan.factory.create
+        @plan = PixFeedPlan.factory.create(:user => @user)
       end
 
       it "should request additional data" do

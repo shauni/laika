@@ -13,7 +13,7 @@ class TestPlansController < ApplicationController
 
   # Set the test plan using the +id+ parameter.
   def set_test_plan
-    @test_plan = TestPlan.find params[:id]
+    @test_plan = current_user.test_plans.find params[:id]
   end
 
   # Set the vendor using the +vendor_id+ parameter.
