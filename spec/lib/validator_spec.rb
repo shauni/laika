@@ -9,13 +9,14 @@ require 'lib/validators/umls_validator.rb'
 C32_SCHEMA_VALIDATOR = Validators::Schema::Validator.new("C32 Schema Validator", "resources/schemas/infrastructure/cda/C32_CDA.xsd")
 C32_SCHEMATRON_VALIDATOR = Validators::Schematron::CompiledValidator.new("C32 Schematron Validator","resources/schematron/c32_v2.1_errors.xslt")
 CCD_SCHEMATRON_VALIDATOR = Validators::Schematron::CompiledValidator.new("CCD Schematron Validator","resources/schematron/ccd_errors.xslt")
-C32_CONTENT_VALIDAOTR = Validators::C32Validation::Validator.new
-UMLS_VALIDAOTR = Validators::Umls::UmlsValidator.new("warning")
+C32_CONTENT_VALIDATOR = Validators::C32Validation::Validator.new
+UMLS_VALIDATOR = Validators::Umls::UmlsValidator.new("warning")
 
 describe Validation::Validator do
 
-  before do
-    Validation.register_validator :C32, C32_CONTENT_VALIDAOTR
+  before(:all) do
+    Validation.unregister_validators
+    Validation.register_validator :C32, C32_CONTENT_VALIDATOR
     Validation.register_validator :C32, C32_SCHEMA_VALIDATOR
     Validation.register_validator :C32, CCD_SCHEMATRON_VALIDATOR
     Validation.register_validator :C32, C32_SCHEMATRON_VALIDATOR
@@ -29,7 +30,7 @@ describe Validation::Validator do
   it "should be able to tell if it contains a specific validator" do
     validator = Validation.get_validator(:C32)
     validator.contains?(C32_SCHEMATRON_VALIDATOR).should_not be_nil
-    validator.contains?(UMLS_VALIDAOTR).should be_false
+    validator.contains?(UMLS_VALIDATOR).should be_false
   end
   
   it "should be able to tell if it contains a specific kind of validator" do
