@@ -62,6 +62,7 @@ class TestPlansController < ApplicationController
       TestPlan.transaction do
         plan.save!
         patient = patient.clone
+        patient.user = current_user
         patient.test_plan = plan
         patient.save!
         flash[:notice] = "Created a new #{test_type.test_name} test plan."

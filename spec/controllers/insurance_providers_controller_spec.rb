@@ -3,12 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe InsuranceProvidersController do
   integrate_views
 
-  fixtures :patients, :insurance_providers, :registration_information, :patient_identifiers, :insurance_provider_patients
-
   before do
-    @user = stub(:user)
-    controller.stub!(:current_user).and_return(@user)
-    @patient = patients(:joe_smith)
+    @patient = Patient.factory.create
+    controller.stub!(:current_user).and_return(@patient.user)
   end
 
   it "should update comment record" do

@@ -10,13 +10,13 @@ end
 describe NewsController do
   integrate_views
 
-  fixtures :users
+  fixtures :settings
 
   describe "in use by a non-admin" do
     before(:each) do
-      @admin = users(:rob_mccready)
+      @admin = User.factory.create
       @admin.grant_admin
-      @user = users(:alex_kroman)
+      @user = User.factory.create
       @user.revoke_admin
       controller.stub!(:current_user).and_return(@user)
     end
@@ -45,9 +45,9 @@ describe NewsController do
 
   describe "in use by an admin" do
     before(:each) do
-      @admin = users(:rob_mccready)
+      @admin = User.factory.create
       @admin.grant_admin
-      @user = users(:alex_kroman)
+      @user = User.factory.create
       @user.grant_admin
       controller.stub!(:current_user).and_return(@user)
     end

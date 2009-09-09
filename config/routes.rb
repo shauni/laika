@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
     vendors.resources :test_plans, :only => :index
   end
   map.resources :users, :except => [:index]
+  map.resources :xds_utility, :singular => "xds_utility_instance"
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
@@ -21,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get },
+      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get, :copy => :post },
       :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|

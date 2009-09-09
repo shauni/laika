@@ -28,7 +28,7 @@ describe TestPatientChildrenController do
 
     it "should not redirect when there is a patient_id parameter" do
       test_patient_child_routes do
-        Patient.stub!(:find).and_return(mock_model(Patient))
+        Patient.stub!(:find).and_return(mock_model(Patient, :editable_by? => true))
         get :hiworld, :patient_id => 1
         response.should be_success
       end

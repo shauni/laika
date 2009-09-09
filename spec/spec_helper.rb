@@ -15,6 +15,29 @@ ModelFactory.configure do
   default(Patient) do
     name { "Harry Manchester" }
     user { User.factory.create }
+    registration_information { RegistrationInformation.factory.create(:patient => self) }
+    advance_directive        { AdvanceDirective.factory.create(:patient => self) }
+    allergies                { [Allergy.factory.create(:patient => self)] }
+    conditions               { [Condition.factory.create(:patient => self)] }
+    encounters               { [Encounter.factory.create(:patient => self)] }
+    immunizations            { [Immunization.factory.create(:patient => self)] }
+    information_source       { InformationSource.factory.create(:patient => self) }
+    insurance_providers      { [InsuranceProvider.factory.create(:patient => self)] }
+    languages                { [Language.factory.create(:patient => self)] }
+    medical_equipments       { [MedicalEquipment.factory.create(:patient => self)] }
+    medications              { [Medication.factory.create(:patient => self)] }
+    patient_identifiers      { [PatientIdentifier.factory.create(:patient => self)] }
+    procedures               { [Procedure.factory.create(:patient => self)] }
+    providers                { [Provider.factory.create(:patient => self)] }
+    results                  { [Result.factory.create(:patient => self)] }
+    support                  { Support.factory.create(:patient => self) }
+    vital_signs              { [VitalSign.factory.create(:patient => self)] }
+  end
+
+  default(InsuranceProvider) do
+    insurance_provider_patient { InsuranceProviderPatient.factory.create(:insurance_provider => self) }
+    insurance_provider_subscriber { InsuranceProviderSubscriber.factory.create(:insurance_provider => self) }
+    insurance_provider_guarantor { InsuranceProviderGuarantor.factory.create(:insurance_provider => self) }
   end
 
   default(User) do

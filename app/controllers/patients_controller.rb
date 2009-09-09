@@ -3,13 +3,32 @@ require_dependency 'sort_order'
 class PatientsController < ApplicationController
   page_title 'Laika Test Library'
   before_filter :set_patient, :except => %w[ index create autoCreate ]
+  before_filter :check_edit_permission, :only => %w[ destroy update ]
 
   include SortOrder
   self.valid_sort_fields = %w[ name created_at updated_at ]
 
   def index
-    @patients = Patient.templates.all :order => sort_order || "name ASC"
-    @vendor = last_selected_vendor
+    @patients      = Patient.owned_by(current_user).all :order => sort_order || "name ASC"
+    @patients     += Patient.templates.all :order => sort_order || "name ASC"
+    @vendor        = last_selected_vendor
+    @xds_patients  = {};
+    
+    if LOCAL_NIST_XDS
+      XdsRecordUtility.all_patients.each do |x| 
+        @xds_patients[ x.patient ] = x if x.patient
+      end
+    end
+  end
+
+  def copy
+    @patient = @patient.clone
+    @patient.user = current_user
+    @patient.save!
+    redirect_to @patient
+  rescue ActiveRecord::Error => e
+    flash[:error] = "Failed to copy patient record: #{e}"
+    redirect_to patients_url
   end
   
   def autoCreate
@@ -79,8 +98,15 @@ class PatientsController < ApplicationController
     end
   end
 
+  protected
+
   def set_patient
     @patient = Patient.find(params[:id])
   end
 
+  def check_edit_permission
+    if not @patient.editable_by?(current_user)
+      redirect_to patients_url
+    end
+  end
 end

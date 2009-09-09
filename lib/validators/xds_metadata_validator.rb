@@ -18,7 +18,7 @@ module Validators
               unless expected_cv.send(cv_attribute).blank?
                 expected_value = expected_cv.send(cv_attribute)
                 actual_value = actual_cv.send(cv_attribute)
-                unless expected_value.eql?(actual_value)
+                unless expected_value == actual_value
                   errors << ContentError.new(:section => cv.to_s.humanize, :field_name => cv_attribute.to_s.humanize,
                                              :error_message => "Expected: #{expected_value}, Found: #{actual_value}",
                                              :validator => "XDS Metadata Validator", :inspection_type => 'XDS Provide and Register')
@@ -38,7 +38,7 @@ module Validators
           author_attributes.each do |aa|
             expected_value = expected.author.send(aa)
             actual_value = actual.author.send(aa)
-            unless expected_value.eql?(actual_value)
+            unless expected_value == actual_value
               errors << ContentError.new(:section => 'Author', :field_name => aa.to_s.humanize,
                                          :error_message => "Expected: #{expected_value}, Found: #{actual_value}",
                                          :validator => "XDS Metadata Validator", :inspection_type => 'XDS Provide and Register')
@@ -54,11 +54,11 @@ module Validators
         else
           source_patient_info_attributes = [:source_patient_identifier, :name, :gender, :date_of_birth, :address]
           source_patient_info_attributes.each do |spia|
-            expected_value = expected.source_patient_info.send(spia)
-            actual_value = actual.source_patient_info.send(spia)
-            unless expected_value.eql?(actual_value)
-              errors << ContentError.new(:section => 'Source Patient Indo', :field_name => spia.to_s.humanize,
-                                         :error_message => "Expected: #{expected_value}, Found: #{actual_value}",
+            expected_value = expected.source_patient_info.send(spia).to_s
+            actual_value = actual.source_patient_info.send(spia).to_s
+            unless expected_value == actual_value
+              errors << ContentError.new(:section => 'Source Patient Info', :field_name => spia.to_s.humanize,
+                                         :error_message => "Expected: `#{expected_value}', Found: `#{actual_value}'",
                                          :validator => "XDS Metadata Validator", :inspection_type => 'XDS Provide and Register')
             end            
           end

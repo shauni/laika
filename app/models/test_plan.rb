@@ -86,6 +86,10 @@ class TestPlan < ActiveRecord::Base
     end
   end
 
+  def test_name
+    self.class.test_name
+  end
+
   # Return either pending_actions or completed_actions depending
   # on the test plan state.
   def test_actions
