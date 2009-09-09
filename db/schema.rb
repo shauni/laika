@@ -333,6 +333,11 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string "code"
   end
 
+  create_table "procedure_status_codes", :force => true do |t|
+    t.string "code"
+    t.string "description"
+  end
+
   create_table "procedures", :force => true do |t|
     t.string  "procedure_id"
     t.string  "name"
