@@ -8,12 +8,16 @@ class XdsPlan < TestPlan
   end
 
   # Accepts metadata as a string or hash.
+  #
+  # When passing a hash, expects a :patient_id key pointing to the
+  # template patient ID.
   def test_type_data=(raw_metadata)
     if raw_metadata.instance_of? XDS::Metadata
       super
     elsif raw_metadata.kind_of?(String)
       super YAML.load(raw_metadata)         
     else
+      patient = Patient.find raw_metadata.delete(:patient_id)
       raw_metadata[:source_patient_info] = patient.source_patient_info
       md = XDS::Metadata.new
       md.from_hash(raw_metadata, AFFINITY_DOMAIN_CONFIG)

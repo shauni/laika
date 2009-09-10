@@ -1,9 +1,9 @@
 <!-- Start Content -->
     <div class="notice">
-      <% unless @patient.vendor_test_plan %>
+      <% unless @patient.test_plan %>
       You are editing a patient template record.  These edits will not affect data in patient records assigned to inspections
       <% else %>
-        Your are editing a patient record for the <%=h @patient.vendor_test_plan.kind.test_type %> <%=h @patient.vendor_test_plan.kind.name %> test within the <%=h @patient.vendor_test_plan.vendor.public_id %> inspection only.  These edits will not affect the original patient template in the library.
+        Your are editing a patient record for the <%=h @patient.test_plan.class.test_name %> test within the <%=h @patient.test_plan.vendor %> inspection only.  These edits will not affect the original patient template in the library.
       <% end %>
     </div>
     <div class="column span-6 append-1">

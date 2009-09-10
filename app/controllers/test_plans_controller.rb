@@ -5,6 +5,7 @@ class TestPlansController < ApplicationController
   self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
 
   before_filter :set_test_plan, :except => [:index, :create]
+  before_filter :set_vendor, :only => [:index]
 
   protected
 
@@ -12,6 +13,21 @@ class TestPlansController < ApplicationController
 
   def set_test_plan
     @test_plan = TestPlan.find params[:id]
+  end
+
+  def set_vendor
+    @vendor = Vendor.find_by_id(params[:vendor_id])
+    if @vendor.nil?
+      vendor = last_selected_vendor || current_user.vendors.first
+      if vendor
+        redirect_to vendor_test_plans_path(vendor)
+      else
+        flash[:notice] = 'You have not yet created any vendor inspections.'
+        redirect_to patients_path
+      end
+    else
+      self.last_selected_vendor_id = @vendor.id
+    end
   end
 
   public
@@ -24,7 +40,6 @@ class TestPlansController < ApplicationController
   include PixFeedPlan::Actions
   
   def index
-    @vendor = last_selected_vendor || current_user.vendors.first
     @test_plans = @vendor.test_plans.all(:order => sort_order)
     @other_vendors = current_user.vendors - [@vendor]
   end
@@ -33,6 +48,16 @@ class TestPlansController < ApplicationController
     test_type = params[:test_plan].delete(:type).constantize
     patient = Patient.find params[:patient_id]
     plan = test_type.new params[:test_plan].merge(:user => current_user)
+    if plan.vendor.nil?
+      vendor_name = params[:vendor_name]
+      begin
+        plan.vendor = Vendor.create!(:public_id => vendor_name, :user_id => current_user.id)
+      rescue ActiveRecord::RecordInvalid => e
+        flash[:notice] = "Failed to create inspection #{vendor_name}: #{e}"
+        redirect_to patients_url
+        return
+      end
+    end
     if plan.valid?
       TestPlan.transaction do
         plan.save!
@@ -40,7 +65,7 @@ class TestPlansController < ApplicationController
         patient.test_plan = plan
         patient.save!
         flash[:notice] = "Created a new #{test_type.test_name} test plan."
-        self.last_selected_vendor_id = params[:test_plan][:vendor_id]
+        self.last_selected_vendor_id = plan.vendor.id
       end
       redirect_to :action => :index
     else

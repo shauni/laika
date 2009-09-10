@@ -27,7 +27,7 @@ You can generate the complete documentation for the Laika source using the
 YARD documentation tool. You don't need to use JRuby to do this:
 
  $ sudo gem install yard
- $ rake yardoc
+ $ yardoc
  $ open doc/index.html
 
 == Additional Dependencies

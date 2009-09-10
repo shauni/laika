@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
   before_save               :encrypt_password
 
-  has_many :vendor_test_plans, :order => "vendor_id", :dependent => :destroy
   has_many :vendors, :dependent => :destroy
 
   has_many :test_plans, :dependent => :destroy do

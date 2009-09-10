@@ -40,12 +40,12 @@ module Validation
     end
     
     def validate(patient_data, document)
-        errors = []       
-        validators.each do |validator|
-          errors.concat(validator.validate(patient_data,document))
-        end
+      errors = []       
+      validators.each do |validator|
+        errors.concat(validator.validate(patient_data,document))
+      end
 
-        errors
+      errors
     end
     
     
@@ -55,11 +55,13 @@ module Validation
          validators << validator
     end
     
-    def contains(validator)
-        validators.index(validator) ? true : false
+    def contains?(validator)
+      validators.include?(validator)
     end
     
-    
+    def contains_kind_of?(validator)
+      validators.any? {|v| v.kind_of?(validator)}
+    end
   end 
   
   class ValidationRegistry
@@ -76,12 +78,12 @@ module Validation
         raise InvalidValidatorException if !validator.kind_of? Validation::BaseValidator
         
         doc_validator = get_validator(doc_type)
-        doc_validator << validator unless doc_validator.contains(validator)
+        doc_validator << validator unless doc_validator.contains?(validator)
     end
 
 
     def get_validator(type)
-      # jsut to make sure everything is normalized to capitalized sysmbols
+      # just to make sure everything is normalized to capitalized symbols
       doc_type = type.class == Symbol ? type.to_s.upcase.to_sym : type.upcase.to_sym
       validator = @validators[doc_type]
       unless validator

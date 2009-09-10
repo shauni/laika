@@ -1,28 +1,19 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :message_logs
   map.resources :atna_audits
-  map.resources :vendors
-  map.resources :users
+  map.resources :vendors, :only => [:create, :update, :destroy] do |vendors|
+    vendors.resources :test_plans, :only => :index
+  end
+  map.resources :users, :except => [:index]
   map.resources :xds_utility, :singular => "xds_utility_instance"
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
-
-  # test operations on vendor test plans
-  map.testop '/vendor_test_plans/:vendor_test_plan_id/testop/:test_type/:test_operation',
-    :controller => 'testop', :action => 'perform_test_operation'
-  map.testop_setup '/patients/:patient_id/testop/:test_type/setup',
-    :controller => 'testop', :action => 'setup'
 
   map.resources :settings, :only => [:index, :update]
 
   map.resources :test_plans, :member => {:mark => :post, :checklist => :get}
   # additional test-specific actions
   map.test_action '/test_plans/:id/:action', :controller => 'test_plans'
-
-  map.resources :vendor_test_plans, :has_one => [:test_result],
-                                    :member => {:validate => :get,
-                                                :checklist => :get,
-                                                :set_status => :get }
 
   map.resources :patients,
       :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
@@ -31,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
                     :insurance_provider_guarantors, :medications, :allergies, :conditions, 
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get },
+      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get, :root => :get },
       :collection => { :autoCreate => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|

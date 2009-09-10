@@ -23,12 +23,17 @@ describe TestPlansController do
       Laika::TEST_PLAN_TYPES.delete 'My Simple Test'
     end
 
-    it "should display tests for the current vendor" do
+    it "should forward to the current vendor" do
       @controller.send(:last_selected_vendor_id=, @vendor.id)
+      get :index
+      response.should redirect_to(vendor_test_plans_url(@vendor))
+    end
+
+    it "should display tests for the specified vendor" do
       plan = MySimpleTestPlan.create \
         :user_id => @user.id.to_s,
         :vendor_id => @vendor.id.to_s
-      get :index
+      get :index, :vendor_id => @vendor.id
       assigns(:test_plans).to_a.should == [ plan ]
       assigns(:vendor).should == @vendor
       assigns(:other_vendors).should == []
