@@ -1,11 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-require 'lib/validation.rb'
-require 'lib/validators/c32_validator.rb'
-require 'lib/validators/schema_validator.rb'
-require 'lib/validators/schematron_validator.rb'
-require 'lib/validators/umls_validator.rb'
-
 C32_SCHEMA_VALIDATOR = Validators::Schema::Validator.new("C32 Schema Validator", "resources/schemas/infrastructure/cda/C32_CDA.xsd")
 C32_SCHEMATRON_VALIDATOR = Validators::Schematron::CompiledValidator.new("C32 Schematron Validator","resources/schematron/c32_v2.1_errors.xslt")
 CCD_SCHEMATRON_VALIDATOR = Validators::Schematron::CompiledValidator.new("CCD Schematron Validator","resources/schematron/ccd_errors.xslt")

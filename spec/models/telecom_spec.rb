@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
- # this will add the validate_c32 
-  
+
 describe Telecom do
   it 'should be blank if all fields are empty' do
     Telecom.new.should be_blank

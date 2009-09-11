@@ -1,9 +1,9 @@
-require 'lib/validation.rb'
-require 'lib/validators/c32_validator.rb'
-require 'lib/validators/schema_validator.rb'
-require 'lib/validators/schematron_validator.rb'
-require 'lib/validators/umls_validator.rb'
-require 'lib/validators/xds_metadata_validator.rb'
+require 'validation'
+require 'validators/c32_validator'
+require 'validators/schema_validator'
+require 'validators/schematron_validator'
+require 'validators/umls_validator'
+require 'validators/xds_metadata_validator'
 Validation.register_validator :C32, Validators::C32Validation::Validator.new
 Validation.register_validator :C32, Validators::Schema::Validator.new("C32 Schema Validator", "resources/schemas/infrastructure/cda/C32_CDA.xsd")
 Validation.register_validator :C32, Validators::Schematron::CompiledValidator.new("CCD Schematron Validator","resources/schematron/ccd_errors.xslt")

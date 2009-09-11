@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/xds_metadata_validator"
 
 describe Validators::XdsMetadataValidator, "can validate xds metadata" do
   it "should tell when a coded attribute is blank" do

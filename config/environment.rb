@@ -9,8 +9,8 @@ RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require "lib/saxon/saxon9.jar"
-require "lib/saxon/saxon9-dom.jar"
+require "saxon/saxon9.jar"
+require "saxon/saxon9-dom.jar"
 # XXX ActiveRecord extensions need to be loaded first, otherwise some
 # operations that utilize AR during init will fail. There's probably a
 # better way to do this.

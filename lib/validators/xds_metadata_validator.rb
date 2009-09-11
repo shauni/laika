@@ -1,5 +1,3 @@
-require 'lib/validation.rb'
-
 module Validators
   class XdsMetadataValidator < Validation::BaseValidator
     def validate(expected, actual)

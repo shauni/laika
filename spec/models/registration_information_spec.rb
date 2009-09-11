@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
 
 describe RegistrationInformation, "can vaildate it's content" do
   fixtures :patients, :registration_information, :person_names, :addresses,
