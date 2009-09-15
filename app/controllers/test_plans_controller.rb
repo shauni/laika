@@ -34,6 +34,8 @@ class TestPlansController < ApplicationController
 
   include C32DisplayAndFilePlan::Actions
   include C32GenerateAndFormatPlan::Actions
+  include NhinDisplayAndFilePlan::Actions
+  include NhinGenerateAndFormatPlan::Actions
   include XdsPlan::Actions
   include XdsProvideAndRegisterPlan::Actions
   include PixPdqPlan::Actions

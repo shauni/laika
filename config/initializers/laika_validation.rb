@@ -9,6 +9,7 @@ unless ENV['RAILS_ENV'] == "test" || ENV['RAILS_ENV'].nil?
   Validation.register_validator :C32, Validators::Schema::Validator.new("C32 Schema Validator", "resources/schemas/infrastructure/cda/C32_CDA.xsd")
   Validation.register_validator :C32, Validators::Schematron::CompiledValidator.new("CCD Schematron Validator","resources/schematron/ccd_errors.xslt")
   Validation.register_validator :C32, Validators::Schematron::CompiledValidator.new("C32 Schematron Validator","resources/schematron/c32_v2.1_errors.xslt")
+  Validation.register_validator :C32, Validators::Schematron::CompiledValidator.new("NHIN Schematron Validator","resources/nhin_schematron/nhin_errors.xsl")
   Validation.register_validator :C32, Validators::Umls::UmlsValidator.new("warning")
   #Validation.register :C32, Validators::Schematron::SchematronValidator.new
 end

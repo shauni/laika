@@ -1,6 +1,6 @@
 class NhinDisplayAndFilePlan < TestPlan
   test_name "NHIN Display and File"
-  pending_actions 'xml' => :nhin_xml, 'checklist' => :nhin_checklist
+  pending_actions 'XML' => :nhin_xml, 'Checklist' => :nhin_checklist
   manual_inspection
 
   module Actions
@@ -10,7 +10,7 @@ class NhinDisplayAndFilePlan < TestPlan
 
     def nhin_checklist
       @patient = test_plan.patient
-      render 'test_plans/c32_checklist.xml', :layout => false
+      render 'test_plans/nhin_checklist.xml', :layout => false
     end
   end
 end

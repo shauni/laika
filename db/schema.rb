@@ -209,8 +209,9 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
 
   create_table "insurance_provider_subscribers", :force => true do |t|
     t.date    "date_of_birth"
-    t.integer "insurance_provider_id", :null => false
+    t.integer "insurance_provider_id",    :null => false
     t.string  "subscriber_id"
+    t.string  "assigning_authority_guid"
   end
 
   create_table "insurance_providers", :force => true do |t|
@@ -220,6 +221,7 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "role_class_relationship_formal_type_id"
     t.integer "coverage_role_type_id"
     t.string  "group_number"
+    t.string  "health_plan"
   end
 
   create_table "insurance_types", :force => true do |t|
@@ -343,7 +345,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "name"
     t.string  "code"
     t.date    "procedure_date"
-    t.integer "patient_id",     :null => false
+    t.integer "patient_id",               :null => false
+    t.integer "procedure_status_code_id"
   end
 
   create_table "provider_roles", :force => true do |t|
