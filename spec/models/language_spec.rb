@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
- # this will add the validate_c32 
   
 describe Language do
   fixtures :languages, :iso_languages, :iso_countries, :language_ability_modes

@@ -144,9 +144,9 @@ class InsuranceProvider < ActiveRecord::Base
     self.insurance_provider_guarantor = InsuranceProviderGuarantor.new
     self.insurance_provider_guarantor.randomize()
 
-    self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find(:all).sort_by{rand}.first
-    self.coverage_role_type = CoverageRoleType.find(:all).sort_by{rand}.first
-    self.insurance_type = InsuranceType.find(:all).sort_by{rand}.first
+    self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find :random
+    self.coverage_role_type = CoverageRoleType.find :random
+    self.insurance_type = InsuranceType.find :random
     if (self.insurance_type_id != 606711552)
       self.group_number = nil
     else

@@ -23,9 +23,116 @@ describe TestPlansController do
       response.should redirect_to(vendor_test_plans_url(@vendor))
     end
 
+    describe "with a C32 Display and File plan" do
+      before do
+        @plan = C32DisplayAndFilePlan.factory.create(:user => @user)
+      end
+
+      it "should display patient xml" do
+        get :c32_xml, :id => @plan.id
+        response.should redirect_to(patient_path(@plan.patient, :format => 'xml'))
+      end
+
+      it "should display the patient checklist" do
+        get :c32_checklist, :id => @plan.id
+        assigns(:patient).should == @plan.patient
+        response.should render_template('test_plans/c32_checklist.xml')
+      end
+
+      it "should pass manually" do
+        get :mark, :id => @plan.id, :state => 'pass'
+        @plan.reload
+        @plan.state.should == 'passed'
+      end
+
+      it "should fail manually" do
+        get :mark, :id => @plan.id, :state => 'fail'
+        @plan.reload
+        @plan.state.should == 'failed'
+      end
+    end
+
+    describe "with a C32 Generate and Format plan" do
+      before do
+        @plan = C32GenerateAndFormatPlan.factory.create(:user => @user)
+        @upload = {
+            :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+          }
+      end
+
+      it "should prompt for an XML document upload" do
+        get :c32_upload, :id => @plan.id
+        assigns(:test_plan).should == @plan
+        response.should render_template('test_plans/c32_upload')
+      end
+
+      it "should display inspection results" do
+        get :c32_inspect, :id => @plan.id
+        assigns(:test_plan).should == @plan
+        response.should render_template('test_plans/c32_inspect.html.erb')
+      end
+
+      describe "with validation stubbed out" do
+        before do
+          @validator = stub(:validator)
+          @validator.stub!(:validate).and_return([])
+          Validation.stub!(:get_validator).and_return(@validator)
+        end
+
+        it "should have the umls enabled flag" do
+          @validator.should_receive(:contains_kind_of?).
+            with(Validators::Umls::UmlsValidator).and_return(true)
+          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          @plan.reload
+          @plan.should be_umls_enabled
+        end
+
+        it "should not have the umls enabled flag" do
+          @validator.should_receive(:contains_kind_of?).
+            with(Validators::Umls::UmlsValidator).and_return(false)
+          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          @plan.reload
+          @plan.should_not be_umls_enabled
+        end
+      end
+
+      describe "with umls stubbed out" do
+        before do
+          @validator = stub(:validator)
+          @validator.stub!(:contains_kind_of?).and_return(false)
+          Validation.stub!(:get_validator).and_return(@validator)
+        end
+
+        it "should pass the test case" do
+          @validator.stub!(:validate).and_return([])
+
+          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          @plan.reload
+          @plan.should be_passed
+        end
+
+        it "should fail the test case" do
+          @validator.stub!(:validate).and_return([ContentError.factory.create])
+
+          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          @plan.reload
+          @plan.should be_failed
+        end
+
+        it "should leave the test case pending" do
+          @validator.stub!(:validate).and_return \
+            { raise C32GenerateAndFormat::ValidationError }
+
+          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          flash[:notice].should =~ /error/
+          @plan.should be_pending
+        end
+      end
+    end
+
     describe "with a XDS Provide and Register plan" do
       before do
-        @plan = XdsProvideAndRegisterPlan.factory.create
+        @plan = XdsProvideAndRegisterPlan.factory.create(:user => @user)
       end
 
       it "should prompt for XDS document selection" do
@@ -46,7 +153,7 @@ describe TestPlansController do
 
     describe "with a PIX Feed plan" do
       before do
-        @plan = PixFeedPlan.factory.create
+        @plan = PixFeedPlan.factory.create(:user => @user)
       end
 
       it "should request additional data" do

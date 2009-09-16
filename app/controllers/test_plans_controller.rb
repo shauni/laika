@@ -11,10 +11,16 @@ class TestPlansController < ApplicationController
 
   attr_reader :test_plan
 
+  # Set the test plan using the +id+ parameter.
   def set_test_plan
-    @test_plan = TestPlan.find params[:id]
+    @test_plan = current_user.test_plans.find params[:id]
   end
 
+  # Set the vendor using the +vendor_id+ parameter.
+  #
+  # If there is no +vendor_id+ then a vendor is selected and the user is
+  # redirected to a vendor-specific dashboard. If the user has no vendors
+  # the user is redirected to the library.
   def set_vendor
     @vendor = Vendor.find_by_id(params[:vendor_id])
     if @vendor.nil?
@@ -39,11 +45,26 @@ class TestPlansController < ApplicationController
   include PixPdqPlan::Actions
   include PixFeedPlan::Actions
   
+  # Display all test plans by vendor.
   def index
     @test_plans = @vendor.test_plans.all(:order => sort_order)
     @other_vendors = current_user.vendors - [@vendor]
   end
 
+  # Assign patient data to a test plan, optionally creating a new inspection.
+  # Patient data is cloned before assignment.
+  #
+  # This method assembles a new test plan and verifies that it is valid. If
+  # the test plan is not valid (i.e., additional data is required) a template
+  # determined based on the plan type name is rendered. For instance, XDS
+  # Provide & Register test type would result in the rendering of the
+  # template "test_plans/create_xds_provide_and_register". This template
+  # can be used to collect additional data needed for test plan creation.
+  #
+  # @param [String] type Test plan class name.
+  # @param [Hash] test_plan Test plan data.
+  # @param [Number] patient_id Source patient/template ID.
+  # @param [Optional String] vendor_name Name for a new vendor.
   def create
     test_type = params[:test_plan].delete(:type).constantize
     patient = Patient.find params[:patient_id]
@@ -76,11 +97,19 @@ class TestPlansController < ApplicationController
     end
   end
 
+  # Delete a test plan.
+  #
+  # @param [Number] id Test plan ID.
   def destroy
     test_plan.destroy if test_plan.user == current_user
     redirect_to test_plans_path
   end
 
+  # Mark a test plan as passed or failed.
+  # This can only be used on pending test plans.
+  #
+  # @param [Number] id Test plan ID.
+  # @param ["pass", "fail"] state Intended test state.
   def mark
     if test_plan.user == current_user
       case params['state']

@@ -1,6 +1,4 @@
-
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/umls_validator"
 
 describe Validators::Umls::UmlsValidator, "Can validate codes/code_systems " do
      before(:each) do 

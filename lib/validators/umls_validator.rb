@@ -1,4 +1,3 @@
-require 'lib/validation.rb'
 module Validators
    module Umls
     #Base class that sets the connection information for all of the other  UMLS models to use

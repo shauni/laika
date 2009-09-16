@@ -87,8 +87,7 @@ class Address < ActiveRecord::Base
   end
 
   def randomize()
-    offset = rand(ZipCode.count)
-    zip = ZipCode.find(:all, :limit => 1, :offset => offset).first
+    zip = ZipCode.find :random
     self.street_address_line_one = Faker::Address.street_address
     self.city = zip.town
     self.state = zip.state

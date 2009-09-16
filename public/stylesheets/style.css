@@ -173,6 +173,10 @@ ul.vendor-actions > li {
 #templateInformationContainer h3 {
   position:fixed;
 }
+
+.other-vendors li > a { font-weight: bold; }
+.other-vendors li > span { font-size: x-small; }
+
 #dashboard .delete > a {
   padding: 4px 0px 0px 0px;
   margin: 0px;

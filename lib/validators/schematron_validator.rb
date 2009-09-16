@@ -1,4 +1,3 @@
-require 'lib/validation.rb'
 module Validators
   module Schematron
     require 'java'

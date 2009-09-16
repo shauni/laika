@@ -1,7 +1,12 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
 
-describe Patient do
+describe Patient, "with no fixtures" do
+  it "should create a random patient without errors" do
+    lambda { Patient.new.randomize }.should_not raise_error
+  end
+end
+
+describe Patient, "with joe smith" do
   fixtures :patients, :registration_information, :person_names, :addresses, :telecoms, :genders, :patient_identifiers
   before(:each) do
      @patient = patients(:joe_smith) 

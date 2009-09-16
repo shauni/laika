@@ -33,7 +33,6 @@ class PatientsController < ApplicationController
   
   def autoCreate
     @patient = Patient.new    
-    @patient.registration_information = RegistrationInformation.new
     @patient.randomize()
     @patient.user = current_user
     @patient.save!

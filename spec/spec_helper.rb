@@ -69,6 +69,12 @@ ModelFactory.configure do
     vendor { Vendor.factory.create }
     test_type_data { XDS::Metadata.new }
   end
+
+  default(ClinicalDocument) do
+    size { 256 }
+    filename { 'factory_document' }
+  end
+
 end
 
 
