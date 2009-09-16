@@ -269,13 +269,6 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string "old_format"
   end
 
-  create_table "kinds", :force => true do |t|
-    t.string "name"
-    t.string "test_type"
-  end
-
-  add_index "kinds", ["name", "test_type"], :name => "index_kinds_on_test_type_and_name", :unique => true
-
   create_table "language_ability_modes", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -547,16 +540,6 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
   create_table "vaccines", :force => true do |t|
     t.string "name"
     t.string "code"
-  end
-
-  create_table "vendor_test_plans", :force => true do |t|
-    t.integer  "vendor_id"
-    t.integer  "kind_id"
-    t.integer  "user_id"
-    t.float    "compliance"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "metadata"
   end
 
   create_table "vendors", :force => true do |t|
