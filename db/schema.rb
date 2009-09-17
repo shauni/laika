@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090903154517) do
+ActiveRecord::Schema.define(:version => 20090908151128) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "loinc_lab_code_id"
   end
 
+  add_index "abstract_results", ["patient_id"], :name => "index_abstract_results_on_patient_id"
+  add_index "abstract_results", ["type"], :name => "index_abstract_results_on_type"
+
   create_table "act_status_codes", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -43,6 +46,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "addressable_id"
     t.string  "addressable_type"
   end
+
+  add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
 
   create_table "advance_directive_status_codes", :force => true do |t|
     t.string "name"
@@ -63,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "advance_directive_status_code_id"
   end
 
+  add_index "advance_directives", ["patient_id"], :name => "index_advance_directives_on_patient_id"
+
   create_table "adverse_event_types", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -80,6 +87,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "allergy_status_code_id"
     t.integer "allergy_type_code_id"
   end
+
+  add_index "allergies", ["patient_id"], :name => "index_allergies_on_patient_id"
 
   create_table "allergy_status_codes", :force => true do |t|
     t.string "name"
@@ -109,6 +118,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "commentable_type"
   end
 
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
+
   create_table "conditions", :force => true do |t|
     t.date    "start_event"
     t.date    "end_event"
@@ -126,14 +137,15 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "section"
     t.string  "subsection"
     t.string  "field_name"
-    t.string  "error_message"
+    t.string  "error_message",   :limit => 2000
     t.string  "location"
-    t.string  "msg_type",        :default => "error"
-    t.string  "validator",                            :null => false
+    t.string  "msg_type",                        :default => "error"
+    t.string  "validator",                                            :null => false
     t.string  "inspection_type"
     t.integer "test_plan_id"
   end
 
+  add_index "content_errors", ["msg_type"], :name => "index_content_errors_on_msg_type"
   add_index "content_errors", ["test_plan_id"], :name => "index_content_errors_on_test_plan_id"
 
   create_table "coverage_role_types", :force => true do |t|
@@ -164,6 +176,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer  "encounter_type_id"
   end
 
+  add_index "encounters", ["patient_id"], :name => "index_encounters_on_patient_id"
+
   create_table "ethnicities", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -187,6 +201,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer  "patient_id",                :null => false
   end
 
+  add_index "immunizations", ["patient_id"], :name => "index_immunizations_on_patient_id"
+
   create_table "information_sources", :force => true do |t|
     t.date    "time"
     t.string  "organization_name"
@@ -194,10 +210,14 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "patient_id",        :null => false
   end
 
+  add_index "information_sources", ["patient_id"], :name => "index_information_sources_on_patient_id"
+
   create_table "insurance_provider_guarantors", :force => true do |t|
     t.date    "effective_date"
     t.integer "insurance_provider_id", :null => false
   end
+
+  add_index "insurance_provider_guarantors", ["insurance_provider_id"], :name => "index_insurance_provider_guarantors_on_insurance_provider_id"
 
   create_table "insurance_provider_patients", :force => true do |t|
     t.date    "date_of_birth"
@@ -207,12 +227,16 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.date    "end_coverage_date"
   end
 
+  add_index "insurance_provider_patients", ["insurance_provider_id"], :name => "index_insurance_provider_patients_on_insurance_provider_id"
+
   create_table "insurance_provider_subscribers", :force => true do |t|
     t.date    "date_of_birth"
     t.integer "insurance_provider_id",    :null => false
     t.string  "subscriber_id"
     t.string  "assigning_authority_guid"
   end
+
+  add_index "insurance_provider_subscribers", ["insurance_provider_id"], :name => "index_insurance_provider_subscribers_on_insurance_provider_id"
 
   create_table "insurance_providers", :force => true do |t|
     t.string  "represented_organization"
@@ -223,6 +247,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "group_number"
     t.string  "health_plan"
   end
+
+  add_index "insurance_providers", ["patient_id"], :name => "index_insurance_providers_on_patient_id"
 
   create_table "insurance_types", :force => true do |t|
     t.string "name"
@@ -245,6 +271,13 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string "old_format"
   end
 
+  create_table "kinds", :force => true do |t|
+    t.string "name"
+    t.string "test_type"
+  end
+
+  add_index "kinds", ["name", "test_type"], :name => "index_kinds_on_test_type_and_name", :unique => true
+
   create_table "language_ability_modes", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -257,6 +290,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.boolean "preference"
     t.integer "patient_id",               :null => false
   end
+
+  add_index "languages", ["patient_id"], :name => "index_languages_on_patient_id"
 
   create_table "loinc_lab_codes", :force => true do |t|
     t.string   "name"
@@ -280,6 +315,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "patient_id",    :null => false
   end
 
+  add_index "medical_equipments", ["patient_id"], :name => "index_medical_equipments_on_patient_id"
+
   create_table "medication_types", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -298,6 +335,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "patient_id",                 :null => false
   end
 
+  add_index "medications", ["patient_id"], :name => "index_medications_on_patient_id"
+
   create_table "no_immunization_reasons", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -308,6 +347,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "affinity_domain"
     t.string  "patient_identifier"
   end
+
+  add_index "patient_identifiers", ["patient_id"], :name => "index_patient_identifiers_on_patient_id"
 
   create_table "patients", :force => true do |t|
     t.string   "name"
@@ -320,6 +361,7 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
   end
 
   add_index "patients", ["test_plan_id"], :name => "index_patients_on_test_plan_id"
+  add_index "patients", ["user_id"], :name => "index_patients_on_user_id"
 
   create_table "person_names", :force => true do |t|
     t.string  "name_prefix"
@@ -329,6 +371,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "nameable_id"
     t.string  "nameable_type"
   end
+
+  add_index "person_names", ["nameable_id", "nameable_type"], :name => "index_person_names_on_nameable_id_and_nameable_type"
 
   create_table "problem_types", :force => true do |t|
     t.string "name"
@@ -348,6 +392,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "patient_id",               :null => false
     t.integer "procedure_status_code_id"
   end
+
+  add_index "procedures", ["patient_id"], :name => "index_procedures_on_patient_id"
 
   create_table "provider_roles", :force => true do |t|
     t.string "name"
@@ -370,6 +416,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "patient_id",              :null => false
   end
 
+  add_index "providers", ["patient_id"], :name => "index_providers_on_patient_id"
+
   create_table "races", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -387,6 +435,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.datetime "document_timestamp"
     t.integer  "affinity_domain_id"
   end
+
+  add_index "registration_information", ["patient_id"], :name => "index_registration_information_on_patient_id"
 
   create_table "relationships", :force => true do |t|
     t.string "name"
@@ -445,6 +495,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer "patient_id",      :null => false
   end
 
+  add_index "supports", ["patient_id"], :name => "index_supports_on_patient_id"
+
   create_table "system_messages", :force => true do |t|
     t.integer  "author_id",  :null => false
     t.integer  "updater_id"
@@ -464,6 +516,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.string  "reachable_type"
   end
 
+  add_index "telecoms", ["reachable_id", "reachable_type"], :name => "index_telecoms_on_reachable_id_and_reachable_type"
+
   create_table "test_plans", :force => true do |t|
     t.string   "type"
     t.string   "state"
@@ -474,6 +528,8 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.integer  "user_id",              :null => false
     t.integer  "vendor_id",            :null => false
   end
+
+  add_index "test_plans", ["user_id", "vendor_id"], :name => "index_test_plans_on_user_id_and_vendor_id"
 
   create_table "users", :force => true do |t|
     t.string   "email"
@@ -494,9 +550,21 @@ ActiveRecord::Schema.define(:version => 20090903154517) do
     t.boolean  "admin",                                   :default => false
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
   create_table "vaccines", :force => true do |t|
     t.string "name"
     t.string "code"
+  end
+
+  create_table "vendor_test_plans", :force => true do |t|
+    t.integer  "vendor_id"
+    t.integer  "kind_id"
+    t.integer  "user_id"
+    t.float    "compliance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "metadata"
   end
 
   create_table "vendors", :force => true do |t|
