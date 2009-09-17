@@ -115,10 +115,10 @@ class Allergy < ActiveRecord::Base
 
     self.start_event = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
 
-    self.adverse_event_type = AdverseEventType.find(:all).sort_by {rand}.first
-    self.severity_term = SeverityTerm.find(:all).sort_by {rand}.first
-    self.allergy_type_code = AllergyTypeCode.find(:all).sort_by {rand}.first
-    self.allergy_status_code = AllergyStatusCode.find(:all).sort_by {rand}.first
+    self.adverse_event_type = AdverseEventType.find :random
+    self.severity_term = SeverityTerm.find :random
+    self.allergy_type_code = AllergyTypeCode.find :random
+    self.allergy_status_code = AllergyStatusCode.find :random
   end
 
   def self.c32_component(allergies, xml)

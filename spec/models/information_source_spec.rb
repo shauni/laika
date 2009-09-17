@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
- # this will add the validate_c32 
   
 describe InformationSource, "Must be present" do
   fixtures :information_sources, :person_names

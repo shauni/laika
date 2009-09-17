@@ -1,14 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe InsuranceProviderPatientsController do
-  integrate_views
-
-  fixtures :patients, :insurance_providers, :insurance_provider_patients, :registration_information
-
   before do
-    @user = stub(:user)
-    controller.stub!(:current_user).and_return(@user)
-    @patient = patients(:joe_smith)
+    @patient = Patient.factory.create
+    controller.stub!(:current_user).and_return(@patient.user)
   end
 
   it "should render edit template on get edit" do

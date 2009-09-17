@@ -39,6 +39,7 @@
   <td class="lighttext">Organizer Code</td>
   <td><% if result.result_type_code %><%=h result.result_type_code.name %><% end %></td>
 </tr>
+  <% if @patient.editable_by? current_user -%>
 <tr class="<%= cycle("darkzebra", "lightzebra")%>">
   <td></td>
   <td>
@@ -56,4 +57,5 @@
   </span> 
   </td>
 </tr>
+<% end -%>
 </table>

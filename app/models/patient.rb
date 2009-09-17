@@ -25,7 +25,14 @@ class Patient < ActiveRecord::Base
   # dependent because results and vital_signs already do that.
   has_many :all_results, :class_name => 'AbstractResult'
 
-  named_scope :templates, :conditions => { :test_plan_id => nil }
+  named_scope :templates, :conditions => { :test_plan_id => nil, :user_id => nil }
+  named_scope :owned_by, lambda { |user|
+    { :conditions => { :test_plan_id => nil, :user_id => user.id } }
+  }
+
+  def editable_by? owner
+    user == owner
+  end
 
   # these are used in the insurance_provider_* controllers
   def insurance_provider_guarantors
@@ -42,8 +49,6 @@ class Patient < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :name
-
-  has_select_options :conditions => 'test_plan_id IS NULL'
 
   # Generate an OID using the time and the patient's ActiveRecord ID.
   #
@@ -190,12 +195,7 @@ class Patient < ActiveRecord::Base
   # Populate a patient record with random values. This does not generate
   # semantically valid C32 documents.
   def randomize()
-
-    # need to ensure that the random name for registration is
-    # the same name as this patient data
-    @first_name = Faker::Name.first_name
-    @last_name = Faker::Name.last_name
-    self.name = @first_name + " " +  @last_name
+    self.registration_information ||= RegistrationInformation.new
 
     registration_information.randomize(self)
     self.name = registration_information.full_name
@@ -273,6 +273,7 @@ class Patient < ActiveRecord::Base
     @patient_identifier.randomize()
     self.patient_identifiers << @patient_identifier
 
+    self
   end
   
   #find the patient template from the XDS id

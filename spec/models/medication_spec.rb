@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
+
 describe Medication, 'it can validate medication elements in a C32' do
   fixtures :medications, :code_systems, :medication_types
 

@@ -37,6 +37,15 @@ Or send it to the developer list: dev@projectlaika.org
 If the tests do not pass with your patch applied it will be rejected. Make
 sure the tests pass before you submit any changes.
 
+== Environment
+Laika uses Saxon (http://saxon.sourceforge.net/) to handle XML Schema validation and XSLT. For this to function properly, the Saxon jars must be set in a CLASSPATH environment variable. 
+
+Navigate to the root of your Laika project and run:
+
+ $ source bin/laika_env.sh
+
+As an alternative, you may create CLASSPATH environment variable as part of the user's profile.
+
 == Running Individual Specs
 
 Sometimes it's more convenient to run individual spec files:

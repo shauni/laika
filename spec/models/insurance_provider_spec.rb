@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
- # this will add the validate_c32 
  
 describe InsuranceProvider, "it can validate insurance provider entries in a C32" do
   fixtures :insurance_providers, :insurance_types, :coverage_role_types, :role_class_relationship_formal_types, :insurance_provider_guarantors, :insurance_provider_patients, :insurance_provider_subscribers

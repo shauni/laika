@@ -1,4 +1,3 @@
-
 <!-- Start Header -->
 <div class="header">
   <div class="right top" id="session-controls"><p>Welcome,
@@ -8,7 +7,7 @@
   <div class="doggy"><%= link_to image_tag("laika.png", :alt => 'Laika'), root_url %></div>
   <div class="right">
     <ul id="smallnav">
-	  <% if LOCAL_NIST_XDS %><li <% if current_controller? 'xds_utility' %>id="active"<% end %>><%= link_to 'XDS Utility', xds_utility_path %></li><% end %>
+			<% if LOCAL_NIST_XDS %><li <% if current_controller? 'xds_utility' %>id="active"<% end %>><%= link_to 'XDS Utility', xds_utility_path %></li><% end %>
       <li <% if current_controller? 'atna_audits' %>id="active"<% end %>><%= link_to 'ATNA Log', atna_audits_path %></li>
       <li <% if current_controller? 'news' %>id="active"<% end %>><%= link_to 'News', news_path %></li>
       <li <% if current_controller? 'settings' %>id="active"<% end %>><%= link_to 'Settings', settings_path %></li>
@@ -26,4 +25,3 @@
   </div>
 </div>
 <!-- End Header -->
->>>>>>> d207dac870ffb287f1b0985a7c4987e4453c84a5

@@ -20,27 +20,31 @@
   </tr>
   <%= render :partial => '/addresses/show', :locals => {:address => support.address, :required => ['sdf'], :hitsp_required => ['sdfsdf']}%>
   <%= render :partial => '/telecoms/show', :locals => {:telecom => support.telecom}%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td>
-    <span>
-      <%= link_to_remote 'Edit', :update => 'supportContainer', 
-                                 :url => edit_patient_support_path(patient),
-                                 :method => 'get' %>
-    </span>
-    <span> <%= link_to_remote 'Remove', :update => 'supportContainer', 
-                                 :url => patient_support_path(patient),
-                                 :confirm=>"Are you sure you wish to remove this support?",
-                                 :method => 'delete' %>
-    </span>
-    </td>
-  </tr>
+  <% if @patient.editable_by? current_user -%>
+    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+      <td></td>
+      <td>
+      <span>
+        <%= link_to_remote 'Edit', :update => 'supportContainer', 
+                                   :url => edit_patient_support_path(patient),
+                                   :method => 'get' %>
+      </span>
+      <span> <%= link_to_remote 'Remove', :update => 'supportContainer', 
+                                   :url => patient_support_path(patient),
+                                   :confirm=>"Are you sure you wish to remove this support?",
+                                   :method => 'delete' %>
+      </span>
+      </td>
+    </tr>
+  <% end -%>
 <% else -%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">There is no support data for this test case</td>
-    <td><%= link_to_remote 'Create some', :update => 'supportContainer',
-                                      :url => new_patient_support_path(patient), :method => 'get' %>
-    </td>
-  </tr>
+  <% if @patient.editable_by? current_user -%>
+    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+      <td class="lighttext">There is no support data for this test case</td>
+      <td><%= link_to_remote 'Create some', :update => 'supportContainer',
+                                        :url => new_patient_support_path(patient), :method => 'get' %>
+      </td>
+    </tr>
+  <% end -%>
 <% end -%>
 </table>

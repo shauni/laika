@@ -36,10 +36,16 @@ class TestPlan < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :vendor_id
 
+  # Count the errors in the content_errors.
+  #
+  # @return [Number] Number of errors in the test results.
   def count_errors
     content_errors.count(:conditions => {:msg_type => 'error'})
   end
 
+  # Count the warnings in the content_errors.
+  #
+  # @return [Number] Number of warnings in the test results.
   def count_warnings
     content_errors.count(:conditions => {:msg_type => 'warning'})
   end
@@ -55,6 +61,8 @@ class TestPlan < ActiveRecord::Base
 
   # Return the normalized name of this test plan, but with underscores instead
   # of dashes. Useful for building URLs and file paths.
+  #
+  # @return [String] Paramterized name.
   def parameterized_name
     self.class.normalize_name(self.class.test_name).gsub('-','_')
   end
@@ -66,24 +74,42 @@ class TestPlan < ActiveRecord::Base
     Laika::TEST_PLAN_TYPES
   end
 
+  # Use this in the body of sub-classes to specify that inspection is done
+  # manually.
+  #
+  # @param [true, false] flag 
   def self.manual_inspection flag = true
     @manual_inspection = flag
   end
 
+  # Return true if this test calls for manual inspection, false otherwise.
+  #
+  # @return [true, false] manual inspection flag
   def self.manual_inspection?
     !!@manual_inspection
   end
 
+  # Return true if this test calls for manual inspection, false otherwise.
+  #
+  # @return [true, false] manual inspection flag
   def manual_inspection?
     self.class.manual_inspection?
   end
 
+  # Get or set the test name.
   def self.test_name name = nil
     if name.nil?
       @test_name
     else
       @test_name = name
     end
+  end
+
+  # Get the test name.
+  #
+  # @return [String] test name, e.g. "XDS Provide & Register"
+  def test_name
+    self.class.test_name
   end
 
   # Return either pending_actions or completed_actions depending
