@@ -29,7 +29,7 @@ class C32GenerateAndFormatPlan < TestPlan
   # This is the primary validation operation for C32 Generate and Format.
   def validate_clinical_document_content
     document = clinical_document.as_xml_document
-    validator = Validation.get_validator(clinical_document.doc_type)
+    validator = Validation.get_validator(:C32)
 
     logger.debug(validator.inspect)
     errors = nil
