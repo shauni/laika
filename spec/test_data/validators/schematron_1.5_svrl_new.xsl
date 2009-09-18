@@ -159,8 +159,7 @@
         <xsl:for-each select="sch:ns | ns">
             <xsl:attribute name="{concat(@prefix,':dummy-for-xmlns')}" namespace="{@uri}"/>
         </xsl:for-each>
- 		
-		<!-- what's up -->
+ 
         <xsl:if test="count(sch:title/* | title/* )">
             <xsl:message>
                 <xsl:text>Warning: </xsl:text>
