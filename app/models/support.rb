@@ -72,13 +72,8 @@ class Support < ActiveRecord::Base
     self.address.randomize()
     self.telecom = Telecom.new
     self.telecom.randomize()
-<<<<<<< HEAD:app/models/support.rb
-    self.contact_type = ContactType.find_random
-    self.relationship = Relationship.find_random
-=======
     self.contact_type = ContactType.find :random
     self.relationship = Relationship.find :random
->>>>>>> f608eea40cfd36da6bfa86681ee0c41176ad8ae2:app/models/support.rb
   end
 
 end
