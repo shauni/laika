@@ -28,6 +28,7 @@ class XdsPlan < TestPlan
   end
 
   module Actions
+    # Display the XDS patient checklist.
     def xds_checklist
       @metadata = test_plan.test_type_data
       render :layout => false

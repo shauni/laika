@@ -159,11 +159,14 @@ class InsuranceProvider < ActiveRecord::Base
     self.insurance_provider_guarantor = InsuranceProviderGuarantor.new
     self.insurance_provider_guarantor.randomize()
 
-    self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find_random
-    self.coverage_role_type = CoverageRoleType.find_random
-    self.insurance_type = InsuranceType.find_random
-    
-    self.group_number = (100000000 + rand(8999999999)) #generates a random 9 digit group or contract number
+    self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find :random
+    self.coverage_role_type = CoverageRoleType.find :random
+    self.insurance_type = InsuranceType.find :random
+    if (self.insurance_type_id != 606711552)
+      self.group_number = nil
+    else
+      self.group_number = (100000000 + rand(8999999999)) #generates a random 9 digit group number
+    end
 
     @organizations = ["Aetna", "Altius", "Anthem Blue Cross", "Health Net", "Medica", "Pacificare", "Unicare", "Lifewise", "CIGNIA", "Medical Mutual", "Harvard Pilgrim", "Humana", "MetLife"]
     self.represented_organization = @organizations[rand(@organizations.size)]

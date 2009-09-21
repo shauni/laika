@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   # AuthenticationSystem supports the acts_as_authenticated
   include AuthenticatedSystem
 
+  filter_parameter_logging :password
+
   # "remember me" functionality
   before_filter :login_from_cookie
 

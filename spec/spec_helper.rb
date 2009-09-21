@@ -12,6 +12,10 @@ ModelFactory.configure do
     value { |i| "factory value #{i}" }
   end
 
+  default(ContentError) do
+    validator { 'factory' }
+  end
+
   default(Patient) do
     name { "Harry Manchester" }
     user { User.factory.create }
@@ -58,6 +62,19 @@ ModelFactory.configure do
     user { User.factory.create }
     vendor { Vendor.factory.create }
   end
+
+  default(XdsProvideAndRegisterPlan) do
+    patient { Patient.factory.create }
+    user { User.factory.create }
+    vendor { Vendor.factory.create }
+    test_type_data { XDS::Metadata.new }
+  end
+
+  default(ClinicalDocument) do
+    size { 256 }
+    filename { 'factory_document' }
+  end
+
 end
 
 

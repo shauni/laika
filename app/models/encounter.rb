@@ -91,7 +91,7 @@ class Encounter < ActiveRecord::Base
 
     self.location_name = possible_encounter_locations[possible_encounter_locations_index]
     
-    self.encounter_location_code = EncounterLocationCode.find_random
+    self.encounter_location_code = EncounterLocationCode.find(:random)
   end
 
   def self.c32_component(encounters, xml)

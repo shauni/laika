@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
 
 describe Condition, "can validate itself" do
   fixtures :conditions, :problem_types

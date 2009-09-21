@@ -103,8 +103,8 @@ class AdvanceDirective < ActiveRecord::Base
 
     self.person_name.first_name = Faker::Name.first_name
     self.person_name.last_name = Faker::Name.last_name
-    self.advance_directive_type = AdvanceDirectiveType.find_random
-    self.advance_directive_status_code = AdvanceDirectiveStatusCode.find_random
+    self.advance_directive_type = AdvanceDirectiveType.find :random
+    self.advance_directive_status_code = AdvanceDirectiveStatusCode.find :random
     self.free_text = "Do not give " + self.advance_directive_type.name
     self.address.randomize()
     self.telecom.randomize()

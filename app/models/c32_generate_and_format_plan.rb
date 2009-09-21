@@ -11,13 +11,17 @@ class C32GenerateAndFormatPlan < TestPlan
     self.test_type_data ||= {}
   end
 
-  # @return true if UMLS is enabled for this test, false otherwise.
+  # Return true if UMLS is enabled for this test, false otherwise.
+  #
+  # @return [true, false] UMLS-enabled flag
   def umls_enabled?
     !!test_type_data[:umls_enabled]
   end
 
   # Used by validate_clinical_document_content to indicate whether UMLS
   # was used. You can check for this flag by calling umls_enabled?
+  #
+  # @param [true, false] flag UMLS-enabled flag
   def umls_enabled= flag
     test_type_data[:umls_enabled] = flag
   end
@@ -55,10 +59,12 @@ class C32GenerateAndFormatPlan < TestPlan
   end
 
   module Actions
+    # Display a form requesting a C32 file for upload.
     def c32_upload
       render 'test_plans/c32_upload', :layout => !request.xhr?
     end
 
+    # Validate a C32 file using this test plan.
     def c32_validate
       test_plan.update_attributes! :clinical_document =>
         ClinicalDocument.create!(params[:clinical_document])
@@ -69,9 +75,10 @@ class C32GenerateAndFormatPlan < TestPlan
       end
       redirect_to test_plans_url
     end
-  end
 
-  def c32_inspect
+    # Display the C32 inspection results.
+    def c32_inspect
+    end
   end
 end
 

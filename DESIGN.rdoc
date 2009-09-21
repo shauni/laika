@@ -37,7 +37,7 @@ Library tab is implemented by {PatientsController#index}.
 
 Remember that we're talking about the EHR testing performed by Laika, *not*
 the automated test suite used to check for regressions in Laika itself. The
-test types are all sub-classes of {TestPlan}. The list of test plan typess is
+test types are all sub-classes of {TestPlan}. The list of test plan types is
 enumerated in config/initializers/load_test_plan_types.rb.
 
 === Test Types

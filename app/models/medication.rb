@@ -112,7 +112,7 @@ class Medication < ActiveRecord::Base
     self.product_code = @product_codes[@index]
     self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.6.88")  #RxNorm
     self.free_text_brand_name = @brand_names[@index]
-    self.medication_type = MedicationType.find_random
+    self.medication_type = MedicationType.find :random
     self.expiration_time = DateTime.new(2008 + rand(4), rand(12) + 1, rand(28) + 1)
   end
   

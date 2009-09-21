@@ -1,7 +1,11 @@
 # Initial cut at separating the C32 validation routines form the models.  All this currently does is to reinject the 
 # models with the validation classes. The C32Validator then just calls the validate 32 method on the pateint data object
-require 'lib/validation.rb'
+
+# FIXME Requiring files using the full path is bad practice.
+# Ideally we should rename/namespace the *C32Validation modules so that they
+# can be autoloaded by Rails.
 Dir.glob(File.join(File.dirname(__FILE__), 'c32/*.rb')).each {|f| require f }
+
 module Validators
   
    module C32Validation

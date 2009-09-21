@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
- # this will add the validate_c32 
   
 describe Provider do
   fixtures :providers,:provider_roles,:provider_types, :person_names, :telecoms, :addresses

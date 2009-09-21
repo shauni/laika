@@ -76,8 +76,8 @@ class Provider < ActiveRecord::Base
     self.start_service = DateTime.new(reg_info.date_of_birth.year + rand(DateTime.now.year - reg_info.date_of_birth.year), rand(12) + 1, rand(28) + 1)
     self.end_service = DateTime.new(self.start_service.year + rand(DateTime.now.year - self.start_service.year), rand(12) + 1, rand(28) + 1)
 
-    self.provider_type = ProviderType.find_random
-    self.provider_role = ProviderRole.find_random
+    self.provider_type = ProviderType.find :random
+    self.provider_role = ProviderRole.find :random
 
     #Creates the address of the healthcare provider. Makes it in the same state/town as the patient
     self.address.street_address_line_one = Faker::Address.street_address

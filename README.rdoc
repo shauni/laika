@@ -13,6 +13,10 @@ The target platform is JRuby on Rails, running under Glassfish.
 
 == Running the Test Suite
 
+Make sure your CLASSPATH variable is set:
+
+ $ source bin/laika_env.sh
+
 To run the spec suite:
 
  $ jruby -S rake spec

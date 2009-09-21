@@ -19,3 +19,4 @@ unless ENV['RAILS_ENV'] == "test" || ENV['RAILS_ENV'].nil?
   Validation.register_validator :NHIN, Validators::Umls::UmlsValidator.new("warning")
 end
 
+

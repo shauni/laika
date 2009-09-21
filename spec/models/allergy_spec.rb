@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "lib/validators/c32_validator"
-
 
 describe Allergy, "it can validate allergy entries in a C32" do
   fixtures :allergies, :severity_terms, :adverse_event_types

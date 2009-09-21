@@ -1,5 +1,8 @@
 module Validation
    
+   def Validation.unregister_validators
+     ValidationRegistry.instance.unregister_validators
+   end
    
    def Validation.register_validator(doc_type, validator)
      ValidationRegistry.instance.register_validator(doc_type, validator)
@@ -72,6 +75,9 @@ module Validation
        @validators={}
     end
 
+    def unregister_validators
+      initialize
+    end
 
     def register_validator(doc_type, validator)
         
