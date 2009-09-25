@@ -38,10 +38,10 @@ module Validators
            redoc.elements.to_a("//svrl:failed-assert").each do |el|
             
              # do something here with the values
-            errors << ContentError.new(:location=>el.attributes["location"],
-                                       :error_message=>el.text,
-                                       :validator=>name,
-                                       :inspection_type=>::XML_VALIDATION_INSPECTION)
+            errors << ContentError.new(:location => el.attributes["location"],
+                                       :error_message => el.elements['svrl:text'].text,
+                                       :validator => name,
+                                       :inspection_type => ::XML_VALIDATION_INSPECTION)
            end
            errors
       end

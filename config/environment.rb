@@ -9,8 +9,12 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require "saxon/saxon9.jar"
-require "saxon/saxon9-dom.jar"
+
+# Ensure that Saxon is used for running XSLT. For this to work, the Saxon jars must be included in the
+# CLASSPATH environment variable. Using require to pull them in does not seem to work.
+java.lang.System.setProperty("javax.xml.transform.TransformerFactory","net.sf.saxon.TransformerFactoryImpl")
+java.lang.System.setProperty("javax.xml.parsers.DocumentBuilderFactory","net.sf.saxon.dom.DocumentBuilderFactoryImpl")
+
 # XXX ActiveRecord extensions need to be loaded first, otherwise some
 # operations that utilize AR during init will fail. There's probably a
 # better way to do this.

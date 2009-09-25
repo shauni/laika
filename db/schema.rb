@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090907233625) do
+ActiveRecord::Schema.define(:version => 20090908151128) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -137,10 +137,10 @@ ActiveRecord::Schema.define(:version => 20090907233625) do
     t.string  "section"
     t.string  "subsection"
     t.string  "field_name"
-    t.string  "error_message"
+    t.string  "error_message",   :limit => 2000
     t.string  "location"
-    t.string  "msg_type",        :default => "error"
-    t.string  "validator",                            :null => false
+    t.string  "msg_type",                        :default => "error"
+    t.string  "validator",                                            :null => false
     t.string  "inspection_type"
     t.integer "test_plan_id"
   end
