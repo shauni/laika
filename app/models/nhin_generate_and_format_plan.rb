@@ -1,7 +1,7 @@
 class NhinGenerateAndFormatPlan < TestPlan
   test_name "NHIN Generate and Format"
-  pending_actions 'execute>' => :nhin_upload
-  completed_actions 'inspect' => :nhin_inspect, 'checklist' => :nhin_checklist
+  pending_actions 'Execute>' => :nhin_upload
+  completed_actions 'Inspect' => :nhin_inspect, 'checklist' => :nhin_checklist
   serialize :test_type_data, Hash
 
   class ValidationError < StandardError; end
