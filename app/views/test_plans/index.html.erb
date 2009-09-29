@@ -19,6 +19,7 @@
   <tr>
     <th>Status</th>
     <th class="<%= sort_order_class('kinds.name') %>"><%= link_to_sort 'kinds.name', 'Test Type' %></th>
+    <th class="<%= sort_order_class('clinical_documents.doc_type') %>"><%= link_to_sort 'clinical_documents.doc_type', 'Document Type' %></th>
     <th class="<%= sort_order_class('patient.name') %>"><%= link_to_sort 'patient.name', 'Patient' %></th>
     <th>Errors</th>
     <th>Warnings</th>
@@ -31,6 +32,7 @@
         <%= render :partial => 'mark_state', :locals => { :plan => test_plan } %>
       </td>
       <td><%= test_plan.class.test_name %></td>
+	  <td><%= test_plan.clinical_document.try :doc_type %></td>
       <td class="edit">
         <%= link_to_if test_plan.pending?, h(test_plan.patient.name),
           patient_url(test_plan.patient) %>

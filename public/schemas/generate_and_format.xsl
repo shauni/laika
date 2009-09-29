@@ -36,7 +36,7 @@
 		       Updated by   Calvin E. Beebe,   Mayo Clinic - Rochester Mn.
             </xsl:comment>
             <body>            
-                <h2 align="center">GENERATE AND FILE TEST RESULTS</h2>
+                <h2 align="center">GENERATE AND FORMAT TEST RESULTS</h2>
                 <h2 align="center"><xsl:value-of select="$title"/></h2>
                 <p align='center'><b><xsl:text>Created On: </xsl:text></b>
                 		 <xsl:call-template name="formatDate">
