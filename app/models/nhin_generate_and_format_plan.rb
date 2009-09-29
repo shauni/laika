@@ -25,7 +25,7 @@ class NhinGenerateAndFormatPlan < TestPlan
   # This is the primary validation operation for C32 Generate and Format.
   def validate_clinical_document_content
     document = clinical_document.as_xml_document
-    validator = Validation.get_validator(clinical_document.doc_type)
+    validator = Validation.get_validator(:NHIN)
 
     logger.debug(validator.inspect)
     errors = nil
@@ -56,7 +56,7 @@ class NhinGenerateAndFormatPlan < TestPlan
 
   module Actions
     def nhin_upload
-      render 'test_plans/c32_upload', :layout => !request.xhr?
+      render 'test_plans/nhin_upload', :layout => !request.xhr?
     end
 
     def nhin_validate
