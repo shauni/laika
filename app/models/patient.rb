@@ -125,6 +125,8 @@ class Patient < ActiveRecord::Base
                "displayName" => "Summarization of patient data", 
                "codeSystem" => "2.16.840.1.113883.6.1", 
                "codeSystemName" => "LOINC")
+               
+      xml.realmCode( "code" => "US" ) #C32 2.4
       xml.title(name)
 
       if registration_information.try(:document_timestamp)

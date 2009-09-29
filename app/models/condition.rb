@@ -81,6 +81,9 @@ class Condition < ActiveRecord::Base
         xml.section do
           xml.templateId("root" => "2.16.840.1.113883.10.20.1.11",
                          "assigningAuthorityName" => "CCD")
+          xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.3.6", #C32 2.4
+                          "assigningAuthorityName" => "CCD")
+          
           xml.code("code" => "11450-4",
                    "displayName" => "Problems",
                    "codeSystem" => "2.16.840.1.113883.6.1",

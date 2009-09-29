@@ -127,6 +127,8 @@ class Allergy < ActiveRecord::Base
         xml.section do
           xml.templateId("root" => "2.16.840.1.113883.10.20.1.2", 
                          "assigningAuthorityName" => "CCD")
+          xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.3.13",  #C32 2.4
+                          "assigningAuthorityName" => "CCD")
           xml.code("code" => "48765-2", 
                    "codeSystem" => "2.16.840.1.113883.6.1")
           xml.title "Allergies, Adverse Reactions, Alerts"
