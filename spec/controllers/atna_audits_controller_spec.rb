@@ -18,18 +18,6 @@ describe AtnaAuditsController do
     end
   end
 
-  describe "with an empty log entry" do
-    before do
-      AtnaAudit.stub!(:paginate).and_return([mock_model(AtnaAudit, :message => '')])
-    end
-
-    it "should result in a parse failure" do
-      get :index
-      response.should be_success
-      assigns[:notice].should == 'Error: ATNA log message is not valid.'
-    end
-  end
-
   describe "with a valid log entry" do
     before do
       AtnaAudit.stub!(:paginate).and_return([mock_model(AtnaAudit, :message => <<ATNA_ENTRY)])
