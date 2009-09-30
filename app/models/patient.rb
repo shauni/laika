@@ -227,7 +227,7 @@ class Patient < ActiveRecord::Base
     self.allergies << @allergy
 
     @condition = Condition.new
-    @condition.randomize(self.registration_information.date_of_birth)
+    @condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth)
     self.conditions << @condition
 
     @language = Language.new
