@@ -202,7 +202,8 @@ class Patient < ActiveRecord::Base
     self.name = registration_information.full_name
 
     # if patient is female, 10% chance patient is pregnant
-    if self.registration_information.gender.code == 'F'
+    age = Date.today.year - self.registration_information.date_of_birth.year
+    if self.registration_information.gender.code == 'F' && age > 14
       random_pregnant = rand(10) 
       if random_pregnant > 8
         self.pregnant = true 

@@ -82,12 +82,27 @@ class RegistrationInformation < ActiveRecord::Base
     name.first_name = Faker::Name.first_name
     name.last_name = Faker::Name.last_name
     self.person_name = name
-    self.gender = Gender.find :random
     self.race = Race.find :random
     self.ethnicity = Ethnicity.find :random
     self.religion = Religion.find :random
     self.marital_status = MaritalStatus.find :random
-    self.date_of_birth = DateTime.new(1930 + rand(78), rand(12) + 1, rand(28) + 1)
+    
+    # smarter fake data from US 2000 census
+    self.gender = Gender.find_by_name(rand(100) + 1 > 51 ? "Male" : "Female")
+    
+    # 20% 0-14, 67% 15-65, 13% 65-100
+    age_percent = rand(100) + 1
+    if age_percent <= 20
+      age_bracket = 0
+      age_range = 15
+    elsif age_percent <= 87
+      age_bracket = 15
+      age_range = 40
+    else age_percent <= 100
+      age_bracket = 65
+      age_range = 35
+    end
+    self.date_of_birth = DateTime.new(Date.today.year - age_bracket - rand(age_range), rand(12) + 1, rand(28) + 1)
 
     self.address = Address.new
     self.address.randomize()
