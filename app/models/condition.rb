@@ -23,6 +23,7 @@ class Condition < ActiveRecord::Base
       xml.act("classCode" => "ACT", "moodCode" => "EVN") do
         xml.templateId("root" => "2.16.840.1.113883.10.20.1.27", "assigningAuthorityName" => "CCD")
         xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.7", "assigningAuthorityName" => "HITSP/C32")
+        xml.templateId("root" => "2.16.840.1.113883.3.88.11.83.7", "assigningAuthorityName" => "HITSP C83")
         xml.id
         xml.code("nullFlavor"=>"NA")
         xml.entryRelationship("typeCode" => "SUBJ") do
