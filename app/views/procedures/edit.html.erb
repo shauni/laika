@@ -32,6 +32,12 @@
       <%= f.calendar_date_select :procedure_date %>
     </td>
   </tr>
+  <tr>  
+    <td class="lighttext">Procedure Status Code <%= requirements_for @procedure, :procedure_status_code_id %></td>
+    <td>
+      <%= f.select :procedure_status_code_id, ProcedureStatusCode.select_options %>
+    </td>
+  </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td></td>
 	<td><%= f.submit "Save" %></td>

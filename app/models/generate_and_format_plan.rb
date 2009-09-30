@@ -1,7 +1,7 @@
-class C32GenerateAndFormatPlan < TestPlan
-  test_name "C32 Generate and Format"
-  pending_actions 'Execute>' => :c32_upload
-  completed_actions 'Inspect' => :c32_inspect, 'Checklist' => :c32_checklist
+class GenerateAndFormatPlan < TestPlan
+  test_name "Generate and Format"
+  pending_actions 'Execute>' => :doc_upload
+  completed_actions 'Inspect' => :doc_inspect, 'Checklist' => :doc_checklist
   serialize :test_type_data, Hash
 
   class ValidationError < StandardError; end
@@ -11,22 +11,18 @@ class C32GenerateAndFormatPlan < TestPlan
     self.test_type_data ||= {}
   end
 
-  # Return true if UMLS is enabled for this test, false otherwise.
-  #
-  # @return [true, false] UMLS-enabled flag
+  # @return true if UMLS is enabled for this test, false otherwise.
   def umls_enabled?
     !!test_type_data[:umls_enabled]
   end
 
   # Used by validate_clinical_document_content to indicate whether UMLS
   # was used. You can check for this flag by calling umls_enabled?
-  #
-  # @param [true, false] flag UMLS-enabled flag
   def umls_enabled= flag
     test_type_data[:umls_enabled] = flag
   end
 
-  # This is the primary validation operation for C32 Generate and Format.
+  # This is the primary validation operation for Generate and Format.
   def validate_clinical_document_content
     document = clinical_document.as_xml_document
     validator = Validation.get_validator(clinical_document.doc_type)
@@ -59,13 +55,11 @@ class C32GenerateAndFormatPlan < TestPlan
   end
 
   module Actions
-    # Display a form requesting a C32 file for upload.
-    def c32_upload
-      render 'test_plans/c32_upload', :layout => !request.xhr?
+    def doc_upload
+      render 'test_plans/doc_upload', :layout => !request.xhr?
     end
 
-    # Validate a C32 file using this test plan.
-    def c32_validate
+    def doc_validate
       test_plan.update_attributes! :clinical_document =>
         ClinicalDocument.create!(params[:clinical_document])
       begin
@@ -75,10 +69,16 @@ class C32GenerateAndFormatPlan < TestPlan
       end
       redirect_to test_plans_url
     end
-
-    # Display the C32 inspection results.
-    def c32_inspect
+    
+    def doc_checklist
+      @patient = test_plan.patient
+      render 'test_plans/doc_checklist.xml', :layout => false
     end
+    
+    def doc_inspect
+    end
+    
   end
+
 end
 

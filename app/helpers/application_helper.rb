@@ -18,6 +18,8 @@ module ApplicationHelper
     case model.requirements[field]
       when :required
         '<span class="validation_for required">Required</span>'
+      when :nhin_required
+        '<span class="validation_for required">Required (NHIN)</span>'
       when :hitsp_required
         '<span class="validation_for required">Required (HITSP R)</span>'
       when :hitsp_r2_required

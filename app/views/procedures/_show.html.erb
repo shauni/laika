@@ -21,6 +21,10 @@
     <td class="lighttext">Procedure Date</td>
     <td><%=h procedure.procedure_date %></td>
   </tr>
+  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+    <td class="lighttext">Procedure Status Code</td>
+    <td><%=h procedure.procedure_status_code.description %></td>
+  </tr>
   <% if @patient.editable_by? current_user -%>
     <tr class="<%= cycle("darkzebra", "lightzebra")%>">
       <td></td><td><span>

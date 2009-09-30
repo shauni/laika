@@ -231,8 +231,9 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
 
   create_table "insurance_provider_subscribers", :force => true do |t|
     t.date    "date_of_birth"
-    t.integer "insurance_provider_id", :null => false
+    t.integer "insurance_provider_id",    :null => false
     t.string  "subscriber_id"
+    t.string  "assigning_authority_guid"
   end
 
   add_index "insurance_provider_subscribers", ["insurance_provider_id"], :name => "index_insurance_provider_subscribers_on_insurance_provider_id"
@@ -244,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.integer "role_class_relationship_formal_type_id"
     t.integer "coverage_role_type_id"
     t.string  "group_number"
+    t.string  "health_plan"
   end
 
   add_index "insurance_providers", ["patient_id"], :name => "index_insurance_providers_on_patient_id"
@@ -375,7 +377,8 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string  "name"
     t.string  "code"
     t.date    "procedure_date"
-    t.integer "patient_id",     :null => false
+    t.integer "patient_id",               :null => false
+    t.integer "procedure_status_code_id"
   end
 
   add_index "procedures", ["patient_id"], :name => "index_procedures_on_patient_id"

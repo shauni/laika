@@ -26,6 +26,7 @@ class InsuranceProvider < ActiveRecord::Base
       :provider_role_free_text => :hitsp_r2_optional,
       :organization => :hitsp_r2_optional,
       :patient_identifier => :hitsp_r2_optional,
+      :health_plan => :hitsp_r2_optional,
     }
   end
 
@@ -126,6 +127,20 @@ class InsuranceProvider < ActiveRecord::Base
             end
 
             insurance_provider_subscriber.try(:to_c32, xml)
+            
+            # if health plan name is provided 
+            if health_plan
+              xml.entryRelationship("typeCode" => "REFR") do
+                xml.act("classCode" => "ACT", "moodCode" => "DEF") do
+                  xml.id("id" => "id", "extension" => "PlanCode")
+                  xml.code("code" => "HMO", 
+                           "displayName" => "health maintenance organization policy", 
+                           "codeSystem" => "2.16.840.1.113883.5.4", 
+                           "codeSystemName" => "ActCode")
+                  xml.text health_plan
+                end
+              end
+            end
 
           end
         end

@@ -1,4 +1,4 @@
-<div id="insurance_provider<%= insurance_provider.id %>">
+<em><div id="insurance_provider<%= insurance_provider.id %>">
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Insurance Provider Organization</td>
@@ -12,6 +12,12 @@
     <td class="lighttext">Insurance Type</td>
     <td>
       <% if insurance_provider.insurance_type %><%=h insurance_provider.insurance_type.name %><% end %>
+    </td>
+  </tr>
+  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+    <td class="lighttext">Health Plan</td>
+    <td>
+      <% if insurance_provider.health_plan %><%=h insurance_provider.health_plan %><% end %>
     </td>
   </tr>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
@@ -60,4 +66,4 @@
              :locals => {:insurance_provider_guarantor => insurance_provider.insurance_provider_guarantor,
                          :patient => patient} %>
 </div>
-</div>
+</div></em>
