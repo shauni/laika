@@ -1,4 +1,5 @@
 class CodeSystem < ActiveRecord::Base
+  extend RandomFinder
   has_select_options :method_name => :select_options
   has_select_options :method_name => :medication_select_options,
     :order => "name DESC",

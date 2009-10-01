@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-describe C32GenerateAndFormatPlan do
+describe GenerateAndFormatPlan do
   describe "with schematron validation stubbed out" do
     before do
       @validator = stub(:validator)
@@ -13,7 +13,7 @@ describe C32GenerateAndFormatPlan do
       end
 
       it "should pass validation" do
-        plan = C32GenerateAndFormatPlan.factory.create \
+        plan = GenerateAndFormatPlan.factory.create \
           :clinical_document => ClinicalDocument.factory.create
         plan.validate_clinical_document_content
         plan.should be_passed
@@ -26,7 +26,7 @@ describe C32GenerateAndFormatPlan do
       end
 
       it "should fail validation" do
-        plan = C32GenerateAndFormatPlan.factory.create \
+        plan = GenerateAndFormatPlan.factory.create \
           :clinical_document => ClinicalDocument.factory.create
         plan.validate_clinical_document_content
         plan.should be_failed
