@@ -231,9 +231,8 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
 
   create_table "insurance_provider_subscribers", :force => true do |t|
     t.date    "date_of_birth"
-    t.integer "insurance_provider_id",    :null => false
+    t.integer "insurance_provider_id", :null => false
     t.string  "subscriber_id"
-    t.string  "assigning_authority_guid"
   end
 
   add_index "insurance_provider_subscribers", ["insurance_provider_id"], :name => "index_insurance_provider_subscribers_on_insurance_provider_id"
@@ -370,6 +369,11 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
   create_table "problem_types", :force => true do |t|
     t.string "name"
     t.string "code"
+  end
+
+  create_table "procedure_status_codes", :force => true do |t|
+    t.string "code"
+    t.string "description"
   end
 
   create_table "procedures", :force => true do |t|

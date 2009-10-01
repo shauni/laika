@@ -52,24 +52,24 @@ describe TestPlansController do
       end
     end
 
-    describe "with a C32 Generate and Format plan" do
+    describe "with a Generate and Format plan" do
       before do
-        @plan = C32GenerateAndFormatPlan.factory.create(:user => @user)
+        @plan = GenerateAndFormatPlan.factory.create(:user => @user)
         @upload = {
             :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
           }
       end
 
       it "should prompt for an XML document upload" do
-        get :c32_upload, :id => @plan.id
+        get :doc_upload, :id => @plan.id
         assigns(:test_plan).should == @plan
-        response.should render_template('test_plans/c32_upload')
+        response.should render_template('test_plans/doc_upload')
       end
 
       it "should display inspection results" do
-        get :c32_inspect, :id => @plan.id
+        get :doc_inspect, :id => @plan.id
         assigns(:test_plan).should == @plan
-        response.should render_template('test_plans/c32_inspect.html.erb')
+        response.should render_template('test_plans/doc_inspect.html.erb')
       end
 
       describe "with validation stubbed out" do
@@ -82,7 +82,7 @@ describe TestPlansController do
         it "should have the umls enabled flag" do
           @validator.should_receive(:contains_kind_of?).
             with(Validators::Umls::UmlsValidator).and_return(true)
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should be_umls_enabled
         end
@@ -90,7 +90,7 @@ describe TestPlansController do
         it "should not have the umls enabled flag" do
           @validator.should_receive(:contains_kind_of?).
             with(Validators::Umls::UmlsValidator).and_return(false)
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should_not be_umls_enabled
         end
@@ -106,7 +106,7 @@ describe TestPlansController do
         it "should pass the test case" do
           @validator.stub!(:validate).and_return([])
 
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should be_passed
         end
@@ -114,16 +114,16 @@ describe TestPlansController do
         it "should fail the test case" do
           @validator.stub!(:validate).and_return([ContentError.factory.create])
 
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should be_failed
         end
 
         it "should leave the test case pending" do
           @validator.stub!(:validate).and_return \
-            { raise C32GenerateAndFormat::ValidationError }
+            { raise GenerateAndFormat::ValidationError }
 
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           flash[:notice].should =~ /error/
           @plan.should be_pending
         end
