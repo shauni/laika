@@ -214,36 +214,36 @@ class Patient < ActiveRecord::Base
       self.pregnant = nil
     end 
 
-    provider = Provider.new
-    provider.randomize(self.registration_information)
-    self.providers << provider
+    #provider = Provider.new
+    #provider.randomize(self.registration_information)
+    #self.providers << provider
 
-    insurance = InsuranceProvider.new
-    insurance.randomize(self.registration_information)
-    self.insurance_providers << insurance
+    #insurance = InsuranceProvider.new
+    #insurance.randomize(self.registration_information)
+    #self.insurance_providers << insurance
 
-    allergy = Allergy.new
-    allergy.randomize(self.registration_information.date_of_birth)
-    self.allergies << allergy
+    #allergy = Allergy.new
+    #allergy.randomize(self.registration_information.date_of_birth)
+    #self.allergies << allergy
 
     condition = Condition.new
     condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, self.conditions)
     self.conditions << condition
 
-    language = Language.new
-    language.randomize()
-    self.languages << language
+    #language = Language.new
+    #language.randomize()
+    #self.languages << language
 
-    immunization = Immunization.new
-    immunization.randomize(self.registration_information.date_of_birth)
-    self.immunizations << immunization
+    #immunization = Immunization.new
+    #immunization.randomize(self.registration_information.date_of_birth)
+    #self.immunizations << immunization
 
     medication = Medication.new
     medication.randomize()
     self.medications << medication
 
-    self.support = Support.new
-    self.support.randomize(self.registration_information.date_of_birth)
+    #self.support = Support.new
+    #self.support.randomize(self.registration_information.date_of_birth)
     
     self.information_source = InformationSource.new
     self.information_source.randomize()
@@ -256,24 +256,24 @@ class Patient < ActiveRecord::Base
     vital_sign.randomize()
     self.vital_signs << vital_sign
 
-    self.advance_directive = AdvanceDirective.new
-    self.advance_directive.randomize(self.registration_information.date_of_birth)
+    #self.advance_directive = AdvanceDirective.new
+    #self.advance_directive.randomize(self.registration_information.date_of_birth)
 
-    encounter = Encounter.new
-    encounter.randomize(self.registration_information.date_of_birth)
-    self.encounters << encounter
+    #encounter = Encounter.new
+    #encounter.randomize(self.registration_information.date_of_birth)
+    #self.encounters << encounter
 
-    procedure = Procedure.new
-    procedure.randomize(self.registration_information.date_of_birth)
-    self.procedures << procedure
+    #procedure = Procedure.new
+    #procedure.randomize(self.registration_information.date_of_birth)
+    #self.procedures << procedure
 
-    medical_equipment = MedicalEquipment.new
-    medical_equipment.randomize(self.registration_information.date_of_birth)
-    self.medical_equipments << medical_equipment
+    #medical_equipment = MedicalEquipment.new
+    #medical_equipment.randomize(self.registration_information.date_of_birth)
+    #self.medical_equipments << medical_equipment
 
-    patient_identifier = PatientIdentifier.new
-    patient_identifier.randomize()
-    self.patient_identifiers << patient_identifier
+    #patient_identifier = PatientIdentifier.new
+    #patient_identifier.randomize()
+    #self.patient_identifiers << patient_identifier
 
     self
   end
