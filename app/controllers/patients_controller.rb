@@ -32,11 +32,26 @@ class PatientsController < ApplicationController
   end
   
   def autoCreate
-    @patient = Patient.new    
-    @patient.randomize()
-    @patient.user = current_user
-    @patient.save!
-    redirect_to patient_url(@patient)
+    create_random_records
+    #@patient = Patient.new    
+    #@patient.randomize()
+    #@patient.user = current_user
+    #@patient.save!
+    #redirect_to patient_url(@patient)
+  end
+  
+  # creates the given number of "realistic" patient records
+  def create_random_records
+    i=0
+    number = params[:number]
+    while i<= 50 
+      patient = Patient.new
+      patient.randomize()
+      patient.save!
+      i += 1
+    end
+    
+    redirect_to patients_url
   end
 
   def create
