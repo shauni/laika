@@ -11,3 +11,5 @@ Validation.register_validator :C32, Validators::Schematron::CompiledValidator.ne
 Validation.register_validator :C32, Validators::Umls::UmlsValidator.new("warning")
 #Validation.register :C32, Validators::Schematron::SchematronValidator.new
 
+require 'import_helper'
+require 'importers/c32/allergy_c32_importer'
