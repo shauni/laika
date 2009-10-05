@@ -1,3 +1,6 @@
+* Upgraded to Rails 2.3.4.
+* Now depending on CCHIT-xds-facade gem.
+* Support for NHIN C32 document variant.
 * Filter password parameter values out of the activity logs, SF #2854713.
 * C32 G&F plans now record whether UMLS was used during validation.
 * Do not expose users to one another, SF #2831708.
