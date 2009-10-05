@@ -8,9 +8,8 @@
       "Allergies Module"
     end
 
-    def validate_c32(document)
+    def validate_c32(allergies)
       errors = []
-      allergies = AllergyC32Importer.import_entries(document.root)
       allergy_to_match = allergies.find {|a| self.free_text_product == a.free_text_product}
       if allergy_to_match
         results = ActiveRecordComparator.compare(self, allergy_to_match)

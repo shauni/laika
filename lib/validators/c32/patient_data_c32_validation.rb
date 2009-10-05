@@ -35,8 +35,15 @@
         errors.concat(self.support.validate_c32(clinical_document)) if self.support
 
       # Allergies
-        self.allergies.each do |allergy|
-          errors.concat(allergy.validate_c32(clinical_document))
+        unless self.allergies.empty?
+          section = AllergyC32Importer.section(clinical_document)
+          if section.blank?
+            errors << ContentError.new(:section => 'Allergy', :error_message => 'Unable to find Allergy section', :type=>'error')
+          end
+          xml_allergies = AllergyC32Importer.import_entries(section)
+          self.allergies.each do |allergy|
+            errors.concat(allergy.validate_c32(xml_allergies))
+          end
         end
 
       # Conditions

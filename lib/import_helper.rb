@@ -18,10 +18,9 @@ module ImportHelper
     REXML::XPath.match(section_element, entry_xpath, DEFAULT_NAMESPACES)
   end
   
-  # Grabs the section and then uses that to pull the entries. Once it has the entry Elements, it will pass them to an import_entry
+  # Pulls the entry elements from the section element. Once it has the entry Elements, it will pass them to an import_entry
   # method to do the job of extracting the data and putting it into an ActiveRecord object
-  def import_entries(document)
-    section_element = section(document)
+  def import_entries(section_element)
     entry_elements = entries(section_element)
     entry_elements.map {|ee| import_entry(ee)}
   end
