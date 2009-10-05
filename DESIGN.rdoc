@@ -45,7 +45,7 @@ enumerated in config/initializers/load_test_plan_types.rb.
 The state of an individual test plan is represented by a sub-class of {TestPlan}:
 
 * {C32DisplayAndFilePlan}
-* {C32GenerateAndFormatPlan}
+* {GenerateAndFormatPlan}
 * {PdqQueryPlan}
 * {PixFeedPlan}
 * {PixQueryPlan}
