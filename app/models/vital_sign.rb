@@ -60,4 +60,51 @@ class VitalSign < AbstractResult
     end
     # End Vital Signs
   end
+  
+  def randomize(gender, birthdate, vital_type)
+
+    self.result_id = rand(100).to_s + 'd' + rand(100000).to_s + '-bd' + rand(100).to_s + '-4c90-891d-eb716d' + rand(10000).to_s + 'c4'
+    self.result_date = DateTime.new(2000 + rand(9), rand(12) + 1, rand(28) + 1)
+    self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.6.1") # sets code system as LOINC
+    self.status_code = 'N'
+    
+    p = rand
+    
+    case vital_type
+    when :systolic
+      self.value_unit = 'mmHg'
+      self.result_code_display_name = 'BP Systolic'
+      self.result_code = '8480-6'
+
+      if p < 0.1
+        self.value_scalar = rand_range(70, 90)
+      elsif p < 0.5 
+        self.value_scalar = rand_range(90, 120)
+      elsif p < 0.7
+        self.value_scalar = rand_range(120, 140)
+      elsif p < 0.9
+        self.value_scalar = rand_range(140, 160)
+      else
+        self.value_scalar = rand_range(160, 180)
+      end
+
+    when :diastolic
+      self.value_unit = 'mmHg'
+      self.result_code_display_name = 'BP Diastolic'
+      self.result_code = '8462-4'
+
+      if p < 0.1
+        self.value_scalar = rand_range(40, 60)
+      elsif p < 0.5 
+        self.value_scalar = rand_range(60, 80)
+      elsif p < 0.7
+        self.value_scalar = rand_range(80, 90)
+      elsif p < 0.9
+        self.value_scalar = rand_range(90, 100)
+      else
+        self.value_scalar = rand_range(100, 130)
+      end
+    end
+    
+  end
 end

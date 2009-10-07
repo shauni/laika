@@ -249,11 +249,15 @@ class Patient < ActiveRecord::Base
     self.information_source.randomize()
 
     result = Result.new
-    result.randomize()
+    result.randomize(self.registration_information.gender, self.registration_information.date_of_birth)
     self.results << result
 
     vital_sign = VitalSign.new
-    vital_sign.randomize()
+    vital_sign.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :systolic)
+    self.vital_signs << vital_sign
+    
+    vital_sign = VitalSign.new
+    vital_sign.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :diastolic)
     self.vital_signs << vital_sign
 
     #self.advance_directive = AdvanceDirective.new
