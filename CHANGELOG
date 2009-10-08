@@ -1,3 +1,5 @@
+=== 2009-10-08 Laika v1.3.9
+
 * Upgraded to Rails 2.3.4.
 * Now depending on CCHIT-xds-facade gem.
 * Support for NHIN C32 document variant.
