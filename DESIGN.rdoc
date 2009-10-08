@@ -58,6 +58,7 @@ The state of an individual test plan is represented by a sub-class of {TestPlan}
 {AtnaAudit}:: references an external table, used for viewing ATNA logs
 {ClinicalDocument}:: C32 document attachment
 {ContentError}:: C32 validation error
+{Proctor}:: test proctor
 {Vendor}:: categorize tests by an arbitrary string
 
 === Controllers

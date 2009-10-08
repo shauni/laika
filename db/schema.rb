@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090908151128) do
+ActiveRecord::Schema.define(:version => 20091008182026) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -387,6 +387,14 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
 
   add_index "procedures", ["patient_id"], :name => "index_procedures_on_patient_id"
 
+  create_table "proctors", :force => true do |t|
+    t.integer "user_id", :null => false
+    t.string  "name",    :null => false
+    t.string  "email",   :null => false
+  end
+
+  add_index "proctors", ["user_id"], :name => "index_proctors_on_user_id"
+
   create_table "provider_roles", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -519,8 +527,10 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.integer  "clinical_document_id"
     t.integer  "user_id",              :null => false
     t.integer  "vendor_id",            :null => false
+    t.integer  "proctor_id"
   end
 
+  add_index "test_plans", ["proctor_id"], :name => "index_test_plans_on_proctor_id"
   add_index "test_plans", ["user_id", "vendor_id"], :name => "index_test_plans_on_user_id_and_vendor_id"
 
   create_table "users", :force => true do |t|

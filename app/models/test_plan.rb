@@ -27,6 +27,7 @@
 class TestPlan < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
+  belongs_to :proctor
   has_one    :patient,           :dependent => :destroy
   belongs_to :clinical_document, :dependent => :destroy
   has_many   :content_errors,    :dependent => :destroy

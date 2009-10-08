@@ -1,7 +1,7 @@
 <!-- Start Header -->
 <div class="header">
   <div class="right top" id="session-controls"><p>Welcome,
-    <%= link_to current_user.first_name, edit_user_path(current_user) %> |
+    <%= link_to current_user.first_name, edit_user_path %> |
     <%= link_to 'Logout', logout_path %>
   </p></div>
   <div class="doggy"><%= link_to image_tag("laika.png", :alt => 'Laika'), root_url %></div>

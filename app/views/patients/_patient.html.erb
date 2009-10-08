@@ -14,7 +14,7 @@
   <td class="actions">
     <ul>
       <li><%= link_to_function 'Add to Test Plan',
-        "toggle_div('assignment_div_#{patient.id}')" %></li>
+        "$('assignment_div_#{patient.id}').toggle().down('select').focus()" %></li>
       <li><%= link_to h('Provide & Register'),
         provide_and_register_xds_patient_url(patient) %>
       <% if not patient.editable_by? current_user -%>
@@ -34,11 +34,14 @@
           :method => 'post' }) do |f| -%>
         <%= hidden_field_tag :patient_id, patient.id %>
         <%= hidden_field_tag :vendor_name, '' %>
-        <%= f.collection_select :vendor_id, current_user.vendors, :id, :public_id,
+        <%= f.collection_select :vendor_id, @vendors, :id, :public_id,
           :include_blank => 'New Inspection' %><br/>
         <%= f.select :type, TestPlan.test_types %><br/>
-        <input type="submit" value="Assign"
-        />
+        <% if not @proctors.empty? -%>
+          <%= f.collection_select :proctor_id, @proctors, :id, :name,
+            :include_blank => 'No Test Proctor' %><br/>
+        <% end -%>
+        <input type="submit" value="Assign" />
       <% end -%>
     </div>
   </td>

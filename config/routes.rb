@@ -4,7 +4,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :vendors, :only => [:create, :update, :destroy] do |vendors|
     vendors.resources :test_plans, :only => :index
   end
-  map.resources :users, :except => [:index]
+  map.resource :user, :except => [:index] do |users|
+    users.resources :proctors, :only => [:create, :destroy, :update]
+  end
   map.resources :xds_utility, :singular => "xds_utility_instance"
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'

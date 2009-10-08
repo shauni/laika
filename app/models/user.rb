@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   before_save               :encrypt_password
 
   has_many :vendors, :dependent => :destroy
+  has_many :proctors, :dependent => :destroy
 
   has_many :test_plans, :dependent => :destroy do
     def by_vendor
