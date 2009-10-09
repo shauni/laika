@@ -26,18 +26,57 @@ class Allergy < ActiveRecord::Base
       xml.act("classCode" => "ACT", "moodCode" => "EVN") do
         xml.templateId("root" => "2.16.840.1.113883.10.20.1.27")
         xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.6")
+        xml.templateId("root" => "2.16.840.1.113883.3.88.11.83.6", "assigningAuthorityName" => "HITSP C83" )
+       	xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5.1")
+       	xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5.3")
+       	xml.statusCode("code"=>"completed")	
+       
+         if start_event != nil || end_event != nil
+          xml.effectiveTime do
+            if start_event != nil 
+              xml.low("value" => start_event.to_s(:brief))
+            end
+            if end_event != nil
+              xml.high("value" => end_event.to_s(:brief))
+            else
+              xml.high("nullFlavor" => "UNK")
+            end
+          end
+        end
+    
         xml.id("root" => "2C748172-7CC2-4902-8AF0-23A105C4401B")
         xml.code("nullFlavor"=>"NA")
-        xml.entryRelationship("typeCode" => "SUBJ") do
+        xml.entryRelationship("typeCode" => "SUBJ", "inversionInd" => "false") do
           xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
             xml.templateId("root" => "2.16.840.1.113883.10.20.1.18")
+            xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5", "assigningAuthorityName" => "IHE PCC")
+            xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.6", "assigningAuthorityName" => "IHE PCC")
+            xml.id
+            xml.value("xsi:type" => "CD", 
+                      "code" => adverse_event_type.code, 
+                      "codeSystem" => "2.16.840.1.113883.6.96", 
+                      "displayName" => adverse_event_type.name,
+                      "codeSystemName" => "SNOMED CT")
+            xml.text do 
+              xml.reference
+            end
+       
+            
             if adverse_event_type 
               xml.code("code" => adverse_event_type.code, 
                        "displayName" => adverse_event_type.name, 
                        "codeSystem" => "2.16.840.1.113883.6.96", 
-                       "codeSystemName" => "SNOMED CT")
+                       "codeSystemName" => "SNOMED CT") do
+                xml.originalText do
+                  xml.reference
+                end
+              end
             else
-              xml.code("nullFlavor"=>"N/A")
+              xml.code("nullFlavor"=>"N/A") do
+                  xml.originalText do
+                    xml.reference
+                  end
+              end
             end
             xml.statusCode("code"=>"completed")
             if start_event != nil || end_event != nil
@@ -64,7 +103,7 @@ class Allergy < ActiveRecord::Base
               end
             end
             if allergy_status_code
-              xml.entryRelationship("typeCode" => "REFR") do
+              xml.entryRelationship("typeCode" => "REFR", "inversionInd" => "false") do
                 xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
                   xml.templateId("root" => "2.16.840.1.113883.10.20.1.39")
                   xml.code("code" => "33999-4", 
@@ -127,6 +166,8 @@ class Allergy < ActiveRecord::Base
         xml.section do
           xml.templateId("root" => "2.16.840.1.113883.10.20.1.2", 
                          "assigningAuthorityName" => "CCD")
+          xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.3.13",  #C32 2.4
+                          "assigningAuthorityName" => "CCD")
           xml.code("code" => "48765-2", 
                    "codeSystem" => "2.16.840.1.113883.6.1")
           xml.title "Allergies, Adverse Reactions, Alerts"
