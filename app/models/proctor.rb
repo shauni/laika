@@ -4,4 +4,9 @@
 class Proctor < ActiveRecord::Base
   validates_presence_of :user_id, :name, :email
   belongs_to :user
+  has_many :test_plans
+
+  def to_s
+    name
+  end
 end

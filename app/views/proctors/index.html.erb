@@ -1,0 +1,7 @@
+<ul>
+<% @proctors.each do |proctor| %>
+  <li><%= link_to h(proctor), proctor %>
+  (<%= pluralize proctor.test_plans.count, "test plan" %> assigned)</li>
+<% end -%>
+</ul>
+<%= link_to 'new', new_proctor_path %>

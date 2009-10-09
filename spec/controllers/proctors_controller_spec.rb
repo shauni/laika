@@ -1,23 +1,23 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ProctorsController do
-  it "should route POST /user/proctors" do
-    params_from(:post, '/user/proctors').should == {
+  it "should route POST /proctors" do
+    params_from(:post, '/proctors').should == {
       :controller => 'proctors',
       :action => 'create'
     }
   end
 
-  it "should route PUT /user/proctors/1" do
-    params_from(:put, '/user/proctors/1').should == {
+  it "should route PUT /proctors/1" do
+    params_from(:put, '/proctors/1').should == {
       :controller => 'proctors',
       :action => 'update',
       :id => '1'
     }
   end
 
-  it "should route DELETE /user/proctors/1" do
-    params_from(:delete, '/user/proctors/1').should == {
+  it "should route DELETE /proctors/1" do
+    params_from(:delete, '/proctors/1').should == {
       :controller => 'proctors',
       :action => 'destroy',
       :id => '1'
@@ -33,7 +33,7 @@ describe ProctorsController do
     it "should create a proctor" do
       proctor_count = @user.proctors.count
       post :create, :proctor => { :name => 'bob', :email => 'bob@bob.foo'}
-      @user.proctors.count.should > proctor_count
+      @user.proctors.count.should == proctor_count + 1
     end
 
     it "should update a proctor" do
