@@ -110,6 +110,7 @@ class Patient < ActiveRecord::Base
                          "xmlns" => "urn:hl7-org:v3",
                          "xmlns:sdtc" => "urn:hl7-org:sdtc",
                          "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance") do
+      xml.realmCode( "code" => "US" ) #C32 2.4
       xml.typeId("root" => "2.16.840.1.113883.1.3",
                  "extension" => "POCD_HD000040")
       xml.templateId("root" => "2.16.840.1.113883.3.27.1776",
@@ -128,7 +129,6 @@ class Patient < ActiveRecord::Base
                "codeSystem" => "2.16.840.1.113883.6.1", 
                "codeSystemName" => "LOINC")
                
-      xml.realmCode( "code" => "US" ) #C32 2.4
       xml.title(name)
 
       if registration_information.try(:document_timestamp)
