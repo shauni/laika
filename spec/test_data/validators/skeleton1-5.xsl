@@ -60,7 +60,7 @@
 <xsl:stylesheet version="1.0" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:axsl="http://www.w3.org/1999/XSL/TransformAlias" 
-	xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+	xmlns:sch="http://www.ascc.net/xml/schematron"
 	 >
 <!-- Note that this namespace is not version specific.
 This program implements schematron 1.5 with some 1.6 extensions -->
