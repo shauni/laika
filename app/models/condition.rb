@@ -26,23 +26,22 @@ class Condition < ActiveRecord::Base
         xml.templateId("root" => "2.16.840.1.113883.3.88.11.83.7", "assigningAuthorityName" => "HITSP C83")
         xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5.1")
         xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5.2")
-        xml.statusCode("code" => "completed")		
-     		
-     		 if start_event != nil || end_event != nil
+
+        xml.id
+        xml.code("nullFlavor"=>"NA")
+        xml.statusCode("code" => "completed")
+        if start_event.present? || end_event.present?
           xml.effectiveTime do
-            if start_event != nil 
+            if start_event.present?
               xml.low("value" => start_event.to_s(:brief))
             end
-            if end_event != nil
+            if end_event.present?
               xml.high("value" => end_event.to_s(:brief))
             else
               xml.high("nullFlavor" => "UNK")
             end
           end
         end
-
-        xml.id
-        xml.code("nullFlavor"=>"NA")
         xml.entryRelationship("typeCode" => "SUBJ", "inversionInd" => "false") do
           xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
             xml.templateId("root" => "2.16.840.1.113883.10.20.1.28", "assigningAuthorityName" => "CCD")
