@@ -187,6 +187,9 @@ ul.vendor-actions > li {
   height: 16px;
   float: right;
 }
+#dashboard .ops a.clone {
+  background: url(/images/icons/page_copy.png) no-repeat bottom center;
+}
 #dashboard .ops a.delete {
   background: url(/images/icons/delete.png) no-repeat bottom center;
 }

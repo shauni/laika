@@ -113,12 +113,20 @@ class TestPlansController < ApplicationController
   # @param [Number] id Test plan ID.
   # @param ["pass", "fail"] state Intended test state.
   def mark
-    if test_plan.user == current_user
-      case params['state']
-      when "pass"; test_plan.pass!
-      when "fail"; test_plan.fail!
-      end
+    case params['state']
+    when "pass"
+      test_plan.pass!
+    when "fail"
+      test_plan.fail!
     end
+    redirect_to test_plans_url
+  end
+
+  # Duplicate an existing test plan so that it can be performed again.
+  #
+  # @param [Number] id Test plan ID.
+  def clone
+    test_plan.clone
     redirect_to test_plans_url
   end
 

@@ -164,6 +164,18 @@ class TestPlan < ActiveRecord::Base
   def self.normalize_name name
     name.strip.downcase.gsub('_','-').gsub(/\ba?nd?\b|&/i, '-and-').gsub(/\W+/, '-')
   end
+
+  # Create and save an identical test plan based on the receiver.
+  # A new patient is cloned and the state is set to "pending".
+  def clone
+    cloned = super
+    new_patient = patient.clone
+    new_patient.save!
+    cloned.patient = new_patient
+    cloned.update_attribute(:state, 'pending')
+    cloned.save!
+    cloned
+  end
 end
 
 
