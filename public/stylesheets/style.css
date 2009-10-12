@@ -177,15 +177,23 @@ ul.vendor-actions > li {
 .other-vendors li > a { font-weight: bold; }
 .other-vendors li > span { font-size: x-small; }
 
-#dashboard .delete > a {
-  padding: 4px 0px 0px 0px;
-  margin: 0px;
+#dashboard .ops a {
+  padding-top: 4px;
+}
+#dashboard .ops a {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 10px;
   width: 16px;
   height: 16px;
-  display:block;
+  float: right;
+}
+#dashboard .ops a.delete {
   background: url(/images/icons/delete.png) no-repeat bottom center;
 }
-#dashboard .delete > a span {
+#dashboard .ops a.notify {
+  background: url(/images/icons/email.png) no-repeat bottom center;
+}
+#dashboard .ops a span {
   display:none;
 }
 
@@ -270,11 +278,11 @@ table#dashboard a {
 }
 
 #dashboard .edit a {
-  padding: 0px 0px 3px 18px;
+  padding: 0px 0px 0px 18px;
   background: url(/images/icons/page_edit.png) no-repeat;
 }
 #dashboard .locked a {
-  padding: 0px 0px 3px 18px;
+  padding: 0px 0px 0px 18px;
   /* background: url(/images/icons/page.png) no-repeat; */
 }
 
@@ -286,7 +294,7 @@ table#dashboard a {
     margin-right: 1ex;
 }
 #dashboard .test_state a {
-  padding: 0px 0px 3px 18px;
+  padding: 0px 0px 0px 18px;
 }
 #dashboard .test_state a.passed {
   background: url(/images/icons/accept.png) no-repeat;

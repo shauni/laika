@@ -18,11 +18,9 @@
 <table id="dashboard">
   <tr>
     <th>Status</th>
-    <th class="<%= sort_order_class('kinds.name') %>"><%= link_to_sort 'kinds.name', 'Test Type' %></th>
-    <th class="<%= sort_order_class('clinical_documents.doc_type') %>"><%= link_to_sort 'clinical_documents.doc_type', 'Document Type' %></th>
+    <th class="<%= sort_order_class('type') %>"><%= link_to_sort 'type', 'Test Type' %></th>
+    <th class="<%= sort_order_class('clinical_documents.doc_type') %>"><%= link_to_sort 'clinical_documents.doc_type', 'Doc Type' %></th>
     <th class="<%= sort_order_class('patient.name') %>"><%= link_to_sort 'patient.name', 'Patient' %></th>
-    <th>Errors</th>
-    <th>Warnings</th>
     <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'When Tested' %></th>
     <th colspan="2">Actions</th>
   </tr>
@@ -37,22 +35,23 @@
         <%= link_to_if test_plan.pending?, h(test_plan.patient.name),
           patient_url(test_plan.patient) %>
       </td>
-      <td>
-        <%= pluralize test_plan.count_errors, 'error' %>
-      </td>
-      <td>
-        <%= pluralize test_plan.count_warnings, 'warning' %>
-      </td>
       <td><%= plan_when_tested test_plan %></td>
       <td class="actions">
         <ul>
           <%= action_list_items test_plan, :update => "execution_div_#{test_plan.id}" %>
         </ul>
       </td>
-      <td class="delete">
-        <%= link_to content_tag('span','delete'), test_plan_path(test_plan), :method => 'delete',
-            :title => 'delete this test plan',
-            :confirm => 'Are you sure you want to delete this test plan?' %>
+      <td class="ops">
+        <%= link_to content_tag('span','delete'),
+            test_plan_path(test_plan), :method => 'delete',
+              :title => 'delete this test plan',
+              :confirm => 'Are you sure you want to delete this test plan?',
+              :class => 'delete' %>
+        <% if test_plan.proctor -%>
+          <%= link_to content_tag('span', 'proctor'),
+            test_plan.proctor, :title => "Test proctor: #{test_plan.proctor}",
+            :class => 'notify' %>
+        <% end -%>
       </td>
     </tr>
     <tr>
