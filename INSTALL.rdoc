@@ -15,54 +15,25 @@ about getting an Amazon EC2 system prepared to run Laika.
 = End-to-end Install Instructions
 Once you get a copy of the Laika code from gitHub, these are step-by-step instructions to get Laika installed on your local machine.
 
-== Git Submodules (Workaround for JRuby bug)
-
-Rails 2.3.2 can cause Laika to trigger a JRuby bug which results in a
-Java stacktrace. The following commit fixed this:
-
-http://github.com/rails/rails/commit/35c5727acea882f4cef2a8a2d12d87a8fda045c8
-
-Since this commit isn't in a released version of Rails, we have submodule
-pointing to the official Rails 2-3-stable branch.
-
-Navigate to the root of your Laika project and run:
-
- $ git submodule init
- $ git submodule update
-
-Associated SF ticket: https://sourceforge.net/tracker/index.php?func=detail&aid=2785138&group_id=205665&atid=994554
-
 == Install JRuby and Required Gems
 
 Ensure that you have JRuby version 1.3.1 installed locally (available here: http://dist.codehaus.org/jruby/1.3.1/) and add <jruby-install>/bin to your PATH environment variable.
 
-You will need to install Rails for JRuby, as well as the Factory Girl and Shoulda gems:
+You will need to install Rails for JRuby:
 
  $ jruby -S gem sources -a http://gems.github.com
- $ jruby -S gem install rails
- $ jruby -S gem install thoughtbot-factory_girl 
- $ jruby -S gem install thoughtbot-shoulda 
+ $ jruby -S gem install rails -v=2.3.4 --no-rdoc --no-ri
 
 Install the rest of the gem dependencies; from the root of your Laika project:
 
  $ jruby -S rake gems:install
 
-== Build and Install the Laika XDS gem
-Get a copy of the xds-facade code from http://github.com/CCHIT/xds-facade/
-Navigate to the xds-facade directory, build the XDS gem and install it:
-
- $ cd xds-facade
- $ jruby -S rake gem
- $ cd pkg
- $ jruby -S gem install xds-facade-0.1.0.gem
-
-_Above instructions soon to be replaced by_: 
- $ jruby -S gem install CCHIT-xds-facade -s http://gems.github.com
-
 == XDS HOST
+
 The default XDS setup on Laika points to localhost. You can change the initial XDS endpoints by editing the settings.yml in spec/fixtures. If you do not have your own XDS set up, you can use the public registry provided by NIST (more information at http://129.6.24.109:9080/index.html); simply change localhost to the following IP address: http://129.6.24.109:9080.
 
 == Database
+
 Install the database adapters:
 
   $ jruby -S gem install activerecord-jdbcmysql-adapter
@@ -83,6 +54,7 @@ Save the file as database.yml (i.e., without .template extension). Run the datab
   $ jruby -S rake db:seed
 
 == Environment
+
 Laika uses Saxon (http://saxon.sourceforge.net/) to handle XML Schema validation and XSLT. For this to function properly, the Saxon jars must be set in a CLASSPATH environment variable. 
 
 Navigate to the root of your Laika project and run:
@@ -92,6 +64,7 @@ Navigate to the root of your Laika project and run:
 As an alternative, you may create CLASSPATH environment variable as part of the user's profile.
 
 == GlassFish
+
 Install the Glassfish server using the Glassfish gem:
 
   $ jruby -S gem install glassfish
