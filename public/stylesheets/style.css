@@ -671,7 +671,11 @@ form.new_patient_data {
 
 .user-box {
   margin-top: 20px;
+  margin-right: 3em;
+  float: left;
 }
+.user-box input[type="text"]  { width: 50ex; }
+.user-box input[type="password"]  { width: 40ex; }
 
 h3 > span {
   font-size: .7em;

@@ -1,0 +1,12 @@
+<h2>
+Proctor: <%=h @proctor %>
+&lt;<%= link_to h(@proctor.email), "mailto:#{@proctor.email}" %>&gt;
+</h2>
+
+<ul>
+  <% @proctor.test_plans.each do |plan| -%>
+    <li><%=h plan %></li>
+  <% end -%>
+</ul>
+
+<%= link_to 'show all proctors', proctors_path %>
