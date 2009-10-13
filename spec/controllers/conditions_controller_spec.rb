@@ -9,7 +9,7 @@ describe ConditionsController do
 
   describe "with a patient" do
     before do
-      @patient = Patient.factory.create
+      @patient = Patient.factory.create(:conditions => [Condition.factory.new])
       controller.stub!(:current_user).and_return(@patient.user)
     end
 

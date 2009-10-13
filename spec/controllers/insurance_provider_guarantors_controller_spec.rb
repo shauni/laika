@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe InsuranceProviderGuarantorsController do
   before do
     @patient = Patient.factory.create
+    @patient.insurance_providers = [InsuranceProvider.factory.create(:patient => @patient)]
     controller.stub!(:current_user).and_return(@patient.user)
   end
 
