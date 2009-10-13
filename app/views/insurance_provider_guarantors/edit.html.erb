@@ -2,18 +2,12 @@
                    :update => "insurance_provider_guarantor#{@insurance_provider_guarantor.id}") do |f| -%>
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td colspan="2" class="lighttext">Guarantor Information</td>
+    <th colspan="2" class="lighttext">Guarantor Information</th>
   </tr>
   <%= f.person_name_fields %>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Guarantor Effective Date</td>
-    <td><%= f.calendar_date_select :effective_date %></td>
-  </tr>
+  <%= f.calendar_date_select :effective_date %>
   <%= f.address_fields %>
   <%= f.telecom_fields %>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td><%= f.submit "Save" %></td>
-  </tr>
+  <%= f.submit "Save" %>
 <table>
 <% end %>

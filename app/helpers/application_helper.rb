@@ -15,7 +15,7 @@ module ApplicationHelper
 
   # Return an HTML span describing the requirements for the given model field.
   def requirements_for(model, field)
-    return '' unless model.try(:requirements)
+    return '' unless model.respond_to?(:requirements) && model.requirements
     case model.requirements[field]
       when :required
         content_tag :span, 'Required',
