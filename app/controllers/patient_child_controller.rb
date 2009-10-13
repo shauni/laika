@@ -11,6 +11,7 @@ class PatientChildController < ApplicationController
   before_filter :find_patient
   before_filter :check_edit_permissions
   layout false
+  helper :patients
 
   def new
     instance_variable_set instance_var_name, model_class.new

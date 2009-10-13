@@ -1,20 +1,8 @@
 <table>
-<tr class="<%= cycle("darkzebra", "lightzebra")%>">
-  <td class="lighttext">Language</td>
-  <td><% if language.iso_language %><%=h language.iso_language.name %><% end %></td>
-</tr>
-<tr class="<%= cycle("darkzebra", "lightzebra")%>">
-  <td class="lighttext">Country</td>
-  <td><% if language.iso_country %><%=h language.iso_country.name %><% end %></td>
-</tr>
-<tr class="<%= cycle("darkzebra", "lightzebra")%>">
-  <td class="lighttext">Mode</td>
-  <td><% if language.language_ability_mode %><%= h language.language_ability_mode.name %><% end %></td>
-</tr>
-<tr class="<%= cycle("darkzebra", "lightzebra")%>">
-  <td class="lighttext">Preferred</td>
-  <td><%= h language.preference %></td>
-</tr>
+  <%= view_row language, :iso_language %>
+  <%= view_row language, :iso_country %>
+  <%= view_row language, :language_ability_mode %>
+  <%= view_row language, :preference %>
 <% if @patient.editable_by? current_user -%>
 <tr class="<%= cycle("darkzebra", "lightzebra")%>">
   <td></td>

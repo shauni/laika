@@ -1,43 +1,22 @@
 <table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Administration Date</td>
-    <td><%=h immunization.administration_date %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Product</td>
-    <td>
-      <% if immunization.vaccine %><%=h immunization.vaccine.name %><% end %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Lot Number Text</td>
-    <td><%=h immunization.lot_number_text %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Patient Refusal</td>
-    <td><%= h immunization.refusal %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">No Immunization Reason</td>
-    <td>
-      <% if immunization.no_immunization_reason %><%=h immunization.no_immunization_reason.name %><% end %>
-    </td>
-  </tr>  
+  <%= view_row immunization, :administration_date %>
+  <%= view_row immunization, :vaccine %>
+  <%= view_row immunization, :lot_number_text %>
+  <%= view_row immunization, :refusal %>
+  <%= view_row immunization, :no_immunization_reason %>
   <% if @patient.editable_by? current_user -%>
     <tr class="<%= cycle("darkzebra", "lightzebra")%>">
       <td></td>
       <td>
-      <span>
-      <%= link_to_remote 'Edit', :update => "immunization#{immunization.id}",
-                                 :url => edit_patient_immunization_path(patient, immunization),
-                                 :method => 'get' %>
-      </span>
-      <span>
-       <%= link_to_remote 'Remove', :update => "immunization#{immunization.id}",
-                                 :url => patient_immunization_path(patient, immunization),
-                                 :confirm=>"Are you sure you wish to remove this immunization?",
-                                 :method => 'delete' %>
-      </span>                           
+        <%= link_to_remote 'Edit',
+          :update => {:success => "immunization#{immunization.id}"},
+          :url => edit_patient_immunization_path(patient, immunization),
+          :method => 'get' %>
+       <%= link_to_remote 'Remove',
+          :update => {:success => "immunization#{immunization.id}"},
+          :url => patient_immunization_path(patient, immunization),
+          :confirm=>"Are you sure you wish to remove this immunization?",
+          :method => 'delete' %>
       </td>
     </tr>
   <% end -%>

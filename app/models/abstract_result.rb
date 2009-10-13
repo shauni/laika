@@ -38,6 +38,11 @@ class AbstractResult < ActiveRecord::Base
     }
   end
 
+  # Return a string representation of the value using value_scalar and value_unit.
+  def value
+    "#{value_scalar} #{value_unit}"
+  end
+
   def statement_ccd_template_id
     '2.16.840.1.113883.10.20.1.31'
   end
