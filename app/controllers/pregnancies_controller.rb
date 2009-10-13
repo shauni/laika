@@ -4,7 +4,7 @@ class PregnanciesController < PatientChildrenController
   end
 
   def update
-    @patient.update_attributes(:pregnant => (params[:pregnant] == 'on'))
+    @patient.update_attributes params[:patient]
     render :partial  => 'show'
   end
   

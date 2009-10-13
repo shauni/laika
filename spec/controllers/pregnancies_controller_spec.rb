@@ -20,7 +20,7 @@ describe PregnanciesController do
     pd = Patient.factory.create(:pregnant => false)
     controller.stub!(:current_user).and_return(pd.user)
 
-    put :update, :patient_id => pd.id.to_s, :pregnant => 'on'
+    put :update, :patient_id => pd.id.to_s, :patient => { :pregnant => '1' }
 
     pd.reload
     pd.pregnant.should == true
@@ -30,7 +30,7 @@ describe PregnanciesController do
     pd = Patient.factory.create(:pregnant => true)
     controller.stub!(:current_user).and_return(pd.user)
 
-    put :update, :patient_id => pd.id.to_s
+    put :update, :patient_id => pd.id.to_s, :patient => {:pregnant => '0' }
 
     pd.reload
     pd.pregnant.should == false

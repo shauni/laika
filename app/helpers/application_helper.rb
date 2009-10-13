@@ -9,25 +9,32 @@ module ApplicationHelper
   # Form helper for building forms using PatientFormBuilder.
   def patient_form_for(record, *args, &proc)
     options = args.extract_options!
-    remote_form_for(record, *(args << options.merge(:builder => PatientFormBuilder)), &proc)
+    update = { :success => options[:update], :failure => nil }
+    remote_form_for(record, *(args << options.merge(:builder => PatientFormBuilder, :update => update)), &proc)
   end
 
   # Return an HTML span describing the requirements for the given model field.
   def requirements_for(model, field)
-    return nil unless model.respond_to?(:requirements) and model.requirements
+    return '' unless model.try(:requirements)
     case model.requirements[field]
       when :required
-        '<span class="validation_for required">Required</span>'
+        content_tag :span, 'Required',
+          :class => 'validation_for required'
       when :nhin_required
-        '<span class="validation_for required">Required (NHIN)</span>'
+        content_tag :span, 'Required (NHIN)',
+          :class => 'validation_for required'
       when :hitsp_required
-        '<span class="validation_for required">Required (HITSP R)</span>'
+        content_tag :span, 'Required (HITSP R)',
+          :class => 'validation_for required'
       when :hitsp_r2_required
-        '<span class="validation_for required">Required (HITSP R2)</span>'
+        content_tag :span, 'Required (HITSP R2)',
+          :class => 'validation_for required'
       when :hitsp_optional
-        '<span class="validation_for">Optional (HITSP R)</span>'
+        content_tag :span, 'Optional (HITSP R)',
+          :class => 'validation_for'
       when :hitsp_r2_optional
-        '<span class="validation_for">Optional (HITSP R2)</span>'
+        content_tag :span, 'Optional (HITSP R2)',
+          :class => 'validation_for'
       else
         ''
     end

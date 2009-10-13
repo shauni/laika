@@ -3,27 +3,14 @@
                    :update => 'informationSourceContainer') do |f| %>
 <h5>Information Source (Required)</h5>
 <table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Time <%= requirements_for @information_source, :time %></td>
-    <td><%= f.calendar_date_select :time %></td>
-  </tr>
+  <%= f.calendar_date_select :time %>
   <%= f.person_name_fields %>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Document ID <%= requirements_for @information_source, :document_id %></td>
-    <td>
-      <%= f.text_field :document_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}');" %>
-      <em><%= render :partial => '/layouts/uuid_help_text', :locals => { :is_vital_sign => false } %></em>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Represented Organization Name <%= requirements_for @information_source, :organization_name %></td>
-    <td>
-      <%= f.text_field :organization_name %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td><%= f.submit "Save" %></td>
-  </tr>
+  <%= f.text_field :document_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}');" %>
+  <tr><td colspan="2">
+      <%= render :partial => '/layouts/uuid_help_text',
+        :locals => { :is_vital_sign => false } %>
+  </td></tr>
+  <%= f.text_field :organization_name %>
+  <%= f.submit("Save") %>
 </table>
 <% end %>

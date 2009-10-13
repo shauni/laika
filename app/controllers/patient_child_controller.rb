@@ -16,6 +16,11 @@ class PatientChildController < ApplicationController
     instance_variable_set instance_var_name, model_class.new
     render :action => 'edit'
   end
+
+  def show
+    instance = @patient.send(association_name)
+    render :partial  => 'show', :locals => {association_name => instance, :patient => @patient}
+  end
   
   def edit
     instance_variable_set instance_var_name, @patient.send(association_name)

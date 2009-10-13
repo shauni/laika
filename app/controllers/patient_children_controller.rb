@@ -9,6 +9,14 @@
 #
 class PatientChildrenController < PatientChildController
   
+  def show
+    instance = @patient.send(association_name).find(params[:id])
+    render :partial  => 'show', :locals => {
+      param_key => instance,
+      :patient => @patient
+    }
+  end
+  
   def edit
     instance_variable_set(instance_var_name, @patient.send(association_name).find(params[:id]))
   end
