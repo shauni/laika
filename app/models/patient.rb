@@ -227,8 +227,24 @@ class Patient < ActiveRecord::Base
     #self.allergies << allergy
 
     condition = Condition.new
-    condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, self.conditions)
-    self.conditions << condition
+    if condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :diabetes)
+      self.conditions << condition
+    end
+    
+    condition = Condition.new
+    if condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :hypertension)
+      self.conditions << condition
+    end
+    
+    condition = Condition.new
+    if condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :ischemia)
+      self.conditions << condition
+    end
+    
+    condition = Condition.new
+    if condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :lipoid)
+      self.conditions << condition
+    end
 
     #language = Language.new
     #language.randomize()

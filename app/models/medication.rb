@@ -103,17 +103,28 @@ class Medication < ActiveRecord::Base
   end
   
   def randomize()
-    @product_names = ["Metoprolol", "Cephalexin", "Albuterol inhalant", "Prednisone", "Clopidogrel"]
-    @product_codes = [430618, 197454, 307782, 312615, 309362]
-    @brand_names = ["Generic Brand",  "Keflex", "ACTUAT inhalant", "", "Plavix"]
-    @index = rand(6)
+    p = rand
 
-    self.product_coded_display_name = @product_names[@index]
-    self.product_code = @product_codes[@index]
-    self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.6.88")  #RxNorm
-    self.free_text_brand_name = @brand_names[@index]
-    self.medication_type = MedicationType.find :random
-    self.expiration_time = DateTime.new(2008 + rand(4), rand(12) + 1, rand(28) + 1)
+    if p < 0.35
+      self.product_coded_display_name = "Aspirin"
+      self.product_code = "R16CO5Y76E"
+      self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.4.9")  #FDA UNII
+      self.free_text_brand_name = ""
+      self.medication_type = MedicationType.find :random
+      self.expiration_time = DateTime.new(2008 + rand(4), rand(12) + 1, rand(28) + 1)
+    else
+      product_names = ["Metoprolol", "Cephalexin", "Albuterol inhalant", "Prednisone", "Clopidogrel"]
+      product_codes = [430618, 197454, 307782, 312615, 309362]
+      brand_names = ["Generic Brand",  "Keflex", "ACTUAT inhalant", "", "Plavix"]
+      index = rand(6)
+
+      self.product_coded_display_name = product_names[index]
+      self.product_code = product_codes[index]
+      self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.6.88")  #RxNorm
+      self.free_text_brand_name = brand_names[index]
+      self.medication_type = MedicationType.find :random
+      self.expiration_time = DateTime.new(2008 + rand(4), rand(12) + 1, rand(28) + 1)
+    end
   end
   
   def self.c32_component(medications, xml)

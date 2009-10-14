@@ -67,11 +67,67 @@ class Condition < ActiveRecord::Base
     end
   end
 
-  def randomize(gender, birth_date, conditions)
+  
+  def randomize(gender, birth_date, condition)
+    
     self.start_event = DateTime.new(rand_range(birth_date.year, DateTime.now.year), rand(12) + 1, rand(28) +1)
     
-    self.problem_type = ProblemType.find(:random)
-    self.free_text_name = SnowmedProblem.find(:random).try(:name)
+    case condition
+    when :diabetes
+      condition_code = "73211009"
+      has_condition = Condition.make_has_condition({ [0, 18]  => {:M => 0.0039, :F => 0.0057}, 
+                                                     [18, 36] => {:M => 0.0214, :F => 0.0153},
+                                                     [36, 54] => {:M => 0.0854, :F => 0.0610},
+                                                     [54, 72] => {:M => 0.1998, :F => 0.1672},
+                                                     [72, 150] => {:M => 0.2239, :F => 0.1837} })
+    when :hypertension
+      condition_code = "59621000"
+      has_condition = Condition.make_has_condition({ [0, 18]  => {:M => 0.0003, :F => 0.0005}, 
+                                                     [18, 36] => {:M => 0.0186, :F => 0.0098},
+                                                     [36, 54] => {:M => 0.0836, :F => 0.0570},
+                                                     [54, 72] => {:M => 0.1516, :F => 0.1392},
+                                                     [72, 150] => {:M => 0.1766, :F => 0.2005} })
+    when :ischemia
+      condition_code = "52674009"
+      has_condition = Condition.make_has_condition({ [0, 18]  => {:M => 0.0039, :F => 0.0057}, 
+                                                     [18, 36] => {:M => 0.0214, :F => 0.0153},
+                                                     [36, 54] => {:M => 0.0854, :F => 0.0610},
+                                                     [54, 72] => {:M => 0.1998, :F => 0.1672},
+                                                     [72, 150] => {:M => 0.2239, :F => 0.1837} })
+    when :lipoid
+      condition_code = "3744001"
+      has_condition = Condition.make_has_condition({ [0, 18]  => {:M => 0.0039, :F => 0.0057}, 
+                                                     [18, 36] => {:M => 0.0214, :F => 0.0153},
+                                                     [36, 54] => {:M => 0.0854, :F => 0.0610},
+                                                     [54, 72] => {:M => 0.1998, :F => 0.1672},
+                                                     [72, 150] => {:M => 0.2239, :F => 0.1837} })
+
+    else #if no condition is specified, chance of random condition
+      condition_code = SnowmedProblem.find(:random).code
+      has_condition = Condition.make_has_condition({[0, 150] => {:M => 0.4, :F => 0.35}})
+    end
+                                                   
+    
+    if has_condition.call(rand, DateTime.now.year - birth_date.year, gender.code.intern)
+      self.problem_type = ProblemType.find_by_name("Condition")
+      self.free_text_name = SnowmedProblem.find_by_code(condition_code).try(:name)
+      return true
+    else
+      return false
+    end
+    
+  end
+  
+  # creates a proc has_condition_x
+  # age_buckets is a hash of the form {[age_min, age_max] => {:M => prob_male, :F => prob_female], ...}
+  def Condition.make_has_condition (age_buckets)
+    
+    return lambda { |p_condition, age, gender|
+      age_buckets.each {|bucket, prob|
+        return true if age >= bucket[0] && age < bucket[1] && p_condition <= prob[gender]
+      }
+      return false
+    }
   end
 
 

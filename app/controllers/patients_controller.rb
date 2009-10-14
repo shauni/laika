@@ -43,15 +43,15 @@ class PatientsController < ApplicationController
   # creates the given number of "realistic" patient records
   def create_random_records
     i=0
-    number = params[:number]
-    while i<= 50 
+    # number = params[:number]
+    while i<= 500
       patient = Patient.new
       patient.randomize()
       patient.save!
       i += 1
     end
     
-    redirect_to patients_url
+    redirect_to patient_url(patient)
   end
 
   def create
