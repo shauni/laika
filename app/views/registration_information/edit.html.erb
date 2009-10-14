@@ -1,6 +1,6 @@
 <!-- Start Personal Information Module -->
 <% patient_form_for(@registration_information, :url => patient_registration_information_path(@patient),
-                   :update => 'personInformationContainer' ) do |f| %>
+                   :update => 'registrationInformationContainer' ) do |f| %>
 <h5>Person Information (Required)</h5>
 <table>
   <%= f.calendar_date_select :document_timestamp %>
@@ -24,7 +24,7 @@
   <%= f.telecom_fields %>
   <%= f.submit("Save") %>
   <%= f.table_controls(link_to_function('Cancel', %{
-        new Ajax.Updater('personInformationContainer',
+        new Ajax.Updater('registrationInformationContainer',
           '#{patient_registration_information_url(@patient)}',
           {method:'get'})
       })) %>

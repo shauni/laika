@@ -1,6 +1,6 @@
 <h5>Support (HITSP required)</h5>
-<table>
 <% if support -%>
+  <table>
   <%= view_row support, :start_support %>
   <%= view_row support, :end_support %>
   <%= render :partial => '/person_names/show', :locals => {:person_name => support.person_name}%>
@@ -8,10 +8,9 @@
   <%= view_row support, :relationship %>
   <%= render :partial => '/addresses/show', :locals => {:address => support.address, :required => ['sdf'], :hitsp_required => ['sdfsdf']}%>
   <%= render :partial => '/telecoms/show', :locals => {:telecom => support.telecom}%>
+  </table>
   <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
+    <div class="controls">
         <%= link_to_remote 'Edit',
           :update => {:success => 'supportContainer'},
           :url => edit_patient_support_path(patient),
@@ -21,19 +20,15 @@
           :url => patient_support_path(patient),
           :confirm=>"Are you sure you wish to remove this support?",
           :method => 'delete' %>
-      </td>
-    </tr>
+    </div>
   <% end -%>
 <% else -%>
   <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td class="lighttext">There is no support data for this test case</td>
-      <td>
-        <%= link_to_remote 'Create some',
+    <div class="controls">
+      There is no support data for this test case.
+        <%= link_to_remote 'Create Support.',
           :update => {:success => 'supportContainer'},
           :url => new_patient_support_path(patient), :method => 'get' %>
-      </td>
-    </tr>
+    </div>
   <% end -%>
 <% end -%>
-</table>

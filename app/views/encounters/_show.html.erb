@@ -5,27 +5,24 @@
   <%= view_row encounter, :name %>
   <%= view_row encounter, :encounter_type %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <th colspan="2" class="lighttext">Encounter Provider</th>
+    <th colspan="2" class="lighttext">Provider</th>
   </tr>
   <%= render :partial => '/person_names/show', :locals => {:person_name => encounter.person_name}%>
   <%= render :partial => '/addresses/show', :locals => {:address => encounter.address}%>
   <%= render :partial => '/telecoms/show', :locals => {:telecom => encounter.telecom}%>
   <%= view_row encounter, :location_name %>
   <%= view_row encounter, :encounter_location_code %>
-  <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
-        <%= link_to_remote 'Edit',
-          :update => {:success => "encounter#{encounter.id}"},
-          :url => edit_patient_encounter_path(patient, encounter),
-          :method => 'get' %>
-        <%= link_to_remote 'Remove',
-          :update => {:success => "encounter#{encounter.id}"},
-          :url => patient_encounter_path(patient, encounter),
-          :confirm=>"Are you sure you wish to remove this encounter?",
-          :method => 'delete' %>
-      </td>
-    </tr>
-  <% end -%>
 </table>
+<% if patient.editable_by? current_user -%>
+  <div class="controls">
+    <%= link_to_remote 'Edit',
+      :update => {:success => "encounter#{encounter.id}"},
+      :url => edit_patient_encounter_path(patient, encounter),
+      :method => 'get' %>
+    <%= link_to_remote 'Remove',
+      :update => {:success => "encounter#{encounter.id}"},
+      :url => patient_encounter_path(patient, encounter),
+      :confirm=>"Are you sure you wish to remove this encounter?",
+      :method => 'delete' %>
+  </div>
+<% end -%>

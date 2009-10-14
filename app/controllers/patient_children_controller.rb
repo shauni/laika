@@ -39,6 +39,9 @@ class PatientChildrenController < PatientChildController
   def destroy
     instance = @patient.send(association_name).find(params[:id])
     instance.destroy
+    render :update do |page|
+      page.remove "#{controller.controller_name.singularize}#{params[:id]}"
+    end
   end
   
   protected

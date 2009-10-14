@@ -119,7 +119,7 @@ body {
 
 .content {
 	background: url(/images/content.png);
-	padding:45px 5px; 
+	padding:30px 5px; 
 	min-height:400px;
 }
 
@@ -167,11 +167,67 @@ ul.vendor-actions > li {
   content: ": ";
 }
 
-#templateInformationContainer {
-  position:fixed;
+#patient-sidebar {
+ position:fixed;
+ width: 230px;
 }
-#templateInformationContainer h3 {
-  position:fixed;
+#patient-sidebar #modules {
+ width: 220px;
+ margin: auto;
+}
+#patient-sidebar ul {
+ margin-left: 0px;
+}
+#patient-sidebar li {
+ list-style: none;
+ padding-left: 1ex;
+}
+
+#patient-sidebar li.back {
+  text-align: center;
+}
+#patient-sidebar li.back a:link {
+  color: #aaa;
+}
+#patient-sidebar li.back a:visited {
+  color: #aaa;
+}
+#patient-content {
+ margin-left: 245px;
+}
+#templateInformationContainer {
+  width: 230px;
+  height: 3em;
+}
+#templateInformationContainer input[type=text] {
+  width: 200px;
+}
+#templateInformationContainer h3 a {
+  font-size: 50%;
+  font-weight: normal;
+  color: #aaa;
+}
+
+#patient-content .module {
+  margin-top: 2em;
+}
+#patient-content .module h5 {
+  margin-bottom: 0px;
+  margin-left: -10px;
+  border-top: solid 2px black;
+}
+#patient-content .module table {
+  margin-top: 1ex;
+  margin-bottom: 0.5ex;
+  border-top: solid 2px #ddd;
+}
+#patient-content .module .controls {
+  margin-bottom: 1em;
+  margin-left: 3em;
+  font-weight: bold;
+}
+#patient-content .module .controls a {
+  margin-right: 2em;
 }
 
 .other-vendors li > a { font-weight: bold; }
@@ -298,6 +354,7 @@ table#dashboard a {
 }
 #dashboard .test_state a {
   padding: 0px 0px 0px 18px;
+  min-height: 20px;
 }
 #dashboard .test_state a.passed {
   background: url(/images/icons/accept.png) no-repeat;

@@ -15,7 +15,7 @@ end %>
     <%= f.text_field :name %>
     <%= f.select :encounter_type_id, EncounterType.select_options, {:include_blank => true} %>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <th colspan="2" class="lighttext">Encounter Provider</th>
+    <th colspan="2" class="lighttext">Provider</th>
   </tr>
   <%= f.person_name_fields %>
   <%= f.address_fields %>

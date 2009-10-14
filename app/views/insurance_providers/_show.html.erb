@@ -1,15 +1,15 @@
 <div id="insurance_provider<%= insurance_provider.id %>">
 <table>
+  <tr class="<%= cycle_row %>"><th colspan="2">Insurance Provider</th></tr>
   <%= view_row insurance_provider, :represented_organization %>
   <%= view_row insurance_provider, :group_number %>
   <%= view_row insurance_provider, :insurance_type %>
   <%= view_row insurance_provider, :health_plan %>
   <%= view_row insurance_provider, :coverage_role_type %>
   <%= view_row insurance_provider, :role_class_relationship_formal_type %>
+</table>
   <% if @patient.editable_by? current_user -%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td>
+    <div class="controls">
       <%= link_to_remote 'Edit',
         :update => {:success => "insurance_provider#{insurance_provider.id}"},
         :url => edit_patient_insurance_provider_path(patient, insurance_provider),
@@ -19,10 +19,8 @@
         :url => patient_insurance_provider_path(patient, insurance_provider),
         :confirm => 'Are you sure you wish to remove this insurance provider?',
         :method => 'delete' %>
-    </td>
-  </tr>
+    </div>
   <% end -%>
-</table>
 <div id="insurance_provider_patient<%= insurance_provider.insurance_provider_patient.id %>">
   <%= render :partial => '/insurance_provider_patients/show', 
              :locals => {:insurance_provider_patient => insurance_provider.insurance_provider_patient,

@@ -1,0 +1,17 @@
+<div class="module" id="<%= ident.camelize(:lower) %>Container">
+  <h5><%= title %></h5>
+  <% @patient.send(ident).each do |item| -%>
+    <div class="item" id="<%= "#{ident.singularize}#{item.id}" %>">
+      <%= render :partial => "/#{table_name}/show",
+          :locals => {
+            table_name.singularize.to_sym => item,
+            :patient => @patient
+          } %>
+    </div>
+  <% end -%>
+  <% if @patient.editable_by? current_user -%>
+    <div class="controls" id="add<%= ident.singularize.camelize %>">
+      <%= link_to_add_module @patient, ident.singularize %>
+    </div>
+  <% end -%>
+</div>

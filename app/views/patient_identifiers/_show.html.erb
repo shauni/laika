@@ -1,24 +1,17 @@
 <table>
   <%= view_row patient_identifier, :patient_identifier %>
   <%= view_row patient_identifier, :affinity_domain %>
-  <% if @patient.editable_by? current_user -%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td>
-    <span>
-      <%= link_to_remote 'Edit',
-        :update => {:success => "patient_identifier#{patient_identifier.id}"},
-        :url => edit_patient_patient_identifier_path(patient, patient_identifier),
-        :method => 'get' %>
-    </span>
-    <span>
-      <%= link_to_remote 'Remove',
-        :update => {:success => "patient_identifier#{patient_identifier.id}"},
-        :url => patient_patient_identifier_path(patient, patient_identifier),
-        :confirm=>"Are you sure you wish to remove this patient identifer?",
-        :method => 'delete' %>
-    </span>
-    </td>
-  </tr>
-  <% end -%>
 </table>
+<% if @patient.editable_by? current_user -%>
+  <div class="controls">
+    <%= link_to_remote 'Edit',
+      :update => {:success => "patient_identifier#{patient_identifier.id}"},
+      :url => edit_patient_patient_identifier_path(patient, patient_identifier),
+      :method => 'get' %>
+    <%= link_to_remote 'Remove',
+      :update => {:success => "patient_identifier#{patient_identifier.id}"},
+      :url => patient_patient_identifier_path(patient, patient_identifier),
+      :confirm=>"Are you sure you wish to remove this patient identifer?",
+      :method => 'delete' %>
+  </div>
+<% end -%>
