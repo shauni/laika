@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ProceduresController do
   before do
-    @patient = Patient.factory.create
+    @patient = Patient.factory.create :procedures => [Procedure.factory.new]
     controller.stub!(:current_user).and_return(@patient.user)
   end
 

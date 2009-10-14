@@ -1,16 +1,14 @@
 class ProctorsController < ApplicationController
-  layout false
+  before_filter :find_proctor, :only => %w[ edit update destroy show ]
+  page_title "Laika Test Proctors"
 
-  def edit
-  end
-
-  def show
+  def index
+    @proctors = current_user.proctors
   end
 
   def update
-    @proctor = Proctor.find params[:id]
-    @proctor.update_attributes!(params[:proctor])
-    render :action => 'show'
+    @proctor.update_attributes! params[:proctor]
+    redirect_to proctors_url
   rescue ActiveRecord::InvalidRecord
     render :action => 'edit'
   end
@@ -18,14 +16,19 @@ class ProctorsController < ApplicationController
   def create
     @proctor = current_user.proctors.new params[:proctor]
     @proctor.save!
-    render :action => 'show'
+    redirect_to proctors_url
   rescue ActiveRecord::InvalidRecord
     render :action => 'edit'
   end
 
   def destroy
-    proctor = current_user.proctors.find params[:id]
-    proctor.destroy
-    redirect_to user_url
+    @proctor.destroy
+    redirect_to proctors_url
+  end
+
+  protected
+
+  def find_proctor
+    @proctor = current_user.proctors.find params[:id]
   end
 end

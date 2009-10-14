@@ -1,5 +1,3 @@
-require_dependency 'sort_order'
-
 class PatientsController < ApplicationController
   page_title 'Laika Test Library'
   before_filter :set_patient, :except => %w[ index create autoCreate ]

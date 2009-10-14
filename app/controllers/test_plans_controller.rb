@@ -2,7 +2,7 @@ class TestPlansController < ApplicationController
   page_title 'Laika Dashboard'
 
   include SortOrder
-  self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
+  self.valid_sort_fields = %w[ type updated_at patients.name clinical_documents.doc_type ]
 
   before_filter :set_test_plan, :except => [:index, :create]
   before_filter :set_vendor, :only => [:index]
@@ -48,7 +48,8 @@ class TestPlansController < ApplicationController
   
   # Display all test plans by vendor.
   def index
-    @test_plans = @vendor.test_plans.all(:order => sort_order)
+    @test_plans = @vendor.test_plans.all :order => sort_order,
+      :include => [ :patient, :proctor, :clinical_document ]
     @other_vendors = current_user.vendors - [@vendor]
   end
 
@@ -112,12 +113,20 @@ class TestPlansController < ApplicationController
   # @param [Number] id Test plan ID.
   # @param ["pass", "fail"] state Intended test state.
   def mark
-    if test_plan.user == current_user
-      case params['state']
-      when "pass"; test_plan.pass!
-      when "fail"; test_plan.fail!
-      end
+    case params['state']
+    when "pass"
+      test_plan.pass!
+    when "fail"
+      test_plan.fail!
     end
+    redirect_to test_plans_url
+  end
+
+  # Duplicate an existing test plan so that it can be performed again.
+  #
+  # @param [Number] id Test plan ID.
+  def clone
+    test_plan.clone
     redirect_to test_plans_url
   end
 

@@ -37,6 +37,12 @@ class TestPlan < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :vendor_id
 
+  # Quick and dirty human-readable stringification, useful for
+  # debugging or prototyping.
+  def to_s
+    "#{vendor}: #{test_name} of #{patient.name} (#{state})"
+  end
+
   # Count the errors in the content_errors.
   #
   # @return [Number] Number of errors in the test results.
@@ -65,7 +71,7 @@ class TestPlan < ActiveRecord::Base
   #
   # @return [String] Paramterized name.
   def parameterized_name
-    self.class.normalize_name(self.class.test_name).gsub('-','_')
+    self.class.normalize_name(test_name).gsub('-','_')
   end
 
   # Accessor for the test plan type registry.
@@ -157,6 +163,18 @@ class TestPlan < ActiveRecord::Base
   # @return [String] normalized name
   def self.normalize_name name
     name.strip.downcase.gsub('_','-').gsub(/\ba?nd?\b|&/i, '-and-').gsub(/\W+/, '-')
+  end
+
+  # Create and save an identical test plan based on the receiver.
+  # A new patient is cloned and the state is set to "pending".
+  def clone
+    cloned = super
+    new_patient = patient.clone
+    new_patient.save!
+    cloned.patient = new_patient
+    cloned.update_attribute(:state, 'pending')
+    cloned.save!
+    cloned
   end
 end
 

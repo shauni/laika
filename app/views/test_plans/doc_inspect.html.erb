@@ -43,13 +43,12 @@
           <td class="lighttext">Test Date</td>
           <td><%= @test_plan.updated_at %></td>
         </tr>
-        <tr>
-          <td class="lighttext">Test Proctor</td>
-          <td><a href="mailto:<%= @test_plan.user.email %>">
-                <%= @test_plan.user.first_name %> 
-                <%= @test_plan.user.last_name %></a>
-          </td>
-        </tr>
+        <% if @test_plan.proctor -%>
+          <tr>
+            <td class="lighttext">Test Proctor</td>
+            <td><%= link_to h(@test_plan.proctor), @test_plan.proctor %></td>
+          </tr>
+        <% end -%>
         <% unless @test_plan.umls_enabled? %>
         <tr>
           <td class="lighttext">UMLS Coded Value Testing</td>

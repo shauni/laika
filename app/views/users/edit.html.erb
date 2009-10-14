@@ -1,7 +1,7 @@
 <%= error_messages_for :user %>
 
 <div class="user-box">
-  <h3>Your Settings</h3>
+  <h2>Your Settings</h2>
   <% form_for(:user, :url => user_path, :html => { :method => :put }) do |form| %>
     <div><label for="user_first_name">First Name</label></div>
     <div><%= form.text_field :first_name %></div>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="user-box">
-  <h3>Update Your Password</h3>
+  <h2>Update Your Password</h2>
   <% form_for(:user, :url => user_path, :html => { :method => :put }) do |form| %>
     <div><label for="user_password">Password</label></div>
     <div><%= form.password_field :password %></div>
@@ -28,4 +28,11 @@
   <% end %>
 </div>
 
+<div class="user-box">
+  <h2>Additional Tools</h2>
+  <ul>
+    <li><%= link_to pluralize(@user.proctors.count, "Test Proctor"),
+      proctors_path %></li>
+  </ul>
+</div>
 
