@@ -1,3 +1,6 @@
+require 'xml_helper'
+require 'laika/constants'
+
 require 'validation'
 require 'validators/c32_validator'
 require 'validators/schema_validator'
