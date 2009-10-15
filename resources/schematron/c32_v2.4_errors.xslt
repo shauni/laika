@@ -10554,7 +10554,7 @@
                        xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="*[cda:templateId/@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.1.1&#34;]"/>
       <xsl:choose>
-         <xsl:when test="parent::cda:ClinicalDocument"/>
+         <xsl:when test="self::cda:ClinicalDocument"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:sch="http://www.ascc.net/xml/schematron"
