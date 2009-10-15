@@ -9,6 +9,11 @@
 #
 class PatientChildrenController < PatientChildController
   
+  def index
+    
+  end
+  
+
   def show
     instance = @patient.send(association_name).find(params[:id])
     render :partial  => 'show', :locals => {

@@ -93,7 +93,7 @@ class Provider < ActiveRecord::Base
     xml.documentationOf do
       xml.serviceEvent("classCode" => "PCPR") do
         xml.effectiveTime do
-          xml.low('value'=> "0")
+          xml.low('value'=> "0000")
           xml.high('value'=> "2010")
         end
         yield

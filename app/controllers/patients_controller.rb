@@ -31,6 +31,10 @@ class PatientsController < ApplicationController
     redirect_to patients_url
   end
   
+  def root
+    
+  end
+  
   def autoCreate
     @patient = Patient.new    
     @patient.randomize()

@@ -23,11 +23,31 @@ class Condition < ActiveRecord::Base
       xml.act("classCode" => "ACT", "moodCode" => "EVN") do
         xml.templateId("root" => "2.16.840.1.113883.10.20.1.27", "assigningAuthorityName" => "CCD")
         xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.7", "assigningAuthorityName" => "HITSP/C32")
+        xml.templateId("root" => "2.16.840.1.113883.3.88.11.83.7", "assigningAuthorityName" => "HITSP C83")
+        xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5.1")
+        xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5.2")
+
         xml.id
         xml.code("nullFlavor"=>"NA")
-        xml.entryRelationship("typeCode" => "SUBJ") do
+        xml.statusCode("code" => "completed")
+        if start_event.present? || end_event.present?
+          xml.effectiveTime do
+            if start_event.present?
+              xml.low("value" => start_event.to_s(:brief))
+            end
+            if end_event.present?
+              xml.high("value" => end_event.to_s(:brief))
+            else
+              xml.high("nullFlavor" => "UNK")
+            end
+          end
+        end
+        xml.entryRelationship("typeCode" => "SUBJ", "inversionInd" => "false") do
           xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
             xml.templateId("root" => "2.16.840.1.113883.10.20.1.28", "assigningAuthorityName" => "CCD")
+            xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5", "assigningAuthorityName" => "IHE PCC" )
+            xml.id
+            
             if problem_type
               xml.code("code" => problem_type.code, 
                        "displayName" => problem_type.name, 
@@ -81,6 +101,9 @@ class Condition < ActiveRecord::Base
         xml.section do
           xml.templateId("root" => "2.16.840.1.113883.10.20.1.11",
                          "assigningAuthorityName" => "CCD")
+          xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.3.6", #C32 2.4
+                          "assigningAuthorityName" => "CCD")
+          
           xml.code("code" => "11450-4",
                    "displayName" => "Problems",
                    "codeSystem" => "2.16.840.1.113883.6.1",

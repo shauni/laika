@@ -110,6 +110,7 @@ class Patient < ActiveRecord::Base
                          "xmlns" => "urn:hl7-org:v3",
                          "xmlns:sdtc" => "urn:hl7-org:sdtc",
                          "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance") do
+      xml.realmCode( "code" => "US" ) #C32 2.4
       xml.typeId("root" => "2.16.840.1.113883.1.3",
                  "extension" => "POCD_HD000040")
       xml.templateId("root" => "2.16.840.1.113883.3.27.1776",
@@ -118,6 +119,8 @@ class Patient < ActiveRecord::Base
                      "assigningAuthorityName" => "CCD")
       xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.1", 
                      "assigningAuthorityName" => "HITSP/C32")
+      xml.templateId("root" => "2.16.840.1.113883.10.20.3",
+                     "assigningAuthorityName" => "CCD")
       xml.id("root" => "2.16.840.1.113883.3.72", 
              "extension" => "Laika C32 Test", 
              "assigningAuthorityName" => "Laika: An Open Source EHR Testing Framework projectlaika.org")
@@ -125,6 +128,7 @@ class Patient < ActiveRecord::Base
                "displayName" => "Summarization of patient data", 
                "codeSystem" => "2.16.840.1.113883.6.1", 
                "codeSystemName" => "LOINC")
+               
       xml.title(name)
 
       if registration_information.try(:document_timestamp)
