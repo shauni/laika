@@ -7,8 +7,10 @@ describe Allergy, "it can validate allergy entries in a C32" do
   
   it "should verify an allergy matches in a C32 doc" do
     document = REXML::Document.new(File.new(RAILS_ROOT + '/spec/test_data/allergies/joe_allergy.xml'))
+    section = AllergyC32Importer.section(document)
+    xml_allergies = AllergyC32Importer.import_entries(section)
     joe_allergy = allergies(:joes_allergy)
-    errors = joe_allergy.validate_c32(document)
+    errors = joe_allergy.validate_c32(xml_allergies)
     errors.should be_empty
   end
   
@@ -81,7 +83,9 @@ describe Allergy, "can create a C32 representation of itself" do
            
        end
     end
-    errors = joe_allergy.validate_c32(document.root)
+    section = AllergyC32Importer.section(document)
+    xml_allergies = AllergyC32Importer.import_entries(section)
+    errors = joe_allergy.validate_c32(xml_allergies)
     errors.should be_empty
   end
 end

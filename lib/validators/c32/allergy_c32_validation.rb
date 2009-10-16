@@ -8,66 +8,17 @@
       "Allergies Module"
     end
 
-    def validate_c32(document)
+    def validate_c32(allergies)
       errors = []
-      begin
-        section = REXML::XPath.first(document,"//cda:section[cda:templateId[@root = '2.16.840.1.113883.10.20.1.2']]", MatchHelper::DEFAULT_NAMESPACES)
-        
-        # To find the allergy we are looking for, we know that the product free text name will always be there
-        # below is the monster XPath expression to find it
-        xpath = %{
-        cda:entry/
-        cda:act[cda:templateId/@root='2.16.840.1.113883.10.20.1.27']/ 
-        cda:entryRelationship[@typeCode='SUBJ']/ 
-        cda:observation[cda:templateId[@root='2.16.840.1.113883.10.20.1.18'] and cda:participant[@typeCode='CSM']/
-        cda:participantRole[@classCode='MANU']/
-        cda:playingEntity[@classCode='MMAT']/
-        cda:name/text() = $free_text_product]
-         }
-
-        #strip out all of the whitespace at the beginning and end of the expression
-        xpath.gsub!(/^\s*/, '')
-        xpath.gsub!(/\s*$/, '')
-        xpath.gsub!(/\n/, '')
-        adverse_event = REXML::XPath.first(section, xpath, MatchHelper::DEFAULT_NAMESPACES, {"free_text_product" => self.free_text_product})
-        if adverse_event
-          errors << match_value(adverse_event, 
-                               "cda:effectiveTime/cda:low/@value", 
-                               'start_event', 
-                               self.start_event.try(:to_formatted_s, :brief))
-          errors << match_value(adverse_event, 
-                               "cda:effectiveTime/cda:high/@value", 
-                               'end_event', 
-                               self.end_event.try(:to_formatted_s, :brief))
-          errors << match_value(adverse_event, 
-                                "cda:participant[@typeCode='CSM']/cda:participantRole[@classCode='MANU']/cda:playingEntity[@classCode='MMAT']/cda:name", 
-                                'free_text_product', 
-                                self.free_text_product)
-          errors << match_value(adverse_event, 
-                                "cda:participant[@typeCode='CSM']/cda:participantRole[@classCode='MANU']/cda:playingEntity[@classCode='MMAT']/cda:code[@codeSystem='2.16.840.1.113883.6.88']/@code", 
-                                'product_code', 
-                                self.product_code)
-          # if self.severity_term
-          #  severity_element = REXML::XPath.first(adverse_event, "cda:entryRelationship[@typeCode='SUBJ']/cda:observation[cda:templateId/@root='2.16.840.1.113883.10.20.1.55']",
-          #                                        MatchHelper::DEFAULT_NAMESPACES)
-          #  if severity_element
-          #   errors.concat(self.severity_term.validate_c32(severity_element))
-          #  else
-          #    errors << ContentError.new(:section => 'allergies', :subsection => 'severity_term', :error_message => "Unable to find severity", :location => adverse_event.try(:xpath))
-          #  end
-          #end
-        else
-          errors << ContentError.new(:section => 'allergies', 
-                                     :error_message => "Unable to find product #{free_text_product}", 
-                                     :location => section.try(:xpath))
-        end
-      rescue
-        errors << ContentError.new(:section => 'Allergy', 
-                                   :error_message => 'Invalid, non-parsable XML for allergy data',
-                                   :type=>'error',
-                                   :location => document.xpath)
+      allergy_to_match = allergies.find {|a| self.free_text_product == a.free_text_product}
+      if allergy_to_match
+        results = ActiveRecordComparator.compare(self, allergy_to_match)
+        errors.concat(results) if results
+      else
+        errors << ContentError.new(:section => 'Allergy', :error_message => "Unable to find allergy with free text product: #{self.free_text_product}")
       end
-      errors.compact
+      
+      errors
     end
 
     # Will get called by patient data if the boolean is set there
