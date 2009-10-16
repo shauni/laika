@@ -154,6 +154,9 @@ class Patient < ActiveRecord::Base
         xml.assignedCustodian do
           xml.representedCustodianOrganization do
             xml.id
+            xml.name
+            xml.telecom
+            xml.addr
           end
         end
       end
