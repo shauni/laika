@@ -57,7 +57,7 @@ class Allergy < ActiveRecord::Base
                        "codeSystem" => "2.16.840.1.113883.6.96", 
                        "codeSystemName" => "SNOMED CT") do
                 xml.originalText do
-                  xml.reference
+                  xml.reference(:value => "#adverse-event-type-" + self.id.to_s)
                 end
               end
             else
@@ -94,7 +94,11 @@ class Allergy < ActiveRecord::Base
                   xml.code("code" => product_code, 
                            "displayName" => free_text_product, 
                            "codeSystem" => "2.16.840.1.113883.6.88", 
-                           "codeSystemName" => "RxNorm")
+                           "codeSystemName" => "RxNorm") do
+                   xml.originalText do
+                     xml.reference(:value => "#product-" + self.id.to_s)
+                   end
+                  end
                   xml.name free_text_product
                 end
               end
@@ -181,12 +185,16 @@ class Allergy < ActiveRecord::Base
                 allergies.try(:each) do |allergy|
                   xml.tr do
                     if allergy.free_text_product != nil
-                      xml.td allergy.free_text_product
+                      xml.td do
+                        xml.content(allergy.free_text_product, "ID" => "product-" + allergy.id.to_s)
+                      end
                     else
                       xml.td
                     end 
                     if allergy.adverse_event_type != nil
-                      xml.td allergy.adverse_event_type.name
+                      xml.td do
+                        xml.content(allergy.adverse_event_type.name, "ID" => "adverse-event-type-" + allergy.id.to_s)
+                      end
                     else
                       xml.td
                     end  
