@@ -41,9 +41,19 @@ class SocialHistory < ActiveRecord::Base
     end
   end
   
-   def randomize(birth_date)
-    self.start_effective_time = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
-    self.social_history_type = SocialHistoryType.find :random
+   def randomize(birth_date, condition)
+    self.start_effective_time = DateTime.new(rand_range(birth_date.year, DateTime.now.year), rand(12) + 1, rand(28) +1)
+    
+    p = rand
+    if p < 0.44
+      self.social_history_type = SocialHistoryType.find_by_name("Tobacco use and exposure")
+    end
+    
+    #if(condition.include?('Smoker finding'))
+     # social_history_code = "229819007"
+    #end    
+
+    #self.social_history_type = SocialHistoryType.find :random
   end
 
   def self.c32_component(social_history, xml)
@@ -56,6 +66,7 @@ class SocialHistory < ActiveRecord::Base
                    "codeSystem" => "2.16.840.1.113883.6.1",
                    "codeSystemName" => "LOINC")
           xml.title "Social History"
+          xml.text
           # XML content inspection
           yield
         end

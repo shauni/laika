@@ -14,6 +14,7 @@ class Patient < ActiveRecord::Base
   has_many_c32 :encounters
   has_many_c32 :procedures
   has_many_c32 :medical_equipments
+  has_many_c32 :social_history
   has_many_c32 :patient_identifiers
 
   has_one_c32 :registration_information
@@ -89,7 +90,7 @@ class Patient < ActiveRecord::Base
 
       %w[
         patient_identifiers languages providers medications allergies conditions
-        all_results immunizations encounters procedures medical_equipments insurance_providers
+        all_results immunizations encounters procedures medical_equipments social_history insurance_providers
       ].each do |assoc|
         send(assoc).each do |item|
           copy.send(assoc) << item.clone
@@ -185,8 +186,11 @@ class Patient < ActiveRecord::Base
           encounters.to_c32(xml)
 
           procedures.to_c32(xml)
+          
+          social_history.to_c32(xml)
 
-          medical_equipments.to_c32(xml)
+          medical_equipments.to_c32(xml)         
+          
         end
       end
       # END CCD/C32 Modules
@@ -294,6 +298,14 @@ class Patient < ActiveRecord::Base
     #patient_identifier = PatientIdentifier.new
     #patient_identifier.randomize()
     #self.patient_identifiers << patient_identifier
+
+    
+    #smoking_condition = self.conditions.find(:first, :conditions => " free_text_name = 'Smoker finding'")
+    #if(smoking_condition)
+      my_social_history = SocialHistory.new
+      my_social_history.randomize(self.registration_information.date_of_birth)
+      self.social_history << my_social_history
+    #end
 
     self
   end
