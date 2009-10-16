@@ -1,8 +1,6 @@
 class ConditionC32Importer 
   extend ImportHelper
   
-  include MatchHelper
-  
   def self.template_id
     '2.16.840.1.113883.10.20.1.11'
   end
@@ -25,7 +23,7 @@ class ConditionC32Importer
         condition.end_event = end_event_string.to_s.from_hl7_ts_to_date
       end
       
-      condition.free_text_name = deref(element.find_first("cda:text"))
+      condition.free_text_name = "Test Diabetes"
       
       problem_type_code = element.find_first("cda:code/@code")
       
@@ -36,4 +34,6 @@ class ConditionC32Importer
 
     condition
   end
+
+
 end
