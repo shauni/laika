@@ -13,5 +13,8 @@ Validation.register_validator :C32, Validators::Umls::UmlsValidator.new("warning
 
 require 'import_helper'
 require 'importers/c32/allergy_c32_importer'
+require 'importers/c32/registration_information_c32_importer'
+require 'importers/c32/condition_c32_importer'
+require 'importers/c32/patient_c32_importer'
 
 require 'active_record_comparator'
