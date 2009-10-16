@@ -9,7 +9,7 @@
 <table>
   <%= f.calendar_date_select :administration_date %>
   <%= f.select :vaccine_id, Vaccine.select_options, {:include_blank => true} %>
-  <%= f.text_field :lot_number_text %></td>
+  <%= f.text_field :lot_number_text %>
   <%= f.check_box :refusal %>
   <%= f.select :no_immunization_reason_id, NoImmunizationReason.select_options, {:include_blank => true} %>
   <%= f.submit "Save" %>

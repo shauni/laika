@@ -1,5 +1,5 @@
 <table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
+  <tr class="<%= cycle_row %>">
     <th colspan="2" class="lighttext">Patient</th>
   </tr>
   <%= view_row insurance_provider_patient , :member_id %>
@@ -7,18 +7,14 @@
   <%= view_row insurance_provider_patient , :end_coverage_date %>
   <%= render :partial => '/person_names/show', :locals => {:person_name => insurance_provider_patient.person_name}%>
   <%= view_row insurance_provider_patient , :date_of_birth %>
-  </tr>
   <%= render :partial => '/addresses/show', :locals => {:address => insurance_provider_patient.address}%>
   <%= render :partial => '/telecoms/show', :locals => {:telecom => insurance_provider_patient.telecom}%>
-  <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
+</table>
+  <% if patient.editable_by? current_user -%>
+    <div class="controls">
         <%= link_to_remote('Edit',
           :update => {:success => "insurance_provider_patient#{insurance_provider_patient.id}"},
           :url => edit_patient_insurance_provider_patient_path(patient, insurance_provider_patient),
           :method => 'get') unless insurance_provider_patient.new_record? %>
-      </td>
-    </tr>
+    </div>
   <% end -%>
-</table>

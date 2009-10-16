@@ -1,14 +1,13 @@
 <h5>Information Source (Required)</h5>
-<table>
 <% if information_source -%>
+<table>
   <%= view_row information_source, :time %>
   <%= render :partial => '/person_names/show', :locals => {:person_name => information_source.person_name}%>
   <%= view_row information_source, :document_id %>
   <%= view_row information_source, :organization_name %>
-  <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
+</table>
+  <% if patient.editable_by? current_user -%>
+    <div class="controls">
         <%= link_to_remote 'Edit',
           :update => {:success => 'informationSourceContainer'}, 
           :url => edit_patient_information_source_path(patient),
@@ -18,17 +17,14 @@
           :url => patient_information_source_path(patient),
           :confirm => 'Are you sure you wish to remove this information source?',
           :method => 'delete' %>
-      </td>
-    </tr>
+    </div>
   <% end -%>
-<% else -%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">There is no information source data for this test case</td>
-    <td><%= link_to_remote 'Create some',
+<% elsif patient.editable_by? current_user -%>
+  <div class="controls">
+    There is no information source data for this test case.
+    <%= link_to_remote 'Create an Information Source.',
       :update => {:success => 'informationSourceContainer'},
       :url => new_patient_information_source_path(patient), 
       :method => 'get' %>
-    </td>
-  </tr>
+  </div>
 <% end -%>
-</table>

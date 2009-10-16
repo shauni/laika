@@ -6,15 +6,12 @@
   <%= view_row insurance_provider_guarantor, :effective_date %>
   <%= render :partial => '/addresses/show', :locals => {:address => insurance_provider_guarantor.address}%>
   <%= render :partial => '/telecoms/show', :locals => {:telecom => insurance_provider_guarantor.telecom}%>
-  <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
+</table>
+  <% if patient.editable_by? current_user -%>
+    <div class="controls">
         <%= link_to_remote('Edit',
           :update => {:success => "insurance_provider_guarantor#{insurance_provider_guarantor.id}"},
           :url => edit_patient_insurance_provider_guarantor_path(patient, insurance_provider_guarantor),
           :method => 'get') unless insurance_provider_guarantor.new_record? %>
-      </td>
-    </tr>
+    </div>
   <% end -%>
-</table>

@@ -4,19 +4,17 @@
   <%= view_row procedure, :code %>
   <%= view_row procedure, :procedure_date %>
   <%= view_row procedure, :procedure_status_code %>
-  <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td><td>
-        <%= link_to_remote 'Edit',
-          :update => {:success => "procedure#{procedure.id}"},
-          :url => edit_patient_procedure_path(patient, procedure),
-          :method => 'get' %>
-        <%= link_to_remote 'Remove',
-          :update => {:success => "procedure#{procedure.id}"},
-          :url => patient_procedure_path(patient, procedure),
-          :confirm=>"Are you sure you wish to remove this procedure?",
-          :method => 'delete' %>
-      </td>
-    </tr>
-  <% end -%>
 </table>
+<% if patient.editable_by? current_user -%>
+  <div class="controls">
+    <%= link_to_remote 'Edit',
+      :update => {:success => "procedure#{procedure.id}"},
+      :url => edit_patient_procedure_path(patient, procedure),
+      :method => 'get' %>
+    <%= link_to_remote 'Remove',
+      :update => {:success => "procedure#{procedure.id}"},
+      :url => patient_procedure_path(patient, procedure),
+      :confirm=>"Are you sure you wish to remove this procedure?",
+      :method => 'delete' %>
+  </div>
+<% end -%>

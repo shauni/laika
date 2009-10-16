@@ -1,5 +1,5 @@
 <div id="provider<%= provider.id %>">
-<table>
+  <table>
   <%= view_row provider, :start_service %>
   <%= view_row provider, :end_service %>
   <%= render :partial => '/person_names/show', :locals => {:person_name => provider.person_name}%>
@@ -10,10 +10,9 @@
   <%= render :partial => '/telecoms/show', :locals => {:telecom => provider.telecom}%>
   <%= view_row provider, :organization %>
   <%= view_row provider, :patient_identifier %>
+  </table>
   <% if @patient.editable_by? current_user -%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td>
+    <div class="controls">
       <%= link_to_remote 'Edit',
         :update => {:success => "provider#{provider.id}"},
         :url => edit_patient_provider_path(patient, provider),
@@ -23,8 +22,6 @@
         :url => patient_provider_path(patient, provider),
         :confirm => 'Are you sure you wish to remove this healthcare provider?',
         :method => 'delete' %>
-    </td>
-  </tr>
+    </div>
   <% end -%>
-</table>
 </div>

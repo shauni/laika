@@ -1,24 +1,19 @@
-<div id="medical_equipment<%= medical_equipment.id %>">
 <table>
   <%= view_row medical_equipment, :name %>
   <%= view_row medical_equipment, :code %>
   <%= view_row medical_equipment, :supply_id %>
   <%= view_row medical_equipment, :date_supplied %>
-  <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
-        <%= link_to_remote 'Edit',
-          :update => {:success => "medical_equipment#{medical_equipment.id}"},
-          :url => edit_patient_medical_equipment_path(patient, medical_equipment),
-          :method => 'get' %>
-       <%= link_to_remote 'Remove',
-          :update => {:success => "medical_equipment#{medical_equipment.id}"},
-          :url => patient_medical_equipment_path(patient, medical_equipment),
-          :confirm=>"Are you sure you wish to remove this medical device?",
-          :method => 'delete' %>
-      </td>
-    </tr>
-  <% end -%>
 </table>
-</div>
+<% if patient.editable_by? current_user -%>
+  <div class="controls">
+      <%= link_to_remote 'Edit',
+        :update => {:success => "medical_equipment#{medical_equipment.id}"},
+        :url => edit_patient_medical_equipment_path(patient, medical_equipment),
+        :method => 'get' %>
+     <%= link_to_remote 'Remove',
+        :update => {:success => "medical_equipment#{medical_equipment.id}"},
+        :url => patient_medical_equipment_path(patient, medical_equipment),
+        :confirm=>"Are you sure you wish to remove this medical device?",
+        :method => 'delete' %>
+  </div>
+<% end -%>

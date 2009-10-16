@@ -2,12 +2,11 @@
 <table>
   <tr class="<%= cycle("darkzebra", "lightzebra")%>">
     <td class="lighttext">Pregnant</td>
-    <td><%= h @patient.pregnant %></td>
+    <td><%= @patient.pregnant ? 'Yes' : 'No' %></td>
   </tr>
-  <% if @patient.editable_by? current_user -%>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td>
+</table>
+<% if @patient.editable_by? current_user -%>
+  <div class="controls">
       <%= link_to_remote 'Edit',
         :update => {:success => 'pregnancyContainer'}, 
         :url => edit_patient_pregnancy_path(@patient),
@@ -17,7 +16,5 @@
         :url => patient_pregnancy_path(@patient),
         :confirm => 'Are you sure you wish to remove this pregnancy information?',
         :method => 'delete' %>
-    </td>
-  </tr>
-  <% end -%>
-</table>
+  </div>
+<% end -%>

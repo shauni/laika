@@ -3,10 +3,9 @@
   <%= view_row condition, :end_event %>
   <%= view_row condition, :problem_type %>
   <%= view_row condition, :free_text_name %>
+</table>
   <% if @patient.editable_by? current_user -%>
-    <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-      <td></td>
-      <td>
+    <div class="controls">
         <%= link_to_remote 'Edit',
           :update => {:success => "condition#{condition.id}"},
           :url => edit_patient_condition_path(patient, condition),
@@ -16,7 +15,5 @@
           :url => patient_condition_path(patient, condition),
           :confirm=>"Are you sure you wish to remove this condition?",
           :method => 'delete' %>
-      </td>
-    </tr>
+    </div>
   <% end -%>
-</table>

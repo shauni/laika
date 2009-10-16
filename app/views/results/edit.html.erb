@@ -1,12 +1,10 @@
 <% if @result.new_record?
-    result_div = "#{controller.controller_name}New" 
-    html_options = {:id => "#{controller.controller_name}Form"} -%>
+  result_div = "#{controller.controller_name.singularize}New" %>
 <div id="<%= result_div %>">
 <% else
-    result_div = "#{controller.controller_name}#{@result.id}"
-    html_options = {}
+    result_div = "#{controller.controller_name.singularize}#{@result.id}"
    end %>
-<% patient_form_for([@patient, @result], :html => html_options, :update => result_div) do |f| -%>
+<% patient_form_for([@patient, @result], :update => result_div) do |f| -%>
 <table>
   <%= f.text_field :result_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}');" %>
   <tr><td colspan="2">
@@ -14,12 +12,12 @@
   </td></tr>
   <%= f.calendar_date_select :result_date %>
   <%= f.select :code_system_id, CodeSystem.select_options, {:include_blank => true} %>
-  <%= f.text_field :result_code %></td>
-  <%= f.text_field :result_code_display_name %></td>
-  <%= f.text_field :status_code %></td>
-  <%= f.text_field :value_scalar %></td>
-  <%= f.text_field :value_unit %></td>
-  <%= f.text_field :organizer_id %></td>
+  <%= f.text_field :result_code %>
+  <%= f.text_field :result_code_display_name %>
+  <%= f.text_field :status_code %>
+  <%= f.text_field :value_scalar %>
+  <%= f.text_field :value_unit %>
+  <%= f.text_field :organizer_id %>
   <%= f.select :act_status_code_id, ActStatusCode.select_options, {:include_blank => true} %>
   <%= f.select :result_type_code_id, ResultTypeCode.select_options, {:include_blank => true} %>
   <%= f.submit "Save" %>
