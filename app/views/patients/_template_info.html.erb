@@ -2,7 +2,8 @@
   <h3><%=h @patient.name %>
     <% if @patient.editable_by? current_user -%>
       <%= link_to_remote 'Edit', 
-            :update => 'templateInformationContainer',
+            :update => {:success => 'templateInformationContainer' },
+            :complete => '$("patient_name").focus()',
             :url => edit_template_info_patient_url(@patient),
             :method => 'get' %>
     <% end -%>
