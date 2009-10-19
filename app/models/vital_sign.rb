@@ -78,11 +78,11 @@ class VitalSign < AbstractResult
 
       if p < 0.1
         self.value_scalar = rand_range(70, 90)
-      elsif p < 0.5 
+      elsif p < 0.2
         self.value_scalar = rand_range(90, 120)
-      elsif p < 0.7
+      elsif p < 0.4
         self.value_scalar = rand_range(120, 140)
-      elsif p < 0.9
+      elsif p < 0.7
         self.value_scalar = rand_range(140, 160)
       else
         self.value_scalar = rand_range(160, 180)
@@ -95,11 +95,11 @@ class VitalSign < AbstractResult
 
       if p < 0.1
         self.value_scalar = rand_range(40, 60)
-      elsif p < 0.5 
+      elsif p < 0.2
         self.value_scalar = rand_range(60, 80)
-      elsif p < 0.7
+      elsif p < 0.4
         self.value_scalar = rand_range(80, 90)
-      elsif p < 0.9
+      elsif p < 0.7
         self.value_scalar = rand_range(90, 100)
       else
         self.value_scalar = rand_range(100, 130)
