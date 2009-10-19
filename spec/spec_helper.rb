@@ -59,6 +59,13 @@ ModelFactory.configure do
     test_type_data { XDS::Metadata.new }
   end
 
+  default(C62InspectionPlan) do
+    patient { Patient.factory.create }
+    user { User.factory.create }
+    vendor { Vendor.factory.create }
+    clinical_document { ClinicalDocument.factory.create(:doc_type => 'C62') }
+  end
+
   default(ClinicalDocument) do
     size { 256 }
     filename { 'factory_document' }
