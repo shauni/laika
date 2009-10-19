@@ -249,6 +249,11 @@ class Patient < ActiveRecord::Base
     if condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :lipoid)
       self.conditions << condition
     end
+    
+    condition = Condition.new
+    if condition.randomize(self.registration_information.gender, self.registration_information.date_of_birth, :smoking)
+      self.conditions << condition
+    end
 
     #language = Language.new
     #language.randomize()

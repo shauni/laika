@@ -103,11 +103,10 @@ class Condition < ActiveRecord::Base
                                                      [72, 150] => {:M => 0.2239, :F => 0.1837} })
     when :smoking
       condition_code = "77176002"
-      has_condition = Condition.make_has_condition({ [0, 18]  => {:M => 0.0039, :F => 0.0057}, 
-                                                     [18, 36] => {:M => 0.0214, :F => 0.0153},
-                                                     [36, 54] => {:M => 0.0854, :F => 0.0610},
-                                                     [54, 72] => {:M => 0.1998, :F => 0.1672},
-                                                     [72, 150] => {:M => 0.2239, :F => 0.1837} })
+      has_condition = Condition.make_has_condition({ [19, 25]  => {:M => 0.295, :F => 0.193}, 
+                                                     [25, 45] => {:M => 0.26, :F => 0.21},
+                                                     [45, 65] => {:M => 0.245, :F => 0.193},
+                                                     [65, 100] => {:M => 0.126, :F => 0.083} })
 
     else #if no condition is specified, chance of random condition
       condition_code = SnowmedProblem.find(:random).code
