@@ -41,18 +41,22 @@ class SocialHistory < ActiveRecord::Base
     end
   end
   
-   def randomize(birth_date, condition)
+   def randomize(birth_date, conditions)
     self.start_effective_time = DateTime.new(rand_range(birth_date.year, DateTime.now.year), rand(12) + 1, rand(28) +1)
     
-    p = rand
-    if p < 0.44
-      self.social_history_type = SocialHistoryType.find_by_name("Tobacco use and exposure")
+    conditions.try(:each) do |condition|
+      if condition.free_text_name == "Smoker finding"
+        @smoker = true
+      end
     end
-    
-    #if(condition.include?('Smoker finding'))
-     # social_history_code = "229819007"
-    #end    
-
+  
+    if @smoker
+      p = rand
+      if p < 0.44
+          self.social_history_type = SocialHistoryType.find_by_name("Tobacco use and exposure")
+      end
+    end    
+    # social_history_code = "229819007"
     #self.social_history_type = SocialHistoryType.find :random
   end
 

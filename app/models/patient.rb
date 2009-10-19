@@ -301,9 +301,8 @@ class Patient < ActiveRecord::Base
 
     
     #smoking_condition = self.conditions.find(:first, :conditions => " free_text_name = 'Smoker finding'")
-    #if(smoking_condition)
       my_social_history = SocialHistory.new
-      my_social_history.randomize(self.registration_information.date_of_birth)
+      my_social_history.randomize(self.registration_information.date_of_birth, conditions)
       self.social_history << my_social_history
     #end
 
