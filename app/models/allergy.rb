@@ -48,6 +48,7 @@ class Allergy < ActiveRecord::Base
         xml.entryRelationship("typeCode" => "SUBJ", "inversionInd" => "false") do
           xml.observation("classCode" => "OBS", "moodCode" => "EVN") do
             xml.templateId("root" => "2.16.840.1.113883.10.20.1.18")
+            xml.templateId("root" => "2.16.840.1.113883.10.20.1.28")
             xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.5", "assigningAuthorityName" => "IHE PCC")
             xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.6", "assigningAuthorityName" => "IHE PCC")
             xml.id
