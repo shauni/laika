@@ -88,9 +88,9 @@ class RegistrationInformation < ActiveRecord::Base
     self.marital_status = MaritalStatus.find :random
     
     # smarter fake data from US 2000 census
-    self.gender = Gender.find_by_name(rand > .51 ? "Male" : "Female")
+    self.gender = Gender.find_by_name(rand > 0.51 ? "Male" : "Female")
     
-    self.date_of_birth = DateTime.new(Date.today.year - random_age, rand(12) + 1, rand(28) + 1)
+    self.date_of_birth = DateTime.new(Date.today.year - RegistrationInformation.random_age, rand(12) + 1, rand(28) + 1)
 
     self.address = Address.new
     self.address.randomize()
@@ -103,25 +103,25 @@ class RegistrationInformation < ActiveRecord::Base
   def self.random_age
     # from census: http://www.census.gov%2Fprod%2F2002pubs%2Fc2kprof00-us.pdf
     age_percent = rand
-    if age_percent <= .353
+    if age_percent <= 0.353
       age_min = 0
       age_max = 25
-    elsif age_percent <= .493
+    elsif age_percent <= 0.493
       age_min = 25
       age_max = 35
-    elsif age_percent <= .653
+    elsif age_percent <= 0.653
       age_min = 35
       age_max = 45
-    elsif age_percent <= .788
+    elsif age_percent <= 0.788
       age_min = 45
       age_max = 55
-    elsif age_percent <= .838
+    elsif age_percent <= 0.838
       age_min = 55
       age_max = 60
-    elsif age_percent <= .876
+    elsif age_percent <= 0.876
       age_min = 60
       age_max = 65
-    elsif age_percent <= .941
+    elsif age_percent <= 0.941
       age_min = 65
       age_max = 75
     else 
