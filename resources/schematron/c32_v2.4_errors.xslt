@@ -1855,7 +1855,7 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="not(cda:code) or cda:code[@codeSystem=&#34;2.16.840.1.113883.6.96&#34; and (                  @code=&#34;304251008&#34; or                  @code=&#34;52765003&#34; or                  @code=&#34;22520400&#34; or                  @code=&#34;89666000&#34; or                  @code=&#34;281789004&#34; or                  @code=&#34;78823007&#34; or                  @code=&#34;61420007&#34; or                  @code=&#34;71388002&#34;)]"/>
+         <xsl:when test="not(cda:code) or cda:code[@codeSystem=&#34;2.16.840.1.113883.6.96&#34; and (                  @code=&#34;304251008&#34; or                  @code=&#34;52765003&#34; or                  @code=&#34;225204009&#34; or                  @code=&#34;89666000&#34; or                  @code=&#34;281789004&#34; or                  @code=&#34;78823007&#34; or                  @code=&#34;61420007&#34; or                  @code=&#34;71388002&#34;)]"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:sch="http://www.ascc.net/xml/schematron"
