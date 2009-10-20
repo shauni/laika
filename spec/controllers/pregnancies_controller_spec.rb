@@ -47,8 +47,6 @@ describe PregnanciesController do
   end
 
   it "should update non-pregnant patient with pregnancy nil" do
-    pending "SF ticket 2783842"
-
     pd = Patient.factory.create(:pregnant => false)
     controller.stub!(:current_user).and_return(pd.user)
 
