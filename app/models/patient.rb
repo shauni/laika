@@ -121,6 +121,7 @@ class Patient < ActiveRecord::Base
                      "assigningAuthorityName" => "HITSP/C32")
       xml.templateId("root" => "2.16.840.1.113883.10.20.3",
                      "assigningAuthorityName" => "CCD")
+      xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.1.1")
       xml.id("root" => "2.16.840.1.113883.3.72", 
              "extension" => "Laika C32 Test", 
              "assigningAuthorityName" => "Laika: An Open Source EHR Testing Framework projectlaika.org")
@@ -153,6 +154,9 @@ class Patient < ActiveRecord::Base
         xml.assignedCustodian do
           xml.representedCustodianOrganization do
             xml.id
+            xml.name
+            xml.telecom
+            xml.addr
           end
         end
       end

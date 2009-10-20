@@ -40,6 +40,7 @@ class AdvanceDirective < ActiveRecord::Base
             xml.templateId("root" => "2.16.840.1.113883.10.20.1.17", "assigningAuthorityName" => "CCD")
             xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.13", "assigningAuthorityName" => "HITSP/C32") 
             xml.templateId("root" => "2.16.840.1.113883.3.88.11.83.12", "assigningAuthorityName" => "HITSP C83") #C32 2.4
+            xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.4.13.7", "assigningAuthorityName" => "IHE")
             xml.id
             if advance_directive_type
               xml.code("code" => advance_directive_type.code, 

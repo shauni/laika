@@ -21,6 +21,8 @@ class InformationSource < ActiveRecord::Base
       end
       xml.assignedAuthor do
         xml.id("root"=>document_id)
+        xml.addr
+        xml.telecom
         xml.assignedPerson do
           xml.name do
             if person_name.name_prefix &&
@@ -44,6 +46,8 @@ class InformationSource < ActiveRecord::Base
         xml.representedOrganization do
           xml.id("root" => "2.16.840.1.113883.19.5")
           xml.name organization_name
+          xml.telecom
+          xml.addr
         end
       end
     end

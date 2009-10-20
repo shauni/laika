@@ -1855,7 +1855,7 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-         <xsl:when test="not(cda:code) or cda:code[@codeSystem=&#34;2.16.840.1.113883.6.96&#34; and (                  @code=&#34;304251008&#34; or                  @code=&#34;52765003&#34; or                  @code=&#34;22520400&#34; or                  @code=&#34;89666000&#34; or                  @code=&#34;281789004&#34; or                  @code=&#34;78823007&#34; or                  @code=&#34;61420007&#34; or                  @code=&#34;71388002&#34;)]"/>
+         <xsl:when test="not(cda:code) or cda:code[@codeSystem=&#34;2.16.840.1.113883.6.96&#34; and (                  @code=&#34;304251008&#34; or                  @code=&#34;52765003&#34; or                  @code=&#34;225204009&#34; or                  @code=&#34;89666000&#34; or                  @code=&#34;281789004&#34; or                  @code=&#34;78823007&#34; or                  @code=&#34;61420007&#34; or                  @code=&#34;71388002&#34;)]"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:sch="http://www.ascc.net/xml/schematron"
@@ -10554,7 +10554,7 @@
                        xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="*[cda:templateId/@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.1.1&#34;]"/>
       <xsl:choose>
-         <xsl:when test="parent::cda:ClinicalDocument"/>
+         <xsl:when test="self::cda:ClinicalDocument"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:sch="http://www.ascc.net/xml/schematron"
@@ -15990,47 +15990,6 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:apply-templates mode="M317"/>
-   </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M317"/>
-   <xsl:template match="*[cda:templateId/@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13.7&#34;]"
-                 priority="3999"
-                 mode="M319">
-      <svrl:fired-rule xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                       xmlns:sch="http://www.ascc.net/xml/schematron"
-                       xmlns:iso="http://purl.oclc.org/dsdl/schematron"
-                       xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="*[cda:templateId/@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13.7&#34;]"/>
-      <xsl:choose>
-         <xsl:when test="not(cda:repeatNumber) and not(cda:interpretationCode) and                   not(cda:methodCode) and not(cda:targetSiteCode)"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                                xmlns:sch="http://www.ascc.net/xml/schematron"
-                                xmlns:iso="http://purl.oclc.org/dsdl/schematron"
-                                xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                                test="not(cda:repeatNumber) and not(cda:interpretationCode) and not(cda:methodCode) and not(cda:targetSiteCode)">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-get-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Error: In IHE PCC Advance Directive Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.7), an Advance Directive Observation shall not contain any repeatNumber, interpretationCode, methodCode or targetSiteCode elements. See: http://wiki.ihe.net/index.php?title=1.3.6.1.4.1.19376.1.5.3.1.4.13.7</svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:choose>
-         <xsl:when test="cda:templateId[@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13&#34;] and                   cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.17&#34;]"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                                xmlns:sch="http://www.ascc.net/xml/schematron"
-                                xmlns:iso="http://purl.oclc.org/dsdl/schematron"
-                                xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                                test="cda:templateId[@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13&#34;] and cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.17&#34;]">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-get-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Error: In IHE PCC Advance Directive Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.7), the templateId elements shown in the specification shall be present, and indicate that this is an Advance Directive entry. See: http://wiki.ihe.net/index.php?title=1.3.6.1.4.1.19376.1.5.3.1.4.13.7</svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates mode="M319"/>
    </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M319"/>
    <xsl:template match="*[cda:templateId/@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13&#34;]"
