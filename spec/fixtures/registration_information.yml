@@ -9,17 +9,6 @@ joe_smith:
   document_timestamp: 1972-04-12
   patient: joe_smith
 
-joe_smith_test:
-  date_of_birth: 1982-03-23
-  gender: male
-  religion: christian
-  race: european
-  ethnicity: spaniard
-  marital_status: never_married
-  affinity_domain_identifier: joe_smith_vendor_test_pid
-  document_timestamp: 1985-05-23
-  patient: joe_smith_vendor_test
-
 emily_jones:
   date_of_birth: 2006-11-01
   gender: female

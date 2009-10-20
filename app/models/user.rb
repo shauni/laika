@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     test_plans.count
   end
 
+  def to_s
+    display_name
+  end
+
   # Authenticates a user by their email name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
     u = find_by_email(email) # need to get the salt

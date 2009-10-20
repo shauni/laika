@@ -4,12 +4,6 @@ joe_smiths_mom:
   relationship: mother
   patient: joe_smith
 
-joe_smiths_vendor_mom:
-  start_support: 1967-03-23  
-  contact_type: next_of_kin
-  relationship: mother
-  patient: joe_smith_vendor_test
-
 emily_jones_mom:
   start_support: 1987-06-04
   end_support: 2010-02-13
