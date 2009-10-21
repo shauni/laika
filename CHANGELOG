@@ -1,6 +1,10 @@
 
+=== 2009-10-21 Laika v1.4.0
+
 * Support for C32 v2.4 CDA documents
+* Support for viewing the unstructured payloads of C62 CDA documents
 * Refactored patient views, cleaned up patient display and editing
+* Display the latest news on login, GH-70
 * Added built-in "About" page, GH-57
 * Create admin user on database seed, GH-2
 * Completed test plans can be cloned, GH-41
