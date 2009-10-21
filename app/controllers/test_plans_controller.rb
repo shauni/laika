@@ -45,6 +45,7 @@ class TestPlansController < ApplicationController
   include XdsProvideAndRegisterPlan::Actions
   include PixPdqPlan::Actions
   include PixFeedPlan::Actions
+  include C62InspectionPlan::Actions
   
   # Display all test plans by vendor.
   def index

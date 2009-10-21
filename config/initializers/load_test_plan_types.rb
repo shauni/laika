@@ -11,6 +11,7 @@ module Laika
     PixQueryPlan.test_name              => PixQueryPlan,
     PixFeedPlan.test_name               => PixFeedPlan,
     XdsProvideAndRegisterPlan.test_name => XdsProvideAndRegisterPlan,
-    XdsQueryAndRetrievePlan.test_name   => XdsQueryAndRetrievePlan
+    XdsQueryAndRetrievePlan.test_name   => XdsQueryAndRetrievePlan,
+    C62InspectionPlan.test_name         => C62InspectionPlan,
   }
 end
