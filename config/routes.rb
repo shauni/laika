@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
+  map.about "about/:action", :controller => 'about', :action => 'index'
   map.root :controller => "test_plans"
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -795,3 +795,12 @@ h3 {
   font-size: large;
   text-align: center;
 }
+
+dl.inline > dt {
+  float: left;
+  width: 30ex;
+  line-height: 2em;
+}
+dl.inline > dd {
+  line-height: 2em;
+}

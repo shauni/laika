@@ -11,7 +11,7 @@
       <li <% if current_controller? 'atna_audits' %>id="active"<% end %>><%= link_to 'ATNA Log', atna_audits_path %></li>
       <li <% if current_controller? 'news' %>id="active"<% end %>><%= link_to 'News', news_path %></li>
       <li <% if current_controller? 'settings' %>id="active"<% end %>><%= link_to 'Settings', settings_path %></li>
-      <li><a href="http://laika.sourceforge.net/about.html">About</a></li>
+      <li <% if current_controller? 'about' %>id="active"<% end %>><%= link_to 'About', about_path %></li>
       <li><a href="mailto:<%= FEEDBACK_EMAIL %>">Feedback</a></li>
     </ul>
   </div>
