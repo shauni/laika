@@ -1,3 +1,13 @@
+
+* Support for C32 v2.4 CDA documents
+* Refactored patient views, cleaned up patient display and editing
+* Added built-in "About" page, GH-57
+* Create admin user on database seed, GH-2
+* Completed test plans can be cloned, GH-41
+* Test proctor support, GH-28
+* Fixed: Unable to remove pregnancy info, GH-19
+* Fixed: Failed AJAX call puts patient page in inconsistent state, GH-66
+
 === 2009-10-08 Laika v1.3.9
 
 * Upgraded to Rails 2.3.4.
