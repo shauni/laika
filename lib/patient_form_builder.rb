@@ -2,6 +2,7 @@ class PatientFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   include ApplicationHelper
+  include PatientsHelper
   
   def select field, content, *args
     table_field field, super(field, content, *args)
@@ -72,7 +73,7 @@ class PatientFormBuilder < ActionView::Helpers::FormBuilder
   def table_field field, content
     table_row(
       content_tag(:td,
-        field.to_s.humanize + ' ' + requirements_for(object, field),
+        humanize(field) + ' ' + requirements_for(object, field),
         :class => 'lighttext') +
       content_tag(:td, content))
   end

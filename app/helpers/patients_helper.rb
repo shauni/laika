@@ -3,13 +3,21 @@ require_dependency 'sort_order'
 module PatientsHelper
   include SortOrderHelper
 
+  HUMANIZE_FIXUPS = {
+    'Iso country' => 'Country',
+  }
+  def humanize field
+    result = field.to_s.humanize
+    HUMANIZE_FIXUPS[result] || result
+  end
+
   def cycle_row
     cycle('darkzebra','lightzebra')
   end
 
   def view_row object, field
     content_tag(:tr,
-                content_tag(:td, field.to_s.humanize, :class => 'lighttext') +
+                content_tag(:td, humanize(field), :class => 'lighttext') +
                 content_tag(:td, html_escape(object.send(field))),
                 :class => cycle_row)
   end
