@@ -2,14 +2,15 @@ namespace :db do
   desc "Load seed data into the current environment's database."
   task :seed => :environment do
     require 'active_record/fixtures'
-    fixture_dir = 'spec/fixtures'
+    fixture_dir = 'db/fixtures'
     ActiveRecord::Base.establish_connection(RAILS_ENV.to_sym)
     Dir.glob(File.join(RAILS_ROOT, fixture_dir, '*.yml')).each do |f|
       Fixtures.create_fixtures(fixture_dir , File.basename(f, '.yml'))
     end
-    User.delete_all
-    puts "You will now set up the administrator user."
-    Rake::Task['db:create_admin'].invoke
+    if User.count == 0
+      puts "You will now set up the administrator user."
+      Rake::Task['db:create_admin'].invoke
+    end
   end
 
   task :create_admin => :environment do
