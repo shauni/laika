@@ -1,7 +1,7 @@
 = Contributing to Laika
 
-The most recent development documentation for Laika (based on zenhob/laika) is
-always available at: http://rdoc.info/projects/zenhob/laika
+The most recent development documentation for Laika (based on CCHIT/laika) is
+always available at: http://rdoc.info/projects/CCHIT/laika
 
 Development is managed using the Git source control system. A good source of
 information on Git usage is the GitHub guides: http://github.com/guides/home
