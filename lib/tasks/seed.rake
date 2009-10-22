@@ -7,8 +7,9 @@ namespace :db do
     Dir.glob(File.join(RAILS_ROOT, fixture_dir, '*.yml')).each do |f|
       Fixtures.create_fixtures(fixture_dir , File.basename(f, '.yml'))
     end
+    User.delete_all
     puts "You will now set up the administrator user."
-    create_admin
+    Rake::Task['db:create_admin'].invoke
   end
 
   task :create_admin => :environment do
