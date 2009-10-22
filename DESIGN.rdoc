@@ -1,10 +1,11 @@
 = Laika Design and Architecture
 
-The classes covered in this document are grouped into three sections.
+The classes covered in this document are grouped into four sections.
 Application-specific code is the scaffolding and business logic that holds
 Laika together. Test and test type code manages EHR testing state and related
 data. Patient code is responsible for reading, updating, processing and
-generating C32 from patient data.
+generating C32 from patient data. Validation code does the heavy lifting
+that constitutes Laika's core functionality.
 
 == Application-specific Code
 
@@ -29,9 +30,10 @@ Library tab is implemented by {PatientsController#index}.
 {UsersController}:: list and update users
 {VendorsController}:: add and update vendors
 
-==== Controller Support
+=== Support Code
 
 * {SortOrder}
+* {PatientFormBuilder}
 
 == Tests and Test Types
 
@@ -45,7 +47,9 @@ enumerated in config/initializers/load_test_plan_types.rb.
 The state of an individual test plan is represented by a sub-class of {TestPlan}:
 
 * {C32DisplayAndFilePlan}
+* {C62InspectionPlan}
 * {GenerateAndFormatPlan}
+* {NhinDisplayAndFilePlan}
 * {PdqQueryPlan}
 * {PixFeedPlan}
 * {PixQueryPlan}
@@ -56,10 +60,15 @@ The state of an individual test plan is represented by a sub-class of {TestPlan}
 
 {MessageLog}:: references an external table, used for ???
 {AtnaAudit}:: references an external table, used for viewing ATNA logs
-{ClinicalDocument}:: C32 document attachment
-{ContentError}:: C32 validation error
+{ClinicalDocument}:: document attachment
+{ContentError}:: validation error
 {Proctor}:: test proctor
 {Vendor}:: categorize tests by an arbitrary string
+
+=== Library Code
+
+{XdsRecordUtility}:: directly access records in an XDS database
+{XDSUtils}:: use xds-facade to query documents in an XDS database
 
 === Controllers
 
@@ -152,6 +161,7 @@ These models represent lookup data needed for the UI and validation.
 ==== Lookup Support
 
 * {HasSelectOptionsExtension}
+* {RandomFinder}
 
 === Controllers
 
@@ -182,4 +192,33 @@ view.
 * {ResultsController}
 * {SupportsController}
 * {VitalSignsController}
+
+== Validation Code
+
+The {Validation} API is used to manage the validators for each document type.
+The validation code is configured in initializers/laika_validation.rb.
+
+=== Validators
+
+{Validation}:: top-level validation management API
+{Validation::Validator}:: validation for a single doc type
+{Validators::C32Validation}:: C32 content inspection
+{Validators::Schema::Validator}:: C32 schema validation
+{Validators::Schematron}:: C32 schematron validation
+{Validators::Umls::UmlsValidator}:: UMLS validation
+{Validators::XdsMetadataValidator}:: XDS metadata validation
+
+=== UMLS Support
+
+* {Validators::Umls::UmlsBase}
+* {Validators::Umls::UmlsCodeHierarchy}
+* {Validators::Umls::UmlsCodeSystem}
+* {Validators::Umls::UmlsConcept}
+
+=== Schematron Support
+
+* {Validators::Schematron::BaseValidator}
+* {Validators::Schematron::CompiledValidator}
+* {Validators::Schematron::UncompiledValidator}
+* {Validators::Schematron::XslProcessor}
 
