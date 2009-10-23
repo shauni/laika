@@ -56,7 +56,8 @@ describe TestPlansController do
       before do
         @plan = GenerateAndFormatPlan.factory.create(:user => @user)
         @upload = {
-            :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+            :uploaded_data => ActionController::TestUploadedFile.new(
+              Rails.root.join('spec/test_data/joe_c32.xml').to_s, 'text/xml')
           }
       end
 
