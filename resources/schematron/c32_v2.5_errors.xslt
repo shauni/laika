@@ -20614,22 +20614,7 @@
       </xsl:choose>
 
 		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="cda:templateId[@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13&#34;] and                   cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.17&#34;]"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                                test="cda:templateId[@root=&#34;1.3.6.1.4.1.19376.1.5.3.1.4.13&#34;] and cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.17&#34;]">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>
-       Error: In IHE PCC Advance Directive Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.7), the templateId elements shown 
-       in the specification shall be present, and indicate that this is an Advance Directive entry.
-       See: http://wiki.ihe.net/index.php?title=1.3.6.1.4.1.19376.1.5.3.1.4.13.7
-    </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
+
       <xsl:apply-templates select="@*|*" mode="M329"/>
    </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M329"/>
