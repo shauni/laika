@@ -27,3 +27,9 @@ Validation.register_validator :'C32 v2.4', Validators::Schematron::CompiledValid
 Validation.register_validator :'C32 v2.4', Validators::Schematron::CompiledValidator.new("C32 Schematron Validator","resources/schematron/c32_v2.4_errors.xslt")
 Validation.register_validator :'C32 v2.4', Validators::Umls::UmlsValidator.new("warning")
 
+Validation.register_validator :'C32 v2.5', Validators::C32Validation::Validator.new
+Validation.register_validator :'C32 v2.5', Validators::Schema::Validator.new("C32 Schema Validator", "resources/schemas/infrastructure/cda/C32_CDA.xsd")
+Validation.register_validator :'C32 v2.5', Validators::Schematron::CompiledValidator.new("CCD Schematron Validator","resources/schematron/ccd_errors.xslt")
+Validation.register_validator :'C32 v2.5', Validators::Schematron::CompiledValidator.new("C32 Schematron Validator","resources/schematron/c32_v2.5_errors.xslt")
+Validation.register_validator :'C32 v2.5', Validators::Umls::UmlsValidator.new("warning")
+
