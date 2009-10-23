@@ -2,7 +2,7 @@ class TestPlansController < ApplicationController
   page_title 'Laika Dashboard'
 
   include SortOrder
-  self.valid_sort_fields = %w[ type updated_at patients.name clinical_documents.doc_type ]
+  self.valid_sort_fields = %w[ type updated_at ]
 
   before_filter :set_test_plan, :except => [:index, :create]
   before_filter :set_vendor, :only => [:index]
