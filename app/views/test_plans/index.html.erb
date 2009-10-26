@@ -19,12 +19,12 @@
   <tr>
     <th>Status</th>
     <th class="<%= sort_order_class('type') %>"><%= link_to_sort 'type', 'Test Type' %></th>
-    <th class="<%= sort_order_class('clinical_documents.doc_type') %>"><%= link_to_sort 'clinical_documents.doc_type', 'Doc Type' %></th>
-    <th class="<%= sort_order_class('patient.name') %>"><%= link_to_sort 'patient.name', 'Patient' %></th>
+    <th>Doc Type</th>
+    <th>Patient</th>
     <th class="<%= sort_order_class('updated_at') %>"><%= link_to_sort 'updated_at', 'When Tested' %></th>
     <th colspan="2">Actions</th>
   </tr>
-  <% @vendor.test_plans.each do |test_plan| -%>
+  <% @test_plans.each do |test_plan| -%>
     <tr class="test_plan <%= test_plan.state %>" id="test_plan_<%= test_plan.id %>">
       <td class="test_state">
         <%= render :partial => 'mark_state', :locals => { :plan => test_plan } %>
