@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091008182026) do
+ActiveRecord::Schema.define(:version => 20091023201304) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20091008182026) do
     t.string  "subsection"
     t.string  "field_name"
     t.string  "error_message",   :limit => 2000
-    t.string  "location"
+    t.string  "location",        :limit => 2000
     t.string  "msg_type",                        :default => "error"
     t.string  "validator",                                            :null => false
     t.string  "inspection_type"
