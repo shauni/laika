@@ -11,6 +11,14 @@
   <%= f.select :language_ability_mode_id, LanguageAbilityMode.select_options, {:include_blank => true} %>       
   <%= f.check_box :preference %>
   <%= f.submit "Save" %>
+  <%= f.table_controls link_to_function('Cancel',
+    @language.new_record? ?
+      %{ $('#{language_div}').remove(); } :
+      %{
+        new Ajax.Updater('#{language_div}',
+          '#{patient_language_url(@patient, @language)}',
+          {method:'get'})
+      }) %>
 </table>                         
 <% end -%>
 <% if @language.new_record? -%>

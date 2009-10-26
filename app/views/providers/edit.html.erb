@@ -19,6 +19,14 @@
     <%= f.text_field :organization %>
     <%= f.text_field :patient_identifier %>
     <%= f.submit("Save") %>
+    <%= f.table_controls link_to_function('Cancel',
+      @provider.new_record? ?
+        %{ $('#{provider_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{provider_div}',
+            '#{patient_provider_url(@patient, @provider)}',
+            {method:'get'})
+        }) %>
   </table>
 <% end %>
 <% if @provider.new_record? -%>

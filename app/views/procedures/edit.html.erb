@@ -15,6 +15,14 @@
   <%= f.calendar_date_select :procedure_date %>
   <%= f.select :procedure_status_code_id, ProcedureStatusCode.select_options %>
 	<%= f.submit "Save" %>
+    <%= f.table_controls link_to_function('Cancel',
+      @procedure.new_record? ?
+        %{ $('#{procedure_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{procedure_div}',
+            '#{patient_procedure_url(@patient, @procedure)}',
+            {method:'get'})
+        }) %>
 </table>
 <% end %>
 <% if @procedure.new_record? -%>

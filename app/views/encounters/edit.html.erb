@@ -23,6 +23,14 @@ end %>
   <%= f.text_field :location_name %>
   <%= f.select :encounter_location_code_id, EncounterLocationCode.select_options, {:include_blank => true} %>
   <%= f.submit "Save" %>
+    <%= f.table_controls link_to_function('Cancel',
+      @encounter.new_record? ?
+        %{ $('#{encounter_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{encounter_div}',
+            '#{patient_encounter_url(@patient, @encounter)}',
+            {method:'get'})
+        }) %>
 </table>
 <% end %>
 <% if @encounter.new_record? -%>

@@ -13,5 +13,13 @@
   <%= f.check_box :refusal %>
   <%= f.select :no_immunization_reason_id, NoImmunizationReason.select_options, {:include_blank => true} %>
   <%= f.submit "Save" %>
+    <%= f.table_controls link_to_function('Cancel',
+      @immunization.new_record? ?
+        %{ $('#{immunization_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{immunization_div}',
+            '#{patient_immunization_url(@patient, @immunization)}',
+            {method:'get'})
+        }) %>
 </table>
 <% end %>

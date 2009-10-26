@@ -12,5 +12,10 @@
   </td></tr>
   <%= f.text_field :organization_name %>
   <%= f.submit("Save") %>
+    <%= f.table_controls(link_to_function('Cancel', %{
+          new Ajax.Updater('informationSourceContainer',
+            '#{patient_information_source_url(@patient)}',
+            {method:'get'})
+        })) %>
 </table>
 <% end %>

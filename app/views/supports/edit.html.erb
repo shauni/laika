@@ -9,6 +9,11 @@
     <%= f.address_fields %>
     <%= f.telecom_fields %>
     <%= f.submit("Save") %>
+    <%= f.table_controls(link_to_function('Cancel', %{
+          new Ajax.Updater('supportContainer',
+            '#{patient_support_url(@patient)}',
+            {method:'get'})
+        })) %>
   </table>
 <% end %>
 

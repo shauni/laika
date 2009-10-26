@@ -16,6 +16,14 @@
     <%= f.text_field :quantity_ordered_unit %>
     <%= f.calendar_date_select :expiration_time %>
     <%= f.submit("Save") %>
+    <%= f.table_controls link_to_function('Cancel',
+      @medication.new_record? ?
+        %{ $('#{medication_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{medication_div}',
+            '#{patient_medication_url(@patient, @medication)}',
+            {method:'get'})
+        }) %>
   </table>
 <% end -%>
 <% if @medication.new_record? -%>

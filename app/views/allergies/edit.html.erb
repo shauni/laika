@@ -21,7 +21,15 @@
     <%= f.calendar_date_select :start_event %>
     <%= f.calendar_date_select :end_event %>
     <%= f.select :allergy_status_code_id, AllergyStatusCode.select_options, {:include_blank => true} %>
-    <%= f.table_controls f.submit("Save") %>
+    <%= f.submit("Save") %>
+    <%= f.table_controls link_to_function('Cancel',
+      @allergy.new_record? ?
+        %{ $('#{allergy_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{allergy_div}',
+            '#{patient_allergy_url(@patient, @allergy)}',
+            {method:'get'})
+        }) %>
 </table>
 <% end %>
 <% if @allergy.new_record? %>

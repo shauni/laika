@@ -12,5 +12,10 @@
   <%= f.telecom_fields %>
   <%= f.select :advance_directive_status_code_id, AdvanceDirectiveStatusCode.select_options %>
   <%= f.submit("Save") %>
+    <%= f.table_controls(link_to_function('Cancel', %{
+          new Ajax.Updater('advanceDirectiveContainer',
+            '#{patient_advance_directive_url(@patient)}',
+            {method:'get'})
+        })) %>
 </table>
 <% end %>

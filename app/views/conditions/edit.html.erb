@@ -12,6 +12,14 @@
     <%= f.select :problem_type_id, ProblemType.select_options, {:include_blank => true} %>
 	  <%= f.table_field :snowmed_problem, text_field_with_auto_complete(:snowmed_problem, :name, {:value => @condition.free_text_name}, :method => :get) %>
     <%= f.submit("Save", :onclick => "update_value('snowmed_problem_name', 'condition_name')") %>
+    <%= f.table_controls link_to_function('Cancel',
+      @condition.new_record? ?
+        %{ $('#{condition_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{condition_div}',
+            '#{patient_condition_url(@patient, @condition)}',
+            {method:'get'})
+        }) %>
 </table>
 <% end %>
 <% if @condition.new_record? -%>
