@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
   class InvalidPasswordResetCode < StandardError; end
   skip_before_filter :login_required, :only => [:login, :signup, :forgot_password, :reset_password]
+  skip_before_filter :verify_authenticity_token, :only => [:login]
 
   def login
     return unless request.post?
