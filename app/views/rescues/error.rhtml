@@ -11,14 +11,10 @@
   <%= stylesheet_link_tag 'style' %>
   <%= stylesheet_link_tag 'button' %>
  
-  <!--[if IE]><link rel="stylesheet" href="/css/blueprint/lib/ie.css" type="text/css" media="screen, projection"><![endif]-->
+  <!--[if IE]>
+    <%= stylesheet_link_tag 'blueprint/lib/ie', :media => 'screen, projection' %>
+  <![endif]-->
     
-  <!-- Show the grid and baseline -->
-  <style type="text/css">
-    /*<![CDATA[*/
-        /*.container {background: url(/css/blueprint/lib/grid.png) repeat;}*/
-    /*]]>*/
-  </style>
 </head>
 <body>
         <div class="content"><%= image_tag "error_doggy.png", {:style => 'float: right;'} %>

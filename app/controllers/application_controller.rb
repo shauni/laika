@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
         page.alert("An internal error occurred, please report this to #{FEEDBACK_EMAIL}.")
       end
     else
-      render :status => '500', :template => "rescues/error"
+      render :status => '500', :template => "rescues/error", :layout => false
     end
   end
 
