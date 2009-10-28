@@ -10,19 +10,18 @@ class C62InspectionPlan < TestPlan
 
   private
 
-  def payload_element
-    @elements ||= REXML::Document.new(clinical_document.current_data).elements
-    @elements['ClinicalDocument/component/nonXMLBody/text']
+  def document
+    @document ||= Validators::C62::Reader.new(clinical_document.current_data)
   end
 
   public
 
   def payload_type
-    payload_element.attributes['mediaType'] if payload_element
+    document.payload_type
   end
 
   def payload_data
-    Base64.decode64(payload_element.text) if payload_element
+    document.payload_data
   end
 
   module Actions

@@ -2,6 +2,7 @@ require 'xml_helper'
 require 'laika/constants'
 
 require 'validation'
+require 'validators/c62'
 require 'validators/c32_validator'
 require 'validators/schema_validator'
 require 'validators/schematron_validator'
@@ -32,4 +33,6 @@ Validation.register_validator :'C32 v2.5', Validators::Schema::Validator.new("C3
 Validation.register_validator :'C32 v2.5', Validators::Schematron::CompiledValidator.new("CCD Schematron Validator","resources/schematron/ccd_errors.xslt")
 Validation.register_validator :'C32 v2.5', Validators::Schematron::CompiledValidator.new("C32 Schematron Validator","resources/schematron/c32_v2.5_errors.xslt")
 Validation.register_validator :'C32 v2.5', Validators::Umls::UmlsValidator.new("warning")
+
+Validation.register_validator :'C62', Validators::C62::Validator.new
 

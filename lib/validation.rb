@@ -1,5 +1,4 @@
 module Validation
-   
    def Validation.unregister_validators
      ValidationRegistry.instance.unregister_validators
    end
@@ -14,6 +13,10 @@ module Validation
    
    def Validation.validate(patient_data, document)
      get_validator(document.doc_type).validate(patient_data,document)
+   end
+
+   def Validation.types
+     ValidationRegistry.instance.types
    end
 
    class InvalidValidatorException < Exception
@@ -69,10 +72,11 @@ module Validation
   
   class ValidationRegistry
     include Singleton
-    attr_accessor :validators
+    attr_reader :validators, :types
 
     def initialize()
        @validators={}
+       @types = Set.new
     end
 
     def unregister_validators
@@ -80,6 +84,7 @@ module Validation
     end
 
     def register_validator(doc_type, validator)
+      @types << doc_type
         
         raise InvalidValidatorException if !validator.kind_of? Validation::BaseValidator
         

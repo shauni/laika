@@ -54,9 +54,11 @@
   <h3><a name="content_inspection">Content Inspection Results</a></h3>
   <%= render :partial => "error_list",
     :locals => { :errors => @test_plan.content_inspection_errors } %>
-  <h3><a name="umls_validation">UMLS Validation Results</a></h3>
-  <%= render :partial => "error_list",
-    :locals => { :errors => @test_plan.umls_codesystem_errors } %>
+  <% if @test_plan.umls_enabled? -%>
+    <h3><a name="umls_validation">UMLS Validation Results</a></h3>
+    <%= render :partial => "error_list",
+      :locals => { :errors => @test_plan.umls_codesystem_errors } %>
+  <% end -%>
 </div>
 <!-- Start Pretty XML -->
 <div class="column span-20 last">

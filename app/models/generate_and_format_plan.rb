@@ -89,7 +89,7 @@ class GenerateAndFormatPlan < TestPlan
     
     def doc_inspect
       if @test_plan.clinical_document.nil?
-        flash[:notice] = "There was no clinical document content to inspect."
+        flash[:notice] = "There is no clinical document content to inspect."
         redirect_to test_plans_url
       else
         @xml_document = @test_plan.clinical_document.as_xml_document

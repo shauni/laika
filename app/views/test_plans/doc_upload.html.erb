@@ -11,7 +11,7 @@
                 else return true
               ] }) do |f| -%>
   <label>Document Type &nbsp;&nbsp;&nbsp;&nbsp;
-	<%= f.select :doc_type, ['C32 v2.1', 'C32 v2.4', 'C32 v2.5', 'NHIN C32'] %>
+  <%= f.select :doc_type, Validation.types %>
   </label>
   <br/>
   <label>Clinical Document
