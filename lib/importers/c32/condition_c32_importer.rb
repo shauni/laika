@@ -7,7 +7,7 @@ class ConditionC32Importer
   end
   
   def self.entry_xpath
-    "cda:entry/cda:act[cda:templateId/@root='2.16.840.1.113883.10.20.1.27']/cda:entryRelationship[@typeCode='SUBJ']/cda:observation[cda:templateId[@root='2.16.840.1.113883.10.20.1.28']]"
+    "cda:entry/cda:act[cda:templateId/@root='2.16.840.1.113883.10.20.1.27']"
   end
   
   def self.import_entry(entry_element)
@@ -24,17 +24,18 @@ class ConditionC32Importer
         condition.end_event = end_event_string.to_s.from_hl7_ts_to_date
       end
       
-      coded_name = element.find_first("cda:value/@displayName").try(:value)
+      obs_xpath = "cda:entryRelationship[@typeCode='SUBJ']/cda:observation[cda:templateId[@root='2.16.840.1.113883.10.20.1.28']]/"
+      coded_name = element.find_first(obs_xpath + "cda:value/@displayName").try(:value)
       if coded_name  
         condition.free_text_name = coded_name
       else
-        text_name = deref(element.find_first("cda:text"))
+        text_name = deref(element.find_first(obs_xpath + "cda:text"))
         if text_name
           condition.free_text_name = text_name
         end
       end
       
-      problem_type_code = element.find_first("cda:code/@code").try(:value)
+      problem_type_code = element.find_first(obs_xpath + "cda:code/@code").try(:value)
       if problem_type_code
         condition.problem_type = ProblemType.find_by_code(problem_type_code)
       end

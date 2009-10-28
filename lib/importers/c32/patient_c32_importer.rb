@@ -22,9 +22,13 @@ class PatientC32Importer
       imported_allergies = AllergyC32Importer.import_entries(allergy_section)
       new_patient.allergies << imported_allergies
       
-      #condition_section = ConditionC32Importer.section(clinical_document)
-      #imported_conditions = ConditionC32Importer.import_entries(condition_section)
-      #new_patient.conditions << imported_conditions
+      condition_section = ConditionC32Importer.section(clinical_document)
+      imported_conditions = ConditionC32Importer.import_entries(condition_section)
+      new_patient.conditions << imported_conditions
+      
+      medication_section = MedicationC32Importer.section(clinical_document)
+      imported_medications = MedicationC32Importer.import_entries(medication_section)
+      new_patient.medications << imported_medications
       
       new_patient.save!
     else

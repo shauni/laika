@@ -7,7 +7,7 @@ class MedicationC32Importer
   end
   
   def self.entry_xpath
-    "cda:entry/cda:substanceAdministration[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.9']"
+    "cda:entry/cda:substanceAdministration[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.8']"
   end
   
   def self.import_entry(entry_element)
