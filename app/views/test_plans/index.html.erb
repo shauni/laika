@@ -1,5 +1,5 @@
 <% form_for @vendor do |vendor_form| -%>
-  <div id="vendor_name">
+  <div id="vendor_name" class="column span-20 last">
     <h3>Laika Inspection ID: <%=h @vendor %></h3>
     <div class="vendor-info">Created <%= time_ago_in_words @vendor.created_at %> ago.</div>
     <ul class="vendor-actions">
@@ -15,7 +15,8 @@
   </span>
 <% end -%>
 
-<table id="dashboard">
+<div class="column span-20 last">
+  <table id="dashboard">
   <tr>
     <th>Status</th>
     <th class="<%= sort_order_class('type') %>"><%= link_to_sort 'type', 'Test Type' %></th>
@@ -68,7 +69,9 @@
     </tr>
   <% end %> <!-- test_plan loop -->
 </table> <!-- .dashboard -->
+</div>
 
+<div class="column span-20 last">
 <% if @vendor.test_plans.count == 0 %>
   <div id="not-assigned">
     You have not assigned any tests to <%=h @vendor %>.
@@ -85,3 +88,4 @@
     <% end -%>
   </ul>
 <% end -%>
+</div>

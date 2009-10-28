@@ -10,6 +10,7 @@
   <%= hidden_field_tag :patient_id, @patient.id %>
   <%= f.hidden_field :type %>
   <%= f.hidden_field :vendor_id %>
+  <%= f.hidden_field :proctor_id %>
   <% f.fields_for(:clinical_document, ClinicalDocument.new) do |doc| -%>
     <%= doc.hidden_field :type, :value => 'C62' %>
     <%= doc.file_field  :uploaded_data, :id => 'file_upload' %>

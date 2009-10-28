@@ -1,42 +1,30 @@
-<%
-  doc = @test_plan.clinical_document.as_xml_document
-  errors = @test_plan.content_errors
-  @error_mapping = match_errors(errors,doc)
-%>
-<!-- Start Content -->
 <div class="column span-6 append-1">
   <div id="results">
-    <% if errors.empty? && @test_plan.clinical_document %>
+    <% if @test_plan.passed? -%>
       <div class="pass">PASS</div>
     <% else %>
       <div class="fail">FAIL</div>
     <% end %>
     <div class="info">
-      <h5>Inspection ID: <%= @test_plan.vendor.public_id %></h5>
+      <h5>Inspection ID: <%= @test_plan.vendor %></h5>
       <h5>Document Type: <%= @test_plan.clinical_document.doc_type %></h5>
-      <p>Test Result Summary</p>
-      <div class="widget">
-        <div class="left on">
-          <% if @test_plan.clinical_document %>
-            <span class="number"><%= @test_plan.content_errors.count(:conditions=>{:inspection_type=>::XML_VALIDATION_INSPECTION}) %></span> XML Validation Errors
-          <% else %>
-            Unrecoverable XML Validation Error
-          <% end %>
-        </div>
-      </div>
-      <div class="widget">
-        <div class="left on">
-          <span class="number"><%= @test_plan.content_errors.count(:conditions=>{:inspection_type=>::CONTENT_INSPECTION}) %></span> Content Inspection Warnings
-        </div>
-      </div>
+      <h6>Test Result Summary</h6>
+      <div class="widget"><div class="left on">
+        <span class="number">
+          <%= @test_plan.xml_validation_errors.count %>
+        </span> <a href="#xml_validation">XML Validation Errors</a>
+      </div></div>
+      <div class="widget"><div class="left on">
+        <span class="number">
+          <%= @test_plan.content_inspection_errors.count %>
+        </span> <a href="#content_inspection">Content Inspection Warnings</a>
+      </div></div>
       <% if @test_plan.umls_enabled? -%>
-      <div class="widget">
-        <div class="left on">
-          <% if @test_plan.clinical_document %>
-            <span class="number"><%= @test_plan.content_errors.count(:conditions=>{:inspection_type=>::UMLS_CODESYSTEM_INSPECTION}) %></span> UMLS Code Warnings
-          <% end %>
-        </div>
-      </div>
+        <div class="widget"><div class="left on">
+          <span class="number">
+            <%= @test_plan.umls_codesystem_errors.count %>
+          </span> <a href="#umls_validation">UMLS Code Warnings</a>
+        </div></div>
       <% end -%>
       <table id="details">
         <tr>
@@ -50,22 +38,30 @@
           </tr>
         <% end -%>
         <% unless @test_plan.umls_enabled? %>
-        <tr>
-          <td class="lighttext">UMLS Coded Value Testing</td>
-          <td>Disabled</td>
-        </tr>
+          <tr>
+            <td class="lighttext">UMLS Coded Value Testing</td>
+            <td>Disabled</td>
+          </tr>
         <% end -%>
       </table>
     </div>
   </div>
 </div>
-  <%= render :partial=>"error_list",:locals=>{:header=>"XML Validation Results", :errors=>@test_plan.content_errors.find_all_by_inspection_type(::XML_VALIDATION_INSPECTION)} %>
-  <%= render :partial=>"error_list",:locals=>{:header=>"Content Inspection Results", :errors=>@test_plan.content_errors.find_all_by_inspection_type(::CONTENT_INSPECTION)} %>
-  <%= render :partial=>"error_list",:locals=>{:header=>"UMLS Validation Results", :errors=>@test_plan.content_errors.find_all_by_inspection_type(::UMLS_CODESYSTEM_INSPECTION)} %>
+<div class="inspection-results column span-13 last">
+  <h3><a name="xml_validation">XML Validation Results</a></h3>
+  <%= render :partial => "error_list",
+    :locals => { :errors => @test_plan.xml_validation_errors } %>
+  <h3><a name="content_inspection">Content Inspection Results</a></h3>
+  <%= render :partial => "error_list",
+    :locals => { :errors => @test_plan.content_inspection_errors } %>
+  <h3><a name="umls_validation">UMLS Validation Results</a></h3>
+  <%= render :partial => "error_list",
+    :locals => { :errors => @test_plan.umls_codesystem_errors } %>
+</div>
 <!-- Start Pretty XML -->
-<div class="column span-19 append-1">
+<div class="column span-20 last">
   <h3>Vendor Generated XML</h3>
   <hr/>
-  <%= render :partial => "node" , :locals => {:doc => doc} %>
+  <%= render :partial => "node" , :locals => {:doc => @xml_document} %>
 </div>
 <!-- End Pretty XML -->

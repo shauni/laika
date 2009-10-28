@@ -1,8 +1,20 @@
 class GenerateAndFormatPlan < TestPlan
-  test_name "Generate and Format"
+  test_name "Generate & Format"
   pending_actions 'Execute>' => :doc_upload
   completed_actions 'Inspect' => :doc_inspect, 'Checklist' => :doc_checklist
   serialize :test_type_data, Hash
+
+  # Use these relations to access content errors by inspection_type.
+  # The *_INSPECTION constants are set in config/initializers/laika_globals.rb
+  has_many :xml_validation_errors, :class_name => 'ContentError',
+    :foreign_key => 'test_plan_id',
+    :conditions => { :inspection_type => ::XML_VALIDATION_INSPECTION }
+  has_many :content_inspection_errors, :class_name => 'ContentError',
+    :foreign_key => 'test_plan_id',
+    :conditions => { :inspection_type => ::CONTENT_INSPECTION }
+  has_many :umls_codesystem_errors, :class_name => 'ContentError',
+    :foreign_key => 'test_plan_id',
+    :conditions => { :inspection_type => ::UMLS_CODESYSTEM_INSPECTION }
 
   class ValidationError < StandardError; end
 
@@ -76,9 +88,15 @@ class GenerateAndFormatPlan < TestPlan
     end
     
     def doc_inspect
+      if @test_plan.clinical_document.nil?
+        flash[:notice] = "There was no clinical document content to inspect."
+        redirect_to test_plans_url
+      else
+        @xml_document = @test_plan.clinical_document.as_xml_document
+        # XXX match_errors sets @error_attributes, used by the node partial
+        @error_mapping = match_errors @test_plan.content_errors, @xml_document
+      end
     end
-    
   end
-
 end
 

@@ -62,10 +62,9 @@ body {
 
 .header ul#bignav {
 	margin: 0px 14px 0px 0;
-	padding-left: 0;
+	padding: 0px;
 	white-space: nowrap;
 	font-size:2em;
-	padding-bottom:7px;
 }
 
 .header ul#bignav li {
@@ -76,6 +75,7 @@ body {
 .header ul#bignav #active a {
 	color:#ff2800;
 	background: url(/images/header_selected.png) repeat-x;
+    margin:0px;
 }
 
 .header ul#bignav a {
@@ -153,6 +153,9 @@ ul.vendor-actions > li {
     margin-right: 1em;
 }
 
+.inspection-results h3 > a {
+  color: black;
+}
 .inspection-results h3 {
   margin-bottom: .5ex;
 }
@@ -238,7 +241,7 @@ ul.vendor-actions > li {
 }
 #dashboard .ops a {
   padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 10px;
+  margin: 0px 0px 0px 6px;
   width: 16px;
   height: 16px;
   float: right;
@@ -262,6 +265,13 @@ ul.vendor-actions > li {
 
 table#dashboard a {
 	color:#424242;
+}
+
+#dashboard tr.test_plan td {
+  white-space:nowrap;
+}
+#dashboard tr.test_plan td.ops {
+  width:68px;
 }
 
 #dashboard th {
@@ -339,6 +349,7 @@ table#dashboard a {
 #dashboard .edit a {
   padding: 0px 0px 0px 18px;
   background: url(/images/icons/page_edit.png) no-repeat;
+  line-height: 20px;
 }
 #dashboard .locked a {
   padding: 0px 0px 0px 18px;
@@ -520,6 +531,8 @@ table#dashboard a {
 #results .on {
 	background:url(/images/results_on_back.png) repeat-x;
 	border:1px solid #d5a9a1;
+    overflow:hidden;
+    white-space:nowrap;
 }
 
 #results .off {
@@ -528,20 +541,15 @@ table#dashboard a {
 }
 
 #results .left {
-	width:195px;
+	width:205px;
 	height:22px;
 	float:left;
-	padding:10px;
+	padding:10px 5px;
 }
 
-#results a .on {
-	background:url(/images/results_on.png) repeat-x;
-	border:1px solid #f0836f;
-}
-
-#results a .off {
-	background:url(/images/results_off.png) repeat-x;
-	border:1px solid #cdcece;
+#results h6 {
+  margin-top: 2em;
+  margin-bottom: 1ex;
 }
 
 #results .right {
@@ -555,12 +563,17 @@ table#dashboard a {
 	margin-left:-1px;
 }
 
-#results a .on:hover {
+h3 > a {
+ color: black;
+}
+#results .on a:hover {
+	text-decoration:underline;
+}
+#results .on a {
 	color:#000;
-	border:1px solid #fd5a3c;
 }
 
-#results a .off:hover {
+#results .off a:hover {
 	color:#000;
 	border:1px solid #929292;
 }

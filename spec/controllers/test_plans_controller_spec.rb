@@ -68,6 +68,8 @@ describe TestPlansController do
       end
 
       it "should display inspection results" do
+        @plan.clinical_document = ClinicalDocument.factory.create
+        @plan.pass
         get :doc_inspect, :id => @plan.id
         assigns(:test_plan).should == @plan
         response.should render_template('test_plans/doc_inspect.html.erb')

@@ -9,25 +9,17 @@
       <div class="info">
         <h5>Inspection ID: <%= @test_plan.vendor.public_id %></h5>
         <% if @test_plan.class.name == "PixFeedPlan" %>
-        <p>Test Result Summary</p>
+        <h6>Test Result Summary</h6>
         <div class="widget">
           <div class="left on">
-            <table border="0">
-              <tr>
-                <td><span class="number"><% if @test_plan.passed? %>0<% else %>1<% end %></span></td>
-                <td>PIX Feed Errors</td>
-              </tr>
-            </table>
+            <span class="number">
+              <% if @test_plan.passed? %>0<% else %>1<% end %>
+            </span> PIX Feed Errors
           </div>
         </div>
         <div class="widget">
           <div class="left on">
-            <table>
-              <tr>
-                <td><span class="number">0 </span></td>
-                <td>PIX Feed Warnings</td>
-              </tr>
-             </table>
+           <span class="number">0</span> PIX Feed Warnings
          </div>
         </div>
         <% end %>
@@ -35,7 +27,7 @@
     <div class="pass">Assign Result</div>
     <div class="info">
       <h5>Inspection ID: <%= @test_plan.vendor.public_id %></h5>
-      <p>Test Result</p>
+      <h6>Test Result</h6>
         <table id="details">
         <tr>
           <% form_tag(mark_test_plan_url(@test_plan), :method => 'post') do %>
