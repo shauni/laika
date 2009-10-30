@@ -197,7 +197,7 @@ ul.vendor-actions > li {
 }
 #patient-content {
  margin-left: 245px;
- float:right;
+ float:right; /* this is for IE7 */
 }
 #templateInformationContainer {
   width: 230px;
