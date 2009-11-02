@@ -1,14 +1,12 @@
 class VitalSignC32Importer 
   extend ImportHelper
 
-  include MatchHelper
-
   def self.template_id
     '2.16.840.1.113883.10.20.1.16'
   end
 
   def self.entry_xpath
-    "cda:entry"
+    "cda:entry/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.16']"
   end
 
   def self.import_entry(entry_element)
@@ -37,7 +35,7 @@ class VitalSignC32Importer
 
       code_system_oid = element.find_first("cda:code/@codeSystem").try(:value)
       if code_system_oid
-        vital_sign.code_system_oid = CodeSystem.find_by_code(code_system_oid)
+        vital_sign.code_system = CodeSystem.find_by_code(code_system_oid)
       end
 
       scalar_value = element.find_first("cda:value/@value").try(:value)

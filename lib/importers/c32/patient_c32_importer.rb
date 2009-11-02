@@ -30,6 +30,18 @@ class PatientC32Importer
       imported_medications = MedicationC32Importer.import_entries(medication_section)
       new_patient.medications << imported_medications
       
+      vitals_section = VitalSignC32Importer.section(clinical_document)
+      imported_vitals = VitalSignC32Importer.import_entries(vitals_section)
+      new_patient.vital_signs << imported_vitals
+      
+      result_section = ResultC32Importer.section(clinical_document)
+      imported_results = ResultC32Importer.import_entries(result_section)
+      new_patient.results << imported_results
+      
+      social_history_section = SocialHistoryC32Importer.section(clinical_document)
+      imported_social_history = SocialHistoryC32Importer.import_entries(social_history_section)
+      new_patient.social_history << imported_social_history
+      
       new_patient.save!
     else
       false

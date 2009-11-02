@@ -17,5 +17,8 @@ require 'importers/c32/registration_information_c32_importer'
 require 'importers/c32/condition_c32_importer'
 require 'importers/c32/medication_c32_importer'
 require 'importers/c32/patient_c32_importer'
+require 'importers/c32/result_c32_importer'
+require 'importers/c32/vital_sign_c32_importer'
+require 'importers/c32/social_history_c32_importer'
 
 require 'active_record_comparator'

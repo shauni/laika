@@ -1,8 +1,6 @@
 class ResultC32Importer 
   extend ImportHelper
   
-  include MatchHelper
-  
   def self.template_id
     '2.16.840.1.113883.10.20.1.14'
   end
@@ -37,7 +35,7 @@ class ResultC32Importer
       
       code_system_oid = element.find_first("cda:code/@codeSystem").try(:value)
       if code_system_oid
-        result.code_system_oid = CodeSystem.find_by_code(code_system_oid)
+        result.code_system = CodeSystem.find_by_code(code_system_oid)
       end
       
       scalar_value = element.find_first("cda:value/@value").try(:value)
