@@ -6,7 +6,7 @@ class VitalSignC32Importer
   end
 
   def self.entry_xpath
-    "cda:entry/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.16']"
+    "cda:entry/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.15']"
   end
 
   def self.import_entry(entry_element)

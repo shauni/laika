@@ -6,7 +6,7 @@ class SocialHistoryC32Importer
   end
 
   def self.entry_xpath
-    "cda:entry/cda:obs[cda:templateId/@root='2.16.840.1.113883.10.20.1.33']"
+    "cda:entry/cda:observation[cda:templateId/@root='2.16.840.1.113883.10.20.1.33']"
   end
 
   def self.import_entry(entry_element)
