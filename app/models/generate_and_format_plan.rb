@@ -83,8 +83,19 @@ class GenerateAndFormatPlan < TestPlan
     end
     
     def doc_checklist
-      @patient = test_plan.patient
-      render 'test_plans/doc_checklist.xml', :layout => false
+      clinical_document = test_plan.clinical_document
+      
+      doc = clinical_document.as_xml_document(true)
+      
+      if doc.root && doc.root.name == "ClinicalDocument"
+        pi = REXML::Instruction.new('xml-stylesheet', 
+          'type="text/xsl" href="' + relative_url_root + 
+          '/schemas/generate_and_format.xsl"')
+        doc.insert_after(doc.xml_decl, pi)
+        render :xml => doc.to_s
+      else
+        redirect_to clinical_document.public_filename
+      end
     end
     
     def doc_inspect
