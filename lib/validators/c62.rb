@@ -30,6 +30,13 @@ module Validators
     class Validator < Validation::BaseValidator
       TEMPLATE_ID_ROOT = '1.3.6.1.4.1.19376.1.2.20'
 
+      # FIXME This code was written in haste before the test flow for
+      # C62 was fully understood. What is really needed for verifying
+      # adherence to the spec is a document containing schematron rules.
+      # I'm leaving this in because it's still technically correct to 
+      # the best of my knowledge, if easily-obsoleted. It could also
+      # potentially serve as a starting point for automated content
+      # inspection.
       def validate patient, document
         elements = document.elements
         [].tap do |errors|
