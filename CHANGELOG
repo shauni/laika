@@ -1,4 +1,14 @@
 
+* C32 v2.5 schematron rules.
+* Generate & Format: Display clinical document in checklist, GH-87
+* Generate & Format: re-order doc types, GH-85
+* Fixed: Patient display broken in IE7, GH-80
+* Rescue error page layout, GH-77
+* Skip CSRF protection on login
+* Patient editing: "Cancel" link for most modules, GH-59.
+* Fixed: sorting broken on dashboard, GH-72
+* Moved seed data out of spec/fixtures, GH-29
+
 === 2009-10-21 Laika v1.4.0
 
 * Support for C32 v2.4 CDA documents
