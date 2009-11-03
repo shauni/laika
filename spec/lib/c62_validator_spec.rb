@@ -9,7 +9,8 @@ describe Validators::C62::Validator do
 <title>My Clinical Document</title>
 <code code="foo" codeSystem="bar"/>
 <confidentialityCode code="foo" codeSystem="bar"/>
-<effectiveTime>2009-10-28 00:00:00 -0800</effectiveTime>
+<effectiveTime value="2009-10-28 00:00:00 -0800"/>
+<languageCode code="en-US"/>
 <component><nonXMLBody>
 <text mediaType="text/plain" representation="B64">
 SGkgd29ybGQhCg==
@@ -48,6 +49,7 @@ SGkgd29ybGQhCg==
     ClinicalDocument/effectiveTime
     ClinicalDocument/code
     ClinicalDocument/confidentialityCode
+    ClinicalDocument/languageCode
     ClinicalDocument/component/nonXMLBody/text
   ].each do |xpath|
     it "should require element #{xpath}" do
@@ -63,8 +65,10 @@ SGkgd29ybGQhCg==
     ClinicalDocument/code@codeSystem
     ClinicalDocument/confidentialityCode@code
     ClinicalDocument/confidentialityCode@codeSystem
+    ClinicalDocument/effectiveTime@value
     ClinicalDocument/component/nonXMLBody/text@mediaType
     ClinicalDocument/component/nonXMLBody/text@representation
+    ClinicalDocument/languageCode@code
   ].map {|a| a.split(/@/, 2) }.each do |element, attribute|
     it "should require attribute #{element}@#{attribute}" do
       @doc.elements[element].attributes.delete(attribute)

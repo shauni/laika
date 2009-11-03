@@ -62,7 +62,8 @@ module Validators
           # The ClinicalDocument/effectiveTime shall denote the time at which
           # the original content was scanned. At a minimum, the time shall be
           # precise to the day and shall include the time zone offset from GMT.
-          errors.concat check_required(elements, 'ClinicalDocument/effectiveTime')
+          errors.concat check_required(elements, 'ClinicalDocument/effectiveTime',
+                                       %w[ value ])
 
           # The ClinicalDocument/confidentialityCode shall be assigned by the
           # operator in accordance with the scanning facility policy. ...
@@ -93,6 +94,15 @@ module Validators
                 "#{text.xpath}@representation attribute does not match expected.")
             end
           end)
+
+          # The ClinicalDocument/languageCode, in accordance with the HL7 CDA
+          # R2 documentation, shall denote the language used in the character
+          # data of the wrapper CDA header.
+          errors.concat check_required(elements, 'ClinicalDocument/languageCode',
+                                       %w[ code ])
+
+          # The ClinicalDocument/recordTarget/patientRole/id element shall
+          # include both the root and the extension attributes.
 
           errors.compact! # remove nils
         end
