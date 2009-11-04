@@ -15,9 +15,10 @@ module PatientsHelper
     cycle('darkzebra','lightzebra')
   end
 
-  def view_row object, field
+  def view_row(object, field, display_name=nil)
+    display_name ||= humanize(field)
     content_tag(:tr,
-                content_tag(:td, humanize(field), :class => 'lighttext') +
+                content_tag(:td, display_name, :class => 'lighttext') +
                 content_tag(:td, html_escape(object.send(field))),
                 :class => cycle_row)
   end
