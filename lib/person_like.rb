@@ -28,7 +28,7 @@ module PersonLike
     end
 
     def person_blank?
-      %w[ person_name address telecom ].all? {|a| read_attribute(a).blank? }
+      self.person_name.blank? && self.address.blank? && self.telecom.blank?
     end
 
     def full_name
