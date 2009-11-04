@@ -10,7 +10,6 @@
    <%= f.text_field :group_number %>
    <%= f.select :insurance_type_id, InsuranceType.select_options, {:include_blank => true} %>
    <%= f.text_field :health_plan %>
-   <%= f.select :coverage_role_type_id, CoverageRoleType.select_options %>
    <%= f.select :role_class_relationship_formal_type_id, 
          RoleClassRelationshipFormalType.select_options %>
    <%= f.submit "Save" %>
