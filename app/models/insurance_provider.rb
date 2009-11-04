@@ -3,7 +3,6 @@ class InsuranceProvider < ActiveRecord::Base
   strip_attributes!
 
   belongs_to :insurance_type
-  belongs_to :coverage_role_type
   belongs_to :role_class_relationship_formal_type
 
   has_one :insurance_provider_patient,    :dependent => :destroy
@@ -17,7 +16,6 @@ class InsuranceProvider < ActiveRecord::Base
     {
       :represented_organization => :required,
       :insurance_type_id => :hitsp_r2_optional,
-      :coverage_role_type_id => :required,
       :role_class_relationship_formal_type_id => :required,
       :start_service => :hitsp_optional,
       :end_service => :hitsp_optional,

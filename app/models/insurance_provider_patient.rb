@@ -2,6 +2,8 @@ class InsuranceProviderPatient < ActiveRecord::Base
 
   strip_attributes!
 
+  belongs_to :coverage_role_type
+
   include InsuranceProviderChild
 
   include PersonLike
@@ -13,6 +15,7 @@ class InsuranceProviderPatient < ActiveRecord::Base
       :start_coverage_date => :hitsp_r2_optional,
       :end_coverage_date => :hitsp_r2_optional,
       :date_of_birth => :required,
+      :coverage_role_type_id => :required
     }
   end
 
