@@ -208,6 +208,11 @@ The validation code is configured in initializers/laika_validation.rb.
 {Validators::Umls::UmlsValidator}:: UMLS validation
 {Validators::XdsMetadataValidator}:: XDS metadata validation
 
+=== C62 Support (incomplete)
+
+{Validators::C62::Reader}:: access the payload of a C62 document
+{Validators::C62::Validator}:: C62 validation (incomplete)
+
 === UMLS Support
 
 * {Validators::Umls::UmlsBase}
