@@ -43,7 +43,7 @@ class Provider < ActiveRecord::Base
         xml.id
         provider_type.try(:to_c32, xml)
         address.try(:to_c32, xml)
-        telecom.try(:to_c32, xml)  
+        telecom.try(:to_c32, xml)
         xml.assignedPerson do
           person_name.try(:to_c32, xml)
         end
@@ -53,6 +53,8 @@ class Provider < ActiveRecord::Base
             xml.id("root" => "2.16.840.1.113883.3.72.5", 
                    "assigningAuthorityName" => organization) 
             xml.name(organization)
+            telecom.try(:to_c32, xml)
+            address.try(:to_c32, xml)
           end
         end
 
