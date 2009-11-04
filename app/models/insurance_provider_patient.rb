@@ -19,10 +19,24 @@ class InsuranceProviderPatient < ActiveRecord::Base
     }
   end
 
-  
 
   def to_c32(xml)
-
+    xml.participant("typeCode" => "COV") do
+      xml.participantRole("classCode" => "PAT") do
+        if coverage_role_type
+          xml.code("code" => coverage_role_type.code,
+                   "displayName" => coverage_role_type.name,
+                   "codeSystem" => "2.16.840.1.113883.5.111",
+                   "codeSystemName" => "RoleCode")
+        end
+        xml.playingEntity do
+          person_name.try(:to_c32, xml)
+          if date_of_birth.present?
+            xml.sdtc(:birthTime, "value" => date_of_birth.to_s(:brief))
+          end
+        end
+      end
+    end
   end
 
   def randomize(reg_info)
@@ -38,6 +52,7 @@ class InsuranceProviderPatient < ActiveRecord::Base
     self.address.postal_code = reg_info.address.postal_code
     self.address.iso_country = reg_info.address.iso_country
     self.member_id = random_id()
+    self.coverage_role_type = CoverageRoleType.find :random
 
     self.telecom.home_phone = reg_info.telecom.home_phone
     self.telecom.work_phone = reg_info.telecom.work_phone
