@@ -11,8 +11,8 @@ class Provider < ActiveRecord::Base
 
   def requirements
     {
-      :start_service => :hitsp_optional,
-      :end_service => :hitsp_optional,
+      :start_service => :hitsp_required,
+      :end_service => :hitsp_required,
       :provider_type_id => :hitsp_r2_optional,
       :provider_role_id => :hitsp_r2_optional,
       :provider_role_free_text => :hitsp_r2_optional,
@@ -26,6 +26,9 @@ class Provider < ActiveRecord::Base
     xml.performer("typeCode" => "PRF") do
       xml.templateId("root" => "2.16.840.1.113883.3.88.11.32.4", 
                      "assigningAuthorityName" => "HITSP/C32")
+      xml.templateId("root" => "2.16.840.1.113883.3.88.11.83.4", 
+                     "assigningAuthorityName" => "HITSP/C83")
+      xml.templateId("root" => "1.3.6.1.4.1.19376.1.5.3.1.2.3")
       unless provider_role.blank?
         provider_role.to_c32(xml,provider_role_free_text)
       end
