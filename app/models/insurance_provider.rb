@@ -3,7 +3,6 @@ class InsuranceProvider < ActiveRecord::Base
   strip_attributes!
 
   belongs_to :insurance_type
-  belongs_to :coverage_role_type
   belongs_to :role_class_relationship_formal_type
 
   has_one :insurance_provider_patient,    :dependent => :destroy
@@ -17,7 +16,6 @@ class InsuranceProvider < ActiveRecord::Base
     {
       :represented_organization => :required,
       :insurance_type_id => :hitsp_r2_optional,
-      :coverage_role_type_id => :required,
       :role_class_relationship_formal_type_id => :required,
       :start_service => :hitsp_optional,
       :end_service => :hitsp_optional,
@@ -73,9 +71,13 @@ class InsuranceProvider < ActiveRecord::Base
               xml.performer("typeCode" => "PRF") do
                 xml.assignedEntity("classCode" => "ASSIGNED") do
                   xml.id('root'=>'2.16.840.1.113883.3.88.3.1')
+                  xml.addr
+                  xml.telecom
                   xml.representedOrganization("classCode" => "ORG") do
                     xml.id("root" => "2.16.840.1.113883.19.5")
                     xml.name represented_organization
+                    xml.telecom
+                    xml.addr
                   end
                 end
               end
@@ -99,6 +101,8 @@ class InsuranceProvider < ActiveRecord::Base
                     end
                   end
                   xml.code(code_atts)
+                  insurance_provider_guarantor.address.try(:to_c32, xml)
+                  insurance_provider_guarantor.telecom.try(:to_c32, xml)
                   xml.assignedPerson do
                     insurance_provider_guarantor.person_name.to_c32(xml)
                   end
@@ -108,22 +112,7 @@ class InsuranceProvider < ActiveRecord::Base
 
             # patient data is provided only if there is some non-nil, non-empty data
             if insurance_provider_patient && !insurance_provider_patient.person_blank?
-              xml.participant("typeCode" => "COV") do
-                xml.participantRole("classCode" => "PAT") do
-                  if coverage_role_type
-                    xml.code("code" => coverage_role_type.code, 
-                             "displayName" => coverage_role_type.name, 
-                             "codeSystem" => "2.16.840.1.113883.5.111", 
-                             "codeSystemName" => "RoleCode") 
-                  end
-                  xml.playingEntity do
-                    insurance_provider_patient.person_name.try(:to_c32, xml)
-                    if !insurance_provider_patient.date_of_birth.blank?
-                      xml.sdtc(:birthTime, "value" => insurance_provider_patient.date_of_birth.to_s(:brief))
-                    end
-                  end
-                end
-              end
+              insurance_provider_patient.to_c32(xml)
             end
 
             insurance_provider_subscriber.try(:to_c32, xml)
@@ -160,7 +149,6 @@ class InsuranceProvider < ActiveRecord::Base
     self.insurance_provider_guarantor.randomize()
 
     self.role_class_relationship_formal_type = RoleClassRelationshipFormalType.find :random
-    self.coverage_role_type = CoverageRoleType.find :random
     self.insurance_type = InsuranceType.find :random
     if (self.insurance_type_id != 606711552)
       self.group_number = nil

@@ -4,6 +4,7 @@ joe_smiths_insurance_provider_patient:
   end_coverage_date: 2016-03-26
   date_of_birth: 1967-03-23
   insurance_provider: joe_smiths_insurance_provider
+  coverage_role_type: self
 
 emily_jones_insurance_provider_patient:
   member_id: 1234567890-ABC-XXX
@@ -11,6 +12,7 @@ emily_jones_insurance_provider_patient:
   end_coverage_date: 2017-03-26
   date_of_birth: 1937-03-23
   insurance_provider: emily_jones_insurance_provider
+  coverage_role_type: natural_child
 
 jennifer_thompsons_insurance_provider_patient:
   member_id: 1234567890-ABC-YYY
@@ -18,3 +20,4 @@ jennifer_thompsons_insurance_provider_patient:
   end_coverage_date: 2015-03-26
   date_of_birth: 1957-04-18
   insurance_provider: jennifer_thompsons_insurance_provider
+  coverage_role_type: self

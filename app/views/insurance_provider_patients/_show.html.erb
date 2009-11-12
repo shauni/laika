@@ -3,6 +3,7 @@
     <th colspan="2" class="lighttext">Patient</th>
   </tr>
   <%= view_row insurance_provider_patient , :member_id %>
+  <%= view_row insurance_provider_patient , :coverage_role_type, "Patient relationship to subscriber" %>
   <%= view_row insurance_provider_patient , :start_coverage_date %>
   <%= view_row insurance_provider_patient , :end_coverage_date %>
   <%= render :partial => '/person_names/show', :locals => {:person_name => insurance_provider_patient.person_name}%>

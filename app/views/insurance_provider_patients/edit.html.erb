@@ -5,6 +5,7 @@
     <th colspan="2" class="lighttext">Insurance Provider Patient</th>
   </tr>
   <%= f.text_field :member_id %>
+  <%= f.select :coverage_role_type_id, CoverageRoleType.select_options %>
   <%= f.calendar_date_select :start_coverage_date %>
   <%= f.calendar_date_select :end_coverage_date %>
   <%= f.person_name_fields %>

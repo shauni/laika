@@ -17,7 +17,7 @@ require 'validators/xds_metadata_validator'
     Validators::Schematron::CompiledValidator.new("CCD Schematron Validator",
       "resources/schematron/ccd_errors.xslt"),
     Validators::Schematron::CompiledValidator.new("C32 Schematron Validator",
-      "resources/schematron/c32_v2.1_errors.xslt"),
+      "resources/schematron/c32_v2.1/c32_v2.1_errors.xslt"),
     Validators::Umls::UmlsValidator.new("warning")
   ],
   'C32 v2.4' => [
@@ -27,7 +27,7 @@ require 'validators/xds_metadata_validator'
     Validators::Schematron::CompiledValidator.new("CCD Schematron Validator",
       "resources/schematron/ccd_errors.xslt"),
     Validators::Schematron::CompiledValidator.new("C32 Schematron Validator",
-      "resources/schematron/c32_v2.4_errors.xslt"),
+      "resources/schematron/c32_v2.4/c32_v2.4_errors.xslt"),
     Validators::Umls::UmlsValidator.new("warning")
   ],
   'C32 v2.5' => [
@@ -37,7 +37,7 @@ require 'validators/xds_metadata_validator'
     Validators::Schematron::CompiledValidator.new("CCD Schematron Validator",
       "resources/schematron/ccd_errors.xslt"),
     Validators::Schematron::CompiledValidator.new("C32 Schematron Validator",
-      "resources/schematron/c32_v2.5_errors.xslt"),
+      "resources/schematron/c32_v2.5/c32_v2.5_errors.xslt"),
     Validators::Umls::UmlsValidator.new("warning")
   ],
   'NHIN C32' => [

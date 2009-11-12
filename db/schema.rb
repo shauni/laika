@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091023201304) do
+ActiveRecord::Schema.define(:version => 20091104151346) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20091023201304) do
     t.string  "member_id"
     t.date    "start_coverage_date"
     t.date    "end_coverage_date"
+    t.integer "coverage_role_type_id"
   end
 
   add_index "insurance_provider_patients", ["insurance_provider_id"], :name => "index_insurance_provider_patients_on_insurance_provider_id"
@@ -242,7 +243,6 @@ ActiveRecord::Schema.define(:version => 20091023201304) do
     t.integer "insurance_type_id"
     t.integer "patient_id",                             :null => false
     t.integer "role_class_relationship_formal_type_id"
-    t.integer "coverage_role_type_id"
     t.string  "group_number"
     t.string  "health_plan"
   end
