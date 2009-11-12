@@ -24,6 +24,8 @@ You will need to install Rails for JRuby:
  $ jruby -S gem sources -a http://gems.github.com
  $ jruby -S gem install rails -v=2.3.4 --no-rdoc --no-ri
 
+Several commands require use of rake, which in turn loads the local rails environment and will complain if the configuration files are not set up.  So make a local copy of config/database.yml.template as config/database.yml.  The file just has to exist for now, we will configure it below.
+
 Install the rest of the gem dependencies; from the root of your Laika project:
 
  $ jruby -S rake gems:install
