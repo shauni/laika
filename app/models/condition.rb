@@ -12,11 +12,9 @@ class Condition < ActiveRecord::Base
       :start_event => :hitsp_r2_optional,
       :end_event => :hitsp_r2_optional,
       :problem_type_id => :hitsp_r2_required,
-      :snowmed_problem => :required,
+      :problem_name => :required,
     }
   end
-
-
  
   def to_c32(xml)
     xml.entry do
@@ -71,12 +69,12 @@ class Condition < ActiveRecord::Base
               end
             end
             # only write out the coded value if the name of the condition is in the SNOMED list
-            if free_text_name
-              snowmed_problem = SnowmedProblem.find(:first, :conditions => {:name => free_text_name})
+            unless problem_name.blank?
+              snowmed_problem = SnowmedProblem.find(:first, :conditions => {:name => problem_name})
               if snowmed_problem
                 xml.value("xsi:type" => "CD", 
                         "code" => snowmed_problem.code, 
-                        "displayName" => free_text_name,
+                        "displayName" => problem_name,
                         "codeSystem" => "2.16.840.1.113883.6.96",
                         "codeSystemName" => 'SNOMED CT')
               end
@@ -90,10 +88,8 @@ class Condition < ActiveRecord::Base
   def randomize(birth_date)
     self.start_event = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
     self.problem_type = ProblemType.find(:random)
-    self.free_text_name = SnowmedProblem.find(:random).try(:name)
+    self.problem_name = SnowmedProblem.find(:random).try(:name)
   end
-
-
 
   def self.c32_component(conditions, xml)
     if conditions.size > 0
@@ -121,9 +117,9 @@ class Condition < ActiveRecord::Base
               xml.tbody do
                conditions.try(:each) do |condition|
                   xml.tr do
-                    if condition.free_text_name != nil
+                    if condition.problem_name != nil
                       xml.td do
-                        xml.content(condition.free_text_name, 
+                        xml.content(condition.problem_name, 
                                      "ID" => "problem-"+condition.id.to_s)
                       end
                     else

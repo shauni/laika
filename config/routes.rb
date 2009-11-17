@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # to support autocomplete actions, include each autocomplete-able controller/action in the list
-  { 'conditions' => %w[ snowmed_problem_name ] }.each do |controller, actions|
+  { 'conditions' => %w[ problem_name ] }.each do |controller, actions|
     actions.each do |action|
       map.connect "/autocomplete/#{controller}/#{action}",
         :controller => controller, :action => "auto_complete_for_#{action}"
