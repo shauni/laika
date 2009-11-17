@@ -76,6 +76,27 @@ class TestPlan < ActiveRecord::Base
     end
   end
 
+  # Manually override test plan state to either passed
+  # or failed, and set a reason.
+  #
+  # @param [Hash<String => String>] expects a state and a status_override_reason
+  # @return true if changes are successfully saved, otherwise raises an ActiveRecord error
+  #   per save!
+  def override_state!(state_options)
+    state = state_options['state']
+    reason = state_options['status_override_reason']
+    case state
+      when 'passed'
+        self.status_override_reason = reason 
+        force_pass!
+      when 'failed'
+        self.status_override_reason = reason 
+        force_fail!
+      else
+        false
+    end
+  end
+
   # Return the normalized name of this test plan, but with underscores instead
   # of dashes. Useful for building URLs and file paths.
   #

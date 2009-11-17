@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091104151346) do
+ActiveRecord::Schema.define(:version => 20091117011414) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -525,9 +525,10 @@ ActiveRecord::Schema.define(:version => 20091104151346) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "clinical_document_id"
-    t.integer  "user_id",              :null => false
-    t.integer  "vendor_id",            :null => false
+    t.integer  "user_id",                :null => false
+    t.integer  "vendor_id",              :null => false
     t.integer  "proctor_id"
+    t.string   "status_override_reason"
   end
 
   add_index "test_plans", ["proctor_id"], :name => "index_test_plans_on_proctor_id"

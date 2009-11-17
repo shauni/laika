@@ -24,8 +24,8 @@
         </span> <a href="#umls_validation">UMLS Code Warnings</a>
       </div></div>
     <% end -%>
+      <%= render :partial => 'assign_test_state_manually' %>
       <table id="details">
-        <%= render :partial => 'assign_test_state_manually' %>
         <tr>
           <td class="lighttext">Test Date</td>
           <td><%= @test_plan.updated_at %></td>

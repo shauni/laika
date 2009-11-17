@@ -144,12 +144,7 @@ class TestPlansController < ApplicationController
   # @param [Number] id Test plan ID.
   # @param ["pass", "fail"] state Intended test state.
   def mark
-    case params['state']
-    when "pass"
-      test_plan.force_pass!
-    when "fail"
-      test_plan.force_fail!
-    end
+    test_plan.override_state!(params[:test_plan])
     redirect_to test_plans_url
   end
 

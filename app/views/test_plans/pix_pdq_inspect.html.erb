@@ -23,8 +23,8 @@
     <% else -%>
       <h6>Test Result</h6>
     <% end -%>
+      <%= render :partial => 'assign_test_state_manually' if @test_plan.pending? -%>
       <table id="details">
-        <%= render :partial => 'assign_test_state_manually' if @test_plan.pending? -%>
         <tr>
           <td class="lighttext">Test Date</td>
           <td><%= @test_plan.updated_at %></td>

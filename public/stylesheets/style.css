@@ -614,7 +614,12 @@ h3 > a {
 
 #assign_test_state_manually {
   padding:3px 0 7px 0;
-  border-bottom:1px solid #ccc;
+  border-top:1px solid #ccc;
+}
+
+#assign_test_state_manually textarea{
+  height: 4em;
+  width: 18em;
 }
 
 #modules table, #modules td, #modules th {
