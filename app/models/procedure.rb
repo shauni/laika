@@ -8,7 +8,8 @@ class Procedure < ActiveRecord::Base
   def requirements
     {
       :procedure_id => :required,
-      :code => :required,
+      :code => :hitsp_r2_required,
+      :name => :required,
       :procedure_date => :hitsp_r2_optional,
       :procedure_status_code_id => :nhin_required,
     }
