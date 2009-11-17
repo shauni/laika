@@ -146,9 +146,9 @@ class TestPlansController < ApplicationController
   def mark
     case params['state']
     when "pass"
-      test_plan.pass!
+      test_plan.force_pass!
     when "fail"
-      test_plan.fail!
+      test_plan.force_fail!
     end
     redirect_to test_plans_url
   end

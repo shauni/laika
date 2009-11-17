@@ -1,10 +1,8 @@
 <div class="column span-6 append-1">
   <div id="results">
-    <% if @test_plan.passed? -%>
-      <div class="pass">PASS</div>
-    <% else %>
-      <div class="fail">FAIL</div>
-    <% end %>
+    <div class="<%= test_plan_results_class(@test_plan) %>">
+      <%= test_plan_results_heading(@test_plan) %>
+    </div>
     <div class="info">
       <h5>Inspection ID: <%= @test_plan.vendor %></h5>
       <h5>Document Type: <%= @test_plan.clinical_document.doc_type %></h5>
@@ -19,30 +17,31 @@
           <%= @test_plan.content_inspection_errors.count %>
         </span> <a href="#content_inspection">Content Inspection Warnings</a>
       </div></div>
-      <% if @test_plan.umls_enabled? -%>
-        <div class="widget"><div class="left on">
-          <span class="number">
-            <%= @test_plan.umls_codesystem_errors.count %>
-          </span> <a href="#umls_validation">UMLS Code Warnings</a>
-        </div></div>
-      <% end -%>
+    <% if @test_plan.umls_enabled? -%>
+      <div class="widget"><div class="left on">
+        <span class="number">
+          <%= @test_plan.umls_codesystem_errors.count %>
+        </span> <a href="#umls_validation">UMLS Code Warnings</a>
+      </div></div>
+    <% end -%>
       <table id="details">
+        <%= render :partial => 'assign_test_state_manually' %>
         <tr>
           <td class="lighttext">Test Date</td>
           <td><%= @test_plan.updated_at %></td>
         </tr>
-        <% if @test_plan.proctor -%>
-          <tr>
-            <td class="lighttext">Test Proctor</td>
-            <td><%= link_to h(@test_plan.proctor), @test_plan.proctor %></td>
-          </tr>
-        <% end -%>
-        <% unless @test_plan.umls_enabled? %>
-          <tr>
-            <td class="lighttext">UMLS Coded Value Testing</td>
-            <td>Disabled</td>
-          </tr>
-        <% end -%>
+      <% if @test_plan.proctor -%>
+        <tr>
+          <td class="lighttext">Test Proctor</td>
+          <td><%= link_to h(@test_plan.proctor), @test_plan.proctor %></td>
+        </tr>
+      <% end -%>
+      <% unless @test_plan.umls_enabled? %>
+        <tr>
+          <td class="lighttext">UMLS Coded Value Testing</td>
+          <td>Disabled</td>
+        </tr>
+      <% end -%>
       </table>
     </div>
   </div>

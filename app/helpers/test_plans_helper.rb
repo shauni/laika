@@ -2,6 +2,30 @@ require 'sort_order'
 module TestPlansHelper
   include SortOrderHelper
 
+  # Selects the proper css class based on the given plan's state.
+  # 
+  # TestPlan#pending? == true is classed as 'pass' in anticipation
+  # of the user setting a test state.
+  # 
+  # @param [TestPlan]
+  # @return [String] 'pass' or 'fail'  
+  def test_plan_results_class(plan)
+    plan.pending? || plan.passed? ? 'pass' : 'fail'
+  end
+
+  # Returns a header string based on plan state, either 'PASS' or 'FAIL'
+  # or 'Assign Result' if pending.
+  #
+  # @param [TestPlan]
+  # @return [String] 
+  def test_plan_results_heading(plan)
+    case 
+      when plan.pending? then 'Assign Result'
+      when plan.passed?  then 'PASS'
+      else                    'FAIL'
+    end
+  end
+
   def plan_when_tested plan
       plan.pending? ? 'not yet tested' : "#{time_ago_in_words plan.updated_at} ago"
   end

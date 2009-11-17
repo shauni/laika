@@ -50,6 +50,46 @@ describe TestPlansController do
         @plan.reload
         @plan.state.should == 'failed'
       end
+
+      describe "that has already passed" do
+        
+        before do
+          @plan.pass
+        end
+
+        it "should override to fail" do
+          get :mark, :id => @plan.id, :state => 'fail'
+          @plan.reload
+          @plan.state.should == 'failed'
+        end
+  
+        it "should remain passed" do
+          get :mark, :id => @plan.id, :state => 'pass'
+          @plan.reload
+          @plan.state.should == 'passed'
+        end
+
+      end
+
+      describe "that has already failed" do
+      
+        before do
+          @plan.fail
+        end
+
+        it "should override to pass" do
+          get :mark, :id => @plan.id, :state => 'pass'
+          @plan.reload
+          @plan.state.should == 'passed'
+        end
+
+        it "should remain failed" do
+          get :mark, :id => @plan.id, :state => 'fail'
+          @plan.reload
+          @plan.state.should == 'failed'
+        end
+
+      end
     end
 
     describe "with a Generate and Format plan" do

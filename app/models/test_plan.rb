@@ -24,6 +24,10 @@
 # You cannot change the state of a plan once it has passed
 # or failed, so you can only pass or fail pending tests.
 #
+# However, we have added force_pass, force_fail events as
+# manual overrides which will ensure a transition to either
+# 'passed' or 'failed', respectively, regardless of whether
+# test is currently pending.
 class TestPlan < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
@@ -63,6 +67,12 @@ class TestPlan < ActiveRecord::Base
     end
     event :fail do
       transition :pending => :failed
+    end
+    event :force_pass do
+      transition [:pending, :passed, :failed] => :passed
+    end
+    event :force_fail do
+      transition [:pending, :passed, :failed] => :failed
     end
   end
 

@@ -1,0 +1,8 @@
+        <tr>
+          <td colspan="2">
+            <% form_tag(mark_test_plan_url(@test_plan), :id => 'assign_test_state_manually', :method => 'post') do %>
+              <%= select_tag :state, %w[pass fail].map{|s|"<option>#{s}</option>"} %>
+              <%= submit_tag "Assign" %>
+            <% end %>
+          </td>
+        </tr>

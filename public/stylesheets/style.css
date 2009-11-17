@@ -612,6 +612,11 @@ h3 > a {
 	list-style-type:none;
 }
 
+#assign_test_state_manually {
+  padding:3px 0 7px 0;
+  border-bottom:1px solid #ccc;
+}
+
 #modules table, #modules td, #modules th {
 	margin:0px;
 	padding:0px;
