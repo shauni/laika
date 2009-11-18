@@ -13,9 +13,10 @@
         <dt>Laika</dt><dd>assumes RxNorm coding.</dd>
         <dt>HITSP</dt><dd>The product causing the adverse event SHALL be
         coded to UNII for Food and substance allergies, or RxNorm when to
-        medications, or NDF-RT when to classes of medications.</dd>
+        medications.</dd>
       </dl>
     } %>
+    <%= f.select :code_system_id, CodeSystem.allergy_select_options %>
     <%= f.select :severity_term_id, SeverityTerm.select_options %>
     <%= f.select :adverse_event_type_id, AdverseEventType.select_options %>
     <%= f.calendar_date_select :start_event %>

@@ -6,6 +6,7 @@ class Allergy < ActiveRecord::Base
   belongs_to :severity_term
   belongs_to :allergy_status_code
   belongs_to :allergy_type_code
+  belongs_to :code_system
 
   include PatientChild
   include Commentable
@@ -14,6 +15,7 @@ class Allergy < ActiveRecord::Base
     {
       :free_text_product => :hitsp_optional,
       :product_code => :hitsp_r2_required,
+      :code_system_id => :hitsp_r2_required,
       :adverse_event_type_id => :required,
       :start_event => :hitsp_r2_optional,
       :end_event => :hitsp_r2_optional,
@@ -94,11 +96,11 @@ class Allergy < ActiveRecord::Base
                 xml.playingEntity("classCode" => "MMAT") do
                   xml.code("code" => product_code, 
                            "displayName" => free_text_product, 
-                           "codeSystem" => "2.16.840.1.113883.6.88", 
-                           "codeSystemName" => "RxNorm") do
-                   xml.originalText do
-                     xml.reference(:value => "#product-" + self.id.to_s)
-                   end
+                           "codeSystem" => code_system.code,
+                           "codeSystemName" => code_system.name) do
+                    xml.originalText do
+                      xml.reference(:value => "#product-" + self.id.to_s)
+                    end
                   end
                   xml.name free_text_product
                 end
@@ -153,6 +155,7 @@ class Allergy < ActiveRecord::Base
     @allergin = @possible_allergin[rand(3)]
     self.free_text_product = @allergin.split[0]
     self.product_code = @allergin.split[1]
+    self.code_system = CodeSystem.find_by_code("2.16.840.1.113883.6.88")  #RxNorm
 
     self.start_event = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
 
