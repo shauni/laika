@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091117011414) do
+ActiveRecord::Schema.define(:version => 20091117221736) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20091117011414) do
     t.date    "start_event"
     t.date    "end_event"
     t.integer "problem_type_id"
-    t.string  "free_text_name"
+    t.string  "problem_name"
     t.integer "patient_id",      :null => false
   end
 
