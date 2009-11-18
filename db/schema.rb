@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091117011414) do
+ActiveRecord::Schema.define(:version => 20091118191432) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -362,6 +362,7 @@ ActiveRecord::Schema.define(:version => 20091117011414) do
     t.string  "name_suffix"
     t.integer "nameable_id"
     t.string  "nameable_type"
+    t.string  "middle_name"
   end
 
   add_index "person_names", ["nameable_id", "nameable_type"], :name => "index_person_names_on_nameable_id_and_nameable_type"

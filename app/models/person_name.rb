@@ -51,16 +51,19 @@ class PersonName < ActiveRecord::Base
 
   def to_c32(xml)
     xml.name do
-      if name_prefix &&  name_prefix.size > 0
+      if name_prefix.present?
         xml.prefix(name_prefix)
       end
-      if first_name &&  first_name.size > 0
+      if first_name.present?
         xml.given(first_name, "qualifier" => "CL")
       end
-      if last_name && last_name.size > 0
+      if middle_name.present?
+        xml.given(middle_name, "qualifier" => "BR")
+      end
+      if last_name.present?
         xml.family(last_name, "qualifier" => "BR")
       end
-      if name_suffix && name_suffix.size > 0
+      if name_suffix.present?
         xml.suffix(name_suffix)
       end
     end

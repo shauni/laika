@@ -1,6 +1,7 @@
 <% parent.fields_for :person_name do |person_name_form| -%>
   <%= person_name_form.text_field :name_prefix %>
   <%= person_name_form.text_field :first_name %>
+  <%= person_name_form.text_field :middle_name %>
   <%= person_name_form.text_field :last_name %>
   <%= person_name_form.text_field :name_suffix %>
 <% end -%>
