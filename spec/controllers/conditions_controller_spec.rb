@@ -57,9 +57,9 @@ describe ConditionsController do
 
     it "should update condition on put update" do
       existing_condition = @patient.conditions.first
-      put :update, :patient_id => @patient.id.to_s, :id => existing_condition.id.to_s, :condition => { :free_text_name => 'foobar'}
+      put :update, :patient_id => @patient.id.to_s, :id => existing_condition.id.to_s, :condition => { :problem_name => 'foobar'}
       existing_condition.reload
-      existing_condition.free_text_name.should == 'foobar'
+      existing_condition.problem_name.should == 'foobar'
     end
 
     it "should remove from @patient.conditions on delete destroy" do

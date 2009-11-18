@@ -2,9 +2,6 @@
 
       include MatchHelper
 
-
-
-
       #Reimplementing from MatchHelper
       def section_name
         "Conditions Module"
@@ -22,16 +19,16 @@
           end
           errors << match_value(observation, "cda:effectiveTime/cda:low/@value", "start_event", start_event.try(:to_formatted_s, :brief))
           errors << match_value(observation, "cda:effectiveTime/cda:high/@value", "end_event", end_event.try(:to_formatted_s, :brief))
-          if free_text_name
+          if problem_name
             text =  REXML::XPath.first(observation,"cda:text",MatchHelper::DEFAULT_NAMESPACES)
             deref_text = deref(text)
-            if(deref_text != free_text_name)
+            if(deref_text != problem_name)
               errors << ContentError.new(:section => "Condition",
-                                         :error_message => "Free text name #{free_text_name} does not match #{deref_text}",
+                                         :error_message => "Problem name #{problem_name} does not match #{deref_text}",
                                          :location => (text)? text.xpath : (code)? code.xpath : section.xpath)
             end
             # if the free text name matches a code from the SNOMED problem list, perform a coded value inspection
-            snowmed_problem = SnowmedProblem.find(:first, :conditions => {:name => free_text_name})
+            snowmed_problem = SnowmedProblem.find(:first, :conditions => {:name => problem_name})
             if snowmed_problem
               code =  REXML::XPath.first(observation,"cda:value",MatchHelper::DEFAULT_NAMESPACES)
               errors << match_value(observation, 
@@ -48,6 +45,5 @@
         end
         errors.compact
       end
-
 
     end
