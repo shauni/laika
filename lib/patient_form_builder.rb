@@ -34,6 +34,7 @@ class PatientFormBuilder < ActionView::Helpers::FormBuilder
       fields_for(:person_name) do |f|
         result << f.text_field(:name_prefix)
         result << f.text_field(:first_name)
+        result << f.text_field(:middle_name)
         result << f.text_field(:last_name)
         result << f.text_field(:name_suffix)
       end

@@ -40,6 +40,7 @@
             <name>
                <prefix>Mr.</prefix>
                <given>Joe</given>
+               <given>William</given>
                <family>Smith</family>
             </name>
             <administrativeGenderCode code="M" displayName="Male"

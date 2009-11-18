@@ -1,6 +1,7 @@
 joe_smith:
   name_prefix: Mr.
   first_name: Joe
+  middle_name: William
   last_name: Smith
   nameable: joe_smith (RegistrationInformation)
 
