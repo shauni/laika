@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091117011414) do
+ActiveRecord::Schema.define(:version => 20091118000210) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20091117011414) do
     t.integer "patient_id",             :null => false
     t.integer "allergy_status_code_id"
     t.integer "allergy_type_code_id"
+    t.integer "code_system_id"
   end
 
   add_index "allergies", ["patient_id"], :name => "index_allergies_on_patient_id"

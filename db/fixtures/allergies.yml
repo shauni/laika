@@ -4,6 +4,7 @@ joes_allergy:
   start_event: 2006-02-21
   free_text_product: Penicillin
   product_code: 70618
+  code_system: rxnorm
   adverse_event_type: propensity_to_adverse_reactions
   severity_term: moderate
   allergy_type_code: allergy
@@ -15,6 +16,7 @@ emilys_allergy:
   end_event: 2028-03-26
   free_text_product: Penicillin
   product_code: 70618
+  code_system: rxnorm
   adverse_event_type: drug_allergy
   severity_term: moderate_to_severe
   allergy_type_code: allergy
@@ -26,6 +28,7 @@ teds_first_allergy:
   end_event: 2008-02-21
   free_text_product: Aspirin
   product_code: 1191
+  code_system: rxnorm
   adverse_event_type: propensity_to_adverse_reactions_to_drug
   severity_term: severe
   allergy_type_code: allergy
@@ -37,6 +40,7 @@ teds_second_allergy:
   end_event: 2008-02-21
   free_text_product: Codeine
   product_code: 2670
+  code_system: rxnorm
   adverse_event_type: allergy_to_substance
   severity_term: fatal
   allergy_type_code: allergy
@@ -48,6 +52,7 @@ wills_allergy:
   end_event: 2048-12-21
   free_text_product: Aspirin
   product_code: 1191
+  code_system: rxnorm
   adverse_event_type: drug_intolerance
   severity_term: mild
   allergy_type_code: adverse_reaction
@@ -59,6 +64,7 @@ davids_allergy:
   end_event: 2021-12-21
   free_text_product: Codeine
   product_code: 2670
+  code_system: rxnorm
   adverse_event_type: drug_allergy
   severity_term: mild_to_moderate
   allergy_type_code: adverse_reaction

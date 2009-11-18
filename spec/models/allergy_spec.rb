@@ -3,8 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Allergy, "it can validate allergy entries in a C32" do
   fixtures :allergies, :severity_terms, :adverse_event_types
   
-
-  
   it "should verify an allergy matches in a C32 doc" do
     document = REXML::Document.new(File.new(RAILS_ROOT + '/spec/test_data/allergies/joe_allergy.xml'))
     joe_allergy = allergies(:joes_allergy)
@@ -21,7 +19,7 @@ describe Allergy, "it can validate allergy entries in a C32" do
 end
 
 describe Allergy, "can create a C32 representation of itself" do
-  fixtures :allergies, :severity_terms, :adverse_event_types
+  fixtures :allergies, :severity_terms, :adverse_event_types, :code_systems
   
  
   it "should create valid C32 content" do
