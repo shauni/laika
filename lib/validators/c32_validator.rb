@@ -4,7 +4,7 @@
 # FIXME Requiring files using the full path is bad practice.
 # Ideally we should rename/namespace the *C32Validation modules so that they
 # can be autoloaded by Rails.
-Dir.glob(File.join(File.dirname(__FILE__), 'c32/*.rb')).each {|f| require f }
+Dir.glob(File.join(File.dirname(__FILE__), 'c32/*.rb')).each {|f| require_dependency f }
 
 module Validators
   

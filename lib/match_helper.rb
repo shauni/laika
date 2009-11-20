@@ -28,7 +28,7 @@
                  return nil
               rescue
                   return ContentError.new(:section => section_name, 
-                                          :error_message => 'Error during validation of the #{section_name} section: #{$!}',
+                                          :error_message => "Error during validation of the #{section_name} section: #{$!}",
                                           :type=>'error',
                                           :location => element.xpath)
               end
