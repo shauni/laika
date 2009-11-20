@@ -44,7 +44,7 @@ class GenerateAndFormatPlan < TestPlan
     begin
       errors = validator.validate(patient, document)
     rescue Exception => e # XXX rescuing everything is almost never a good idea
-      logger.info("ERROR DURING VALIDATION: #{e}")
+      logger.info("ERROR DURING VALIDATION: #{e.inspect}\n#{e.backtrace.join("\n")}")
       raise ValidationError
     end
     logger.debug(errors.inspect)

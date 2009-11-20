@@ -50,7 +50,7 @@
             errors << match_value(substance_administration, 
                                  "cda:entryRelationship[@typeCode='SUBJ']/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.10']/cda:code/@displayName",
                                  'medication_type', 
-                                 medication_type.name)
+                                 medication_type.try(:name))
             # validate the status
             errors << match_value(substance_administration,
                                  "cda:entryRelationship[@typeCode='REFR']/cda:observation[cda:templateId/@root='2.16.840.1.113883.10.20.1.47']/cda:value/@code", 
