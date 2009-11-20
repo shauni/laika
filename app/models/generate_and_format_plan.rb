@@ -80,7 +80,7 @@ class GenerateAndFormatPlan < TestPlan
       if(node)
         elem = node
         if node.class == REXML::Attribute
-          @error_attributes << node
+          error_attributes << node
           elem = node.element
         end
         if elem
