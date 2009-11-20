@@ -65,6 +65,36 @@ class GenerateAndFormatPlan < TestPlan
 
     content_errors
   end
+  
+  # method used to mark the elements in the document that have errors so they 
+  # can be linked to
+  def match_errors(doc)
+    error_map = {}
+    error_id = 0
+    error_attributes = []
+    locs = content_errors.collect{|e| e.location}
+    locs.compact!
+
+    locs.each do |location|
+      node = REXML::XPath.first(doc ,location)
+      if(node)
+        elem = node
+        if node.class == REXML::Attribute
+          @error_attributes << node
+          elem = node.element
+        end
+        if elem
+          unless elem.attributes['error_id']
+            elem.add_attribute('error_id',"#{error_id}") 
+            error_id += 1
+          end
+          error_map[location] = elem.attributes['error_id']
+        end
+      end
+    end
+
+    return error_map, error_attributes
+  end
 
   module Actions
     def doc_upload
@@ -105,7 +135,7 @@ class GenerateAndFormatPlan < TestPlan
       else
         @xml_document = @test_plan.clinical_document.as_xml_document
         # XXX match_errors sets @error_attributes, used by the node partial
-        @error_mapping = match_errors @test_plan.content_errors, @xml_document
+        @error_mapping, @error_attributes = @test_plan.match_errors(@xml_document)
       end
     end
   end
