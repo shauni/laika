@@ -68,7 +68,7 @@ XML
       error_map, error_attributes = plan.match_errors(@doc)
       error_map[location].should_not be_nil
       error_map[location].should == '0'
-      element = REXML::XPath.first(@doc ,location)
+      element = REXML::XPath.first(@doc ,'/ClinicalDocument/structuredBody/component/section/thingy')
       element.name.should == 'thingy'
       element.attributes['error_id'].should == '0'
     end
