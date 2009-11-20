@@ -71,19 +71,19 @@
     <% end %>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Prefix</td>
-        <td><%=h @patient.registration_information.person_name.name_prefix %></td>
+        <td><%=h @patient.registration_information.person_name.try(:name_prefix) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">First name</td>
-        <td><%=h @patient.registration_information.person_name.first_name %></td>
+        <td><%=h @patient.registration_information.person_name.try(:first_name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Last name</td>
-        <td><%=h @patient.registration_information.person_name.last_name %></td>
+        <td><%=h @patient.registration_information.person_name.try(:last_name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Suffix</td>
-        <td><%=h @patient.registration_information.person_name.name_suffix %></td>
+        <td><%=h @patient.registration_information.person_name.try(:name_suffix) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Date of birth</td>
@@ -91,23 +91,23 @@
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Religion</td>
-        <td><%=h @patient.registration_information.religion.name %></td>
+        <td><%=h @patient.registration_information.religion.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Marital status</td>
-        <td><%=h @patient.registration_information.marital_status.name %></td>
+        <td><%=h @patient.registration_information.marital_status.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Gender</td>
-        <td><%=h @patient.registration_information.gender.name %></td>
+        <td><%=h @patient.registration_information.gender.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Race</td>
-        <td><%=h @patient.registration_information.race.name %></td>
+        <td><%=h @patient.registration_information.race.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Ethnicity</td>
-        <td><%=h @patient.registration_information.ethnicity.name %></td>
+        <td><%=h @patient.registration_information.ethnicity.try(:name) %></td>
       </tr>
     </table>
   </div>
