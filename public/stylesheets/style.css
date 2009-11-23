@@ -618,8 +618,8 @@ h3 > a {
 }
 
 #assign_test_state_manually textarea{
-  height: 11.5em;
-  width: 18em;
+  height: 150px;
+  width: 205px 
 }
 
 #modules table, #modules td, #modules th {
