@@ -69,10 +69,10 @@
 
                    <tr>
                        <td width='15%' valign="top"><b><xsl:text>Birthdate: </xsl:text></b></td>
-                       <td width='35%' valign="top"><xsl:call-template name="formatDate">
-                                  <xsl:with-param name="date" 
-                         select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:birthTime/@value"/>
-                              </xsl:call-template>
+                       <td width='35%' valign="top">
+                           <xsl:call-template name="formatDate">
+                               <xsl:with-param name="date" select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:birthTime/@value"/>
+                           </xsl:call-template>
                        </td>
                        <td width='15%' align='right' valign="top"><b><xsl:text>Sex: </xsl:text></b></td>
                        <td width='35%' valign="top">
@@ -259,9 +259,9 @@
       <!-- will have a checklist in their section. This is intended to conform with the verification       -->
       <!-- requirements. POTENTIAL ISSUE: If you change the title text of either of the above sections     -->
       <!-- this code will break and the checklist will not be displayed. -->
-       <xsl:if test=".='Allergies, Adverse Reactions, Alerts' or .='Medications' or .='Results' or .='Procedures' or .='Conditions or Problems'">
-       <font color="#DD1111"><b>CCHIT DISPLAY AND FILE <xsl:value-of select="."/>: ___</b></font><p/>
-      </xsl:if>
+         <xsl:if test=".='Allergies, Adverse Reactions, Alerts' or .='Medications' or .='Results' or .='Procedures' or .='Conditions or Problems'">
+             <font color="#DD1111"><b>CCHIT DISPLAY AND FILE <xsl:value-of select="."/>: ___</b></font><p/>
+         </xsl:if>
      </div>
 
 </xsl:template>

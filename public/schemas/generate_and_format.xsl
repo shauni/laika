@@ -22,7 +22,7 @@
 <xsl:template match="n1:ClinicalDocument">
         <html>
             <head>
-		 		 <!-- <meta name='Generator' content='&CDA-Stylesheet;'/> -->
+            <!-- <meta name='Generator' content='&CDA-Stylesheet;'/> -->
                 <xsl:comment>
                         Do NOT edit this HTML directly, it was generated via an XSLt
                         transformation from the original release 2 CDA Document.
@@ -30,122 +30,131 @@
                 <title>
                      <xsl:value-of select="$title"/>
                 </title>
-		     </head>
-            <xsl:comment>		 		 		 		 
+            </head>
+            <xsl:comment>                
               Derived from HL7 Finland R2 Tyylitiedosto: Tyyli_R2_B3_01.xslt
-		       Updated by   Calvin E. Beebe,   Mayo Clinic - Rochester Mn.
+           Updated by   Calvin E. Beebe,   Mayo Clinic - Rochester Mn.
             </xsl:comment>
             <body>            
                 <h2 align="center">GENERATE AND FORMAT TEST RESULTS</h2>
                 <h2 align="center"><xsl:value-of select="$title"/></h2>
                 <p align='center'><b><xsl:text>Created On: </xsl:text></b>
-                		 <xsl:call-template name="formatDate">
-		 		    		 		 <xsl:with-param name="date" 
-		 		  		 		 		  select="/n1:ClinicalDocument/n1:effectiveTime/@value"/>
+                     <xsl:call-template name="formatDate">
+                     <xsl:with-param name="date" 
+                        select="/n1:ClinicalDocument/n1:effectiveTime/@value"/>
                         </xsl:call-template></p>
                 <hr/>
-		 		 <table width='100%'>
-		 		    <xsl:variable name="patientRole" select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole"/>
-		 		    <tr><td width='15%' valign="top"><b><xsl:text>Patient: </xsl:text></b></td>
-		 		        <td width='35%' valign="top"><xsl:call-template name="getName">
-   		 		                             <xsl:with-param name="name" 
- 		 		                      select="$patientRole/n1:patient/n1:name"/>
-                                 </xsl:call-template>
-		 		 		 		 <xsl:if test="$patientRole/n1:addr">
-		 		 		 		 		 <xsl:call-template name="getAddress"> 
-		 		 		 		 		 		 <xsl:with-param name="addr" select="$patientRole/n1:addr"/>
-		 		 		 		 		 </xsl:call-template>
-		 		 		 		 </xsl:if>
-		 		 		 		 <xsl:if test="$patientRole/n1:telecom">
-		 		 		 		 		 <xsl:call-template name="getTelecom"> 
-		 		 		 		 		 		 <xsl:with-param name="telecom" 
-		 		 		 		 		 		    select="$patientRole/n1:telecom"/>
-		 		 		 		 		 </xsl:call-template>
-		 		 		 		 </xsl:if>
-                                 </td>
+                <table width='100%'>
+                   <xsl:variable name="patientRole" select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole"/>
+                   <tr>
+                       <td width='15%' valign="top"><b><xsl:text>Patient: </xsl:text></b></td>
+                       <td width='35%' valign="top"><xsl:call-template name="getName">
+                           <xsl:with-param name="name" select="$patientRole/n1:patient/n1:name"/>
+                           </xsl:call-template>
+                           <xsl:if test="$patientRole/n1:addr">
+                                <xsl:call-template name="getAddress"> 
+                                    <xsl:with-param name="addr" select="$patientRole/n1:addr"/>
+                                </xsl:call-template>
+                           </xsl:if>
+                           <xsl:if test="$patientRole/n1:telecom">
+                                <xsl:call-template name="getTelecom"> 
+                                    <xsl:with-param name="telecom" 
+                                       select="$patientRole/n1:telecom"/>
+                                </xsl:call-template>
+                           </xsl:if>
+                       </td>
                        <td width='15%' align='right' valign="top"><b><xsl:text>MRN: </xsl:text></b></td>
-		 		        <td width='35%' valign="top"><xsl:value-of select="$patientRole/n1:id/@extension"/></td>		 		        
-		 		    </tr>
+                       <td width='35%' valign="top"><xsl:value-of select="$patientRole/n1:id/@extension"/></td>                
+                   </tr>
 
-		 		    <tr><td width='15%' valign="top"><b><xsl:text>Birthdate: </xsl:text></b></td>
-                       <td width='35%' valign="top"><xsl:call-template name="formatDate">
-   		 		                        <xsl:with-param name="date" 
- 		 		                 select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:birthTime/@value"/>
-                              </xsl:call-template></td>
-                   <td width='15%' align='right' valign="top"><b><xsl:text>Sex: </xsl:text></b></td>
-		 		    <td width='35%' valign="top"><xsl:variable name="sex" 
-                                select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:administrativeGenderCode/@code"/>
+                   <tr>
+                       <td width='15%' valign="top"><b><xsl:text>Birthdate: </xsl:text></b></td>
+                       <td width='35%' valign="top">
+                           <xsl:call-template name="formatDate">
+                               <xsl:with-param name="date" select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:birthTime/@value"/>
+                           </xsl:call-template>
+                       </td>
+                       <td width='15%' align='right' valign="top"><b><xsl:text>Sex: </xsl:text></b></td>
+                       <td width='35%' valign="top">
+                           <xsl:variable name="sex" select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:administrativeGenderCode/@code"/>
                            <xsl:choose>
                                <xsl:when test="$sex='M'">Male</xsl:when>
                                <xsl:when test="$sex='F'">Female</xsl:when>
-                           </xsl:choose></td>		 		        
-		 		    </tr>
-		 		    <tr>
-		 		 		 <td width="15%" valign="top"><b>Guardian: </b></td>
-		 		 		 <td width="35%" valign="top">
-		 		 		 		 <xsl:call-template name="getParticipant">
-		 		 		 		 		 <xsl:with-param name="participant" select="/n1:ClinicalDocument/n1:participant[@typeCode='IND']/n1:associatedEntity[@classCode='GUAR']"/>
-		 		 		 		 </xsl:call-template>
-		 		 		 </td>
-		 		 		 <td width="15%" valign="top" align='right'><b>Next of Kin: </b></td>
-		 		 		 <td width="35%" valign="top">
-		 		 		 		 <xsl:call-template name="getParticipant">
-		 		 		 		 		 <xsl:with-param name="participant" select="/n1:ClinicalDocument/n1:participant[@typeCode='IND']/n1:associatedEntity[@classCode='NOK']"/>
-		 		 		 		 </xsl:call-template>
-		 		 		 </td>
-		 		    </tr>
-                    <tr><td colspan="3"/><td><font color="#DD1111"><b>CCHIT DISPLAY AND FILE Registration: ___</b></font></td></tr>
-		 		 </table>
-		 		 
+                           </xsl:choose>
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <td width="15%" valign="top"><b>Guardian: </b></td>
+                       <td width="35%" valign="top">
+                           <xsl:call-template name="getParticipant">
+                               <xsl:with-param name="participant" select="/n1:ClinicalDocument/n1:participant[@typeCode='IND']/n1:associatedEntity[@classCode='GUAR']"/>
+                           </xsl:call-template>
+                       </td>
+                       <td width="15%" valign="top" align='right'><b>Next of Kin: </b></td>
+                       <td width="35%" valign="top">
+                           <xsl:call-template name="getParticipant">
+                               <xsl:with-param name="participant" select="/n1:ClinicalDocument/n1:participant[@typeCode='IND']/n1:associatedEntity[@classCode='NOK']"/>
+                           </xsl:call-template>
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <td colspan="3"/>
+                       <td><font color="#DD1111"><b>CCHIT GENERATE AND FORMAT Registration: ___</b></font></td>
+                   </tr>
+
+                </table>
+         
                 <hr/>
                 <div>
-                		 <h3><a name="toc">Table of Contents</a></h3>
-                		 <ul>
-                		 		 <xsl:for-each select="n1:component/n1:structuredBody/n1:component/n1:section/n1:title">
-                		 		 		 <li>
-                		 		 		   <a href="#{generate-id(.)}"><xsl:value-of select="."/></a> 
-                		 		 		 </li>
-                		 		 </xsl:for-each>
-                		 </ul>
+                     <h3><a name="toc">Table of Contents</a></h3>
+                     <ul>
+                         <xsl:for-each select="n1:component/n1:structuredBody/n1:component/n1:section/n1:title">
+                             <li>
+                               <a href="#{generate-id(.)}"><xsl:value-of select="."/></a> 
+                             </li>
+                         </xsl:for-each>
+                     </ul>
                 </div>
-		 		 <xsl:apply-templates select="n1:component/n1:structuredBody"/> 
-		 		 <xsl:call-template name="bottomline"/>
+         <xsl:apply-templates select="n1:component/n1:structuredBody"/> 
+         <xsl:call-template name="bottomline"/>
             </body>
         </html>
 </xsl:template>
 
 <xsl:template name="getParticipant">
-		 <xsl:param name="participant"/>
+     <xsl:param name="participant"/>
 
-		 <p>
-		 		 <xsl:call-template name="getName">
-		 		    <xsl:with-param name="name" 
- 		 		    select="$participant/n1:associatedPerson/n1:name"/>
- 		 		 </xsl:call-template>
- 		 		 <xsl:if test="$participant/n1:addr">
- 		 		 		 <xsl:call-template name="getAddress"> 
- 		 		 		 		 <xsl:with-param name="addr" select="$participant/n1:addr"/>
- 		 		 		 </xsl:call-template>
- 		 		 </xsl:if>
- 		 		 <xsl:if test="$participant/n1:telecom">
-		 		 		 <xsl:call-template name="getTelecom"> 
-		 		 		 		 <xsl:with-param name="telecom" 
-		 		 		 		    select="$participant/n1:telecom"/>
-		 		 		 </xsl:call-template>
- 		 		 </xsl:if>
-		 
-		 </p>
+     <p>
+         <xsl:call-template name="getName">
+            <xsl:with-param name="name" 
+            select="$participant/n1:associatedPerson/n1:name"/>
+         </xsl:call-template>
+         <xsl:if test="$participant/n1:addr">
+             <xsl:call-template name="getAddress"> 
+                 <xsl:with-param name="addr" select="$participant/n1:addr"/>
+             </xsl:call-template>
+         </xsl:if>
+         <xsl:if test="$participant/n1:telecom">
+             <xsl:call-template name="getTelecom"> 
+                 <xsl:with-param name="telecom" 
+                    select="$participant/n1:telecom"/>
+             </xsl:call-template>
+         </xsl:if>
+     
+     </p>
 </xsl:template>
 
 <xsl:template name="getAddress">
-		 <xsl:param name="addr"/>
-		 <br/><xsl:value-of select="$addr/n1:streetAddressLine"/>
-		 <br/><xsl:value-of select="$addr/n1:city"/>, <xsl:value-of select="$addr/n1:state"/>, <xsl:value-of select="$addr/n1:postalCode"/>
+     <xsl:param name="addr"/>
+     <br/><xsl:value-of select="$addr/n1:streetAddressLine"/>
+     <br/><xsl:value-of select="$addr/n1:city"/>, <xsl:value-of select="$addr/n1:state"/>, <xsl:value-of select="$addr/n1:postalCode"/>
 </xsl:template>
 
 <xsl:template name="getTelecom">
-		 <xsl:param name="telecom"/>
-		 <br/><xsl:value-of select="$telecom/@value"/>
+     <xsl:param name="telecom"/>
+     <br/><xsl:value-of select="$telecom/@value"/>
 </xsl:template>
     
 <!-- Get a Name  -->
@@ -229,36 +238,42 @@
 
 <!-- StructuredBody -->
 <xsl:template match="n1:component/n1:structuredBody">
-		 		 <xsl:apply-templates select="n1:component/n1:section"/>
+         <xsl:apply-templates select="n1:component/n1:section"/>
 </xsl:template>
 
 <!-- Component/Section -->    
 <xsl:template match="n1:component/n1:section">
-		 <xsl:apply-templates select="n1:title"/>
-		 <xsl:apply-templates select="n1:text"/>		 		 		 		 		 
-         <xsl:apply-templates select="n1:component/n1:section"/>
+     <xsl:apply-templates select="n1:title"/>
+     <xsl:apply-templates select="n1:text"/>                     
+     <xsl:apply-templates select="n1:component/n1:section"/>
 </xsl:template>
 
 <!--   Title  -->
 <xsl:template match="n1:title">
 
-		 <h3><span style="font-weight:bold;">		 
-		 <a name="{generate-id(.)}" href="#toc"><xsl:value-of select="."/></a>
-		 </span></h3>
-		 <div align="right">
-		   <font color="#DD1111"><b>CCHIT DISPLAY AND FILE <xsl:value-of select="."/>: ___</b></font><p/>
-		 </div>
+     <h3><span style="font-weight:bold;">    
+     <a name="{generate-id(.)}" href="#toc"><xsl:value-of select="."/></a>
+     </span></h3>
+     <div align="right">
+      <!-- This if statement has been placed here so that only "Conditions and Problems" and "Medications" -->
+      <!-- will have a checklist in their section. This is intended to conform with the verification       -->
+      <!-- requirements. POTENTIAL ISSUE: If you change the title text of either of the above sections     -->
+      <!-- this code will break and the checklist will not be displayed. -->
+         <xsl:if test=".='Allergies, Adverse Reactions, Alerts' or .='Medications' or .='Results' or .='Procedures' or .='Conditions or Problems'">
+             <font color="#DD1111"><b>CCHIT GENERATE AND FORMAT <xsl:value-of select="."/>: ___</b></font><p/>
+         </xsl:if>
+     </div>
 
 </xsl:template>
 
 <!--   Text   -->
-<xsl:template match="n1:text">		 
-		 <xsl:apply-templates />		 
+<xsl:template match="n1:text">     
+     <xsl:apply-templates />     
 </xsl:template>
 
 <!--   paragraph  -->
 <xsl:template match="n1:paragraph">
-		 <p><xsl:apply-templates/></p>
+     <p><xsl:apply-templates/></p>
 </xsl:template>
 
 <!--     Content w/ deleted text is hidden -->
@@ -266,7 +281,7 @@
 
 <!--   content  -->
 <xsl:template match="n1:content">
-		 <xsl:apply-templates/>
+     <xsl:apply-templates/>
 </xsl:template>
 
 
@@ -279,11 +294,11 @@
     </xsl:if>
    <ul>
     <xsl:for-each select="n1:item">
-		 <li>
+     <li>
           <xsl:apply-templates />
-		 </li>
+     </li>
      </xsl:for-each>
-    </ul>		 
+    </ul>    
 </xsl:template>
 
 <xsl:template match="n1:list[@listType='ordered']">
@@ -294,215 +309,215 @@
     </xsl:if>
    <ol>
     <xsl:for-each select="n1:item">
-		 <li>
+     <li>
           <xsl:apply-templates />
-		 </li>
+     </li>
      </xsl:for-each>
-    </ol>		 
+    </ol>    
 </xsl:template>
-		 
+     
 
 <!--   caption  -->
 <xsl:template match="n1:caption">  
-		 <xsl:apply-templates/>
-		 <xsl:text>: </xsl:text>
+     <xsl:apply-templates/>
+     <xsl:text>: </xsl:text>
 </xsl:template>
-		 
-		 <!--      Tables   -->
-		 <xsl:template match="n1:table/@*|n1:thead/@*|n1:tfoot/@*|n1:tbody/@*|n1:colgroup/@*|n1:col/@*|n1:tr/@*|n1:th/@*|n1:td/@*">
-		 		 <xsl:copy>
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </xsl:copy>
-		 </xsl:template>
+     
+     <!--      Tables   -->
+     <xsl:template match="n1:table/@*|n1:thead/@*|n1:tfoot/@*|n1:tbody/@*|n1:colgroup/@*|n1:col/@*|n1:tr/@*|n1:th/@*|n1:td/@*">
+         <xsl:copy>
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </xsl:copy>
+     </xsl:template>
 
-		 <xsl:template match="n1:table">
-		 		 <table>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </table>		 
-		 </xsl:template>
-		 
-		 <xsl:template match="n1:thead">
-		 		 <thead>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </thead>		 
-		 </xsl:template>
+     <xsl:template match="n1:table">
+         <table>     
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </table>    
+     </xsl:template>
+     
+     <xsl:template match="n1:thead">
+         <thead>     
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </thead>    
+     </xsl:template>
 
-		 <xsl:template match="n1:tfoot">
-		 		 <tfoot>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </tfoot>		 
-		 </xsl:template>
+     <xsl:template match="n1:tfoot">
+         <tfoot>     
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </tfoot>    
+     </xsl:template>
 
-		 <xsl:template match="n1:tbody">
-		 		 <tbody>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </tbody>		 
-		 </xsl:template>
+     <xsl:template match="n1:tbody">
+         <tbody>     
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </tbody>    
+     </xsl:template>
 
-		 <xsl:template match="n1:colgroup">
-		 		 <colgroup>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </colgroup>		 
-		 </xsl:template>
+     <xsl:template match="n1:colgroup">
+         <colgroup>    
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </colgroup>     
+     </xsl:template>
 
-		 <xsl:template match="n1:col">
-		 		 <col>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </col>		 
-		 </xsl:template>
+     <xsl:template match="n1:col">
+         <col>     
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </col>    
+     </xsl:template>
 
-		 <xsl:template match="n1:tr">
-		 		 <tr>		 
-		 		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </tr>		 
-		 </xsl:template>
+     <xsl:template match="n1:tr">
+         <tr>    
+         
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </tr>     
+     </xsl:template>
 
-		 <xsl:template match="n1:th">
-		 		 <th>		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </th>		 
-		 </xsl:template>
+     <xsl:template match="n1:th">
+         <th>    
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </th>     
+     </xsl:template>
 
-		 <xsl:template match="n1:td">
-		 		 <td>		 
-		 		 		 <xsl:copy-of select="@*"/>
-		 		 		 <xsl:apply-templates/>
-		 		 </td>		 
-		 </xsl:template>
+     <xsl:template match="n1:td">
+         <td>    
+             <xsl:copy-of select="@*"/>
+             <xsl:apply-templates/>
+         </td>     
+     </xsl:template>
 
-		 <xsl:template match="n1:table/n1:caption">
-		 		 <span style="font-weight:bold; ">		 
-		 		 		 <xsl:apply-templates/>
-		 		 </span>		 
-		 </xsl:template>
+     <xsl:template match="n1:table/n1:caption">
+         <span style="font-weight:bold; ">     
+             <xsl:apply-templates/>
+         </span>     
+     </xsl:template>
 
 <!--   RenderMultiMedia 
 
          this currently only handles GIF's and JPEG's.  It could, however,
-	 be extended by including other image MIME types in the predicate
-	 and/or by generating <object> or <applet> tag with the correct
-	 params depending on the media type  @ID  =$imageRef     referencedObject
+   be extended by including other image MIME types in the predicate
+   and/or by generating <object> or <applet> tag with the correct
+   params depending on the media type  @ID  =$imageRef     referencedObject
  -->
      <xsl:template match="n1:renderMultiMedia">
-		 <xsl:variable name="imageRef" select="@referencedObject"/>
+     <xsl:variable name="imageRef" select="@referencedObject"/>
         <xsl:choose>
              <xsl:when test="//n1:regionOfInterest[@ID=$imageRef]">
              <!-- Here is where the Region of Interest image referencing goes -->
                   <xsl:if test='//n1:regionOfInterest[@ID=$imageRef]//n1:observationMedia/n1:value[@mediaType="image/gif" or @mediaType="image/jpeg"]'>
-		 		 		 <br clear='all'/>
-		 		        <xsl:element name='img'>
-		 		 		     <xsl:attribute name='src'>
-		 		 		 		 <xsl:value-of select='//n1:regionOfInterest[@ID=$imageRef]//n1:observationMedia/n1:value/n1:reference/@value'/>
-		 		 		     </xsl:attribute>
-		 		        </xsl:element>
-		           </xsl:if>
+             <br clear='all'/>
+                <xsl:element name='img'>
+                 <xsl:attribute name='src'>
+                 <xsl:value-of select='//n1:regionOfInterest[@ID=$imageRef]//n1:observationMedia/n1:value/n1:reference/@value'/>
+                 </xsl:attribute>
+                </xsl:element>
+               </xsl:if>
              </xsl:when>
              <xsl:otherwise>
              <!-- Here is where the direct MultiMedia image referencing goes -->
                   <xsl:if test='//n1:observationMedia[@ID=$imageRef]/n1:value[@mediaType="image/gif" or @mediaType="image/jpeg"]'>
-		 		 		 <br clear='all'/>
-		 		        <xsl:element name='img'>
-		 		 		     <xsl:attribute name='src'>
-		 		 		 		 <xsl:value-of select='//n1:observationMedia[@ID=$imageRef]/n1:value/n1:reference/@value'/>
-		 		 		     </xsl:attribute>
-		 		        </xsl:element>
-		           </xsl:if>              
+             <br clear='all'/>
+                <xsl:element name='img'>
+                 <xsl:attribute name='src'>
+                 <xsl:value-of select='//n1:observationMedia[@ID=$imageRef]/n1:value/n1:reference/@value'/>
+                 </xsl:attribute>
+                </xsl:element>
+               </xsl:if>              
              </xsl:otherwise>
-        </xsl:choose>		 
+        </xsl:choose>    
      </xsl:template>
 
-<!-- 	Stylecode processing   
-	  Supports Bold, Underline and Italics display
+<!--  Stylecode processing   
+    Supports Bold, Underline and Italics display
 
 -->
 
-		 <xsl:template match="//n1:*[@styleCode]">
+     <xsl:template match="//n1:*[@styleCode]">
 
-		 <xsl:if test="@styleCode='Bold'">
-		      <xsl:element name='b'>		 		 		 		 
-		           <xsl:apply-templates/>
-		      </xsl:element>		 
-		 </xsl:if> 
+     <xsl:if test="@styleCode='Bold'">
+          <xsl:element name='b'>                 
+               <xsl:apply-templates/>
+          </xsl:element>     
+     </xsl:if> 
 
-		 <xsl:if test="@styleCode='Italics'">
-		      <xsl:element name='i'>		 		 		 		 
-		           <xsl:apply-templates/>
-		      </xsl:element>		 
-		 </xsl:if>
+     <xsl:if test="@styleCode='Italics'">
+          <xsl:element name='i'>                 
+               <xsl:apply-templates/>
+          </xsl:element>     
+     </xsl:if>
 
-		 <xsl:if test="@styleCode='Underline'">
-		      <xsl:element name='u'>		 		 		 		 
-		           <xsl:apply-templates/>
-		      </xsl:element>		 
-		 </xsl:if>
+     <xsl:if test="@styleCode='Underline'">
+          <xsl:element name='u'>                 
+               <xsl:apply-templates/>
+          </xsl:element>     
+     </xsl:if>
 
-		    <xsl:if test="contains(@styleCode,'Bold') and contains(@styleCode,'Italics') and not (contains(@styleCode, 'Underline'))">
-		      <xsl:element name='b'>
-		 		 <xsl:element name='i'>		 		 		 		 
-		           <xsl:apply-templates/>
-		 		 </xsl:element>
-		      </xsl:element>		 
-		    </xsl:if>
+        <xsl:if test="contains(@styleCode,'Bold') and contains(@styleCode,'Italics') and not (contains(@styleCode, 'Underline'))">
+          <xsl:element name='b'>
+         <xsl:element name='i'>                
+               <xsl:apply-templates/>
+         </xsl:element>
+          </xsl:element>     
+        </xsl:if>
 
-		    <xsl:if test="contains(@styleCode,'Bold') and contains(@styleCode,'Underline') and not (contains(@styleCode, 'Italics'))">
-		      <xsl:element name='b'>
-		 		 <xsl:element name='u'>		 		 		 		 
-		           <xsl:apply-templates/>
-		 		 </xsl:element>
-		      </xsl:element>		 
-		    </xsl:if>
+        <xsl:if test="contains(@styleCode,'Bold') and contains(@styleCode,'Underline') and not (contains(@styleCode, 'Italics'))">
+          <xsl:element name='b'>
+         <xsl:element name='u'>                
+               <xsl:apply-templates/>
+         </xsl:element>
+          </xsl:element>     
+        </xsl:if>
 
-		    <xsl:if test="contains(@styleCode,'Italics') and contains(@styleCode,'Underline') and not (contains(@styleCode, 'Bold'))">
-		      <xsl:element name='i'>
-		 		 <xsl:element name='u'>		 		 		 		 
-		           <xsl:apply-templates/>
-		 		 </xsl:element>
-		      </xsl:element>		 
-		    </xsl:if>
+        <xsl:if test="contains(@styleCode,'Italics') and contains(@styleCode,'Underline') and not (contains(@styleCode, 'Bold'))">
+          <xsl:element name='i'>
+         <xsl:element name='u'>                
+               <xsl:apply-templates/>
+         </xsl:element>
+          </xsl:element>     
+        </xsl:if>
 
-		    <xsl:if test="contains(@styleCode,'Italics') and contains(@styleCode,'Underline') and contains(@styleCode, 'Bold')">
-		      		 <xsl:element name='b'>
-		 		 <xsl:element name='i'>
-		 		 <xsl:element name='u'>		 		 		 		 
-		             <xsl:apply-templates/>
-		 		 </xsl:element>
-		 		 </xsl:element>
-		      		 </xsl:element>		 
-		    </xsl:if>
+        <xsl:if test="contains(@styleCode,'Italics') and contains(@styleCode,'Underline') and contains(@styleCode, 'Bold')">
+               <xsl:element name='b'>
+         <xsl:element name='i'>
+         <xsl:element name='u'>                
+                 <xsl:apply-templates/>
+         </xsl:element>
+         </xsl:element>
+               </xsl:element>    
+        </xsl:if>
 
-		 </xsl:template>
+     </xsl:template>
 
-<!-- 	Superscript or Subscript   -->
-		 <xsl:template match="n1:sup">
-		      <xsl:element name='sup'>		 		 		 		 
-		           <xsl:apply-templates/>
-		      </xsl:element>		 
-		 </xsl:template>
-		 <xsl:template match="n1:sub">
-		      <xsl:element name='sub'>		 		 		 		 
-		           <xsl:apply-templates/>
-		      </xsl:element>		 
-		 </xsl:template>
+<!--  Superscript or Subscript   -->
+     <xsl:template match="n1:sup">
+          <xsl:element name='sup'>                 
+               <xsl:apply-templates/>
+          </xsl:element>     
+     </xsl:template>
+     <xsl:template match="n1:sub">
+          <xsl:element name='sub'>                 
+               <xsl:apply-templates/>
+          </xsl:element>     
+     </xsl:template>
 
-		 <!--  Bottomline  -->
-		 
+     <!--  Bottomline  -->
+     
      <xsl:template name="bottomline">
      
       </xsl:template>
