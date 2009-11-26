@@ -43,6 +43,7 @@
         </tr>
       <% end -%>
       </table>
+      <%= render :partial => 'print_preview' %>
     </div>
   </div>
 </div>
@@ -60,7 +61,7 @@
   <% end -%>
 </div>
 <!-- Start Pretty XML -->
-<div class="column span-20 last">
+<div class="column span-20 last pretty-xml">
   <h3>Vendor Generated XML</h3>
   <hr/>
   <%= render :partial => "node" , :locals => {:doc => @xml_document} %>

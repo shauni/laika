@@ -612,6 +612,11 @@ h3 > a {
 	list-style-type:none;
 }
 
+.printer-friendly-affordance {
+  margin-top:10px;
+  border-top: 1px solid black;
+}
+
 #assign_test_state_manually {
   padding:3px 0 7px 0;
   border-top:1px solid #ccc;

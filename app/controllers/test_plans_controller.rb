@@ -6,6 +6,7 @@ class TestPlansController < ApplicationController
 
   before_filter :set_test_plan, :except => [:index, :create]
   before_filter :set_vendor, :only => [:index]
+  before_filter :check_print_preview, :only => [:doc_inspect, :pix_pdq_inspect, :xds_inspect]
 
   protected
 
@@ -156,5 +157,13 @@ class TestPlansController < ApplicationController
     redirect_to test_plans_url
   end
 
+  protected
+
+    # Checks to see if a parameter :print_preview == 1.
+    # If this has been passed in, sets @print_preview to true which
+    # the layout can use to adjust stylesheets for print rather than screen.
+    def check_print_preview
+      @print_preview = params[:print_preview] == '1'
+    end
 end
 

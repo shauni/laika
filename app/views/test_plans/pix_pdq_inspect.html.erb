@@ -36,9 +36,10 @@
         </tr>
       <% end -%>
       </table>
+      <%= render :partial => 'print_preview' %>
     </div> <!-- div.info -->
   </div> <!-- div.results -->
-  <h5><%= link_to 'View HL7 Message Log', message_logs_url, :popup => ['new window', 'width=1000, height=500, left = 450, top = 100, resizable=false, scrollbars=yes' ] %></h5>
+  <h5 class="hl7-message-log-affordance"><%= link_to 'View HL7 Message Log', message_logs_url, :popup => ['new window', 'width=1000, height=500, left = 450, top = 100, resizable=false, scrollbars=yes' ] %></h5>
 
 </div>
 <div class="column span-13 last">
