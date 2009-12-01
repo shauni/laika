@@ -52,7 +52,8 @@ Make sure your local database server is running and create a new user *laika* wi
 
 Save the file as database.yml (i.e., without .template extension). Initialize the databases and load the seed data:
 
-  $ jruby -S rake db:create:all
+  $ jruby -S rake db:create
+  $ jruby -S rake db:schema:load
   $ jruby -S rake db:seed
 
 You will be prompted for information about the administrator account.
