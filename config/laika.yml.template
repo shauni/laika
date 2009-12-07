@@ -1,0 +1,22 @@
+# This file is a template of local configuration for the Laika application.
+# Make a copy of this as config/laika.yml and adjust any settings as necessary.
+# Do not check in your local config/laika.yml
+
+# These are configuration options for the exception_notifier plugin which
+# will send out emails when 500 errors occur in the application (see
+# vendors/plugins/exception_notification/README or
+# http://github.com/rails/exception_notification)
+exception_notifier:
+  # Set this to a comma separated list of email addresses which you want to receive
+  # email notifications when a 500 error is encounted by Laika
+  exception_recipients: [ ]
+  sender_address: 'exception.notifier@default.com'
+  email_prefix: '[Laika Error] '
+
+# These are configuration options fore ActionMailer::Base
+# Set these only if you need to mail through an SMTP server that is
+# not localhost (or you need to customize some other ActionMailer setting)
+action_mailer:
+#  :address => "localhost"
+#  :port => 25
+#  :domain => ""

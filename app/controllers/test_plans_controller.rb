@@ -50,6 +50,7 @@ class TestPlansController < ApplicationController
   
   # Display all test plans by vendor.
   def index
+raise 'foo'
     @test_plans = @vendor.test_plans.all :order => sort_order,
       :include => [ :patient, :proctor, :clinical_document ]
     @other_vendors = current_user.vendors - [@vendor]
