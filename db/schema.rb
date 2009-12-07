@@ -233,8 +233,9 @@ ActiveRecord::Schema.define(:version => 20091118191432) do
 
   create_table "insurance_provider_subscribers", :force => true do |t|
     t.date    "date_of_birth"
-    t.integer "insurance_provider_id", :null => false
+    t.integer "insurance_provider_id",    :null => false
     t.string  "subscriber_id"
+    t.string  "assigning_authority_guid"
   end
 
   add_index "insurance_provider_subscribers", ["insurance_provider_id"], :name => "index_insurance_provider_subscribers_on_insurance_provider_id"
@@ -450,6 +451,14 @@ ActiveRecord::Schema.define(:version => 20091118191432) do
     t.string "code"
   end
 
+  create_table "reports", :force => true do |t|
+    t.string   "title"
+    t.string   "numerator_query",   :limit => 2000
+    t.string   "denominator_query", :limit => 2000
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "result_type_codes", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -486,6 +495,19 @@ ActiveRecord::Schema.define(:version => 20091118191432) do
   create_table "snowmed_problems", :force => true do |t|
     t.string "name"
     t.string "code"
+  end
+
+  create_table "social_history", :force => true do |t|
+    t.date    "start_effective_time"
+    t.date    "end_effective_time"
+    t.integer "social_history_type_id"
+    t.integer "patient_id",             :null => false
+  end
+
+  create_table "social_history_types", :force => true do |t|
+    t.string "name"
+    t.string "code"
+    t.string "description"
   end
 
   create_table "supports", :force => true do |t|
