@@ -70,3 +70,24 @@ It's possible to get RCov working in jruby:
  $ cd <laika_project_dir>
  $ jruby -S rake spec:rcov
 
+== ruby-debug
+
+If you want to be able to use the ruby-debug command line debugger, you will need
+to install a base gem which has the native extensions compiled, because JRuby 
+cannot perform this step.
+
+NOTE: Check for the latest versions of ruby-debug-base.
+
+  $ wget http://rubyforge.org/frs/download.php/48904/ruby-debug-base-0.10.3.1-java.gem
+  $ jruby -S gem install -l ruby-debug-base-0.10.3.1-java.gem
+  $ jruby -S gem install --ignore-dependencies ruby-debug
+
+Then add a line calling 'debugger' in your test code at the point you want to break out and:
+
+  $ jruby --debug code-to-test.rb
+
+Will drop you into the debugger.
+
+For more information on installation see:
+
+http://debug-commons.rubyforge.org/#jruby-debug

@@ -18,6 +18,8 @@ module LaikaExceptionNotification
 
   module Decorator 
 
+    protected 
+
     # Decorate's ExceptionNotifiable's local_request? because glassfish is not
     # providing remote_ip for localhost at least.
     def local_request_with_guard?

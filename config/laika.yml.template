@@ -10,7 +10,7 @@ exception_notifier:
   # Set this to a comma separated list of email addresses which you want to receive
   # email notifications when a 500 error is encounted by Laika
   exception_recipients: [ ]
-  sender_address: 'exception.notifier@default.com'
+  sender_address: 'laika.exception.notifier@default.com'
   email_prefix: '[Laika Error] '
 
 # These are configuration options fore ActionMailer::Base
