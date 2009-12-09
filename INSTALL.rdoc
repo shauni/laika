@@ -68,6 +68,19 @@ Navigate to the root of your Laika project and run:
 
 As an alternative, you may create CLASSPATH environment variable as part of the user's profile.
 
+== Mail Settings
+
+Laika sends mail for forgotten passwords, and potentially for error notifications (see below).
+
+By default, Laika assumes that it can send mail through a mail server configured at localhost on port 25.  To change this, create a copy of config/laika.yml from the config/laika.yml.template and set your mail settings as needed under 'action_mailer:'.  See the ActionMailer::Base configuration options for further details (http://api.rubyonrails.org/classes/ActionMailer/Base.html).
+
+== Error Notifications
+
+Laika uses the exception_notification plugin to email application errors encountered on a production server.  If you wish to receive email notifications, make sure that you have a config/laika.yml YAML file in place and that the exception_recipients parameter has been set to a list of one or more email addresses who should be receiving error notifications:
+
+exception_notifier:
+  exception_recipients: [ 'foo@bar.com' ]
+
 == GlassFish
 
 Install the Glassfish server using the Glassfish gem:
