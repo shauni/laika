@@ -34,7 +34,7 @@ body {
 }
 
 .header {
-	background: url(../images/header.png);
+	background: url(/images/header.png);
 }
 
 .header a {
