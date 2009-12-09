@@ -4,6 +4,7 @@
   <table>
     <%= f.calendar_date_select :start_support %>
     <%= f.calendar_date_select :end_support %>
+    <%= f.person_name_fields %>
     <%= f.select :contact_type_id, ContactType.select_options %>
     <%= f.select :relationship_id, Relationship.select_options, {:include_blank => true} %>
     <%= f.address_fields %>
