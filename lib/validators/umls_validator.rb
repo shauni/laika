@@ -46,7 +46,7 @@ module Validators
     class UmlsValidator < Validation::BaseValidator
         # The mapping file maps the oid's that would be found in a clinical document to the logical codesystem 
         # identifier in the UMLS db
-        UMLS_MAPPING_DEFAULT = "config/UMLS_MAPPING_FILE.yaml"
+        UMLS_MAPPING_DEFAULT = "#{RAILS_ROOT}/config/UMLS_MAPPING_FILE.yaml"
         
         attr_accessor :mapping, :msg_type
         
