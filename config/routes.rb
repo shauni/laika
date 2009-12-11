@@ -32,16 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     xds_patients.do_provide_and_register_xds_patient '/xds_patients/do_provide_and_register', :action => 'do_provide_and_register'
   end
   
-  
-  map.resources :patients ,:as =>"ptents",
-      :has_one  => [:registration_information, :support, :information_source, :advance_directive, :pregnancy],
-      :has_many => [:languages, :providers, :insurance_providers, 
-                    :insurance_provider_patients, :insurance_provider_subscribers, 
-                    :insurance_provider_guarantors, :medications, :allergies, :conditions, 
-                    :results, :immunizations, :vital_signs,
-                    :encounters, :procedures, :medical_equipments, :patient_identifiers],
-      :member   => {:set_no_known_allergies => :post, :edit_template_info => :get, :copy => :post },
-      :collection => { :autoCreate => :post }
+
 
   map.with_options :controller => 'xds_patients' do |xds_patients|
     xds_patients.provide_and_register_xds_patient '/xds_patients/provide_and_register/:id', :action => 'provide_and_register'
