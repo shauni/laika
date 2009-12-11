@@ -1,4 +1,19 @@
+=== 2009-12-07 Laika v1.4.1
 
+* Printer friendly view of test inspections GH-97 
+* Layout and content fixes for C32 Displayand File checklists GH-96 
+* Improved XDS validation results page layout GH-61
+* Cleaned up dependency of lib validation code for MatchHelper issue GH-104 
+* Implemented middle name support GH-31
+* Corrected medication code system options GH-95
+* Allergy/Drug Sensitivity section has a code system GH-93
+* Conditions section has correctly labelled problem_name field GH-91
+* Procedure fields marked with correct options GH-92
+* Override for Generate/Format tests GH-90
+* Rake tasks support for jdbc_adapter 
+* Some updates to install documentation
+* Start/end service required, GH-5
+* Changes to CoverageRoleType, FinancialResponsibilityParty, GH-74
 * C32 v2.5 schematron rules.
 * Generate & Format: Display clinical document in checklist, GH-87
 * Generate & Format: re-order doc types, GH-85

@@ -1,4 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%
+print_stylesheet_media = @print_preview ? 'all' : 'print'
+%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -8,25 +11,16 @@
 
   <title><%=h @page_title %></title>
 
-  <%= stylesheet_link_tag 'blueprint/screen', :media => "screen, projection, print" %>
-  <%= stylesheet_link_tag 'style', :media => "screen, projection, print"%>
-  <%= stylesheet_link_tag 'progressbar', :media => "screen, projection, print"%>
+  <%= stylesheet_link_tag 'blueprint/screen', 'style', 'progressbar', :media => "all", :cache => 'blueprint/core_styles_bundle' %>
+  <%= stylesheet_link_tag 'blueprint/print', 'print', :media => print_stylesheet_media, :cache => 'blueprint/print_styles_bundle' %>
 
-  <%= javascript_include_tag 'prototype' %>
-  <%= javascript_include_tag 'common' %>  
-  <%= javascript_include_tag 'scriptaculous' %>
-  
+  <%= javascript_include_tag 'prototype', 'common', 'scriptaculous', 'application', :cache => 'core_scripts_bundle' %>
   <%= calendar_date_select_includes "silver" %><%# patient %>
-
-  <%= javascript_include_tag 'application' %>
   <%= javascript_include_if_exists controller_name %>
 
   <!--[if IE 7]>
     <%= stylesheet_link_tag 'ie7master' %>
   <![endif]-->
-  <!--[if lt IE 7]><%# TODO what's this URL? it's not valid on demo.cchit.org <zhobson> %>
-    <link rel="stylesheet" href="/CatalystStyles/ie6.css" type="text/css" media="screen" />    
-  <![endif]-->    
   <!--[if IE]>
     <%= stylesheet_link_tag 'blueprint/lib/ie', :media => 'screen, projection' %>
   <![endif]-->

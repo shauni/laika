@@ -34,7 +34,7 @@ body {
 }
 
 .header {
-	background: url(../images/header.png);
+	background: url(/images/header.png);
 }
 
 .header a {
@@ -612,14 +612,19 @@ h3 > a {
 	list-style-type:none;
 }
 
+.printer-friendly-affordance {
+  margin-top:10px;
+  border-top: 1px solid black;
+}
+
 #assign_test_state_manually {
   padding:3px 0 7px 0;
   border-top:1px solid #ccc;
 }
 
 #assign_test_state_manually textarea{
-  height: 11.5em;
-  width: 18em;
+  height: 150px;
+  width: 205px 
 }
 
 #modules table, #modules td, #modules th {

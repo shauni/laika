@@ -1,4 +1,6 @@
-require 'sort_order'
+# XXX See about moving SortOrderHelper into app/helpers/sort_order_helper.rb
+require_dependency 'sort_order'
+
 module TestPlansHelper
   include SortOrderHelper
 

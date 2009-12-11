@@ -23,15 +23,18 @@
   
         def safe_match(element,&block)
            if element
-              begin
+# Commenting this out for now so that code bugs can actually filter
+# up for resolution.  Either that or we need to capture the backtrace
+# as well.
+#              begin
                  yield(element) 
                  return nil
-              rescue
-                  return ContentError.new(:section => section_name, 
-                                          :error_message => 'Error during validation of the #{section_name} section: #{$!}',
-                                          :type=>'error',
-                                          :location => element.xpath)
-              end
+#              rescue
+#                  return ContentError.new(:section => section_name, 
+#                                          :error_message => "Error during validation of the #{section_name} section: #{$!}",
+#                                          :type=>'error',
+#                                          :location => element.xpath)
+#              end
             
            else
                return ContentError.new(:section => section_name, 

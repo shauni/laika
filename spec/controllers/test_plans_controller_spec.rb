@@ -77,6 +77,13 @@ describe TestPlansController do
         response.should render_template('test_plans/doc_inspect.html.erb')
       end
 
+      it "should set a print_preview variable if called for" do
+        @plan.clinical_document = ClinicalDocument.factory.create
+        @plan.pass
+        get :doc_inspect, :id => @plan.id, :print_preview => 1
+        assigns(:print_preview).should == true
+      end
+
       describe "with validation stubbed out" do
         before do
           @validator = stub(:validator)
@@ -154,6 +161,7 @@ describe TestPlansController do
         @plan.should_receive(:validate_xds_metadata).with(:a => 'b')
         get :xds_compare, :id => @plan.id, :test_type_data => "---\n:a: b\n"
       end
+
     end
 
     describe "with a PIX Feed plan" do
@@ -184,6 +192,7 @@ describe TestPlansController do
         @plan.reload
         @plan.should be_passed
       end
+
     end
 
     describe "with test-specific plans" do

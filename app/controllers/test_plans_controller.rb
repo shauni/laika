@@ -6,6 +6,7 @@ class TestPlansController < ApplicationController
 
   before_filter :set_test_plan, :except => [:index, :create]
   before_filter :set_vendor, :only => [:index]
+  before_filter :check_print_preview, :only => [:doc_inspect, :pix_pdq_inspect, :xds_inspect]
 
   protected
 
@@ -34,36 +35,6 @@ class TestPlansController < ApplicationController
     else
       self.last_selected_vendor_id = @vendor.id
     end
-  end
-
-  # method used to mark the elements in the document that have errors so they 
-  # can be linked to
-  def match_errors(errors, doc)
-    error_map = {}
-    error_id = 0
-    @error_attributes = []
-    locs = errors.collect{|e| e.location}
-    locs.compact!
-
-    locs.each do |location|
-      node = REXML::XPath.first(doc ,location)
-      if(node)
-        elem = node
-        if node.class == REXML::Attribute
-          @error_attributes << node
-          elem = node.element
-        end
-        if elem
-          unless elem.attributes['error_id']
-            elem.add_attribute('error_id',"#{error_id}") 
-            error_id += 1
-          end
-          error_map[location] = elem.attributes['error_id']
-        end
-      end
-    end
-
-    error_map
   end
 
   public
@@ -156,5 +127,13 @@ class TestPlansController < ApplicationController
     redirect_to test_plans_url
   end
 
+  protected
+
+    # Checks to see if a parameter :print_preview == 1.
+    # If this has been passed in, sets @print_preview to true which
+    # the layout can use to adjust stylesheets for print rather than screen.
+    def check_print_preview
+      @print_preview = params[:print_preview] == '1'
+    end
 end
 

@@ -1,0 +1,36 @@
+.header .sessions,
+.header .right,
+.pretty-xml,
+.footer,
+INPUT,
+.printer-friendly-affordance,
+.hl7-message-log-affordance {
+  display:none;
+}
+.level1, .level2,
+.header, .content {
+  background:transparent none repeat scroll 0 0;
+}
+img {
+  float:none;
+}
+a:link:after, a:visited:after {
+content:"";
+}
+.header .doggy {
+  height : 120px;
+}
+.header .doggy img {
+  top : 10px;
+}
+.content {
+  border : 1px solid black;
+}
+/* assign test state manually */
+#assign_test_state_manually SELECT,
+#assign_test_state_manually H5 {
+  display:none;
+}
+#assign_test_state_manually TEXTAREA {
+  background:transparent none repeat scroll 0 0;
+}
