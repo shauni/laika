@@ -32,13 +32,6 @@ ActionController::Routing::Routes.draw do |map|
     xds_patients.do_provide_and_register_xds_patient '/xds_patients/do_provide_and_register', :action => 'do_provide_and_register'
   end
   
-
-
-  map.with_options :controller => 'xds_patients' do |xds_patients|
-    xds_patients.provide_and_register_xds_patient '/xds_patients/provide_and_register/:id', :action => 'provide_and_register'
-    xds_patients.do_provide_and_register_xds_patient '/xds_patients/do_provide_and_register', :action => 'do_provide_and_register'
-  end
-
   map.with_options :controller => 'account' do |account|
     %w[ signup login logout forgot_password reset_password ].each do |action|
       account.send(action, "/account/#{action}", :action => action)
