@@ -6,9 +6,9 @@ describe ConditionC32Importer do
 
     section = ConditionC32Importer.section(document)
     conditions = ConditionC32Importer.import_entries(section)
-    condition = condition.first
+    condition = conditions.first
     
     condition.start_event.should.eql? Date.civil(2006, 02, 21)
-    condition.problem_name.should == "Abnormal mass finding"
+    condition.free_text_name.should == "Abdominal mass finding"
   end
 end

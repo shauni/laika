@@ -6,7 +6,7 @@ class ResultC32Importer
   end
   
   def self.entry_xpath
-    "cda:entry/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.16']"
+    "cda:entry/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.16' or cda:templateId/@root='2.16.840.1.113883.10.20.1.31' or cda:templateId/@root='2.16.840.1.113883.10.20.1.17']"
   end
   
   def self.import_entry(entry_element)
@@ -17,17 +17,22 @@ class ResultC32Importer
       if id_string
         result.result_id = id_string
       end
-      
+
       date_string = element.find_first("cda:effectiveTime/@value").try(:value)
       if date_string
         result.result_date = date_string.to_s.from_hl7_ts_to_date
       end
-      
+
+      status = element.find_first("cda:statusCode/@code").try(:value)
+      if status
+        result.status_code = status
+      end
+
       code = element.find_first("cda:code/@code").try(:value)
       if code
         result.result_code = code
       end
-      
+
       name = element.find_first("cda:code/@displayName").try(:value)
       if name
         result.result_code_display_name = name

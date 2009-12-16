@@ -22,6 +22,11 @@ class VitalSignC32Importer
       if date_string
         vital_sign.result_date = date_string.to_s.from_hl7_ts_to_date
       end
+      
+      status = element.find_first("cda:statusCode/@code").try(:value)
+      if status
+        vital_sign.status_code = status
+      end
 
       code = element.find_first("cda:code/@code").try(:value)
       if code

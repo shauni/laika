@@ -14,6 +14,6 @@ describe ResultC32Importer do
     result.result_code_display_name.should == "Cholesterol"
     result.status_code.should == "N"
     result.value_scalar.should == "135"
-    result.value_unit.should == "md/dL"
+    result.value_unit.should == "mg/dL"
   end
 end

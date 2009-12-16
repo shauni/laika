@@ -43,6 +43,8 @@ class PatientC32Importer
       new_patient.social_history << imported_social_history
       
       new_patient.save!
+      
+      return new_patient
     else
       false
     end

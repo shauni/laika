@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 
 describe VitalSignC32Importer do
   it "should import a vital sign entry in a C32 into an ActiveRecord object" do
-    document = REXML::Document.new(File.new(RAILS_ROOT + '/spec/test_data/vital_signa/jenny_vital_sign.xml'))
+    document = REXML::Document.new(File.new(RAILS_ROOT + '/spec/test_data/vital_signs/jenny_vital_sign.xml'))
 
     section = VitalSignC32Importer.section(document)
     vitals = VitalSignC32Importer.import_entries(section)
