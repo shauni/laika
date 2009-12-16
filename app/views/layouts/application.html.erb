@@ -14,7 +14,7 @@ print_stylesheet_media = @print_preview ? 'all' : 'print'
   <%= stylesheet_link_tag 'blueprint/screen', 'style', 'progressbar', :media => "all", :cache => 'blueprint/core_styles_bundle' %>
   <%= stylesheet_link_tag 'blueprint/print', 'print', :media => print_stylesheet_media, :cache => 'blueprint/print_styles_bundle' %>
 
-  <%= javascript_include_tag 'prototype', 'common', 'scriptaculous', 'application', :cache => 'core_scripts_bundle' %>
+  <%= javascript_include_tag 'prototype', 'common', 'effects', 'application', :cache => 'core_scripts_bundle' %>
   <%= calendar_date_select_includes "silver" %><%# patient %>
   <%= javascript_include_if_exists controller_name %>
 
