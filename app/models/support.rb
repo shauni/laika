@@ -7,7 +7,6 @@ class Support < ActiveRecord::Base
 
   include PatientChild
   include PersonLike
-  include MatchHelper
 
   def requirements
     {
@@ -15,8 +14,6 @@ class Support < ActiveRecord::Base
       :relationship_id => :hitsp_r2_required,
     }
   end
-
- 
 
   def to_c32(xml)
     if contact_type && contact_type.code == "GUARD"

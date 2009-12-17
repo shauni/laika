@@ -1,4 +1,4 @@
- module PatientDataC32Validation
+ module PatientC32Validation
 
 
 

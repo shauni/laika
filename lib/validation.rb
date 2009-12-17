@@ -52,7 +52,6 @@ module Validation
       errors
     end
     
-    
     def << (validator)
 
          raise InvalidValidatorException if !validator.kind_of? Validation::BaseValidator
@@ -147,7 +146,6 @@ require_dependency 'validators/schema_validator'
 require_dependency 'validators/schematron_validator'
 require_dependency 'validators/umls_validator'
 require_dependency 'validators/xds_metadata_validator'
-
 
 {
   'C32 v2.1/v2.3' => [
