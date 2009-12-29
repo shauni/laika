@@ -9,6 +9,6 @@ describe ConditionC32Importer do
     condition = conditions.first
     
     condition.start_event.should.eql? Date.civil(2006, 02, 21)
-    condition.free_text_name.should == "Abdominal mass finding"
+    condition.problem_name.should == "Abdominal mass finding"
   end
 end

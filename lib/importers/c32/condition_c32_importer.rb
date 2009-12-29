@@ -31,7 +31,7 @@ class ConditionC32Importer
       else
         text_name = deref(element.find_first(obs_xpath + "cda:text"))
         if text_name
-          condition.free_text_name = text_name
+          condition.problem_name = text_name
         end
       end
       

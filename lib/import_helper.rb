@@ -3,7 +3,7 @@
 # it expects a template_id, import_entries and entry_xpath class methods to be provided by the class
 # extending it
 module ImportHelper
-  DEFAULT_NAMESPACES = {"cda"=>"urn:hl7-org:v3"}
+  DEFAULT_NAMESPACES = {"cda"=>"urn:hl7-org:v3", "sdtc"=>"urn:hl7-org:sdtc"}
   
   # Gets a secton Element. Will call template_id to find the appropriate id to place in it's XPath expression
   def section(document)
