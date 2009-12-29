@@ -1,8 +1,8 @@
 <%= error_messages_for :user %>
 
 <div class="user-box">
-  <h3><%= current_user == @user ? 'Your' : "#{@user.display_name}'s" %> Settings</h3>
-  <% form_for(:user, :url => user_path(@user), :html => { :method => :put }) do |form| %>
+  <h2>Your Settings</h2>
+  <% form_for(:user, :url => user_path, :html => { :method => :put }) do |form| %>
     <div><label for="user_first_name">First Name</label></div>
     <div><%= form.text_field :first_name %></div>
     <div><label for="user_last_name">Last Name</label></div>
@@ -18,12 +18,21 @@
 </div>
 
 <div class="user-box">
-  <h3>Update Your Password</h3>
-  <% form_for(:user, :url => user_path(@user), :html => { :method => :put }) do |form| %>
+  <h2>Update Your Password</h2>
+  <% form_for(:user, :url => user_path, :html => { :method => :put }) do |form| %>
     <div><label for="user_password">Password</label></div>
     <div><%= form.password_field :password %></div>
-    <div><label for="user_confirm_password">Confirm Password</label></div>
+    <div><label for="user_password_confirmation">Confirm Password</label></div>
     <div><%= form.password_field :password_confirmation %></div>
     <div><%= submit_tag "Update password" %></div>
   <% end %>
 </div>
+
+<div class="user-box">
+  <h2>Additional Tools</h2>
+  <ul>
+    <li><%= link_to pluralize(@user.proctors.count, "Test Proctor"),
+      proctors_path %></li>
+  </ul>
+</div>
+

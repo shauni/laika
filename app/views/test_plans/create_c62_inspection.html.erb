@@ -1,0 +1,20 @@
+<% @page_header = "Inspect C62 based on template for patient #{@patient.name}" %>
+<% form_for(:test_plan, @plan, :method => 'post',
+            :html => {
+              :multipart => true,
+              :onSubmit => %[
+                if ($("file_upload").value.blank())
+                  { alert("You must specify a file to upload."); return false }
+                else return true
+              ] }) do |f| -%>
+  <%= hidden_field_tag :patient_id, @patient.id %>
+  <%= f.hidden_field :type %>
+  <%= f.hidden_field :vendor_id %>
+  <%= f.hidden_field :proctor_id %>
+  <% f.fields_for(:clinical_document, ClinicalDocument.new) do |doc| -%>
+    <%= doc.hidden_field :type, :value => 'C62' %>
+    <%= doc.file_field  :uploaded_data, :id => 'file_upload' %>
+  <% end -%>
+  <%= f.submit 'Assign' %> or <%=link_to 'Back', patients_path %>
+<% end -%>
+

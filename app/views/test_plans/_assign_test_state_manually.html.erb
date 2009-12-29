@@ -1,0 +1,9 @@
+        <div id="assign_test_state_manually">
+            <h5>Status override</h5>
+            <% form_for(:test_plan, :url => mark_test_plan_url(@test_plan)) do |f| %>
+              <%= f.select :state, { 'PASS' => 'passed', 'FAIL' => 'failed' } %>
+              <%= f.label :status_override_reason %>
+              <%= f.text_area :status_override_reason %>
+              <%= f.submit "Assign" %>
+            <% end %>
+        </div>

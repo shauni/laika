@@ -1,0 +1,7 @@
+<div class="module" id="<%= ident.camelize(:lower) %>Container">
+  <%= render :partial => "/#{ident.pluralize}/show",
+      :locals => {
+        ident.to_sym => item,
+        :patient => @patient
+      } %>
+</div>

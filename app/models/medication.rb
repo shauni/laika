@@ -21,8 +21,6 @@ class Medication < ActiveRecord::Base
       :expiration_date => :hitsp_r2_optional,
     }
   end
-
- 
   
   def to_c32(xml)
     xml.entry {

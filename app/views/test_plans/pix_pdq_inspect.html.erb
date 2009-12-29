@@ -1,85 +1,46 @@
-<!-- Start Content -->
 <div class="column span-6 append-1">
+    
   <div id="results">
-    <% if !@test_plan.pending? -%>
-      <% if @test_plan.passed? -%>
-        <div class="pass">PASS</div>
-      <% else %>
-        <div class="fail">FAIL</div>
-      <% end %>
-      <div class="info">
-        <h5>Inspection ID: <%= @test_plan.vendor.public_id %></h5>
-        <% if @test_plan.class.name == "PixFeedPlan" %>
-        <p>Test Result Summary</p>
-        <div class="widget">
-          <div class="left on">
-            <table border="0">
-              <tr>
-                <td><span class="number"><% if @test_plan.passed? %>0<% else %>1<% end %></span></td>
-                <td>PIX Feed Errors</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="widget">
-          <div class="left on">
-            <table>
-              <tr>
-                <td><span class="number">0 </span></td>
-                <td>PIX Feed Warnings</td>
-              </tr>
-             </table>
-         </div>
-        </div>
-        <% end %>
-        <table id="details">
-          <tr>
-            <td class="lighttext">Test Date</td>
-            <td><%= @test_plan.updated_at %></td>
-          </tr>
-          <tr>
-            <td class="lighttext">Test Proctor</td>
-            <td><a href="mailto:<%= @test_plan.user.email %>">
-                  <%= @test_plan.user.first_name %>
-                  <%= @test_plan.user.last_name %></a>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <% else %>
-    <div class="pass">Assign Result</div>
+    <div class="<%= test_plan_results_class(@test_plan) %>">
+      <%= test_plan_results_heading(@test_plan) %>
+    </div>
     <div class="info">
       <h5>Inspection ID: <%= @test_plan.vendor.public_id %></h5>
-      <p>Test Result</p>
-        <table id="details">
-        <tr>
-          <% form_tag(mark_test_plan_url(@test_plan), :method => 'post') do %>
-            <td><%= select_tag :state, %w[pass fail].map{|s|"<option>#{s}</option>"} %>
-            <%= submit_tag "Assign" %> <br/><br/></td>
-          <% end %>
-        </tr>
-        </table>
+    <% if !@test_plan.pending? && @test_plan.class.name == "PixFeedPlan" -%>
+      <h6>Test Result Summary</h6>
+      <div class="widget">
+        <div class="left on">
+          <span class="number">
+            <%= @test_plan.passed? ? '0' : '1' %>
+          </span> PIX Feed Errors
+        </div>
+      </div>
+      <div class="widget">
+        <div class="left on">
+         <span class="number">0</span> PIX Feed Warnings
+       </div>
+      </div>
+    <% else -%>
+      <h6>Test Result</h6>
+    <% end -%>
+      <%= render :partial => 'assign_test_state_manually' if @test_plan.pending? -%>
       <table id="details">
         <tr>
           <td class="lighttext">Test Date</td>
           <td><%= @test_plan.updated_at %></td>
         </tr>
+      <% if @test_plan.proctor -%>
         <tr>
           <td class="lighttext">Test Proctor</td>
-          <td><a href="mailto:<%= @test_plan.user.email %>">
-                <%= @test_plan.user.first_name %>
-                <%= @test_plan.user.last_name %></a>
-          </td>
+          <td><%= link_to h(@test_plan.proctor), @test_plan.proctor %></td>
         </tr>
+      <% end -%>
       </table>
-    </div>
+      <%= render :partial => 'print_preview' %>
+    </div> <!-- div.info -->
+  </div> <!-- div.results -->
+  <h5 class="hl7-message-log-affordance"><%= link_to 'View HL7 Message Log', message_logs_url, :popup => ['new window', 'width=1000, height=500, left = 450, top = 100, resizable=false, scrollbars=yes' ] %></h5>
 
-    <% end %>
-  </div>
-<%# XXX https://sourceforge.net/tracker/index.php?func=detail&aid=2684053&group_id=205665&atid=994554 %>
-<%# if @test_plan.test_result && @test_plan.test_result.result == "FAIL"%>
-    <h5><%= link_to 'View HL7 Message Log', message_logs_url, :popup => ['new window', 'width=1000, height=500, left = 450, top = 100, resizable=false, scrollbars=yes' ] %></h5>
-  <%# end %>
 </div>
 <div class="column span-13 last">
   <div id="template">
@@ -111,19 +72,19 @@
     <% end %>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Prefix</td>
-        <td><%=h @patient.registration_information.person_name.name_prefix %></td>
+        <td><%=h @patient.registration_information.person_name.try(:name_prefix) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">First name</td>
-        <td><%=h @patient.registration_information.person_name.first_name %></td>
+        <td><%=h @patient.registration_information.person_name.try(:first_name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Last name</td>
-        <td><%=h @patient.registration_information.person_name.last_name %></td>
+        <td><%=h @patient.registration_information.person_name.try(:last_name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Suffix</td>
-        <td><%=h @patient.registration_information.person_name.name_suffix %></td>
+        <td><%=h @patient.registration_information.person_name.try(:name_suffix) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Date of birth</td>
@@ -131,23 +92,23 @@
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Religion</td>
-        <td><%=h @patient.registration_information.religion.name %></td>
+        <td><%=h @patient.registration_information.religion.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Marital status</td>
-        <td><%=h @patient.registration_information.marital_status.name %></td>
+        <td><%=h @patient.registration_information.marital_status.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Gender</td>
-        <td><%=h @patient.registration_information.gender.name %></td>
+        <td><%=h @patient.registration_information.gender.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Race</td>
-        <td><%=h @patient.registration_information.race.name %></td>
+        <td><%=h @patient.registration_information.race.try(:name) %></td>
       </tr>
       <tr class="<%= cycle("darkzebra", "lightzebra")%>">
         <td class="lighttext">Ethnicity</td>
-        <td><%=h @patient.registration_information.ethnicity.name %></td>
+        <td><%=h @patient.registration_information.ethnicity.try(:name) %></td>
       </tr>
     </table>
   </div>

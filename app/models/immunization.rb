@@ -54,6 +54,7 @@ class Immunization < ActiveRecord::Base
     if (rand > 0.5)
       self.refusal = true
       self.no_immunization_reason = NoImmunizationReason.find :random
+
     else
       self.refusal = false
     end

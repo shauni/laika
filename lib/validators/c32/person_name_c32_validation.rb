@@ -13,7 +13,8 @@ module PersonNameC32Validation
     errors = []
     if name_element
       errors << match_value(name_element, 'cda:prefix', 'name_prefix', self.name_prefix)
-      errors << match_value(name_element, 'cda:given', 'first_name', self.first_name)
+      errors << match_value(name_element, 'cda:given[1]', 'first_name', self.first_name)
+      errors << match_value(name_element, 'cda:given[2]', 'middle_name', self.middle_name)
       errors << match_value(name_element, 'cda:family', 'last_name', self.last_name)
       errors << match_value(name_element, 'cda:suffix', 'name_suffix', self.name_suffix)
     else

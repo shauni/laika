@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
   class InvalidPasswordResetCode < StandardError; end
   skip_before_filter :login_required, :only => [:login, :signup, :forgot_password, :reset_password]
+  skip_before_filter :verify_authenticity_token, :only => [:login]
 
   def login
     return unless request.post?
@@ -12,7 +13,12 @@ class AccountController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      
+
+      # Display the latest news on login.
+      if SystemMessage.count > 0
+        flash[:notice] = SystemMessage.first(:order => 'updated_at DESC').body
+      end
+
       # Either direct to the Dashboard or the Library, depending on if the user has vendor test plans
       if current_user.count_test_plans == 0
         redirect_to patients_url

@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   before_save               :encrypt_password
 
   has_many :vendors, :dependent => :destroy
+  has_many :proctors, :dependent => :destroy
+  has_many :patients, :conditions => { :test_plan_id => nil }
 
   has_many :test_plans, :dependent => :destroy do
     def by_vendor
@@ -32,6 +34,10 @@ class User < ActiveRecord::Base
 
   def count_test_plans
     test_plans.count
+  end
+
+  def to_s
+    display_name
   end
 
   # Authenticates a user by their email name and unencrypted password.  Returns the user or nil.

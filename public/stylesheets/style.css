@@ -62,10 +62,9 @@ body {
 
 .header ul#bignav {
 	margin: 0px 14px 0px 0;
-	padding-left: 0;
+	padding: 0px;
 	white-space: nowrap;
 	font-size:2em;
-	padding-bottom:7px;
 }
 
 .header ul#bignav li {
@@ -76,6 +75,7 @@ body {
 .header ul#bignav #active a {
 	color:#ff2800;
 	background: url(/images/header_selected.png) repeat-x;
+    margin:0px;
 }
 
 .header ul#bignav a {
@@ -119,7 +119,7 @@ body {
 
 .content {
 	background: url(/images/content.png);
-	padding:45px 5px; 
+	padding:30px 5px; 
 	min-height:400px;
 }
 
@@ -153,6 +153,9 @@ ul.vendor-actions > li {
     margin-right: 1em;
 }
 
+.inspection-results h3 > a {
+  color: black;
+}
 .inspection-results h3 {
   margin-bottom: .5ex;
 }
@@ -167,25 +170,93 @@ ul.vendor-actions > li {
   content: ": ";
 }
 
-#templateInformationContainer {
-  position:fixed;
+#patient-sidebar {
+ position:fixed;
+ width: 230px;
 }
-#templateInformationContainer h3 {
-  position:fixed;
+#patient-sidebar #modules {
+ width: 220px;
+ margin: auto;
+}
+#patient-sidebar ul {
+ margin-left: 0px;
+}
+#patient-sidebar li {
+ list-style: none;
+ padding-left: 1ex;
+}
+
+#patient-sidebar li.back {
+  text-align: center;
+}
+#patient-sidebar li.back a:link {
+  color: #aaa;
+}
+#patient-sidebar li.back a:visited {
+  color: #aaa;
+}
+#patient-content {
+ margin-left: 245px;
+ float:right; /* this is for IE7 */
+}
+#templateInformationContainer {
+  width: 230px;
+  height: 3em;
+}
+#templateInformationContainer input[type=text] {
+  width: 200px;
+}
+#templateInformationContainer h3 a {
+  font-size: 50%;
+  font-weight: normal;
+  color: #aaa;
+}
+
+#patient-content .module {
+  margin-top: 2em;
+}
+#patient-content .module h5 {
+  margin-bottom: 0px;
+  margin-left: -10px;
+  border-top: solid 2px black;
+}
+#patient-content .module table {
+  margin-top: 1ex;
+  margin-bottom: 0.5ex;
+  border-top: solid 2px #ddd;
+}
+#patient-content .module .controls {
+  margin-bottom: 1em;
+  margin-left: 3em;
+  font-weight: bold;
+}
+#patient-content .module .controls a {
+  margin-right: 2em;
 }
 
 .other-vendors li > a { font-weight: bold; }
 .other-vendors li > span { font-size: x-small; }
 
-#dashboard .delete > a {
-  padding: 4px 0px 0px 0px;
-  margin: 0px;
+#dashboard .ops a {
+  padding-top: 4px;
+}
+#dashboard .ops a {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 6px;
   width: 16px;
   height: 16px;
-  display:block;
+  float: right;
+}
+#dashboard .ops a.clone {
+  background: url(/images/icons/page_copy.png) no-repeat bottom center;
+}
+#dashboard .ops a.delete {
   background: url(/images/icons/delete.png) no-repeat bottom center;
 }
-#dashboard .delete > a span {
+#dashboard .ops a.notify {
+  background: url(/images/icons/email.png) no-repeat bottom center;
+}
+#dashboard .ops a span {
   display:none;
 }
 
@@ -195,6 +266,13 @@ ul.vendor-actions > li {
 
 table#dashboard a {
 	color:#424242;
+}
+
+#dashboard tr.test_plan td {
+  white-space:nowrap;
+}
+#dashboard tr.test_plan td.ops {
+  width:68px;
 }
 
 #dashboard th {
@@ -270,11 +348,12 @@ table#dashboard a {
 }
 
 #dashboard .edit a {
-  padding: 0px 0px 3px 18px;
+  padding: 0px 0px 0px 18px;
   background: url(/images/icons/page_edit.png) no-repeat;
+  line-height: 20px;
 }
 #dashboard .locked a {
-  padding: 0px 0px 3px 18px;
+  padding: 0px 0px 0px 18px;
   /* background: url(/images/icons/page.png) no-repeat; */
 }
 
@@ -286,7 +365,8 @@ table#dashboard a {
     margin-right: 1ex;
 }
 #dashboard .test_state a {
-  padding: 0px 0px 3px 18px;
+  padding: 0px 0px 0px 18px;
+  min-height: 20px;
 }
 #dashboard .test_state a.passed {
   background: url(/images/icons/accept.png) no-repeat;
@@ -452,6 +532,8 @@ table#dashboard a {
 #results .on {
 	background:url(/images/results_on_back.png) repeat-x;
 	border:1px solid #d5a9a1;
+    overflow:hidden;
+    white-space:nowrap;
 }
 
 #results .off {
@@ -460,20 +542,15 @@ table#dashboard a {
 }
 
 #results .left {
-	width:195px;
+	width:205px;
 	height:22px;
 	float:left;
-	padding:10px;
+	padding:10px 5px;
 }
 
-#results a .on {
-	background:url(/images/results_on.png) repeat-x;
-	border:1px solid #f0836f;
-}
-
-#results a .off {
-	background:url(/images/results_off.png) repeat-x;
-	border:1px solid #cdcece;
+#results h6 {
+  margin-top: 2em;
+  margin-bottom: 1ex;
 }
 
 #results .right {
@@ -487,12 +564,17 @@ table#dashboard a {
 	margin-left:-1px;
 }
 
-#results a .on:hover {
+h3 > a {
+ color: black;
+}
+#results .on a:hover {
+	text-decoration:underline;
+}
+#results .on a {
 	color:#000;
-	border:1px solid #fd5a3c;
 }
 
-#results a .off:hover {
+#results .off a:hover {
 	color:#000;
 	border:1px solid #929292;
 }
@@ -528,6 +610,21 @@ table#dashboard a {
 #results .info ul {
 	margin:0px;
 	list-style-type:none;
+}
+
+.printer-friendly-affordance {
+  margin-top:10px;
+  border-top: 1px solid black;
+}
+
+#assign_test_state_manually {
+  padding:3px 0 7px 0;
+  border-top:1px solid #ccc;
+}
+
+#assign_test_state_manually textarea{
+  height: 150px;
+  width: 205px 
 }
 
 #modules table, #modules td, #modules th {
@@ -663,7 +760,11 @@ form.new_patient_data {
 
 .user-box {
   margin-top: 20px;
+  margin-right: 3em;
+  float: left;
 }
+.user-box input[type="text"]  { width: 50ex; }
+.user-box input[type="password"]  { width: 40ex; }
 
 h3 > span {
   font-size: .7em;
@@ -722,4 +823,13 @@ h3 {
 #not-assigned {
   font-size: large;
   text-align: center;
+}
+
+dl.inline > dt {
+  float: left;
+  width: 30ex;
+  line-height: 2em;
+}
+dl.inline > dd {
+  line-height: 2em;
 }

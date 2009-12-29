@@ -5,11 +5,13 @@
 module Laika
   TEST_PLAN_TYPES = {
     C32DisplayAndFilePlan.test_name     => C32DisplayAndFilePlan,
-    C32GenerateAndFormatPlan.test_name  => C32GenerateAndFormatPlan,
+    NhinDisplayAndFilePlan.test_name    => NhinDisplayAndFilePlan,
+    GenerateAndFormatPlan.test_name     => GenerateAndFormatPlan,
     PdqQueryPlan.test_name              => PdqQueryPlan,
     PixQueryPlan.test_name              => PixQueryPlan,
     PixFeedPlan.test_name               => PixFeedPlan,
     XdsProvideAndRegisterPlan.test_name => XdsProvideAndRegisterPlan,
-    XdsQueryAndRetrievePlan.test_name   => XdsQueryAndRetrievePlan
+    XdsQueryAndRetrievePlan.test_name   => XdsQueryAndRetrievePlan,
+    C62InspectionPlan.test_name         => C62InspectionPlan,
   }
 end

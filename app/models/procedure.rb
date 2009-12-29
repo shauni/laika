@@ -1,13 +1,17 @@
 class Procedure < ActiveRecord::Base
   strip_attributes!
+  
+  belongs_to :procedure_status_code
 
   include PatientChild
 
   def requirements
     {
       :procedure_id => :required,
-      :code => :required,
+      :code => :hitsp_r2_required,
+      :name => :required,
       :procedure_date => :hitsp_r2_optional,
+      :procedure_status_code_id => :nhin_required,
     }
   end
 
@@ -65,6 +69,7 @@ class Procedure < ActiveRecord::Base
     self.name = "Total hip replacement, left"
     self.procedure_id = "e401f340-7be2-11db-9fe1-0800200c9a66"
     self.code = "52734007"
+    self.procedure_status_code = ProcedureStatusCode.find :random
     self.procedure_date = DateTime.new(birth_date.year + rand(DateTime.now.year - birth_date.year), rand(12) + 1, rand(28) +1)
   end
 

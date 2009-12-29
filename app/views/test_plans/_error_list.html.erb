@@ -1,6 +1,4 @@
-<div class="column span-13 last">
   <div id="template">
-    <h3><%= header %></h3>
     <table id="dashboard">
       <tr valign="top">
         <th width="125">Error Type</th>
@@ -19,7 +17,7 @@
           <td><%= err.validator %></td>
           <td>
             <% if error_id %>
-              <a style="color:#cc3300" href="javascript:scroll_to_module('error_<%=error_id%>', 1.0);" ><b><%= index %></b> <span><%= err.error_message %></span></a>
+              <a style="color:#cc3300" href="javascript:scroll_to_module('error_<%=error_id%>', 1.0);" ><b><%= index %></b> <span><%= h err.error_message %></span></a>
             <% else %>
               <b><%= index %>.</b> <span><%= err.error_message %></span>
             <% end %>
@@ -29,4 +27,3 @@
        
     </table>
   </div>
-</div>

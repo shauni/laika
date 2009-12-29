@@ -4,14 +4,16 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :vendors, :only => [:create, :update, :destroy] do |vendors|
     vendors.resources :test_plans, :only => :index
   end
-  map.resources :users, :except => [:index]
+  map.resource :user, :except => [:index]
+  map.resources :proctors
   map.resources :xds_utility, :singular => "xds_utility_instance"
   map.resources :document_locations
   map.resources :news, :singular => 'news_item'
 
   map.resources :settings, :only => [:index, :update]
 
-  map.resources :test_plans, :member => {:mark => :post, :checklist => :get}
+  map.resources :test_plans,
+    :member => { :mark => :post, :checklist => :get, :clone => :post }
   # additional test-specific actions
   map.test_action '/test_plans/:id/:action', :controller => 'test_plans'
 
@@ -39,11 +41,13 @@ ActionController::Routing::Routes.draw do |map|
   # to support autocomplete actions, include each autocomplete-able controller/action in the list
   { 'conditions' => %w[ snowmed_problem_name ] }.each do |controller, actions|
     actions.each do |action|
-      map.connect "/autocomplete/#{controller}/#{action}",
-        :controller => controller, :action => "auto_complete_for_#{action}"
+      full_action = "auto_complete_for_#{action}"
+      map.send(full_action, "/autocomplete/#{controller}/#{action}",
+        :controller => controller, :action => full_action)
     end
   end
 
+  map.about "about/:action", :controller => 'about', :action => 'index'
   map.root :controller => "test_plans"
 
   # The priority is based upon order of creation: first created -> highest priority.

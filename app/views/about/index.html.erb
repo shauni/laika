@@ -1,0 +1,46 @@
+<h1>Laika version <%= LAIKA_VERSION %></h1>
+
+<p><%= link_to 'View Recent Changes in Laika', about_path('changelog') %></p>
+
+<dl class="inline">
+  <dt>Your total test cases</dt>
+  <dd><%= pluralize @total_test_cases, 'test case' %></dd>
+  <dt>Your total patient templates</dt>
+  <dd><%= pluralize @total_patient_templates, 'patient template' %></dd>
+</dl>
+
+<h2>About the Laika Project</h2>
+
+<p>
+Laika is led by contributions from the Certification Commission for Healthcare Information Technology, The MITRE Corporation, and OpenSourcery, LLC.
+</p>
+
+<p>
+The Certification Commission is a private, not-for-profit organization whose mission is to accelerate adoption of health information technology in the United States (<%= link_to 'www.cchit.org', 'http://www.cchit.org/', :target => '_new' %>).
+</p>
+
+<p>
+The MITRE Corporation is a not-for-profit organization chartered to work in the public interest. As a national resource, we apply our expertise in systems engineering, information technology, operational concepts, and enterprise modernization to address our sponsors' critical needs. (<%= link_to 'www.mitre.org', 'http://www.mitre.org/', :target => '_new' %>).
+</p>
+
+<p>
+OpenSourcery is a leader in transparent, agile Web development. We build the custom web applications and feature-rich websites that power small businesses, nonprofits and startups. We proudly run on 100% open source software supported by world-class systems administration. (<%= link_to 'www.opensourcery.com', 'http://www.opensourcery.com', :target => '_new' %>)
+</p>
+
+<h2>Laika Resources</h2>
+
+<ul>
+  <% with_options :target => '_new' do |new| -%>
+    <li><%= new.link_to 'Official home page',
+      'http://laika.sourceforge.net/' %></li>
+    <li><%= new.link_to 'Source repository',
+      'http://github.com/CCHIT/laika/tree/master' %></li>
+    <li><%= new.link_to 'Wiki documentation',
+      'http://sourceforge.net/apps/mediawiki/laika/index.php' %></li>
+    <li><%= new.link_to 'Developer documentation',
+      'http://rdoc.info/projects/CCHIT/laika' %></li>
+    <li><%= new.link_to 'Source code downloads',
+      'http://github.com/CCHIT/laika/downloads' %></li>
+  <% end -%>
+</ul>
+

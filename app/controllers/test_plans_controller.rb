@@ -2,10 +2,11 @@ class TestPlansController < ApplicationController
   page_title 'Laika Dashboard'
 
   include SortOrder
-  self.valid_sort_fields = %w[ created_at updated_at patients.name type ]
+  self.valid_sort_fields = %w[ type updated_at ]
 
   before_filter :set_test_plan, :except => [:index, :create]
   before_filter :set_vendor, :only => [:index]
+  before_filter :check_print_preview, :only => [:doc_inspect, :pix_pdq_inspect, :xds_inspect]
 
   protected
 
@@ -39,15 +40,18 @@ class TestPlansController < ApplicationController
   public
 
   include C32DisplayAndFilePlan::Actions
-  include C32GenerateAndFormatPlan::Actions
+  include GenerateAndFormatPlan::Actions
+  include NhinDisplayAndFilePlan::Actions
   include XdsPlan::Actions
   include XdsProvideAndRegisterPlan::Actions
   include PixPdqPlan::Actions
   include PixFeedPlan::Actions
+  include C62InspectionPlan::Actions
   
   # Display all test plans by vendor.
   def index
-    @test_plans = @vendor.test_plans.all(:order => sort_order)
+    @test_plans = @vendor.test_plans.all :order => sort_order,
+      :include => [ :patient, :proctor, :clinical_document ]
     @other_vendors = current_user.vendors - [@vendor]
   end
 
@@ -111,14 +115,25 @@ class TestPlansController < ApplicationController
   # @param [Number] id Test plan ID.
   # @param ["pass", "fail"] state Intended test state.
   def mark
-    if test_plan.user == current_user
-      case params['state']
-      when "pass"; test_plan.pass!
-      when "fail"; test_plan.fail!
-      end
-    end
+    test_plan.override_state!(params[:test_plan])
     redirect_to test_plans_url
   end
 
+  # Duplicate an existing test plan so that it can be performed again.
+  #
+  # @param [Number] id Test plan ID.
+  def clone
+    test_plan.clone
+    redirect_to test_plans_url
+  end
+
+  protected
+
+    # Checks to see if a parameter :print_preview == 1.
+    # If this has been passed in, sets @print_preview to true which
+    # the layout can use to adjust stylesheets for print rather than screen.
+    def check_print_preview
+      @print_preview = params[:print_preview] == '1'
+    end
 end
 

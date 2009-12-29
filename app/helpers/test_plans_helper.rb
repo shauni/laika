@@ -1,6 +1,32 @@
-require 'sort_order'
+# XXX See about moving SortOrderHelper into app/helpers/sort_order_helper.rb
+require_dependency 'sort_order'
+
 module TestPlansHelper
   include SortOrderHelper
+
+  # Selects the proper css class based on the given plan's state.
+  # 
+  # TestPlan#pending? == true is classed as 'pass' in anticipation
+  # of the user setting a test state.
+  # 
+  # @param [TestPlan]
+  # @return [String] 'pass' or 'fail'  
+  def test_plan_results_class(plan)
+    plan.pending? || plan.passed? ? 'pass' : 'fail'
+  end
+
+  # Returns a header string based on plan state, either 'PASS' or 'FAIL'
+  # or 'Assign Result' if pending.
+  #
+  # @param [TestPlan]
+  # @return [String] 
+  def test_plan_results_heading(plan)
+    case 
+      when plan.pending? then 'Assign Result'
+      when plan.passed?  then 'PASS'
+      else                    'FAIL'
+    end
+  end
 
   def plan_when_tested plan
       plan.pending? ? 'not yet tested' : "#{time_ago_in_words plan.updated_at} ago"
@@ -18,36 +44,6 @@ module TestPlansHelper
           link_to(k, :controller => 'test_plans', :action => v, :id => test_plan)
       end
     end
-  end
-
-  # method used to mark the elements in the document that have errors so they 
-  # can be linked to
-  def match_errors(errors, doc)
-    error_map = {}
-    error_id = 0
-    @error_attributes = []
-    locs = errors.collect{|e| e.location}
-    locs.compact!
-
-    locs.each do |location|
-      node = REXML::XPath.first(doc ,location)
-      if(node)
-        elem = node
-        if node.class == REXML::Attribute
-          @error_attributes << node
-          elem = node.element
-        end
-        if elem
-          unless elem.attributes['error_id']
-            elem.add_attribute('error_id',"#{error_id}") 
-            error_id += 1
-          end
-          error_map[location] = elem.attributes['error_id']
-        end
-      end
-    end
-
-    error_map
   end
 
   def xds_metadata_single_attribute(metadata, attribute)

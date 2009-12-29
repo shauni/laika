@@ -3,7 +3,7 @@
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.action_controller.relative_url_root = ""
-config.cache_classes = true
+config.cache_classes = false #true # work around CCHIT/#62.
 
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new

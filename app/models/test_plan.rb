@@ -24,9 +24,14 @@
 # You cannot change the state of a plan once it has passed
 # or failed, so you can only pass or fail pending tests.
 #
+# However, we have added force_pass, force_fail events as
+# manual overrides which will ensure a transition to either
+# 'passed' or 'failed', respectively, regardless of whether
+# test is currently pending.
 class TestPlan < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
+  belongs_to :proctor
   has_one    :patient,           :dependent => :destroy
   belongs_to :clinical_document, :dependent => :destroy
   has_many   :content_errors,    :dependent => :destroy
@@ -35,6 +40,12 @@ class TestPlan < ActiveRecord::Base
 
   validates_presence_of :user_id
   validates_presence_of :vendor_id
+
+  # Quick and dirty human-readable stringification, useful for
+  # debugging or prototyping.
+  def to_s
+    "#{vendor}: #{test_name} of #{patient.name} (#{state})"
+  end
 
   # Count the errors in the content_errors.
   #
@@ -57,6 +68,33 @@ class TestPlan < ActiveRecord::Base
     event :fail do
       transition :pending => :failed
     end
+    event :force_pass do
+      transition [:pending, :passed, :failed] => :passed
+    end
+    event :force_fail do
+      transition [:pending, :passed, :failed] => :failed
+    end
+  end
+
+  # Manually override test plan state to either passed
+  # or failed, and set a reason.
+  #
+  # @param [Hash<String => String>] expects a state and a status_override_reason
+  # @return true if changes are successfully saved, otherwise raises an ActiveRecord error
+  #   per save!
+  def override_state!(state_options)
+    state = state_options['state']
+    reason = state_options['status_override_reason']
+    case state
+      when 'passed'
+        self.status_override_reason = reason 
+        force_pass!
+      when 'failed'
+        self.status_override_reason = reason 
+        force_fail!
+      else
+        false
+    end
   end
 
   # Return the normalized name of this test plan, but with underscores instead
@@ -64,7 +102,7 @@ class TestPlan < ActiveRecord::Base
   #
   # @return [String] Paramterized name.
   def parameterized_name
-    self.class.normalize_name(self.class.test_name).gsub('-','_')
+    self.class.normalize_name(test_name).gsub('-','_')
   end
 
   # Accessor for the test plan type registry.
@@ -156,6 +194,18 @@ class TestPlan < ActiveRecord::Base
   # @return [String] normalized name
   def self.normalize_name name
     name.strip.downcase.gsub('_','-').gsub(/\ba?nd?\b|&/i, '-and-').gsub(/\W+/, '-')
+  end
+
+  # Create and save an identical test plan based on the receiver.
+  # A new patient is cloned and the state is set to "pending".
+  def clone
+    cloned = super
+    new_patient = patient.clone
+    new_patient.save!
+    cloned.patient = new_patient
+    cloned.update_attribute(:state, 'pending')
+    cloned.save!
+    cloned
   end
 end
 

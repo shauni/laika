@@ -103,7 +103,7 @@ severity_terms supports telecoms users vaccines vendors zip_codes
     3.times do |i|
       record.conditions << Condition.new(
         :start_event => Date.today + i,
-        :free_text_name => "condition #{i}",
+        :problem_name => "condition #{i}",
         :problem_type => ProblemType.find(:first)
       )
     end
@@ -114,7 +114,7 @@ severity_terms supports telecoms users vaccines vendors zip_codes
   it "should refresh updated_at when a child record is updated" do
     record = patients(:david_carter)
     old_updated_at = record.updated_at
-    record.conditions.first.update_attributes!(:free_text_name => 'something else')
+    record.conditions.first.update_attributes!(:problem_name => 'something else')
     record.reload
     record.updated_at.should > old_updated_at
   end

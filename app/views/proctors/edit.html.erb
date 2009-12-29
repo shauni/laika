@@ -1,0 +1,5 @@
+<% form_for @proctor, :method => 'put' do |proctor| -%>
+  <%= render :partial => 'proctors/proctor_form', :object => proctor %>
+  <%= proctor.submit 'Update' %>
+  or <%= link_to 'Cancel', proctors_path %>
+<% end -%>

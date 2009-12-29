@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090908151128) do
+ActiveRecord::Schema.define(:version => 20091118191432) do
 
   create_table "abstract_results", :force => true do |t|
     t.string  "result_id"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.integer "patient_id",             :null => false
     t.integer "allergy_status_code_id"
     t.integer "allergy_type_code_id"
+    t.integer "code_system_id"
   end
 
   add_index "allergies", ["patient_id"], :name => "index_allergies_on_patient_id"
@@ -124,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.date    "start_event"
     t.date    "end_event"
     t.integer "problem_type_id"
-    t.string  "free_text_name"
+    t.string  "problem_name"
     t.integer "patient_id",      :null => false
   end
 
@@ -138,7 +139,7 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string  "subsection"
     t.string  "field_name"
     t.string  "error_message",   :limit => 2000
-    t.string  "location"
+    t.string  "location",        :limit => 2000
     t.string  "msg_type",                        :default => "error"
     t.string  "validator",                                            :null => false
     t.string  "inspection_type"
@@ -225,14 +226,16 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string  "member_id"
     t.date    "start_coverage_date"
     t.date    "end_coverage_date"
+    t.integer "coverage_role_type_id"
   end
 
   add_index "insurance_provider_patients", ["insurance_provider_id"], :name => "index_insurance_provider_patients_on_insurance_provider_id"
 
   create_table "insurance_provider_subscribers", :force => true do |t|
     t.date    "date_of_birth"
-    t.integer "insurance_provider_id", :null => false
+    t.integer "insurance_provider_id",    :null => false
     t.string  "subscriber_id"
+    t.string  "assigning_authority_guid"
   end
 
   add_index "insurance_provider_subscribers", ["insurance_provider_id"], :name => "index_insurance_provider_subscribers_on_insurance_provider_id"
@@ -242,8 +245,8 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.integer "insurance_type_id"
     t.integer "patient_id",                             :null => false
     t.integer "role_class_relationship_formal_type_id"
-    t.integer "coverage_role_type_id"
     t.string  "group_number"
+    t.string  "health_plan"
   end
 
   add_index "insurance_providers", ["patient_id"], :name => "index_insurance_providers_on_patient_id"
@@ -361,6 +364,7 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string  "name_suffix"
     t.integer "nameable_id"
     t.string  "nameable_type"
+    t.string  "middle_name"
   end
 
   add_index "person_names", ["nameable_id", "nameable_type"], :name => "index_person_names_on_nameable_id_and_nameable_type"
@@ -370,15 +374,29 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string "code"
   end
 
+  create_table "procedure_status_codes", :force => true do |t|
+    t.string "code"
+    t.string "description"
+  end
+
   create_table "procedures", :force => true do |t|
     t.string  "procedure_id"
     t.string  "name"
     t.string  "code"
     t.date    "procedure_date"
-    t.integer "patient_id",     :null => false
+    t.integer "patient_id",               :null => false
+    t.integer "procedure_status_code_id"
   end
 
   add_index "procedures", ["patient_id"], :name => "index_procedures_on_patient_id"
+
+  create_table "proctors", :force => true do |t|
+    t.integer "user_id", :null => false
+    t.string  "name",    :null => false
+    t.string  "email",   :null => false
+  end
+
+  add_index "proctors", ["user_id"], :name => "index_proctors_on_user_id"
 
   create_table "provider_roles", :force => true do |t|
     t.string "name"
@@ -433,6 +451,14 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.string "code"
   end
 
+  create_table "reports", :force => true do |t|
+    t.string   "title"
+    t.string   "numerator_query",   :limit => 2000
+    t.string   "denominator_query", :limit => 2000
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "result_type_codes", :force => true do |t|
     t.string "name"
     t.string "code"
@@ -469,6 +495,19 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
   create_table "snowmed_problems", :force => true do |t|
     t.string "name"
     t.string "code"
+  end
+
+  create_table "social_history", :force => true do |t|
+    t.date    "start_effective_time"
+    t.date    "end_effective_time"
+    t.integer "social_history_type_id"
+    t.integer "patient_id",             :null => false
+  end
+
+  create_table "social_history_types", :force => true do |t|
+    t.string "name"
+    t.string "code"
+    t.string "description"
   end
 
   create_table "supports", :force => true do |t|
@@ -510,10 +549,13 @@ ActiveRecord::Schema.define(:version => 20090908151128) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "clinical_document_id"
-    t.integer  "user_id",              :null => false
-    t.integer  "vendor_id",            :null => false
+    t.integer  "user_id",                :null => false
+    t.integer  "vendor_id",              :null => false
+    t.integer  "proctor_id"
+    t.string   "status_override_reason"
   end
 
+  add_index "test_plans", ["proctor_id"], :name => "index_test_plans_on_proctor_id"
   add_index "test_plans", ["user_id", "vendor_id"], :name => "index_test_plans_on_user_id_and_vendor_id"
 
   create_table "users", :force => true do |t|

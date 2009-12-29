@@ -4,24 +4,21 @@
 <% else
      patient_identifier_div = "patient_identifier#{@patient_identifier.id}"
    end %>
-   <% remote_form_for([@patient, @patient_identifier], :update => patient_identifier_div) do |f| -%>
-
-<table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Patient Identifer <%= requirements_for @patient_identifier, :patient_identifier %></td>
-    <td>
+   <% patient_form_for([@patient, @patient_identifier], :update => patient_identifier_div) do |f| -%>
+    <table>
       <%= f.text_field :patient_identifier %>
-     </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Affinity Domain <%= requirements_for @patient_identifier, :affinity_domain %></td>
-    <td>
       <%= f.text_field  :affinity_domain %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td><%= f.submit "Save" %></td>
-  </tr>
-</table>
+      <%= f.submit "Save" %>
+      <%= f.table_controls link_to_function('Cancel',
+        @patient_identifier.new_record? ?
+          %{ $('#{patient_identifier_div}').remove(); } :
+          %{
+            new Ajax.Updater('#{patient_identifier_div}',
+              '#{patient_patient_identifier_url(@patient, @patient_identifier)}',
+              {method:'get'})
+          }) %>
+    </table>
 <% end %>
+<% if @patient_identifier.new_record? -%>
+</div>
+<% end -%>

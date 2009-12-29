@@ -1,75 +1,26 @@
 <% if @result.new_record?
-    result_div = "#{controller.controller_name}New" 
-    html_options = {:id => "#{controller.controller_name}Form"} -%>
+  result_div = "#{controller.controller_name.singularize}New" %>
 <div id="<%= result_div %>">
 <% else
-    result_div = "#{controller.controller_name}#{@result.id}"
-    html_options = {}
+    result_div = "#{controller.controller_name.singularize}#{@result.id}"
    end %>
-   <% remote_form_for([@patient, @result], :html => html_options, :update => result_div) do |f| -%>
+<% patient_form_for([@patient, @result], :update => result_div) do |f| -%>
 <table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Result ID <%= requirements_for @result, :result_id %></td>
-    <td>
-      <%= f.text_field :result_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}');" %>
-      <br />
-      <em>
-        <%= render :partial => '/layouts/uuid_help_text' %>
-      </em> 
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Date <%= requirements_for @result, :result_date %></td>
-    <td>
-      <%= f.calendar_date_select :result_date %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Code System <%= requirements_for @result, :code_system_id %></td>
-    <td>
-      <%= f.select :code_system_id, CodeSystem.select_options, {:include_blank => true} %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Result Code <%= requirements_for @result, :result_code %></td>
-    <td><%= f.text_field :result_code %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Result Code Display Name <%= requirements_for @result, :result_code_display_name %></td>
-    <td><%= f.text_field :result_code_display_name %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Status Code <%= requirements_for @result, :status_code %></td>
-    <td><%= f.text_field :status_code %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Value <%= requirements_for @result, :value_scalar %></td>
-    <td><%= f.text_field :value_scalar %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Value Units <%= requirements_for @result, :value_unit %></td>
-    <td><%= f.text_field :value_unit %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Organizer ID <%= requirements_for @result, :organizer_id %></td>
-    <td><%= f.text_field :organizer_id %></td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Organizer Status <%= requirements_for @result, :act_status_code_id %></td>
-    <td>
-      <%= f.select :act_status_code_id, ActStatusCode.select_options, {:include_blank => true} %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Organizer Code <%= requirements_for @result, :result_type_code_id %></td>
-    <td>
-      <%= f.select :result_type_code_id, ResultTypeCode.select_options, {:include_blank => true} %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td><%= f.submit "Save" %></td>
-  </tr>
+  <%= f.text_field :result_id, :onfocus => "Effect.BlindDown('uuid-#{controller.class}');", :onblur => "Effect.BlindUp('uuid-#{controller.class}');" %>
+  <tr><td colspan="2">
+    <%= render :partial => '/layouts/uuid_help_text' %>
+  </td></tr>
+  <%= f.calendar_date_select :result_date %>
+  <%= f.select :code_system_id, CodeSystem.select_options, {:include_blank => true} %>
+  <%= f.text_field :result_code %>
+  <%= f.text_field :result_code_display_name %>
+  <%= f.text_field :status_code %>
+  <%= f.text_field :value_scalar %>
+  <%= f.text_field :value_unit %>
+  <%= f.text_field :organizer_id %>
+  <%= f.select :act_status_code_id, ActStatusCode.select_options, {:include_blank => true} %>
+  <%= f.select :result_type_code_id, ResultTypeCode.select_options, {:include_blank => true} %>
+  <%= f.submit "Save" %>
 </table>
 <% end -%>
 <% if @result.new_record? -%>

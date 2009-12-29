@@ -4,43 +4,15 @@
 <% else
      insurance_provider_div = "insurance_provider#{@insurance_provider.id}"
    end %>
-<% remote_form_for([@patient, @insurance_provider], :update => insurance_provider_div) do |f| -%>
+<% patient_form_for([@patient, @insurance_provider], :update => insurance_provider_div) do |f| -%>
 <table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Insurance Provider Organization <%= requirements_for @insurance_provider, :represented_organization %></td>
-    <td>
-      <%= f.text_field :represented_organization %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Insurance Provider Group Number <%= requirements_for @insurance_provider, :group_number %></td>
-    <td>
-      <%= f.text_field :group_number %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Insurance Type <%= requirements_for @insurance_provider, :insurance_type_id %></td>
-    <td>
-      <%= f.select :insurance_type_id, InsuranceType.select_options, {:include_blank => true} %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Relationship to Subscriber <%= requirements_for @insurance_provider, :coverage_role_type_id %></td>
-    <td>
-      <%= f.select :coverage_role_type_id, CoverageRoleType.select_options %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Financial Responsibility Type <%= requirements_for @insurance_provider, :role_class_relationship_formal_type_id %> </td>
-    <td>
-      <%= f.select :role_class_relationship_formal_type_id, 
-            RoleClassRelationshipFormalType.select_options %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td></td>
-    <td><%= f.submit "Save" %></td>
-  </tr>
+   <%= f.text_field :represented_organization %>
+   <%= f.text_field :group_number %>
+   <%= f.select :insurance_type_id, InsuranceType.select_options, {:include_blank => true} %>
+   <%= f.text_field :health_plan %>
+   <%= f.select :role_class_relationship_formal_type_id, 
+         RoleClassRelationshipFormalType.select_options %>
+   <%= f.submit "Save" %>
 </table>
 <% end %>
 <% unless @insurance_provider.new_record? -%>

@@ -40,36 +40,48 @@ describe TestPlansController do
       end
 
       it "should pass manually" do
-        get :mark, :id => @plan.id, :state => 'pass'
+        get :mark, :id => @plan.id, :test_plan => { :state => "passed", :status_override_reason => "foo" }
         @plan.reload
         @plan.state.should == 'passed'
+        @plan.status_override_reason.should == 'foo'
       end
 
       it "should fail manually" do
-        get :mark, :id => @plan.id, :state => 'fail'
+        get :mark, :id => @plan.id, :test_plan => { :state => 'failed', :status_override_reason => 'foo' }
         @plan.reload
         @plan.state.should == 'failed'
+        @plan.status_override_reason.should == 'foo'
       end
     end
 
-    describe "with a C32 Generate and Format plan" do
+    describe "with a Generate and Format plan" do
       before do
-        @plan = C32GenerateAndFormatPlan.factory.create(:user => @user)
+        @plan = GenerateAndFormatPlan.factory.create(:user => @user)
         @upload = {
-            :uploaded_data => fixture_file_upload('../test_data/joe_c32.xml')
+            :uploaded_data => ActionController::TestUploadedFile.new(
+              Rails.root.join('spec/test_data/joe_c32.xml').to_s, 'text/xml')
           }
       end
 
       it "should prompt for an XML document upload" do
-        get :c32_upload, :id => @plan.id
+        get :doc_upload, :id => @plan.id
         assigns(:test_plan).should == @plan
-        response.should render_template('test_plans/c32_upload')
+        response.should render_template('test_plans/doc_upload')
       end
 
       it "should display inspection results" do
-        get :c32_inspect, :id => @plan.id
+        @plan.clinical_document = ClinicalDocument.factory.create
+        @plan.pass
+        get :doc_inspect, :id => @plan.id
         assigns(:test_plan).should == @plan
-        response.should render_template('test_plans/c32_inspect.html.erb')
+        response.should render_template('test_plans/doc_inspect.html.erb')
+      end
+
+      it "should set a print_preview variable if called for" do
+        @plan.clinical_document = ClinicalDocument.factory.create
+        @plan.pass
+        get :doc_inspect, :id => @plan.id, :print_preview => 1
+        assigns(:print_preview).should == true
       end
 
       describe "with validation stubbed out" do
@@ -82,7 +94,7 @@ describe TestPlansController do
         it "should have the umls enabled flag" do
           @validator.should_receive(:contains_kind_of?).
             with(Validators::Umls::UmlsValidator).and_return(true)
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should be_umls_enabled
         end
@@ -90,7 +102,7 @@ describe TestPlansController do
         it "should not have the umls enabled flag" do
           @validator.should_receive(:contains_kind_of?).
             with(Validators::Umls::UmlsValidator).and_return(false)
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should_not be_umls_enabled
         end
@@ -106,7 +118,7 @@ describe TestPlansController do
         it "should pass the test case" do
           @validator.stub!(:validate).and_return([])
 
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should be_passed
         end
@@ -114,16 +126,16 @@ describe TestPlansController do
         it "should fail the test case" do
           @validator.stub!(:validate).and_return([ContentError.factory.create])
 
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           @plan.reload
           @plan.should be_failed
         end
 
         it "should leave the test case pending" do
           @validator.stub!(:validate).and_return \
-            { raise C32GenerateAndFormat::ValidationError }
+            { raise GenerateAndFormat::ValidationError }
 
-          get :c32_validate, :id => @plan.id, :clinical_document => @upload
+          get :doc_validate, :id => @plan.id, :clinical_document => @upload
           flash[:notice].should =~ /error/
           @plan.should be_pending
         end
@@ -149,6 +161,7 @@ describe TestPlansController do
         @plan.should_receive(:validate_xds_metadata).with(:a => 'b')
         get :xds_compare, :id => @plan.id, :test_type_data => "---\n:a: b\n"
       end
+
     end
 
     describe "with a PIX Feed plan" do
@@ -179,6 +192,7 @@ describe TestPlansController do
         @plan.reload
         @plan.should be_passed
       end
+
     end
 
     describe "with test-specific plans" do

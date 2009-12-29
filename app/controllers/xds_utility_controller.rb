@@ -1,5 +1,3 @@
-require_dependency 'sort_order'
-
 class XdsUtilityController < ApplicationController
   
   page_title 'XDS Utility'

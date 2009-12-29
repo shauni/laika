@@ -1,41 +1,37 @@
-<%= javascript_include_tag :defaults %>
-
 <% if @condition.new_record?
   condition_div = 'conditionNew' -%>
 <div id="conditionNew">
 <% else
      condition_div = "condition#{@condition.id}"
    end %>
-<% remote_form_for([@patient, @condition], :update => condition_div, :name => "conditions_form") do |f| -%>
-<table>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Start Event <%= requirements_for @condition, :start_event %></td>
-    <td>
-      <%= f.calendar_date_select :start_event %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">End Event <%= requirements_for @condition, :end_event %></td>
-    <td>
-      <%= f.calendar_date_select :end_event %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Problem Type <%= requirements_for @condition, :problem_type_id %></td>
-    <td>
-      <%= f.select :problem_type_id, ProblemType.select_options, {:include_blank => true} %>
-    </td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td class="lighttext">Free Text Problem Name <%= requirements_for @condition, :snowmed_problem %></td>
-    <td>
-	  <%= text_field_with_auto_complete :snowmed_problem, :name, {:value => @condition.free_text_name}, :method => :get %>
-	</td>
-  </tr>
-  <tr class="<%= cycle("darkzebra", "lightzebra")%>">
-    <td><input id="condition_name" name="condition[free_text_name]" type="hidden" value="<%=@condition.free_text_name%>"></td>
-	<td><%= f.submit "Save", :onclick => "update_value('snowmed_problem_name', 'condition_name')" %></td>
-  </tr>
+<% patient_form_for([@patient, @condition], :update => condition_div, :name => "conditions_form") do |f| -%>
+  <table>
+    <%= f.calendar_date_select :start_event %>
+    <%= f.calendar_date_select :end_event %>
+    <%= f.select :problem_type_id, ProblemType.select_options, {:include_blank => true} %>
+	  <%= f.table_field :problem_name,
+          auto_complete_stylesheet + 
+          text_field(:condition, :problem_name) + 
+          %q{<div id="condition_problem_name_auto_complete" class="auto_complete" />} +
+          auto_complete_field(:condition_problem_name, :url => auto_complete_for_snowmed_problem_name_path, :method => :get, :param_name => 'snowmed_problem[name]')
+      # XXX if we intend to generalize auto completion features for other fields which,
+      # like condition.problem_name auto complete against a completely different table's
+      # field (snowmed_problem.name, in this case) then we should turn the above into a helper.
+      # The auto_complete plugin is built for slightly more straight forward cases where
+      # you are auto-completing from the obect.method's column itself rather than a separate
+      # lookup table.
+    %>
+    <%= f.submit("Save") %>
+    <%= f.table_controls link_to_function('Cancel',
+      @condition.new_record? ?
+        %{ $('#{condition_div}').remove(); } :
+        %{
+          new Ajax.Updater('#{condition_div}',
+            '#{patient_condition_url(@patient, @condition)}',
+            {method:'get'})
+        }) %>
 </table>
 <% end %>
-
+<% if @condition.new_record? -%>
+</div>
+<% end -%>

@@ -1,7 +1,8 @@
 = Contributing to Laika
 
-The most recent development documentation for Laika (based on zenhob/laika) is
-always available at: http://rdoc.info/projects/zenhob/laika
+The most recent development documentation for Laika (based on CCHIT/laika) is
+always available at: http://rdoc.info/projects/CCHIT/laika. You can also generate
+the HTML docs yourself using YARD. See the README.
 
 Development is managed using the Git source control system. A good source of
 information on Git usage is the GitHub guides: http://github.com/guides/home
@@ -9,14 +10,14 @@ information on Git usage is the GitHub guides: http://github.com/guides/home
 == For GitHub users:
 
 The easiest way to get a patch reviewed and approved quickly is to fork from
-Zack Hobson's Laika fork on GitHub: http://github.com/zenhob/laika
+the main Laika repository on GitHub: http://github.com/CCHIT/laika
 
 After you make your changes and push, you can send a pull request and your 
 changes will be reviewed and possibly merged.
 
 == For everyone else:
 
- $ git clone git://github.com/zenhob/laika.git
+ $ git clone git://github.com/CCHIT/laika.git
  $ cd laika
  $ git checkout -b my_changes
  $ <hack hack hack>
@@ -27,10 +28,7 @@ changes will be reviewed and possibly merged.
  $ git merge master
  $ git format-patch --stdout master > my_changes.patch
 
-Go to SourceForge and submit your patch:
-https://sourceforge.net/tracker/?func=add&group_id=205665&atid=994556
-
-Or send it to the developer list: dev@projectlaika.org
+Send your patch to the developer list: dev@projectlaika.org
 
 = Running Tests
 
@@ -38,13 +36,17 @@ If the tests do not pass with your patch applied it will be rejected. Make
 sure the tests pass before you submit any changes.
 
 == Environment
-Laika uses Saxon (http://saxon.sourceforge.net/) to handle XML Schema validation and XSLT. For this to function properly, the Saxon jars must be set in a CLASSPATH environment variable. 
+
+Laika uses Saxon (http://saxon.sourceforge.net/) to handle XML Schema
+validation and XSLT. For this to function properly, the Saxon jars must be set
+in a CLASSPATH environment variable. 
 
 Navigate to the root of your Laika project and run:
 
  $ source bin/laika_env.sh
 
-As an alternative, you may create CLASSPATH environment variable as part of the user's profile.
+As an alternative, you may create CLASSPATH environment variable as part of the
+user's profile.
 
 == Running Individual Specs
 

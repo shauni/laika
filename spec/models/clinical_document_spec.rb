@@ -1,15 +1,15 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ClinicalDocument, "can store validation reports" do
-  fixtures :clinical_documents
-  
   before(:each) do
-    @joe = clinical_documents(:joe_c32_clinical_document)
+    @joe = ClinicalDocument.create!(
+      :uploaded_data =>
+        ActionController::TestUploadedFile.new(
+          Rails.root.join('spec/test_data/joe_c32.xml').to_s, 'text/xml')
+    )
   end
 
-  
   it "should be able to obtain document as an REXML::Document " do
-     require "rexml/document"
      doc = @joe.as_xml_document
      doc.class.should  == REXML::Document
      # the test document has one stylesheet declaration so this should equal 1
@@ -17,10 +17,5 @@ describe ClinicalDocument, "can store validation reports" do
      # ask for the doc again with the stylesheet tags stripped out
      doc =  @joe.as_xml_document(true)
      doc.instructions.length.should == 0
-     
-     
   end
-  
-  
-  
 end

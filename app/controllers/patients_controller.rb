@@ -1,5 +1,3 @@
-require_dependency 'sort_order'
-
 class PatientsController < ApplicationController
   page_title 'Laika Test Library'
   before_filter :set_patient, :except => %w[ index create autoCreate ]
@@ -9,11 +7,13 @@ class PatientsController < ApplicationController
   self.valid_sort_fields = %w[ name created_at updated_at ]
 
   def index
-    @patients      = Patient.owned_by(current_user).all :order => sort_order || "name ASC"
-    @patients     += Patient.templates.all :order => sort_order || "name ASC"
-    @vendor        = last_selected_vendor
-    @xds_patients  = {};
+    @patients  = Patient.owned_by(current_user).all :order => sort_order || "name ASC"
+    @patients += Patient.templates.all :order => sort_order || "name ASC"
+    @vendor    = last_selected_vendor
+    @vendors   = current_user.vendors
+    @proctors  = current_user.proctors
     
+    @xds_patients = {};
     if LOCAL_NIST_XDS
       XdsRecordUtility.all_patients.each do |x| 
         @xds_patients[ x.patient ] = x if x.patient
@@ -29,6 +29,10 @@ class PatientsController < ApplicationController
   rescue ActiveRecord::Error => e
     flash[:error] = "Failed to copy patient record: #{e}"
     redirect_to patients_url
+  end
+  
+  def root
+    
   end
   
   def autoCreate

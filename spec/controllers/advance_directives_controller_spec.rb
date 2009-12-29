@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe AdvanceDirectivesController do
   before do
-    @patient = Patient.factory.create
+    @patient = Patient.factory.create(:advance_directive => AdvanceDirective.factory.new)
     controller.stub!(:current_user).and_return(@patient.user)
   end
 

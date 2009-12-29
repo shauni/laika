@@ -1,4 +1,7 @@
+.vimrc
+.current
 *.log
+log
 *.sqlite3
 public/clinical_documents
 config/database.yml
