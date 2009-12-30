@@ -29,6 +29,7 @@ class InsuranceProviderC32Importer
       if patient_dob
         provider.insurance_provider_patient.date_of_birth = patient_dob.to_s.from_hl7_ts_to_date
       end
+      provider.insurance_provider_patient.member_id = element.find_first(patient_xpath + "cda:id/@root").try(:value)
       
       provider.insurance_provider_subscriber = InsuranceProviderSubscriber.new
       subscriber_xpath = "cda:participant[@typeCode='HLD']/cda:participantRole/"
@@ -36,7 +37,6 @@ class InsuranceProviderC32Importer
       if dob
         provider.insurance_provider_subscriber.date_of_birth = dob.to_s.from_hl7_ts_to_date
       end
-      provider.member_id = element.find_first(subscriber_xpath + "cda:id/@root").try(:value)
       
       provider.insurance_provider_guarantor = InsuranceProviderGuarantor.new
       guarantor_xpath = "cda:performer[cda:assignedEntity/cda:code[@code='' and @codeSystem='']]/"

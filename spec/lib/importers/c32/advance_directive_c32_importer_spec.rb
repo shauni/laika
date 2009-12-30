@@ -8,7 +8,7 @@ describe AdvanceDirectiveC32Importer do
     directives = AdvanceDirectiveC32Importer.import_entries(section)
     ad = directives.first
     
-    ad.free_text.should == "Do not resuscitate"
+    ad.free_text.should == "Do not put on life support"
 
   end
 end
