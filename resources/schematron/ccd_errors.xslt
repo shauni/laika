@@ -19,9 +19,10 @@
    <xsl:template match="/">
       <schematron-output title="Schematron schema for validating conformance to CCD documents"
                          schemaVersion=""
-                         phase="errors">
+                         phase="errors" xmlns="http://purl.oclc.org/dsdl/svrl" xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
          <ns uri="urn:hl7-org:v3" prefix="cda"/>
          <ns uri="http://www.w3.org/2001/XMLSchema-instance" prefix="xsi"/>
+         <ns uri="http://purl.oclc.org/dsdl/svrl" prefix="svrl"/>
          <active-pattern name="CCD v1.0 Templates Root - errors validation phase">
             <xsl:apply-templates/>
          </active-pattern>
@@ -266,7 +267,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:ClinicalDocument"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:ClinicalDocument" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:ClinicalDocument" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -277,7 +278,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='34133-9'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='34133-9'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='34133-9'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -289,7 +290,7 @@
       <xsl:choose>
          <xsl:when test="cda:documentationOf/cda:serviceEvent"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:documentationOf/cda:serviceEvent" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:documentationOf/cda:serviceEvent" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -300,7 +301,7 @@
       <xsl:choose>
          <xsl:when test="cda:documentationOf/cda:serviceEvent/@classCode='PCPR'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:documentationOf/cda:serviceEvent/@classCode='PCPR'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:documentationOf/cda:serviceEvent/@classCode='PCPR'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -311,7 +312,7 @@
       <xsl:choose>
          <xsl:when test="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:low"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:low"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:low"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -323,7 +324,7 @@
       <xsl:choose>
          <xsl:when test="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:high"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:high"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:high"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -335,7 +336,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:languageCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:languageCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:languageCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -346,7 +347,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:templateId)&gt;=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:templateId)&gt;=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:templateId)&gt;=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -357,7 +358,7 @@
       <xsl:choose>
          <xsl:when test="cda:templateId[@root='2.16.840.1.113883.10.20.1' and not(@extension)]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="cda:templateId[@root='2.16.840.1.113883.10.20.1' and not(@extension)]"
                            role="">
                <xsl:attribute name="location">
@@ -370,7 +371,7 @@
       <xsl:choose>
          <xsl:when test="string-length(cda:effectiveTime/@value) &gt; 18"/>
          <xsl:otherwise>
-            <failed-assert id="" test="string-length(cda:effectiveTime/@value) &gt; 18" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="string-length(cda:effectiveTime/@value) &gt; 18" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -381,7 +382,7 @@
       <xsl:choose>
          <xsl:when test="contains(translate(cda:effectiveTime/@value,&#34;+-&#34;,&#34;ZZ&#34;),&#34;Z&#34;)"/>
          <xsl:otherwise>
-            <failed-assert id="" test="contains(translate(cda:effectiveTime/@value,&#34;+-&#34;,&#34;ZZ&#34;),&#34;Z&#34;)"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="contains(translate(cda:effectiveTime/@value,&#34;+-&#34;,&#34;ZZ&#34;),&#34;Z&#34;)"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -393,7 +394,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:recordTarget)&lt;=2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:recordTarget)&lt;=2" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:recordTarget)&lt;=2" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -404,7 +405,7 @@
       <xsl:choose>
          <xsl:when test="cda:author/cda:assignedAuthor/cda:assignedPerson | cda:author/cda:assignedAuthor/cda:representedOrganization"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="cda:author/cda:assignedAuthor/cda:assignedPerson | cda:author/cda:assignedAuthor/cda:representedOrganization"
                            role="">
                <xsl:attribute name="location">
@@ -417,7 +418,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.13&#34;]) &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.13&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
@@ -430,7 +431,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.9&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.9&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.9&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -442,7 +443,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.1&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.1&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.1&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -454,7 +455,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.11&#34;]) &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.11&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
@@ -467,7 +468,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.7&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.7&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.7&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -479,7 +480,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.6&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.6&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.6&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -491,7 +492,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.9&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.9&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.9&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -503,7 +504,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.1&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.1&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.1&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -515,7 +516,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.5&#34;])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.5&#34;]) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.5&#34;]) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -527,7 +528,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.14']) &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.14']) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
@@ -540,7 +541,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.12']) &lt;=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.12']) &lt;=1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.12']) &lt;=1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -552,7 +553,7 @@
       <xsl:choose>
          <xsl:when test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.3'])  &lt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.3']) &lt;= 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(.//cda:templateId[@root='2.16.840.1.113883.10.20.1.3']) &lt;= 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -570,7 +571,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -581,7 +582,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -592,7 +593,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='42348-3'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='42348-3'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='42348-3'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -604,7 +605,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -621,7 +622,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -632,7 +633,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -643,7 +644,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -654,7 +655,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -671,7 +672,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -682,7 +683,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='46240-8'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='46240-8'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='46240-8'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -694,7 +695,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -711,7 +712,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='10157-6'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='10157-6'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='10157-6'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -723,7 +724,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -734,7 +735,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:subject)"/>
          <xsl:otherwise>
-            <failed-assert id="" test="not(cda:subject)" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="not(cda:subject)" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -759,7 +760,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -770,7 +771,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -781,7 +782,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='47420-5'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='47420-5'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='47420-5'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -793,7 +794,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -810,7 +811,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -821,7 +822,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -832,7 +833,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -843,7 +844,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='11369-6'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='11369-6'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='11369-6'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -855,7 +856,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -872,7 +873,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -883,7 +884,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -894,7 +895,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -905,7 +906,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='46264-8'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='46264-8'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='46264-8'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -917,7 +918,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -934,7 +935,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -945,7 +946,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -956,7 +957,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -967,7 +968,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='10160-0'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='10160-0'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='10160-0'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -979,7 +980,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -996,7 +997,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1007,7 +1008,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1018,7 +1019,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='48768-6'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='48768-6'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='48768-6'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1030,7 +1031,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1047,7 +1048,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1058,7 +1059,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1069,7 +1070,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='18776-5'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='18776-5'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='18776-5'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1081,7 +1082,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1098,7 +1099,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1109,7 +1110,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='11450-4'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='11450-4'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='11450-4'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1121,7 +1122,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1146,7 +1147,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1157,7 +1158,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='47519-4'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='47519-4'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='47519-4'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1169,7 +1170,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1185,7 +1186,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1202,7 +1203,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1213,7 +1214,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1224,7 +1225,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='48764-5'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='48764-5'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='48764-5'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1236,7 +1237,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1253,7 +1254,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1264,7 +1265,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1275,7 +1276,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1286,7 +1287,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='30954-2'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='30954-2'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='30954-2'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1298,7 +1299,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1315,7 +1316,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1326,7 +1327,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1337,7 +1338,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1348,7 +1349,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='29762-2'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='29762-2'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='29762-2'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1360,7 +1361,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1377,7 +1378,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:section"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:section" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:section" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1388,7 +1389,7 @@
       <xsl:choose>
          <xsl:when test="cda:text"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:text" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:text" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1399,7 +1400,7 @@
       <xsl:choose>
          <xsl:when test="cda:code"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1410,7 +1411,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='8716-3'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='8716-3'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='8716-3'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1422,7 +1423,7 @@
       <xsl:choose>
          <xsl:when test="cda:title"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:title" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:title" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1439,7 +1440,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1450,7 +1451,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='OBS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='OBS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='OBS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1461,7 +1462,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1472,7 +1473,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1483,7 +1484,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1494,7 +1495,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode/@code='completed'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode/@code='completed'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode/@code='completed'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1505,7 +1506,7 @@
       <xsl:choose>
          <xsl:when test="count(descendant::*[cda:templateId/@root=&#34;2.16.840.1.113883.10.20.1.37&#34;])=1"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="count(descendant::*[cda:templateId/@root=&#34;2.16.840.1.113883.10.20.1.37&#34;])=1"
                            role="">
                <xsl:attribute name="location">
@@ -1518,7 +1519,7 @@
       <xsl:choose>
          <xsl:when test="count(descendant::*[cda:templateId/@root=&#34;2.16.840.1.113883.10.20.1.36&#34;])&lt;=1"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="count(descendant::*[cda:templateId/@root=&#34;2.16.840.1.113883.10.20.1.36&#34;])&lt;=1"
                            role="">
                <xsl:attribute name="location">
@@ -1537,7 +1538,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1548,7 +1549,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1559,7 +1560,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1570,7 +1571,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1581,7 +1582,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:participant) or (count(cda:participant//cda:playingEntity)=1)"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="not(cda:participant) or (count(cda:participant//cda:playingEntity)=1)"
                            role="">
                <xsl:attribute name="location">
@@ -1594,7 +1595,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:participant) or (cda:participant[@typeCode='CSM'])"/>
          <xsl:otherwise>
-            <failed-assert id="" test="not(cda:participant) or (cda:participant[@typeCode='CSM'])" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="not(cda:participant) or (cda:participant[@typeCode='CSM'])" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1605,7 +1606,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:participant) or (cda:participant/cda:participantRole[@classCode='MANU'])"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="not(cda:participant) or (cda:participant/cda:participantRole[@classCode='MANU'])"
                            role="">
                <xsl:attribute name="location">
@@ -1618,7 +1619,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity[@classCode='MMAT'])"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity[@classCode='MMAT'])"
                            role="">
                <xsl:attribute name="location">
@@ -1631,7 +1632,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity/cda:code)"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity/cda:code)"
                            role="">
                <xsl:attribute name="location">
@@ -1652,7 +1653,7 @@
       <xsl:choose>
          <xsl:when test="parent::cda:entryRelationship/@typeCode='MFST'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="parent::cda:entryRelationship/@typeCode='MFST'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="parent::cda:entryRelationship/@typeCode='MFST'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1669,7 +1670,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1680,7 +1681,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='ACT'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='ACT'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='ACT'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1691,7 +1692,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1702,7 +1703,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1713,7 +1714,7 @@
       <xsl:choose>
          <xsl:when test="cda:entryRelationship"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:entryRelationship" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:entryRelationship" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1732,7 +1733,7 @@
       <xsl:choose>
          <xsl:when test="@typeCode='SUBJ'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@typeCode='SUBJ'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@typeCode='SUBJ'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1743,7 +1744,7 @@
       <xsl:choose>
          <xsl:when test="*[@moodCode='PRMS']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="*[@moodCode='PRMS']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="*[@moodCode='PRMS']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1760,7 +1761,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1771,7 +1772,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@classCode='ACT']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@classCode='ACT']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@classCode='ACT']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1782,7 +1783,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@moodCode='DEF']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@moodCode='DEF']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@moodCode='DEF']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1793,7 +1794,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1804,7 +1805,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode) = 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode) = 1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode) = 1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1815,7 +1816,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1826,7 +1827,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='48768-6'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='48768-6'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='48768-6'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1838,7 +1839,7 @@
       <xsl:choose>
          <xsl:when test="cda:entryRelationship"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:entryRelationship" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:entryRelationship" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1849,7 +1850,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:entryRelationship[cda:sequenceNumber[position()=2]])"/>
          <xsl:otherwise>
-            <failed-assert id="" test="not(cda:entryRelationship[cda:sequenceNumber[position()=2]])"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="not(cda:entryRelationship[cda:sequenceNumber[position()=2]])"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -1861,7 +1862,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:entryRelationship[not(@typeCode='COMP')])"/>
          <xsl:otherwise>
-            <failed-assert id="" test="not(cda:entryRelationship[not(@typeCode='COMP')])" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="not(cda:entryRelationship[not(@typeCode='COMP')])" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1880,7 +1881,7 @@
       <xsl:choose>
          <xsl:when test="*/cda:templateId[@root='2.16.840.1.113883.10.20.1.26']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="*/cda:templateId[@root='2.16.840.1.113883.10.20.1.26']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="*/cda:templateId[@root='2.16.840.1.113883.10.20.1.26']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1897,7 +1898,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:encounter"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:encounter" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:encounter" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1908,7 +1909,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='ENC'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='ENC'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='ENC'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1919,7 +1920,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1930,7 +1931,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:id) &gt;= 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:id) &gt;= 1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:id) &gt;= 1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1941,7 +1942,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:effectiveTime) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:effectiveTime) &lt; 2" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:effectiveTime) &lt; 2" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1960,7 +1961,7 @@
       <xsl:choose>
          <xsl:when test="@typeCode='RSON'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@typeCode='RSON'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@typeCode='RSON'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1979,7 +1980,7 @@
       <xsl:choose>
          <xsl:when test="count(./cda:assignedEntity/cda:code) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(./cda:assignedEntity/cda:code) &lt; 2" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(./cda:assignedEntity/cda:code) &lt; 2" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -1996,7 +1997,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2007,7 +2008,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2018,7 +2019,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2029,7 +2030,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2040,7 +2041,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode/@code='completed'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode/@code='completed'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode/@code='completed'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2057,7 +2058,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:organizer"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:organizer" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:organizer" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2068,7 +2069,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='CLUSTER'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='CLUSTER'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='CLUSTER'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2079,7 +2080,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2090,7 +2091,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2101,7 +2102,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode/@code='completed'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode/@code='completed'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode/@code='completed'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2112,7 +2113,7 @@
       <xsl:choose>
          <xsl:when test="cda:component"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:component" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:component" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2123,7 +2124,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:subject)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:subject)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:subject)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2134,7 +2135,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:subject/cda:relatedSubject)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:subject/cda:relatedSubject)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:subject/cda:relatedSubject)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2145,7 +2146,7 @@
       <xsl:choose>
          <xsl:when test="cda:subject/cda:relatedSubject/@classCode='PRS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:subject/cda:relatedSubject/@classCode='PRS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:subject/cda:relatedSubject/@classCode='PRS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2156,7 +2157,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:subject/cda:relatedSubject/cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:subject/cda:relatedSubject/cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:subject/cda:relatedSubject/cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2181,7 +2182,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:substanceAdministration"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:substanceAdministration" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:substanceAdministration" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2192,7 +2193,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN' or @moodCode='INT'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN' or @moodCode='INT'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN' or @moodCode='INT'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2203,7 +2204,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2222,7 +2223,7 @@
       <xsl:choose>
          <xsl:when test="@typeCode='CAUS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@typeCode='CAUS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@typeCode='CAUS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2239,7 +2240,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act or self::cda:encounter or self::cda:observation or self::cda:procedure or self::cda:substanceAdministration or self::cda:supply"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="self::cda:act or self::cda:encounter or self::cda:observation or self::cda:procedure or self::cda:substanceAdministration or self::cda:supply"
                            role="">
                <xsl:attribute name="location">
@@ -2252,7 +2253,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2263,7 +2264,7 @@
       <xsl:choose>
          <xsl:when test="count(@moodCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(@moodCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(@moodCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2274,7 +2275,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act or self::cda:encounter or self::cda:observation or self::cda:procedure or self::cda:substanceAdministration or self::cda:supply"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="self::cda:act or self::cda:encounter or self::cda:observation or self::cda:procedure or self::cda:substanceAdministration or self::cda:supply"
                            role="">
                <xsl:attribute name="location">
@@ -2287,7 +2288,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2298,7 +2299,7 @@
       <xsl:choose>
          <xsl:when test="count(@moodCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(@moodCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(@moodCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2345,7 +2346,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2356,7 +2357,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@classCode='ACT']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@classCode='ACT']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@classCode='ACT']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2367,7 +2368,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@moodCode='EVN']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@moodCode='EVN']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@moodCode='EVN']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2378,7 +2379,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2389,7 +2390,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode) = 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode) = 1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode) = 1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2400,7 +2401,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2411,7 +2412,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:performer[@typeCode='PRF'])=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:performer[@typeCode='PRF'])=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:performer[@typeCode='PRF'])=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2422,7 +2423,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participant[@typeCode='COV'])=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participant[@typeCode='COV'])=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participant[@typeCode='COV'])=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2433,7 +2434,7 @@
       <xsl:choose>
          <xsl:when test="cda:participant[@typeCode='COV']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:participant[@typeCode='COV']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:participant[@typeCode='COV']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2444,7 +2445,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participant[@typeCode='HLD'])&lt;=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participant[@typeCode='HLD'])&lt;=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participant[@typeCode='HLD'])&lt;=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2455,7 +2456,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:entryRelationship[not(@typeCode='REFR')])"/>
          <xsl:otherwise>
-            <failed-assert id="" test="not(cda:entryRelationship[not(@typeCode='REFR')])" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="not(cda:entryRelationship[not(@typeCode='REFR')])" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2474,7 +2475,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:time)&lt;=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:time)&lt;=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:time)&lt;=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2493,7 +2494,7 @@
       <xsl:choose>
          <xsl:when test="*[cda:templateId/@root='2.16.840.1.113883.10.20.1.19'] | cda:act[@classCode='ACT'][@moodCode='DEF']"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="*[cda:templateId/@root='2.16.840.1.113883.10.20.1.19'] | cda:act[@classCode='ACT'][@moodCode='DEF']"
                            role="">
                <xsl:attribute name="location">
@@ -2514,7 +2515,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2531,7 +2532,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@classCode='ACT'][@moodCode='EVN']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@classCode='ACT'][@moodCode='EVN']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@classCode='ACT'][@moodCode='EVN']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2542,7 +2543,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2553,7 +2554,7 @@
       <xsl:choose>
          <xsl:when test="cda:code/@nullFlavor='NA'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code/@nullFlavor='NA'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code/@nullFlavor='NA'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2564,7 +2565,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:effectiveTime) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:effectiveTime) &lt; 2" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:effectiveTime) &lt; 2" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2575,7 +2576,7 @@
       <xsl:choose>
          <xsl:when test="cda:entryRelationship"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:entryRelationship" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:entryRelationship" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2586,7 +2587,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.41']) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.41']) &lt; 2"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.41']) &lt; 2"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2598,7 +2599,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.48']) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.48']) &lt; 2"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.48']) &lt; 2"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2624,7 +2625,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation[@moodCode='EVN']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation[@moodCode='EVN']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation[@moodCode='EVN']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2635,7 +2636,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2646,7 +2647,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode/@code='completed'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode/@code='completed'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode/@code='completed'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2657,7 +2658,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.50']) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.50']) &lt; 2"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.50']) &lt; 2"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2669,7 +2670,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.51']) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.51']) &lt; 2"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.51']) &lt; 2"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2681,7 +2682,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.48']) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.48']) &lt; 2"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:templateId[@root='2.16.840.1.113883.10.20.1.48']) &lt; 2"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2699,7 +2700,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:procedure or self::cda:act or self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:procedure or self::cda:act or self::cda:observation"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:procedure or self::cda:act or self::cda:observation"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2711,7 +2712,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2722,7 +2723,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2733,7 +2734,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2744,7 +2745,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2761,7 +2762,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2772,7 +2773,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@classCode='ACT']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@classCode='ACT']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@classCode='ACT']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2783,7 +2784,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act[@moodCode='EVN']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act[@moodCode='EVN']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act[@moodCode='EVN']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2794,7 +2795,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode) = 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode) = 1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode) = 1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2805,7 +2806,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2816,7 +2817,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='23745001'][@codeSystem='2.16.840.1.113883.6.96']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='23745001'][@codeSystem='2.16.840.1.113883.6.96']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='23745001'][@codeSystem='2.16.840.1.113883.6.96']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -2828,7 +2829,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:entryRelationship/@typeCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:entryRelationship/@typeCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:entryRelationship/@typeCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2839,7 +2840,7 @@
       <xsl:choose>
          <xsl:when test="cda:entryRelationship[@typeCode='RSON']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:entryRelationship[@typeCode='RSON']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:entryRelationship[@typeCode='RSON']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2850,7 +2851,7 @@
       <xsl:choose>
          <xsl:when test="cda:entryRelationship[@typeCode='RSON']/cda:act | cda:entryRelationship[@typeCode='RSON']/cda:encounter | cda:entryRelationship[@typeCode='RSON']/cda:observation | cda:entryRelationship[@typeCode='RSON']/cda:procedure | cda:entryRelationship[@typeCode='RSON']/cda:substanceAdministration | cda:entryRelationship[@typeCode='RSON']/cda:supply"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="cda:entryRelationship[@typeCode='RSON']/cda:act | cda:entryRelationship[@typeCode='RSON']/cda:encounter | cda:entryRelationship[@typeCode='RSON']/cda:observation | cda:entryRelationship[@typeCode='RSON']/cda:procedure | cda:entryRelationship[@typeCode='RSON']/cda:substanceAdministration | cda:entryRelationship[@typeCode='RSON']/cda:supply"
                            role="">
                <xsl:attribute name="location">
@@ -2869,7 +2870,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2880,7 +2881,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2891,7 +2892,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2902,7 +2903,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2913,7 +2914,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2924,7 +2925,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:value)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:value)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:value)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2935,7 +2936,7 @@
       <xsl:choose>
          <xsl:when test="not(cda:referenceRange/cda:observationRange/cda:code)"/>
          <xsl:otherwise>
-            <failed-assert id="" test="not(cda:referenceRange/cda:observationRange/cda:code)" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="not(cda:referenceRange/cda:observationRange/cda:code)" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2954,7 +2955,7 @@
       <xsl:choose>
          <xsl:when test="@unit"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@unit" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@unit" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2971,7 +2972,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:organizer"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:organizer" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:organizer" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2982,7 +2983,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -2993,7 +2994,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3004,7 +3005,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3015,7 +3016,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3026,7 +3027,7 @@
       <xsl:choose>
          <xsl:when test="cda:component"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:component" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:component" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3037,7 +3038,7 @@
       <xsl:choose>
          <xsl:when test=".//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.31&#34;]"/>
          <xsl:otherwise>
-            <failed-assert id="" test=".//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.31&#34;]" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test=".//cda:templateId[@root=&#34;2.16.840.1.113883.10.20.1.31&#34;]" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3048,7 +3049,7 @@
       <xsl:choose>
          <xsl:when test="cda:component/cda:observation[cda:templateId/@root='2.16.840.1.113883.10.20.1.31']"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="cda:component/cda:observation[cda:templateId/@root='2.16.840.1.113883.10.20.1.31']"
                            role="">
                <xsl:attribute name="location">
@@ -3067,7 +3068,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3078,7 +3079,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='OBS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='OBS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='OBS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3089,7 +3090,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3100,7 +3101,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3111,7 +3112,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3122,7 +3123,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3139,7 +3140,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:supply"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:supply" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:supply" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3150,7 +3151,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN' or @moodCode='INT'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN' or @moodCode='INT'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN' or @moodCode='INT'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3161,7 +3162,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3180,7 +3181,7 @@
       <xsl:choose>
          <xsl:when test="parent::cda:entryRelationship/@typeCode='SUBJ'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="parent::cda:entryRelationship/@typeCode='SUBJ'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="parent::cda:entryRelationship/@typeCode='SUBJ'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3197,7 +3198,7 @@
       <xsl:choose>
          <xsl:when test="cda:component/cda:observation[cda:templateId/@root=&#34;2.16.840.1.113883.10.20.1.31&#34;]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="cda:component/cda:observation[cda:templateId/@root=&#34;2.16.840.1.113883.10.20.1.31&#34;]"
                            role="">
                <xsl:attribute name="location">
@@ -3224,7 +3225,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:externalDocument"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:externalDocument" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:externalDocument" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3235,7 +3236,7 @@
       <xsl:choose>
          <xsl:when test="parent::cda:reference/@typeCode='REFR'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="parent::cda:reference/@typeCode='REFR'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="parent::cda:reference/@typeCode='REFR'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3246,7 +3247,7 @@
       <xsl:choose>
          <xsl:when test="cda:id"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:id" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:id" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3277,7 +3278,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation[@classCode='OBS'][@moodCode='EVN']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation[@classCode='OBS'][@moodCode='EVN']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation[@classCode='OBS'][@moodCode='EVN']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3288,7 +3289,7 @@
       <xsl:choose>
          <xsl:when test="cda:code/@code='397659008'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code/@code='397659008'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code/@code='397659008'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3299,7 +3300,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1 and cda:statusCode/@code='completed'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1 and cda:statusCode/@code='completed'"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1 and cda:statusCode/@code='completed'"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -3311,7 +3312,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:value)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:value)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:value)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3336,7 +3337,7 @@
       <xsl:choose>
          <xsl:when test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='AlertStatusCode']/code[@value = current()/cda:value/@code]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='AlertStatusCode']/code[@value = current()/cda:value/@code]"
                            role="">
                <xsl:attribute name="location">
@@ -3355,7 +3356,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3366,7 +3367,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='ACT'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='ACT'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='ACT'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3377,7 +3378,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3388,7 +3389,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3405,7 +3406,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation[@classCode='OBS' and @moodCode='EVN']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation[@classCode='OBS' and @moodCode='EVN']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation[@classCode='OBS' and @moodCode='EVN']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -3417,7 +3418,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1 and cda:statusCode/@code='completed'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1 and cda:statusCode/@code='completed'"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1 and cda:statusCode/@code='completed'"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -3435,7 +3436,7 @@
       <xsl:choose>
          <xsl:when test="cda:entryRelationship[@typeCode='CAUS']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:entryRelationship[@typeCode='CAUS']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:entryRelationship[@typeCode='CAUS']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3460,7 +3461,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3471,7 +3472,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='INT'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='INT'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='INT'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3488,7 +3489,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:participant[@typeCode='LOC']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:participant[@typeCode='LOC']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:participant[@typeCode='LOC']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3499,7 +3500,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participantRole) = 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participantRole) = 1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participantRole) = 1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3510,7 +3511,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participantRole/@code) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participantRole/@code) &lt; 2" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participantRole/@code) &lt; 2" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3521,7 +3522,7 @@
       <xsl:choose>
          <xsl:when test="cda:participantRole/@classCode = 'SDLOC'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:participantRole/@classCode = 'SDLOC'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:participantRole/@classCode = 'SDLOC'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3532,7 +3533,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participantRole/playingEntity) &lt; 2"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participantRole/playingEntity) &lt; 2" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participantRole/playingEntity) &lt; 2" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3543,7 +3544,7 @@
       <xsl:choose>
          <xsl:when test="cda:participantRole/cda:playingEntity/@classCode = 'PLC'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:participantRole/cda:playingEntity/@classCode = 'PLC'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:participantRole/cda:playingEntity/@classCode = 'PLC'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3560,7 +3561,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3571,7 +3572,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='OBS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='OBS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='OBS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3582,7 +3583,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3593,7 +3594,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3604,7 +3605,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3615,7 +3616,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='30973-2'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='30973-2'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='30973-2'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -3627,7 +3628,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:value)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:value)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:value)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3638,7 +3639,7 @@
       <xsl:choose>
          <xsl:when test="cda:value[@xsi:type='INT']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:value[@xsi:type='INT']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:value[@xsi:type='INT']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3657,7 +3658,7 @@
       <xsl:choose>
          <xsl:when test="@typeCode='SUBJ'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@typeCode='SUBJ'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@typeCode='SUBJ'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3688,7 +3689,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:participant[@typeCode='SBJ']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:participant[@typeCode='SBJ']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:participant[@typeCode='SBJ']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3699,7 +3700,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:awarenessCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:awarenessCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:awarenessCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3710,7 +3711,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participantRole/cda:id)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participantRole/cda:id)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participantRole/cda:id)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3721,7 +3722,7 @@
       <xsl:choose>
          <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole//cda:id[@root=cda:participantRole/cda:id/@root]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole//cda:id[@root=cda:participantRole/cda:id/@root]"
                            role="">
                <xsl:attribute name="location">
@@ -3740,7 +3741,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:act"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:act" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:act" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3751,7 +3752,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='INT'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='INT'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='INT'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3762,7 +3763,7 @@
       <xsl:choose>
          <xsl:when test="parent::cda:entryRelationship/@typeCode='SUBJ'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="parent::cda:entryRelationship/@typeCode='SUBJ'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="parent::cda:entryRelationship/@typeCode='SUBJ'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3779,7 +3780,7 @@
       <xsl:choose>
          <xsl:when test="cda:code/@code='11323-3'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code/@code='11323-3'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code/@code='11323-3'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3790,7 +3791,7 @@
       <xsl:choose>
          <xsl:when test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='ProblemHealthStatusCode']/code[@value = current()/cda:value/@code]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='ProblemHealthStatusCode']/code[@value = current()/cda:value/@code]"
                            role="">
                <xsl:attribute name="location">
@@ -3809,7 +3810,7 @@
       <xsl:choose>
          <xsl:when test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='ProblemStatusCode']/code[@value = current()/cda:value/@code]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='ProblemStatusCode']/code[@value = current()/cda:value/@code]"
                            role="">
                <xsl:attribute name="location">
@@ -3828,7 +3829,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:manufacturedProduct"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:manufacturedProduct" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:manufacturedProduct" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3839,7 +3840,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:manufacturedMaterial/cda:code) = 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:manufacturedMaterial/cda:code) = 1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:manufacturedMaterial/cda:code) = 1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3850,7 +3851,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:manufacturedMaterial/cda:code/cda:originalText) = 1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:manufacturedMaterial/cda:code/cda:originalText) = 1"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:manufacturedMaterial/cda:code/cda:originalText) = 1"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -3868,7 +3869,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:participantRole"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:participantRole" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:participantRole" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3879,7 +3880,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='MANU'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='MANU'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='MANU'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3896,7 +3897,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3907,7 +3908,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='OBS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='OBS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='OBS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3918,7 +3919,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3929,7 +3930,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3940,7 +3941,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3957,7 +3958,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3968,7 +3969,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='OBS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='OBS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='OBS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3979,7 +3980,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -3990,7 +3991,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4001,7 +4002,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4012,7 +4013,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4023,7 +4024,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='SEV']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='SEV']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='SEV']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4034,7 +4035,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:value)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:value)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:value)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4053,7 +4054,7 @@
       <xsl:choose>
          <xsl:when test="@typeCode='SUBJ'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@typeCode='SUBJ'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@typeCode='SUBJ'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4070,7 +4071,7 @@
       <xsl:choose>
          <xsl:when test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='SocialHistoryStatusCode']/code[@value = current()/cda:value/@code]"/>
          <xsl:otherwise>
-            <failed-assert id=""
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl"
                            test="document('voc.xml')/systems/system[@codeSystemName='SNOMED CT'][@group='SocialHistoryStatusCode']/code[@value = current()/cda:value/@code]"
                            role="">
                <xsl:attribute name="location">
@@ -4089,7 +4090,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:observation"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:observation" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:observation" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4100,7 +4101,7 @@
       <xsl:choose>
          <xsl:when test="parent::cda:entryRelationship/@typeCode='REFR'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="parent::cda:entryRelationship/@typeCode='REFR'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="parent::cda:entryRelationship/@typeCode='REFR'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4111,7 +4112,7 @@
       <xsl:choose>
          <xsl:when test="@classCode='OBS'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@classCode='OBS'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@classCode='OBS'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4122,7 +4123,7 @@
       <xsl:choose>
          <xsl:when test="@moodCode='EVN'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@moodCode='EVN'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@moodCode='EVN'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4133,7 +4134,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:code)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:code)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:code)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4144,7 +4145,7 @@
       <xsl:choose>
          <xsl:when test="cda:code[@code='33999-4'][@codeSystem='2.16.840.1.113883.6.1']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:code[@code='33999-4'][@codeSystem='2.16.840.1.113883.6.1']"
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:code[@code='33999-4'][@codeSystem='2.16.840.1.113883.6.1']"
                            role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
@@ -4156,7 +4157,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:statusCode)=1"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:statusCode)=1" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:statusCode)=1" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4167,7 +4168,7 @@
       <xsl:choose>
          <xsl:when test="cda:statusCode[@code='completed']"/>
          <xsl:otherwise>
-            <failed-assert id="" test="cda:statusCode[@code='completed']" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="cda:statusCode[@code='completed']" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4178,7 +4179,7 @@
       <xsl:choose>
          <xsl:when test="(count(@*)=2) and @classCode and @moodCode"/>
          <xsl:otherwise>
-            <failed-assert id="" test="(count(@*)=2) and @classCode and @moodCode" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="(count(@*)=2) and @classCode and @moodCode" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4189,7 +4190,7 @@
       <xsl:choose>
          <xsl:when test="count(cda:participant)=0"/>
          <xsl:otherwise>
-            <failed-assert id="" test="count(cda:participant)=0" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="count(cda:participant)=0" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4220,7 +4221,7 @@
       <xsl:choose>
          <xsl:when test="self::cda:participant"/>
          <xsl:otherwise>
-            <failed-assert id="" test="self::cda:participant" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="self::cda:participant" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
@@ -4231,7 +4232,7 @@
       <xsl:choose>
          <xsl:when test="@typeCode='VRF'"/>
          <xsl:otherwise>
-            <failed-assert id="" test="@typeCode='VRF'" role="">
+            <failed-assert xmlns="http://purl.oclc.org/dsdl/svrl" test="@typeCode='VRF'" role="">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-get-full-path"/>
                </xsl:attribute>
