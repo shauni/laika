@@ -26,8 +26,6 @@ module Validation
    # everything that is registered as a validator really is one
    class BaseValidator
      
-     
-     
      def validate(patient_data, document)
          raise "Implement me damn it"
      end
@@ -85,11 +83,11 @@ module Validation
 
     def register_validator(doc_type, validator)
       @types << doc_type
-        
-        raise InvalidValidatorException if !validator.kind_of? Validation::BaseValidator
-        
-        doc_validator = get_validator(doc_type)
-        doc_validator << validator unless doc_validator.contains?(validator)
+      
+      raise InvalidValidatorException if !validator.kind_of? Validation::BaseValidator
+      
+      doc_validator = get_validator(doc_type)
+      doc_validator << validator unless doc_validator.contains?(validator)
     end
 
 
