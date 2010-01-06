@@ -6,6 +6,8 @@ module ImportHelper
   DEFAULT_NAMESPACES = {"cda"=>"urn:hl7-org:v3", "sdtc"=>"urn:hl7-org:sdtc"}
   
   # Gets a secton Element. Will call template_id to find the appropriate id to place in it's XPath expression
+  # For irregular modules and data elements (for example RegistrationInformation) that do not follow the '
+  # section/templateId' pattern, re-implement this method in lieu of providing the template_id method
   def section(document)
     REXML::XPath.first(document,"//cda:section[cda:templateId[@root = '#{template_id}']]", DEFAULT_NAMESPACES)
   end
