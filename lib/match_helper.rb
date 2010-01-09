@@ -1,4 +1,4 @@
- # Module to be included into models who do matching against clinical documents
+  # Module to be included into models who do matching against clinical documents
   # The match value function will pull the section and subsection names from
   # the methods section_name and subsection_name. By default, section_name
   # will return the underscore name of the class. Subsection will return nil.
