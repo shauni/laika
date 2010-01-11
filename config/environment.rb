@@ -85,13 +85,13 @@ Rails::Initializer.run do |config|
   config.gem 'uuid', :version => '2.0.1'
   config.gem 'builder', :version => '2.1.2'
   config.gem 'CCHIT-xds-facade', :lib => 'xds-facade', :version => '>= 0.1.1', :source => 'http://gems.github.com'
+  config.gem 'state_machine'
 
   # These are dependencies for the tests.
   # We just want to make sure they're available without loading them.
   config.gem 'rspec',       :lib => false, :version => '>= 1.2.2'
   config.gem 'rspec-rails', :lib => false, :version => '>= 1.2.2'
-
-  config.gem 'state_machine'
+  config.gem 'selenium-client', :lib => false
 
   # Setting a default timezone, please change this to where ever you are deployed
   config.time_zone = "Eastern Time (US & Canada)"
