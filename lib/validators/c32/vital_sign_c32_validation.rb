@@ -1,3 +1,5 @@
+require 'validators/c32/abstract_result_c32_validation.rb'
+
 module VitalSignC32Validation
 
   include MatchHelper
