@@ -27,7 +27,7 @@ class ConditionC32Importer
       obs_xpath = "cda:entryRelationship[@typeCode='SUBJ']/cda:observation[cda:templateId[@root='2.16.840.1.113883.10.20.1.28']]/"
       coded_name = element.find_first(obs_xpath + "cda:value/@displayName").try(:value)
       if coded_name  
-        condition.free_text_name = coded_name
+        condition.problem_name = coded_name
       else
         text_name = deref(element.find_first(obs_xpath + "cda:text"))
         if text_name

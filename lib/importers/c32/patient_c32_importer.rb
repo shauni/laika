@@ -38,10 +38,6 @@ class PatientC32Importer
       imported_results = ResultC32Importer.import_entries(result_section)
       new_patient.results << imported_results
       
-      social_history_section = SocialHistoryC32Importer.section(clinical_document)
-      imported_social_history = SocialHistoryC32Importer.import_entries(social_history_section)
-      new_patient.social_history << imported_social_history
-      
       new_patient.save!
       
       return new_patient
