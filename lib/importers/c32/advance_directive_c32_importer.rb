@@ -22,7 +22,7 @@ class AdvanceDirectiveC32Importer
         directive.end_effective_time = end_time.to_s.from_hl7_ts_to_date
       end
       
-      directive.free_text = deref(element.find_first("cda:code/cda:originalText"))
+      directive.free_text = deref(element.find_first("cda:code/cda:originalText")).try(:value)
       
       directive_type = element.find_first("cda:code/@code").try(:value)
       if directive_type
