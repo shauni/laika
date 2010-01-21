@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
                     :results, :immunizations, :vital_signs,
                     :encounters, :procedures, :medical_equipments, :patient_identifiers],
       :member   => {:set_no_known_allergies => :post, :edit_template_info => :get, :copy => :post },
-      :collection => { :autoCreate => :post }
+      :collection => { :autoCreate => :post, :import => :post }
 
   map.with_options :controller => 'xds_patients' do |xds_patients|
     xds_patients.provide_and_register_xds_patient '/xds_patients/provide_and_register/:id', :action => 'provide_and_register'

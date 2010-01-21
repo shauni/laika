@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   page_title 'Laika Test Library'
-  before_filter :set_patient, :except => %w[ index create autoCreate ]
+  before_filter :set_patient, :except => %w[ index create autoCreate import]
   before_filter :check_edit_permission, :only => %w[ destroy update ]
 
   include SortOrder
@@ -50,6 +50,24 @@ class PatientsController < ApplicationController
     redirect_to patient_url(@patient)
   rescue ActiveRecord::RecordInvalid => e
     flash[:notice] = e.to_s
+    redirect_to patients_url
+  end
+  
+  def import
+    validator = Validation.get_validator(:CCD)
+    document = ClinicalDocument.create!(params[:clinical_document])
+    errors = validator.validate(nil, document.as_xml_document)
+    if errors.empty?
+      @patient = PatientC32Importer.import_c32(document.as_xml_document) 
+      @patient.user = current_user
+      @patient.save!
+      redirect_to patient_url(@patient)
+    else
+      flash[:notice] = "Import failed. #{errors.size} validation error(s).\nError 1: #{errors.first.error_message}"
+      redirect_to patients_url
+    end
+  rescue 
+    flash[:error] = "Import failed: " + $!.to_s
     redirect_to patients_url
   end
   
