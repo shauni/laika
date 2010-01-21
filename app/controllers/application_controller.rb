@@ -1,8 +1,68 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
+# Uses the exception_notification plugin
+module LaikaExceptionNotification
+  def self.included(target)
+    # hook in exception_notification plugin
+    # and decorate render_500 with render_500_with_ajax
+    target.class_eval do 
+      include ExceptionNotifiable
+      include Decorator
+      # decorate ExceptionNotifiable
+      alias_method_chain :render_500, :ajax
+      alias_method_chain :local_request?, :guard
+      alias_method_chain :rescue_action_in_public, :recipients_check
+    end 
+  end
+
+  module Decorator 
+
+    protected 
+
+    # Decorate's ExceptionNotifiable's local_request? because glassfish is not
+    # providing remote_ip for localhost at least.
+    def local_request_with_guard?
+      logger.info("request.remote_ip: #{request.remote_ip}")
+      request.remote_ip.blank? ? false : local_request_without_guard?
+    end
+
+    # Decorates ExceptionNotifiable's render_500 to handle 500 errors returned
+    # for Ajax requests.
+    def render_500_with_ajax
+      if request.xhr?
+        render :update, :status => '500' do |page|
+          page.alert("An internal error occurred, please report this to #{FEEDBACK_EMAIL}.")
+        end
+      else
+        render_500_without_ajax
+      end
+    end
+
+    # Decorates ExceptionNotifiable's rescue_action_in_public in order to 
+    # skip delivery if no exception_recipients have been sent.
+    def rescue_action_in_public_with_recipients_check(exception)
+      if ExceptionNotifier.exception_recipients.empty?
+        # just render the exception message
+        case exception
+          when *self.class.exceptions_to_treat_as_404
+            render_404
+          else
+            render_500
+        end
+      else
+        # render and send exception message
+        rescue_action_in_public_without_recipients_check(exception)
+      end 
+    end
+  end
+end
+  
 class ApplicationController < ActionController::Base
- 
+
+  # When handling exceptions send out emails to admins configured in config/laika.yml
+  include LaikaExceptionNotification
+
   # AuthenticationSystem supports the acts_as_authenticated
   include AuthenticatedSystem
 
@@ -34,7 +94,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Set the page title for the controller, can be overridden by calling page_title in any controller action.
+  # Set the page title for the controller, can be overridden by calling
+  # page_title in any controller action.
   def self.page_title(title)
     class_eval %{
       before_filter :set_page_title
@@ -58,29 +119,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def rescue_action_in_public(exception)
-    if request.xhr?
-      render :update, :status => '500' do |page|
-        page.alert("An internal error occurred, please report this to #{FEEDBACK_EMAIL}.")
-      end
-    else
-      render :status => '500', :template => "rescues/error", :layout => false
-    end
-  end
-
-  #def log_error(exception) 
-  #  super(exception)
-  #  begin
-  #    logger.error("Attempting to send error email")
-  #    ErrorMailer.deliver_errormail(exception, 
-  #     clean_backtrace(exception), 
-  #      session.instance_variable_get("@data"), 
-  #      params,
-  #      request.env)
-  #  rescue => e
-  #    logger.error("Failed to send error email")
-  #    logger.error(e)
-  #  end
-  #end
-  
 end

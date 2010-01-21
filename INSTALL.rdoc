@@ -15,6 +15,18 @@ about getting an Amazon EC2 system prepared to run Laika.
 = End-to-end Install Instructions
 Once you get a copy of the Laika code from gitHub, these are step-by-step instructions to get Laika installed on your local machine.
 
+== Environment
+
+Laika uses Saxon (http://saxon.sourceforge.net/) to handle XML Schema validation and XSLT. For this to function properly, the Saxon jars must be set in a CLASSPATH environment variable.  They are bundled in lib/saxon.
+
+In a Unix environment, navigate to the root of your Laika project and run:
+
+ $ source bin/laika_env.sh
+
+As an alternative, you may create CLASSPATH environment variable as part of the user's profile.
+
+Note that many rake tasks load the environment, and thus will also fail if the CLASSPATH does not include Saxon.
+
 == Install JRuby and Required Gems
 
 Ensure that you have JRuby version 1.3.1 installed locally (available here: http://dist.codehaus.org/jruby/1.3.1/) and add <jruby-install>/bin to your PATH environment variable.
@@ -24,7 +36,7 @@ You will need to install Rails for JRuby:
  $ jruby -S gem sources -a http://gems.github.com
  $ jruby -S gem install rails -v=2.3.4 --no-rdoc --no-ri
 
-Several commands require use of rake, which in turn loads the local rails environment and will complain if the configuration files are not set up.  So make a local copy of config/database.yml.template as config/database.yml.  The file just has to exist for now, we will configure it below.
+Several commands require the use of rake, which in turn loads the local rails environment and will complain if the configuration files are not set up.  So make a local copy of config/database.yml.template as config/database.yml.  The file just has to exist for now, we will configure it below.
 
 Install the rest of the gem dependencies; from the root of your Laika project:
 
@@ -52,20 +64,24 @@ Make sure your local database server is running and create a new user *laika* wi
 
 Save the file as database.yml (i.e., without .template extension). Initialize the databases and load the seed data:
 
-  $ jruby -S rake db:create:all
+  $ jruby -S rake db:create
+  $ jruby -S rake db:schema:load
   $ jruby -S rake db:seed
 
 You will be prompted for information about the administrator account.
 
-== Environment
+== Mail Settings
 
-Laika uses Saxon (http://saxon.sourceforge.net/) to handle XML Schema validation and XSLT. For this to function properly, the Saxon jars must be set in a CLASSPATH environment variable. 
+Laika sends mail for forgotten passwords, and potentially for error notifications (see below).
 
-Navigate to the root of your Laika project and run:
+By default, Laika assumes that it can send mail through a mail server configured at localhost on port 25.  To change this, create a copy of config/laika.yml from the config/laika.yml.template and set your mail settings as needed under 'action_mailer:'.  See the ActionMailer::Base configuration options for further details (http://api.rubyonrails.org/classes/ActionMailer/Base.html).
 
- $ source bin/laika_env.sh
+== Error Notifications
 
-As an alternative, you may create CLASSPATH environment variable as part of the user's profile.
+Laika uses the exception_notification plugin to email application errors encountered on a production server.  If you wish to receive email notifications, make sure that you have a config/laika.yml YAML file in place and that the exception_recipients parameter has been set to a list of one or more email addresses who should be receiving error notifications:
+
+exception_notifier:
+  exception_recipients: [ 'foo@bar.com' ]
 
 == GlassFish
 

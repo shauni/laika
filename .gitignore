@@ -16,3 +16,7 @@ config/glassfish.yml
 *.pid
 doc
 .yardoc
+public/stylesheets/blueprint/*_bundle.css
+public/javascripts/*_bundle.js
+.ackrc
+config/laika.yml

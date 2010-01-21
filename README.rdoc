@@ -39,6 +39,11 @@ YARD documentation tool. You don't need to use JRuby to do this:
 For complete validation functionality the UMLS database (including SNOMED)
 is required, see http://www.nlm.nih.gov/research/umls/
 
+ATNA syslog server
+Two implementations of syslog are available in this package: http://cloud.github.com/downloads/CCHIT/laika/syslog_server.zip. CCHIT currently uses the BSD version of syslog when deploying to official testing and the http://demo.cchit.org instances.
+
+A README.TXT file is included in the package outlining the installation procedure.
+
 == Resources
 
 The source repository is hosted on GitHub:

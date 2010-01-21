@@ -2,10 +2,10 @@
 
 <script type="text/javascript">
 //<![CDATA[
-var newResultDiv = $('<%= controller.controller_name %>New');
+var newResultDiv = $('<%= controller.controller_name.singularize %>New');
 if (newResultDiv != null)
 {      
-  newResultDiv.id = '<%= controller.controller_name %><%= @result.id %>';
+  newResultDiv.id = '<%= controller.controller_name.singularize %><%= @result.id %>';
 }
 //]]>
 </script>
