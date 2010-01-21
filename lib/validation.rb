@@ -193,7 +193,11 @@ require_dependency 'validators/xds_metadata_validator'
       "resources/nhin_schematron/nhin_errors.xsl"),
     Validators::Umls::UmlsValidator.new("warning")
   ],
-  'C62' => [ Validators::C62::Validator.new ]
+  'C62' => [ Validators::C62::Validator.new ],
+  'CCD' => [
+    Validators::Schematron::CompiledValidator.new("CCD Schematron Validator",
+      "resources/schematron/ccd_errors.xslt")
+  ]
 }.each do |type, validators|
   validators.each do |validator|
     Validation.register_validator type.to_sym, validator
