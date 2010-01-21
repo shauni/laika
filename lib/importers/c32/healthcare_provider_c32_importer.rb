@@ -12,6 +12,10 @@ class HealthcareProviderC32Importer
   def self.import_entry(entry_element)
     provider = Provider.new
     with_element(entry_element) do |element|
+      
+      provider.person_name = PersonNameC32Importer.import(element.find_first("cda:assignedEntity/cda:assignedPerson/cda:name"))
+      provider.address = AddressC32Importer.import(element.find_first("cda:assignedEntity/cda:addr"))
+      
       start_time = element.find_first("cda:time/cda:low/@value").try(:value)
       if start_time
         provider.start_service = start_time.to_s.from_hl7_ts_to_date

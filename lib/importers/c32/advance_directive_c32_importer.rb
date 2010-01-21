@@ -12,6 +12,10 @@ class AdvanceDirectiveC32Importer
   def self.import_entry(entry_element)
     directive = AdvanceDirective.new
     with_element(entry_element) do |element|
+      
+      directive.person_name = PersonNameC32Importer.import(element.find_first("cda:participant/cda:participantRole/cda:playingEntity/cda:name"))
+      directive.address = AddressC32Importer.import(element.find_first("cda:participant/cda:participantRole/cda:addr"))
+      
       start_time = element.find_first("cda:effectiveTime/cda:low/@value").try(:value)
       if start_time
         directive.start_effective_time = start_time.to_s.from_hl7_ts_to_date

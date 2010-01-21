@@ -25,6 +25,8 @@ class InsuranceProviderC32Importer
       
       provider.insurance_provider_patient = InsuranceProviderPatient.new
       patient_xpath = "cda:participant[@typeCode='COV']/cda:participantRole[@classCode='PAT']/"
+      provider.insurance_provider_patient.person_name = PersonNameC32Importer.import(element.find_first(patient_xpath + "cda:playingEntity/cda:name"))
+      provider.insurance_provider_patient.address = AddressC32Importer.import(element.find_first(patient_xpath + "cda:addr"))
       patient_dob = element.find_first(patient_xpath + "cda:playingEntity/sdtc:birthTime/@value") 
       if patient_dob
         provider.insurance_provider_patient.date_of_birth = patient_dob.to_s.from_hl7_ts_to_date
@@ -33,6 +35,8 @@ class InsuranceProviderC32Importer
       
       provider.insurance_provider_subscriber = InsuranceProviderSubscriber.new
       subscriber_xpath = "cda:participant[@typeCode='HLD']/cda:participantRole/"
+      provider.insurance_provider_subscriber.person_name = PersonNameC32Importer.import(element.find_first(subscriber_xpath + "cda:playingEntity/cda:name"))
+      provider.insurance_provider_subscriber.address = AddressC32Importer.import(element.find_first(subscriber_xpath + "cda:addr"))
       dob = element.find_first(subscriber_xpath + "cda:playingEntity/sdtc:birthTime/@value") 
       if dob
         provider.insurance_provider_subscriber.date_of_birth = dob.to_s.from_hl7_ts_to_date
@@ -40,7 +44,8 @@ class InsuranceProviderC32Importer
       
       provider.insurance_provider_guarantor = InsuranceProviderGuarantor.new
       guarantor_xpath = "cda:performer[cda:assignedEntity/cda:code[@code='' and @codeSystem='']]/"
-      
+      provider.insurance_provider_guarantor.person_name = PersonNameC32Importer.import(element.find_first(guarantor_xpath + "cda:assignedEntity/cda:assignedPerson/cda:name"))
+      provider.insurance_provider_guarantor.address = AddressC32Importer.import(element.find_first(guarantor_xpath + "cda:assignedEntity/cda:addr"))
       role_type = element.find_first(guarantor_xpath + "cda:assignedEntity/cda:code/@code").try(:value)
       if role_type
         provider.insurance_type = RoleClassRelationshipFormalType.find_by_code(role_type)

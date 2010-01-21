@@ -12,6 +12,10 @@ class EncounterC32Importer
   def self.import_entry(entry_element)
     encounter = Encounter.new
     with_element(entry_element) do |element|
+      
+      encounter.person_name = PersonNameC32Importer.import(element.find_first("cda:participant[@typeCode='PRF']/cda:participantRole[@classCode='PROV']/cda:playingEntity/cda:name"))
+      encounter.address = AddressC32Importer.import(element.find_first("cda:participant[@typeCode='PRF']/cda:participantRole[@classCode='PROV']/cda:addr"))
+      
       encounter.encounter_id = element.find_first("cda:id/@root").try(:value) 
       encounter.free_text = element.find_first("cda:code/cda:originalText").try(:text)
       # encounter.name -- currently not structured in Laika-produced C32 XML
