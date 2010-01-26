@@ -146,8 +146,10 @@ require 'validators/xds_metadata_validator'
     Validators::Umls::UmlsValidator.new("warning")
   ],
   'CCD' => [
+    Validators::Schema::Validator.new("C32 Schema Validator",
+      "#{RAILS_ROOT}/resources/schemas/infrastructure/cda/C32_CDA.xsd"),
     Validators::Schematron::CompiledValidator.new("CCD Schematron Validator",
-      "resources/schematron/ccd_errors.xslt")
+      "#{RAILS_ROOT}/resources/schematron/ccd_errors.xslt")
   ]
 }.each do |type, validators|
   validators.each do |validator|
