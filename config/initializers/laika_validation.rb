@@ -18,7 +18,6 @@ require 'importers/c32/immunization_c32_importer'
 require 'importers/c32/healthcare_provider_c32_importer'
 require 'importers/c32/address_c32_importer'
 require 'importers/c32/person_name_c32_importer'
-require 'active_record_comparator'
 
 
 require 'validation'
