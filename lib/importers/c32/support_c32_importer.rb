@@ -15,6 +15,7 @@ class SupportC32Importer
       
       support.person_name = PersonNameC32Importer.import(element.find_first("cda:associatedEntity/cda:associatedPerson/cda:name"))
       support.address = AddressC32Importer.import(element.find_first("cda:associatedEntity/cda:addr"))
+      support.telecom = TelecomC32Importer.import(element.find_first("cda:associatedEntity"))
       
       start_time = element.find_first("cda:time/cda:low/@value").try(:value)
       if start_time

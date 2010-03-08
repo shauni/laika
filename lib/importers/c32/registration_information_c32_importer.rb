@@ -16,6 +16,7 @@ class RegistrationInformationC32Importer
       
       reg_info.person_name = PersonNameC32Importer.import(element.find_first("cda:patient/cda:name"))
       reg_info.address = AddressC32Importer.import(element.find_first("cda:addr"))
+      reg_info.telecom = TelecomC32Importer.import(element.find_first(""))
       
       birthday_string = element.find_first("cda:patient/cda:birthTime/@value").try(:value)
       if birthday_string

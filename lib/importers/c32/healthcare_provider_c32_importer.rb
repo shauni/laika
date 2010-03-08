@@ -15,6 +15,7 @@ class HealthcareProviderC32Importer
       
       provider.person_name = PersonNameC32Importer.import(element.find_first("cda:assignedEntity/cda:assignedPerson/cda:name"))
       provider.address = AddressC32Importer.import(element.find_first("cda:assignedEntity/cda:addr"))
+      provider.telecom = TelecomC32Importer.import(element.find_first("cda:assignedEntity"))
       
       start_time = element.find_first("cda:time/cda:low/@value").try(:value)
       if start_time

@@ -15,6 +15,7 @@ class EncounterC32Importer
       
       encounter.person_name = PersonNameC32Importer.import(element.find_first("cda:participant[@typeCode='PRF']/cda:participantRole[@classCode='PROV']/cda:playingEntity/cda:name"))
       encounter.address = AddressC32Importer.import(element.find_first("cda:participant[@typeCode='PRF']/cda:participantRole[@classCode='PROV']/cda:addr"))
+      encounter.telecom = TelecomC32Importer.import(element.find_first("cda:participant[@typeCode='PRF']/cda:participantRole[@classCode='PROV']"))
       
       encounter.encounter_id = element.find_first("cda:id/@root").try(:value) 
       encounter.free_text = element.find_first("cda:code/cda:originalText").try(:text)
