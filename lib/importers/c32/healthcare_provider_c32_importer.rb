@@ -6,7 +6,7 @@ class HealthcareProviderC32Importer
   end
   
   def self.entry_xpath
-   "cda:performer[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.4']"
+   "cda:serviceEvent/cda:performer[cda:templateId/@root='2.16.840.1.113883.3.88.11.32.4']"
   end
   
   def self.import_entry(entry_element)
@@ -37,9 +37,9 @@ class HealthcareProviderC32Importer
         provider.provider_type = ProviderType.find_by_code(provider_type_code)
       end
       
-      provider.patient_identifier = element.find_first("sdtc:patient/sdtc:id/@root").try(:value)
+      provider.patient_identifier = element.find_first("cda:assignedEntity/sdtc:patient/sdtc:id/@root").try(:value)
       
-      provider.organization = element.find_first("cda:representedOrganization/cda:name").try(:text)
+      provider.organization = element.find_first("cda:assignedEntity/cda:representedOrganization/cda:name").try(:text)
       
     end
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClinicalDocument
+	xmlns="urn:hl7-org:v3" xmlns:sdtc="urn:hl7-org:sdtc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<component>
+		<structuredBody>
+			<component>
+	        <section>
+	          <templateId root="2.16.840.1.113883.10.20.1.6" assigningAuthorityName="CCD"/>
+	          <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+	          <title>Immunizations</title>
+	          <text>
+	            <table border="1" width="100%">
+	              <thead>
+	                <tr>
+	                  <th>Vaccine</th>
+	                  <th>Administration Date</th>
+	                </tr>
+	              </thead>
+	              <tbody>
+	                <tr>
+	                  <td>Influenza Virus Vaccine Live Attenuated for Intranasal Use</td>
+	                  <td>12.May.1980</td>
+	                </tr>
+	              </tbody>
+	            </table>
+	          </text>
+	          <entry typeCode="DRIV">
+	            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+	              <templateId root="2.16.840.1.113883.10.20.1.24" assigningAuthorityName="CCD"/>
+	              <templateId root="2.16.840.1.113883.3.88.11.32.14" assigningAuthorityName="HITSP/C32"/>
+	              <id root="41755f58-d7c0-4aab-9f7c-a3a5d8df4581"/>
+	              <statusCode code="completed"/>
+	              <effectiveTime xsi:type="IVL_TS">
+	                <center value="19800512"/>
+	              </effectiveTime>
+	              <consumable>
+	                <manufacturedProduct>
+	                  <templateId root="2.16.840.1.113883.10.20.1.53"/>
+	                  <manufacturedMaterial>
+	                    <code code="111" codeSystem="2.16.840.1.113883.6.59" displayName="Influenza Virus Vaccine Live Attenuated for Intranasal Use">
+	                      <originalText>Influenza Virus Vaccine Live Attenuated for Intranasal Use</originalText>
+	                    </code>
+	                    <lotNumberText>mm345-417-DFF</lotNumberText>
+	                  </manufacturedMaterial>
+	                </manufacturedProduct>
+	              </consumable>
+	            </substanceAdministration>
+	          </entry>
+	        </section>
+	      </component>
+		</structuredBody>
+	</component>
+</ClinicalDocument>
