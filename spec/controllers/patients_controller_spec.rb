@@ -45,5 +45,22 @@ describe PatientsController do
     template.reload
     template.name.should == 'You'
   end
+  
+  it "should import a valid C32" do
+    doc_mock = mock('doc_mock')
+    doc_mock.should_receive(:as_xml_document).and_return(REXML::Document.new(File.new(RAILS_ROOT + '/spec/test_data/joe_smith_complete.xml')))
+    ClinicalDocument.stub!(:create!).and_return(doc_mock)
+    count = Patient.count
+    post :import, :clinical_document => 'stubbed_file'
+    Patient.count.should == count + 1
+  end
 
+  it "should fail with invalid C32 and redirect to patient index" do
+    doc_mock = mock('doc_mock')
+    doc_mock.should_receive(:as_xml_document).and_return(REXML::Document.new("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ClinicalDocument/>"))
+    ClinicalDocument.stub!(:create!).and_return(doc_mock)
+    post :import, :clinical_document => 'stubbed_file'
+    response.should redirect_to(patients_url)
+  end
+    
 end
