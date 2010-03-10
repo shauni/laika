@@ -55,10 +55,10 @@ class PatientsController < ApplicationController
   
   def import
     validator = Validation.get_validator(:CCD)
-    document = ClinicalDocument.create!(params[:clinical_document])
-    errors = validator.validate(nil, document.as_xml_document)
+    document = ClinicalDocument.create!(params[:clinical_document]).as_xml_document
+    errors = validator.validate(nil, document)
     if errors.empty?
-      @patient = PatientC32Importer.import_c32(document.as_xml_document) 
+      @patient = PatientC32Importer.import_c32(document) 
       @patient.user = current_user
       @patient.save!
       redirect_to patient_url(@patient)
